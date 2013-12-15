@@ -1,0 +1,34 @@
+<div class="user-aside">
+    <div class="usermenu">
+        <div class="userbox clearfix">
+            <a class="pic" title="{$user['username']}" href="{url user/profile}"><img width="60" height="60" src="{$user['avatar']}" alt="{$user['username']}"></a>
+            <h3>{$user['username']}</h3>
+            <span>{$user['grouptitle']}</span>
+            <div class="userprogress"><span class="progress-label">33/400</span></div>
+        </div>
+        <ul class="menu clearfix">
+            <li><a href="/me_ask/supermustang/">回答数</a>100</li>
+            <li><a href="/me_reply/supermustang/">提问数</a>300</li>
+            <li><a href="/me_collection/supermustang/">关注</a>100</li>
+        </ul>
+        <ul class="user-nav">
+            <li<!--{if strstr($regular,"user/score")}--> class="on"<!--{/if}-->><!--{if strstr($regular,"user/score")}-->我的首页<!--{else}--><a href="{url user/score}">我的首页</a><!--{/if}--></li>
+            <li<!--{if strstr($regular,"user/profile")}--> class="on"<!--{/if}-->><!--{if strstr($regular,"user/profile")}-->个人信息<!--{else}--><a href="{url user/profile}">个人信息</a><!--{/if}--></li>
+            <li<!--{if strstr($regular,"user/ask")}--> class="on"<!--{/if}-->><!--{if strstr($regular,"user/ask")}-->我的提问<!--{else}--><a href="{url user/ask/1}">我的提问</a><!--{/if}--></li>
+            <li<!--{if strstr($regular,"user/answer")}--> class="on"<!--{/if}-->><!--{if strstr($regular,"user/answer")}-->我的回答<!--{else}--><a href="{url user/answer/1}">我的回答</a><!--{/if}--></li>
+            <li<!--{if strstr($regular,"user/attention")}--> class="on"<!--{/if}-->><!--{if strstr($regular,"user/attention")}-->最新动态<!--{else}--><a href="{url user/attention}">最新动态</a><!--{/if}--></li>
+            <li<!--{if strstr($regular,"message")}--> class="on"<!--{/if}-->><!--{if strstr($regular,"message")}-->我的消息<!--{else}--><a href="{url message/personal}">我的消息</a><!--{/if}--></li>
+            <li<!--{if strstr($regular,"favorite")}--> class="on"<!--{/if}-->><!--{if strstr($regular,"favorite")}-->我的收藏<!--{else}--><a href="{url favorite/default}">我的收藏</a><!--{/if}--></li>
+            <li><a href="/me_collection/supermustang/">我的等级</a></li>
+            <li><a href="/me_together/supermustang/">我的金币</a></li>
+        </ul>
+    </div>
+</div>
+<script type='text/javascript'>
+
+    $(function() {
+        $(".userprogress").progressbar({
+            value: 70
+        });
+    });
+</script>

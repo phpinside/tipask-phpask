@@ -1,0 +1,11 @@
+<!--{loop $commentlist $comment}-->
+<li>
+    <div class="other-comment">
+        <a class="pic" target="_blank" title="朔月♂寒心" href="http://my.zol.com.cn/1806801450gyj154/"><img width="30" height="30" src="{$comment['avatar']}"></a>
+        <p><a target="_blank" title="朔月♂寒心" href="http://my.zol.com.cn/1806801450gyj154/">{$comment['author']}</a>：{$comment['content']}</p>
+    </div>
+    <div class="replybtn">
+        <span class="times">{$comment['format_time']}</span><a  href="#">回复</a>
+    </div>
+</li>
+<!--{/loop}-->

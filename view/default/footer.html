@@ -1,0 +1,19 @@
+<div class="wrapper">
+
+    <div class="footer">
+        <div class="bottom">
+            <a href="{SITE_URL}" target="_blank">{$setting['site_name']}</a><span class="span-line">|</span>
+            <a href="mailto:{$setting['admin_email']}" target="_blank">联系我们</a>
+            <!--{if $setting['site_icp']}-->
+            <span class="span-line">|</span><a href="http://www.miibeian.gov.cn" target="_blank">{$setting['site_icp']}</a>
+            <!--{/if}-->
+        </div>
+        <p>Powered by <a rel="nofollow" target="_blank" href="http://www.tipask.com/">Tipask v{TIPASK_VERSION}</a> &copy;2009-2103 <a rel="nofollow" target="_blank" href="http://www.tipask.com">tipask.com</a>，Processed in {$runtime} second(s), {$querynum} queries.</p>
+    </div>
+</div>
+<div class="usercard" id="usercard"></div>
+<script type="text/javascript" src="{SITE_URL}js/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript" src="{SITE_URL}js/common.js"></script>
+
+</body>
+</html>
