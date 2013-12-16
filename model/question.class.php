@@ -30,7 +30,7 @@ class questionmodel {
     function questionmodel(&$base) {
         $this->base = $base;
         $this->db = $base->db;
-        if ($this->base->setting['xunsearch_open']) {
+        if (!$this->base->setting['xunsearch_open']) {
             require_once $this->base->setting['xunsearch_sdk_file'];
             $xs = new XS('question');
             $this->search = $xs->search;
