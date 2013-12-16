@@ -498,7 +498,7 @@ th{font-style: normal;font-weight: 400;}
 .comments-list .replybtn{ float:right;text-align: right;margin-right: 10px;}
 .replybtn .times{ padding:0 0 0 10px; color:#999;}
 .replybtn span{color:#999;}
-.replybtn a{ padding:0 0 0 10px; color:#666;}
+.replybtn a{ padding:0 0 0 3px; color:#666;}
 
 /*我来回答*/
 .your-answer-mod{ padding:0 30px 10px; border:1px solid #E4E4E4;border-top:none;}
