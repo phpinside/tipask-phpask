@@ -26,7 +26,7 @@
                                             <!--{if $question['price'] > 0}-->
                                             <span class="gold"><img src="{SITE_URL}css/default/gold.gif">$question['price']</span>
                                             <!--{/if}-->
-                                            <a href="{url question/view/$question['id']}" target="_blank" title="{$question['title']}">{eval echo cutstr($question['title'],60)}</a>
+                                            <a href="{url question/view/$question['id']}" target="_blank" title="{$question['title']}">{eval echo cutstr($question['title'],54)}</a>
                                             <a title="{$question['category_name']}" href="{url category/view/$question['cid']}" class="type" target="_blank">[{$question['category_name']}]</a>                                        </div>
                                     </div>
                                 </td>

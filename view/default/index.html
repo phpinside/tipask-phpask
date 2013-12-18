@@ -248,12 +248,10 @@
                                 $(".pagination li[class='spanhover']").removeClass("spanhover");
                                 var topicid = $(this).attr("topicid");
                                 $(this).addClass("spanhover");
-                                $(".topic").hide();
-                                $("#" + topicid).show();
                                 timer = setTimeout(function() {
                                     $(".topic").hide();
                                     $("#" + topicid).show();
-                                }, 200);
+                                }, 100);
                             });
                             $("#weektab").hover(function() {
                                 $(this).attr("class", "select");

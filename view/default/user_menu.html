@@ -7,9 +7,9 @@
             <div class="userprogress"><span class="progress-label">33/400</span></div>
         </div>
         <ul class="menu clearfix">
-            <li><a href="/me_ask/supermustang/">回答数</a>100</li>
-            <li><a href="/me_reply/supermustang/">提问数</a>300</li>
-            <li><a href="/me_collection/supermustang/">关注</a>100</li>
+            <li><a href="{url user/answer/1}">回答数</a>{$user['answers']}</li>
+            <li><a href="{url user/ask/1}">提问数</a>{$user['questions']}</li>
+            <li><a href="{url user/attention}">关注</a>{$user['attentions']}</li>
         </ul>
         <ul class="user-nav">
             <li<!--{if strstr($regular,"user/score")}--> class="on"<!--{/if}-->><!--{if strstr($regular,"user/score")}-->我的首页<!--{else}--><a href="{url user/score}">我的首页</a><!--{/if}--></li>
