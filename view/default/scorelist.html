@@ -20,7 +20,7 @@
                             <!--{loop $userlist $index $user}-->
                             <tr>
                                 <td><strong>{eval echo(++$index);}</strong></td>
-                                <td><a href="{url user/space/$user['uid']}" target="_blank" onmouseover="pop_user_on(this, '{$user[uid]}', 'text');"  onmouseout="pop_user_out();">{$user['username']}</a></td>
+                                <td><a href="{url user/space/$user['uid']}" target="_blank">{$user['username']}</a></td>
                                 <td>{$user['credit2']}</td>
                                 <td>{$user['answers']}</td>
                                 <td>{$user['adopts']}</td>
