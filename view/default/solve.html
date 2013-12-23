@@ -294,6 +294,8 @@
     </form>
 </div>
 <link rel="stylesheet" href="{SITE_URL}js/lightbox/lightbox.css"/>
+<link rel="stylesheet" href="{SITE_URL}js/editor/third-party/SyntaxHighlighter/shCoreDefault.css" />
+<script type="text/javascript" src="{SITE_URL}js/editor/third-party/SyntaxHighlighter/shCore.js"></script>
 <script type="text/javascript" src="{SITE_URL}js/lightbox/lightbox.js"></script>
 <script type="text/javascript">
                         var category1 = {$categoryjs[category1]};
@@ -330,6 +332,7 @@
                                     }
                                 });
                             });
+                            SyntaxHighlighter.all();
                         });
                         function show_comment(answerid) {
                             if ($("#comment_" + answerid).css("display") === "none") {
