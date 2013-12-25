@@ -564,7 +564,7 @@ th{font-style: normal;font-weight: 400;}
 .usermenu .menu{ padding:18px 0 15px;border-top:1px dotted #F2E5AA;}
 .usermenu .menu li{ width:66px;color:#FF8100;}
 .userprogress{width:110px;position: relative;}
-.userprogress span{position: absolute;text-align: center;top: 4px;font-size: 10px;line-height: 10px;color:#A0A0A0;top:0px;}
+.userprogress span{position: absolute;text-align: center;top: 4px;font-size: 10px;line-height: 10px;top:0px;}
 
 .user-nav{ position:relative; overflow:hidden; zoom:1;}
 .user-nav li{ padding:7px 25px; height:20px; font-size:14px; line-height:20px; border-top:1px solid #F5F5F5;}

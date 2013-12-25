@@ -6,8 +6,8 @@
             <div class="title">我的提问</div>
             <div id="qa-tabcard">
                 <ul>
-                    <li<!--{if $status=='all'}--> class="on"<!--{/if}-->><!--{if $status=='all'}-->全部回答<!--{else}--><a href="{url user/space_answer}">全部回答</a><!--{/if}--></li>
-                    <li<!--{if $status==2}--> class="on"<!--{/if}-->><!--{if $status==2}-->被采纳的回答<!--{else}--><a href="{url user/space_answer/$member['uid']/2}}">被采纳的回答</a><!--{/if}--></li>
+                    <li<!--{if $status=='all'}--> class="on"<!--{/if}-->><!--{if $status=='all'}-->全部回答<!--{else}--><a href="{url user/space_answer/1}">全部回答</a><!--{/if}--></li>
+                    <li<!--{if $status==2}--> class="on"<!--{/if}-->><!--{if $status==2}-->被采纳的回答<!--{else}--><a href="{url user/space_answer/$member['uid']/2}">被采纳的回答</a><!--{/if}--></li>
                 </ul>
             </div>
             <div class="bd">
