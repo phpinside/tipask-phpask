@@ -350,6 +350,12 @@ class usercontrol extends base {
         $detail2 = $credit_detail[1];
         include template('myscore');
     }
+    
+   function onlevel(){
+       $navtitle = '我的等级';
+       $usergroup = $this->usergroup;
+       include template("mylevel");
+   }
 
     function onexchange() {
         $navtitle = '积分兑换';

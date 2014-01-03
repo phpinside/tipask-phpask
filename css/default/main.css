@@ -563,6 +563,7 @@ th{font-style: normal;font-weight: 400;}
 .userbox span a{color:#FF8100;}
 .usermenu .menu{ padding:18px 0 15px;border-top:1px dotted #F2E5AA;}
 .usermenu .menu li{ width:66px;color:#FF8100;}
+.userbox .user-level,.user-level{font-weight: 700;color:#FF7800;font-size: 12px;}
 .userprogress{width:110px;position: relative;}
 .userprogress span{position: absolute;text-align: center;top: 4px;font-size: 10px;line-height: 10px;top:0px;}
 
@@ -594,6 +595,14 @@ th{font-style: normal;font-weight: 400;}
 .my-answerbox .manage-box{margin-left: 58px;padding: 10px;}
 .my-answerbox .manage-box2{padding: 10px;}
 .my-answerbox .pages{ padding:10px 0 ;}
+
+/*我的等级*/
+.table_list {margin-bottom: 20px;}
+.table_list table {border-left: 1px solid #E0E0E0;border-top: 1px solid #E0E0E0;margin-top: 15px;margin-left: 12px;text-align: center;}
+.table_list table thead th {background: none repeat scroll 0 0 #F8F8F8;font-weight: 700;font-size: 14px;font-family: "microsoft yahei";text-align: center;}
+.table_list table thead th, .table_list table tbody td {border-bottom: 1px solid #E0E0E0;border-right: 1px solid #E0E0E0;line-height: 27px;text-align: center;}
+.table_list td {font-size: 12px;}
+
 
 /*用户登陆*/
 .loginform{ margin-left:20px; margin-right:20px; margin-top:5px;margin-bottom: 30px;}
