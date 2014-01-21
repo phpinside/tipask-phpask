@@ -1,4 +1,4 @@
-/* CSS Document */
+loginform/* CSS Document */
 body,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fieldset,legend,input,button,textarea,hr{margin:0;padding:0;}
 body {font:12px/1.5 Arial; color:#333;_height:100%; background-attachment:fixed;}
 select,input,button {vertical-align:middle;font-size:100%;}
@@ -691,6 +691,7 @@ th{font-style: normal;font-weight: 400;}
 
 /*用户登陆*/
 .loginform{ margin-left:20px; margin-right:20px; margin-top:5px;margin-bottom: 30px;}
+.poploginform{ margin-left:0px;margin-top:5px;margin-bottom: 30px;}
 .auto-login,.code-bar{ margin-left:116px;margin-top: 15px;}
 .verifycode{border: 1px solid #DDDDDD;float: left;height: 29px;width:80px;}
 .changecode{line-height: 32px;}

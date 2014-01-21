@@ -4,11 +4,10 @@
                 <a class="pic" title="{$user['username']}" href="{url user/profile}"><img width="60" height="60" src="{$user['avatar']}" alt="{$user['username']}"></a>
                 <h3>{$member['username']}</h3>
                 <span>{$member['grouptitle']}</span>
-                <div class="userprogress"><span class="progress-label">33/400</span></div>
             </div>
             <ul class="menu clearfix">
-                <li><a href="/me_ask/supermustang/">回答数</a>{$member['answers']}</li>
-                <li><a href="/me_reply/supermustang/">提问数</a>{$member['questions']}</li>
+                <li><a href="{url user/space_ask/$member['uid']}">提问数</a>{$member['questions']}</li>
+                <li><a href="{url user/space_answer/$member['uid']}">回答数</a>{$member['answers']}</li>
                 <li><a href="/me_collection/supermustang/">关注</a>100</li>
             </ul>
             <ul class="user-nav">
