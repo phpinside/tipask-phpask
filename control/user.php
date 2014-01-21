@@ -350,12 +350,12 @@ class usercontrol extends base {
         $detail2 = $credit_detail[1];
         include template('myscore');
     }
-    
-   function onlevel(){
-       $navtitle = '我的等级';
-       $usergroup = $this->usergroup;
-       include template("mylevel");
-   }
+
+    function onlevel() {
+        $navtitle = '我的等级';
+        $usergroup = $this->usergroup;
+        include template("mylevel");
+    }
 
     function onexchange() {
         $navtitle = '积分兑换';
@@ -511,7 +511,12 @@ class usercontrol extends base {
         }
     }
 
-    /* 用户问题查看下详细信息 */
+    function onajaxpoplogin() {
+        include template("poplogin");
+        
+    }
+
+    /* 用户查看下详细信息 */
 
     function onajaxuserinfo() {
         $uid = intval($this->get[2]);

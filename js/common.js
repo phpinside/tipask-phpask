@@ -140,7 +140,7 @@ function pop_user_on(popobj, uid, type) {
         var myalign = "left-27 bottom-30";
         if (type == 'text') {
             myalign = "left-21 bottom-10";
-        }else if(type=='image_active'){
+        } else if (type == 'image_active') {
             myalign = "left-40 bottom-43";
         }
         if (popusertimer) {
@@ -163,6 +163,18 @@ function pop_user_out() {
     popusertimer = setTimeout(function() {
         $("#usercard").hide();
     }, 600);
+}
+
+/*用户登陆*/
+function login() {
+    $("#poplogin").remove();
+    $("body").append('<div id="poplogin" title="欢迎登陆tipask问答网"></div>');
+    $("#poplogin").load(g_site_url+"index.php?user/ajaxpoplogin");
+    $("#poplogin").dialog({
+        width: 520,
+        modal: true,
+        resizable: false
+    });
 }
 
 /*删除回答*/
