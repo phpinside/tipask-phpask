@@ -73,7 +73,7 @@ input.ui-button { padding: .4em 1em; }
 
 
 .ui-progressbar { height:0.8em;top: 2px; text-align: left; overflow: hidden; }
-.ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; background:none repeat scroll 0 0 #F6C6A1;}
+.ui-progressbar .ui-progressbar-value {margin: -1px; height:100%; background:none repeat scroll 0 0 #FBB50D;}
 /* workarounds */
 button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra padding in Firefox */
 .ui-datepicker { width: 17em; padding: .2em .2em 0; display: none; }

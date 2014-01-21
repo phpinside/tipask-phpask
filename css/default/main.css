@@ -570,12 +570,15 @@ th{font-style: normal;font-weight: 400;}
 
 .mod-status-info {
     color: #666;
+    padding-bottom: 10px;
 }
+
 .mod-status-info .hd {
     border-bottom: 1px solid #EBEBEB;
     height: 18px;
     padding: 10px 0;
 }
+
 .mod-status-info .hd h3 {
     border-bottom: 3px solid #40B50E;
     padding-bottom: 3px;
@@ -587,6 +590,18 @@ th{font-style: normal;font-weight: 400;}
 .mod-status-info .bd {
     padding: 10px 0;
 }
+.mod-status-info .exchange{margin-top: 10px;margin-bottom: 10px;padding-bottom: 15px;}
+.mod-status-info .ask-box{
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #E9E9E9;
+}
+.status-data h4{font-family: 'Microsoft YaHei';font-size: 14px;color: #444;border-bottom: 1px solid #E9E9E9;padding-bottom:5px;margin-top: 20px;}
+.status-data .recharge {
+    float: right;
+    margin-top: 4px;
+    color:#F78229;
+}
 
 .status-data .item {
     border-right: 1px solid #E9E9E9;
@@ -595,7 +610,11 @@ th{font-style: normal;font-weight: 400;}
     padding: 0 6px;
     width: 68px;
 }
-
+.status-data .rate {
+    padding: 5px 0 5px 50px;
+    width: 250px;
+}
+.status-data p{text-align: center;}
 .status-data .item em {
     color: #F78229;
     display: block;
@@ -605,7 +624,10 @@ th{font-style: normal;font-weight: 400;}
 .status-data .item span, .status-data .item a {
     color: #676767;
 }
-.expert-single-input{margin-top: 25px;margin-bottom: 30px;}
+.status-data .last {
+    border-right: 0 none;
+}
+.expert-single-input{margin-top: 15px;}
 .expert-single-input p {
     float: left;
     font-family: 'Microsoft YaHei',Arail;
@@ -690,6 +712,7 @@ input:hover{border-color:#3EA201;}
 .comment-input {border: 1px solid #D6D6D6;height: 30px;line-height: 30px;width: 490px;float: left;margin-right:5px;font-size:14px;box-shadow: 2px 2px 2px #F0F0F0 inset;}
 .tag-input {margin: 0 10px 0 6px;border: 1px solid #D6D6D6;height: 30px;line-height: 30px;width: 450px;float: left;margin-left:10px;font-size:14px;box-shadow: 2px 2px 2px #F0F0F0 inset;}
 .code-input{float: left;margin: 0 5px 0 6px;border: 1px solid #D6D6D6;font-size: 16px;font-family: "Microsoft YaHei";font-weight: bold;height: 30px;line-height: 30px;width: 80px;box-shadow: 2px 2px 2px #F0F0F0 inset;}
+.credit_input{margin: 0 5px 0 6px;border: 1px solid #D6D6D6;font-size: 14px;font-family: "Microsoft YaHei";height: 25px;line-height: 25px;width: 50px;box-shadow: 2px 2px 2px #F0F0F0 inset;}
 .normal-button, .normal-button:hover{border: 0 none;color: #FFFFFF;cursor: pointer;display: inline-block;font-family: "Microsoft YaHei";font-size: 14px;height: 34px;outline: medium none;width: 96px;}
 .normal-button{background:url("buttons.png") no-repeat scroll 0 0 transparent;}
 .normal-button{background-position: 0px -38px;}
