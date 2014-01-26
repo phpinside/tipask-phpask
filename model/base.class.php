@@ -95,7 +95,7 @@ class base {
                 break;
             case 'notelist'://首页右侧公告列表
                 $this->load('note');
-                $cachedata = $_ENV['note']->get_list(0, $this->setting['list_indexnote']);
+                $cachedata = $_ENV['note']->get_list(0,10);
                 break;
             case 'famouslist'://问答名人堂
                 $this->load('famous');

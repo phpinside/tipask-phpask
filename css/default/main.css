@@ -236,6 +236,10 @@ em {font-style: normal;color:#E63A00;}
 .ask-input .blue-btn-w90{ margin:0 0 0 10px; border:0 none; cursor:pointer;}
 
 /*公告*/
+
+#scoll-note{height: 29px;overflow: hidden;float: right;text-align: right;}
+#scoll-note a{color:#444;}
+#scoll-note span{margin-left: 10px;color:#999999;}
 .notice-news{ padding:0 14px 0 10px;}
 .notice-news h3{ height:33px; font-size:12px; line-height:33px; overflow:hidden;}
 .notice-news .pic{ width:160px; height:120px; display:block; border:1px solid #ccc;}
@@ -369,7 +373,7 @@ th{font-style: normal;font-weight: 400;}
 
 /*问答分类页*/
 .classifymod .title{ background-position: -214px -646px;}
-.classifymod-list{ padding:8px 0 6px 10px;}
+.classifymod-list{ padding:0px 0 15px 10px;}
 .classifymod-list li{ float:left; width:176px; height:30px; font-size:14px; line-height:30px;}
 .classifymod-list li em{ color:#999;}
 .q-tabmod{ padding:5px 10px;}
@@ -594,7 +598,6 @@ th{font-style: normal;font-weight: 400;}
 .mod-status-info .ask-box{
     margin-top: 15px;
     padding-top: 15px;
-    border-top: 1px solid #E9E9E9;
 }
 .status-data h4{font-family: 'Microsoft YaHei';font-size: 14px;color: #444;border-bottom: 1px solid #E9E9E9;padding-bottom:5px;margin-top: 20px;}
 .status-data .recharge {

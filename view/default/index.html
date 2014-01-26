@@ -1,7 +1,17 @@
 <!--{template header}-->
 <!--{eval $statistics=$this->fromcache('statistics');}-->
 <!--{eval $onlineusernum=$this->fromcache('onlineusernum');}-->
-<div class="nav-line"><div class="icon_count"/></div><span>已解决问题：{$statistics['solves']}</span><span>待解决问题：{$statistics['nosolves']}</span><span>当前在线：{$onlineusernum[0]}人</span></div>
+<div class="nav-line">
+    <div class="icon_count"/></div><span>已解决问题：{$statistics['solves']}</span><span>待解决问题：{$statistics['nosolves']}</span><span>当前在线：{$onlineusernum[0]}人</span>
+<div id="scoll-note">
+    <ul>
+        <!--{eval $notelist=$this->fromcache('notelist');}-->
+        <!--{loop $notelist $note}-->
+        <li><a target="_blank" title="{$note['title']}" {if $note['url']}href="{$note['url']}"{else}href="{url note/view/$note['id']}"{/if}>{eval echo cutstr({$note['title']},40,'');}</a><span>( {eval echo cutstr($note['format_time'],10,'')} )</span></li>
+        <!--{/loop}-->
+    </ul>
+</div>
+</div>
 <div class="wrapper clearfix">
     <div class="aside">
         <div class="modbox mt10">
@@ -66,18 +76,6 @@
                 <!--{/loop}-->
             </ul>
         </div>
-        <div class="modbox noticebox mt10">
-            <!-- 公告 -->
-            <h3 class="title">站内公告</h3>
-            <p class="more"><a target="_blank" href="{url note/list}">更多</a></p>
-            <ul class="list">
-                <!--{eval $notelist=$this->fromcache('notelist');}-->
-                <!--{loop $notelist $note}-->
-                <li><a target="_blank" title="{$note['title']}" {if $note['url']}href="{$note['url']}"{else}href="{url note/view/$note['id']}"{/if}>{eval echo cutstr({$note['title']},28);}</a></li>
-                <!--{/loop}-->
-            </ul>
-
-        </div>
     </div>
     <div class="content">
         <div class="main">
@@ -87,7 +85,7 @@
                         <!--{eval $topiclist=$this->fromcache('topiclist');}-->
                         <!--{loop $topiclist $index $topic}-->
                         <div class="topic" id="{$topic['id']}" <!--{if $index!=0}-->style="display:none"<!--{/if}-->>
-                            <img width="228" height="170" src="{SITE_URL}{$topic['image']}"/>
+                             <img width="228" height="170" src="{SITE_URL}{$topic['image']}"/>
                             <h4>{eval echo cutstr($topic['title'],14,'');}</h4>
                             <p>{eval echo cutstr($topic['describtion'],60,'');}</p>
                             <ul class="list">
@@ -236,35 +234,44 @@
     </div>
 </div>
 <script type="text/javascript">
-                        var timer;
-                        $(document).ready(function() {
-                            $(".curr_menu").hover(function() {
-                                $(this).addClass("categorybox-hover");
-                            }, function() {
-                                $(this).removeClass("categorybox-hover");
-                            });
-                            //slider
-                            $(".pagination li").hover(function() {
-                                $(".pagination li[class='spanhover']").removeClass("spanhover");
-                                var topicid = $(this).attr("topicid");
-                                $(this).addClass("spanhover");
-                                timer = setTimeout(function() {
-                                    $(".topic").hide();
-                                    $("#" + topicid).show();
-                                }, 100);
-                            });
-                            $("#weektab").hover(function() {
-                                $(this).attr("class", "select");
-                                $("#alltab").attr("class", "not-selected");
-                                $("#weektop").show();
-                                $("#alltop").hide();
-                            });
-                            $("#alltab").hover(function() {
-                                $(this).attr("class", "select");
-                                $("#weektab").attr("class", "not-selected");
-                                $("#alltop").show();
-                                $("#weektop").hide();
-                            });
-                        });
+    var timer;
+    $(document).ready(function() {
+        $(".curr_menu").hover(function() {
+            $(this).addClass("categorybox-hover");
+        }, function() {
+            $(this).removeClass("categorybox-hover");
+        });
+        //note scroll
+        setInterval(function() {
+            $("#scoll-note ul:first").animate({
+                marginTop: "-29px"
+            }, 400, function() {
+                $(this).css({marginTop: "0px"}).find("li:first").appendTo(this);
+            });
+             $(".pagination ul:first").animate();
+        }, 3000);
+        //slider
+        $(".pagination li").hover(function() {
+            $(".pagination li[class='spanhover']").removeClass("spanhover");
+            var topicid = $(this).attr("topicid");
+            $(this).addClass("spanhover");
+            timer = setTimeout(function() {
+                $(".topic").hide();
+                $("#" + topicid).show();
+            }, 100);
+        });
+        $("#weektab").hover(function() {
+            $(this).attr("class", "select");
+            $("#alltab").attr("class", "not-selected");
+            $("#weektop").show();
+            $("#alltop").hide();
+        });
+        $("#alltab").hover(function() {
+            $(this).attr("class", "select");
+            $("#weektab").attr("class", "not-selected");
+            $("#alltop").show();
+            $("#weektop").hide();
+        });
+    });
 </script>
 <!--{template footer}-->

@@ -37,8 +37,9 @@
                 </div>
             </form>
         </div>
-        <div id="customerList" class="net-answer mt10">
-            <div class="title">全部评论({$rownum})</div>
+        <!--{if $commentlist}-->
+        <div  class="net-answer mt10">
+            <div class="title">全部评论</div>
             <ul class="net-answer-list">
                 <!--{loop $commentlist $index $comment}-->
                 <li>
@@ -63,8 +64,8 @@
                 </li>
                 <!--{/loop}-->
             </ul>
-
         </div>
+        <!--{/if}-->
         <div class="pages">{$departstr}</div>
     </div>
 
@@ -84,26 +85,26 @@
 <link rel="stylesheet" href="{SITE_URL}js/lightbox/lightbox.css"/>
 <script type="text/javascript" src="{SITE_URL}js/lightbox/lightbox.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-        $(".anscontent img,.description img").each(function(i){
-            var img = $(this);
-            $.ajax({
-                type: "POST",
-                url: "{url index/ajaxchkimg}",
-                async: true,
-                data: "imgsrc="+img.attr("src"),
-                success: function(status){
-                    if('1' == status){
-                        img.wrap("<a href='"+img.attr("src")+"' title='"+img.attr("title")+"' data-lightbox='comment'></a>");
-                    }
-                }
-            });
-        });
-});
-function delete_comment(noteid, commentid) {
-    if (confirm('确定删除改评论？') === true) {
-        document.location.href = g_site_url + '' + query + 'note/deletecomment/' + noteid + '/' + commentid + g_suffix;
-    }
-}
+                                        $(document).ready(function(){
+                                $(".anscontent img,.description img").each(function(i){
+                                var img = $(this);
+                                        $.ajax({
+                                        type: "POST",
+                                                url: "{url index/ajaxchkimg}",
+                                                async: true,
+                                                data: "imgsrc=" + img.attr("src"),
+                                                success: function(status){
+                                                if ('1' == status){
+                                                img.wrap("<a href='" + img.attr("src") + "' title='" + img.attr("title") + "' data-lightbox='comment'></a>");
+                                                }
+                                                }
+                                        });
+                                });
+                                });
+                                        function delete_comment(noteid, commentid) {
+                                        if (confirm('确定删除改评论？') === true) {
+                                        document.location.href = g_site_url + '' + query + 'note/deletecomment/' + noteid + '/' + commentid + g_suffix;
+                                        }
+                                        }
 </script>
 <!--{template footer}-->
