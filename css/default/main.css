@@ -357,7 +357,7 @@ th{font-style: normal;font-weight: 400;}
 .inputbox .adopt_text {height:20px;background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #D6D6D6;border-radius: 2px 2px 2px 2px;box-shadow: 1px 1px 1px #F8F8F8 inset;float: left;font-size: 16px;height: 22px;line-height: 22px;outline: 0 none;overflow: hidden;padding: 12px;resize: none;width:430px;}
 .inputbox .qtitle:hover,.inputbox .adopt_text  {border: 2px solid #50B30E;padding:11px;}
 .inputbox h3{margin-top:20px;}
-.ask-input-bar{padding-top: 20px;font-size: 14px;}
+.ask-input-bar{padding-top:20px;font-size: 14px;}
 .ask-input-bar h2{float: left;font-size: 14px;font-weight: normal;height: 28px;margin-top: 2px;margin-right: 10px;text-align: right;}
 .ask-input-bar a,.ask-input-bar span{font-size: 12px;}
 .ask-input-bar ul{font-size: 12px;width: 185px;float: left;}
@@ -696,12 +696,17 @@ th{font-style: normal;font-weight: 400;}
 .loginform{ margin-left:20px; margin-right:20px; margin-top:5px;margin-bottom: 30px;}
 .poploginform{ margin-left:0px;margin-top:5px;margin-bottom: 30px;}
 .auto-login,.code-bar{ margin-left:116px;margin-top: 15px;}
+.auto-login a{margin-left: 10px;}
 .verifycode{border: 1px solid #DDDDDD;float: left;height: 29px;width:80px;}
 .changecode{line-height: 32px;}
+.qqLogin s,.sinaWebLogin s {background: url("thirdfast_login_all.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);display: inline-block;height: 18px;margin-bottom: -5px;width: 19px;}
+.qqLogin a,.sinaWebLogin a {height: 18px;left: 2px;line-height: 18px;padding-right: 10px;position: relative;text-decoration: none;top: -3px;}
+.qqLogin s {background-position: -185px 0;}
+.sinaWebLogin s {background-position: 0 0;}
 
 /*表单元素样式*/
 input:hover{border-color:#3EA201;}
-.input-bar{ margin-left:40px;padding-top: 25px;font-size: 14px;}
+.input-bar{ margin-left:40px;padding-top: 20px;font-size: 14px;}
 .input-bar h2{float: left;font-size: 14px;font-weight: normal;height: 24px;margin-top: 6px;margin-right: 10px;width:60px;text-align: right;}
 .input-bar .text{height:30px;line-height: 24px;margin-left: 6px;}
 .input-bar .avatarbox{float:left;width: 100px;}
@@ -725,6 +730,7 @@ input:hover{border-color:#3EA201;}
 .input_desc {border: 1px solid #EDEDED;color: #777777;font-size: 13px;line-height: 30px;padding: 7px 6px 5px 10px;}
 .input_ok {background: url("input_ok.png") no-repeat scroll 6px 5px transparent;line-height: 30px;padding: 7px 6px 5px 28px;}
 .input_error {background: url("input_error.png") no-repeat scroll 6px 7px #FFF2F5;border: 1px solid #ED9A9A;color: #777777;font-size: 13px;line-height:30px;padding:6px 6px 7px 28px;}
+.user_error {color: #FF0000;font-size: 12px;line-height:22px;margin:0 5px 0 75px; }
 .input_warming{background: none repeat scroll 0 0 #FEFFD8;border: 1px solid #ECE05D;color: #777777;font-size: 13px;line-height:30px;padding:6px 6px 7px 10px;}
 /*分页模块*/
 .pages{ padding:10px 0px 10px 0px; font-family:Tahoma; font-weight:bold;}
