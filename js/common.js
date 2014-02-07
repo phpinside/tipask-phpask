@@ -122,15 +122,28 @@ function updatecode() {
 //验证码检测
 function check_code() {
     var code = $.trim($('#code').val());
-    $.post(g_site_url + "index.php" + query + "user/ajaxcode", {code: code}, function(flag) {
-        if (1 == flag) {
-            $('#codetip').html("&nbsp;");
-            $('#codetip').attr('class', 'input_ok');
-            return true;
-        } else {
-            $('#codetip').html("验证码错误");
-            $('#codetip').attr('class', 'input_error');
-            return false;
+    if ($.trim(code) == '') {
+        $('#codetip').html("验证码错误");
+        $('#codetip').attr('class', 'input_error');
+        return false;
+    }
+    $.ajax({
+        type: "POST",
+        async: false,
+        cache: false,
+        url: g_site_url + "index.php" + query + "user/ajaxcode",
+        data: "code=" + $.trim(code),
+        success: function(flag) {
+            if (1 == flag) {
+                $('#codetip').html("&nbsp;");
+                $('#codetip').attr('class', 'input_ok');
+                return true;
+            } else {
+                $('#codetip').html("验证码错误");
+                $('#codetip').attr('class', 'input_error');
+                return false;
+            }
+
         }
     });
 }
@@ -169,7 +182,7 @@ function pop_user_out() {
 function login() {
     $("#poplogin").remove();
     $("body").append('<div id="poplogin" title="欢迎登陆tipask问答网"></div>');
-    $("#poplogin").load(g_site_url+"index.php?user/ajaxpoplogin");
+    $("#poplogin").load(g_site_url + "index.php?user/ajaxpoplogin");
     $("#poplogin").dialog({
         width: 520,
         modal: true,

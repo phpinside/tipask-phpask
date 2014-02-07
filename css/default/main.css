@@ -34,16 +34,8 @@ em {font-style: normal;color:#E63A00;}
 .blue-btn-w80{ display:block; width:80px; height:30px; background-position:0 -169px; font-size:14px; line-height:30px; color:#fff; text-align:center; border:0 none; cursor:pointer; font-weight:bold;}
 .blue-btn-w80:hover{ background-position:-81px -169px; color:#fff; text-decoration:none;}
 
-.js-fixed {
-    background: none repeat scroll 0 0 #FFFFFF;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 99;
-}
-.fixed-theme .search_mod {
-    border-bottom: 1px solid #C5C5C5;
-}
+.js-fixed {background: none repeat scroll 0 0 #FFFFFF;position: fixed;top: 0;width: 100%;z-index: 99;}
+.search_mod {border-bottom: 1px solid #C5C5C5;}
 /*top-bar 顶部导航*/
 .top-bar{ height:35px; background: none repeat scroll 0 0 #F5F5F5;border-bottom: 1px solid #EEEEEE;}
 .goback{float: left;height: 32px;line-height: 32px;padding: 2px 0;margin-left: 10px;}
@@ -696,8 +688,14 @@ th{font-style: normal;font-weight: 400;}
 .loginform{ margin-left:20px; margin-right:20px; margin-top:5px;margin-bottom: 30px;}
 .poploginform{ margin-left:0px;margin-top:5px;margin-bottom: 30px;}
 .auto-login,.code-bar{ margin-left:116px;margin-top: 15px;}
+.auto-login a{margin-left: 10px;}
 .verifycode{border: 1px solid #DDDDDD;float: left;height: 29px;width:80px;}
 .changecode{line-height: 32px;}
+.qqLogin s,.sinaWebLogin s {background: url("thirdfast_login_all.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);display: inline-block;height: 18px;margin-bottom: -5px;width: 19px;}
+.qqLogin a,.sinaWebLogin a {height: 18px;left: 2px;line-height: 18px;padding-right: 10px;position: relative;text-decoration: none;top: -3px;}
+.qqLogin s {background-position: -185px 0;}
+.sinaWebLogin s {background-position: 0 0;}
+
 
 /*表单元素样式*/
 input:hover{border-color:#3EA201;}
@@ -725,6 +723,7 @@ input:hover{border-color:#3EA201;}
 .input_desc {border: 1px solid #EDEDED;color: #777777;font-size: 13px;line-height: 30px;padding: 7px 6px 5px 10px;}
 .input_ok {background: url("input_ok.png") no-repeat scroll 6px 5px transparent;line-height: 30px;padding: 7px 6px 5px 28px;}
 .input_error {background: url("input_error.png") no-repeat scroll 6px 7px #FFF2F5;border: 1px solid #ED9A9A;color: #777777;font-size: 13px;line-height:30px;padding:6px 6px 7px 28px;}
+.user_error{color: #FF0000;font-size: 12px;line-height:22px;margin:0 5px 0 75px;}
 .input_warming{background: none repeat scroll 0 0 #FEFFD8;border: 1px solid #ECE05D;color: #777777;font-size: 13px;line-height:30px;padding:6px 6px 7px 10px;}
 /*分页模块*/
 .pages{ padding:10px 0px 10px 0px; font-family:Tahoma; font-weight:bold;}
