@@ -34,6 +34,8 @@ class indexcontrol extends base {
         ($width > 300) && exit('1');
         exit('-1');
     }
+    
+    
 
 }
 
