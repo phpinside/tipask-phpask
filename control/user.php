@@ -129,7 +129,7 @@ class usercontrol extends base {
                 $_ENV['user']->refresh($user['uid'], 1, $cookietime);
                 $this->setting['passport_open'] && $this->setting['passport_type'] && $_ENV['user']->passport_server($forward);
                 $this->credit($this->user['uid'], $this->setting['credit1_login'], $this->setting['credit2_login']); //登录增加积分
-                header("Location:" . SITE_URL . $this->setting['seo_prefix'] . get_url_source($forward) . $this->setting['seo_suffix']);
+                $this->message("登录成功!", get_url_source($forward));
             } else {
                 $this->message('用户名或密码错误！', 'user/login');
             }
@@ -150,6 +150,7 @@ class usercontrol extends base {
         $password = md5($this->post['password']);
         $user = $_ENV['user']->get_by_username($username);
         if (is_array($user) && ($password == $user['password'])) {
+            $_ENV['user']->refresh($user['uid']);
             exit('1');
         }
         exit('-1');
@@ -512,6 +513,7 @@ class usercontrol extends base {
 
     function onajaxpoplogin() {
         include template("poplogin");
+        
     }
 
     /* 用户查看下详细信息 */
