@@ -186,7 +186,8 @@ function login() {
     $("#poplogin").dialog({
         width: 520,
         modal: true,
-        resizable: false
+        resizable: false,
+        position:{my:"bottom-60"}
     });
 }
 
