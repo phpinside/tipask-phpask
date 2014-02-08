@@ -404,6 +404,10 @@
                         //添加评论
                         function addcomment(answerid) {
                             var content = $("#comment_" + answerid + " input[name='content']").val();
+                            if(bytes($.trim(content))<5){
+                                alert("评论内容不能少于5字");
+                                return false;
+                            }
                             $.ajax({
                                 type: "POST",
                                 url: "{url answer/addcomment}",
@@ -439,7 +443,6 @@
                             if (type == 1) {
                                 content = name + '的提问';
                             }
-
                             $("#append_score").dialog({
                                 autoOpen: false,
                                 width: 480,

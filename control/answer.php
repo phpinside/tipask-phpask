@@ -17,7 +17,6 @@ class answercontrol extends base {
         $commentstr = '<li class="loading">暂无评论 :)</li>';
         if ($commentlist) {
             $commentstr = "";
-            $floor = count($commentlist);
             $admin_control = ($this->user['grouptype'] == 1) ? '<span class="span-line">|</span><a href="javascript:void(0)" onclick="deletecomment({commentid},{answerid});">删除</a>' : '';
             foreach ($commentlist as $comment) {
                 $viewurl = urlmap('user/space/' . $comment['authorid'], 2);
@@ -25,8 +24,7 @@ class answercontrol extends base {
                     $admin_control = str_replace("{commentid}", $comment['id'], $admin_control);
                     $admin_control = str_replace("{answerid}", $comment['aid'], $admin_control);
                 }
-                $commentstr.='<li><div class="other-comment"><a href="' . $viewurl . '" title="' . $comment['author'] . '" target="_blank" class="pic"><img width="30" height="30" src="' . $comment['avatar'] . '"  onmouseover="pop_user_on(this, \'' . $comment['authorid'] . '\', \'\');"  onmouseout="pop_user_out();"></a><p><a href="' . $viewurl . '" title="' . $comment['author'] . '" target="_blank">' . $comment['author'] . '</a>：' . $comment['content'] . '</p></div><div class="replybtn"><span class="times">' . $comment['format_time'] . '</span><span class="span-line">|</span><span>' . $floor . '楼</span>' . $admin_control . '</div></li>';
-                $floor--;
+                $commentstr.='<li><div class="other-comment"><a href="' . $viewurl . '" title="' . $comment['author'] . '" target="_blank" class="pic"><img width="30" height="30" src="' . $comment['avatar'] . '"  onmouseover="pop_user_on(this, \'' . $comment['authorid'] . '\', \'\');"  onmouseout="pop_user_out();"></a><p><a href="' . $viewurl . '" title="' . $comment['author'] . '" target="_blank">' . $comment['author'] . '</a>：' . $comment['content'] . '</p></div><div class="replybtn"><span class="times">' . $comment['format_time'] . '</span>' . $admin_control . '</div></li>';
             }
         }
         exit($commentstr);

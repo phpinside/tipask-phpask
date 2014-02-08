@@ -3,7 +3,7 @@
     <!--{template space_menu}-->
     <div class="user-content">
         <div class="my-answerbox">
-            <div class="title">我的提问</div>
+            <div class="title">{$navtitle}</div>
             <div id="qa-tabcard">
                 <ul>
                     <li<!--{if $status==1}--> class="on"<!--{/if}-->><!--{if $status==1}-->待解决问题<!--{else}--><a href="{url user/space_ask/$member['uid']}">待解决问题</a><!--{/if}--></li>

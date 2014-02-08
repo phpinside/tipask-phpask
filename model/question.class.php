@@ -9,7 +9,7 @@ class questionmodel {
     var $search;
     var $index;
     var $statustable = array(
-        'all' => ' AND status<>0',
+        'all' => ' AND status<>0 ',
         '0' => ' AND status=0',
         '1' => ' AND status=1',
         '2' => ' AND status=2',

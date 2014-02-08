@@ -287,7 +287,7 @@ class usercontrol extends base {
     }
 
     function onspace_ask() {
-        $navtitle = 'TA的问题';
+        $navtitle = 'TA的提问';
         $uid = intval($this->get[2]);
         $member = $_ENV['user']->get_by_uid($uid);
         $status = $this->get[3] ? $this->get[3] : 1;
@@ -297,7 +297,7 @@ class usercontrol extends base {
         $pagesize = $this->setting['list_default'];
         $startindex = ($page - 1) * $pagesize; //每页面显示$pagesize条
         $questionlist = $_ENV['question']->list_by_uid($uid, $status, $startindex, $pagesize);
-        $questiontotal = intval($this->db->fetch_total('question', 'authorid=' . $uid . $_ENV['question']->statustable['all']));
+        $questiontotal = $this->db->fetch_total('question', 'authorid=' . $uid . $_ENV['question']->statustable[$status]);
         $departstr = page($questiontotal, $pagesize, $page, "user/space_ask/$uid/$status"); //得到分页字符串
         include template('space_ask');
     }
