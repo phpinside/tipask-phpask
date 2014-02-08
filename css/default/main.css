@@ -423,6 +423,7 @@ th{font-style: normal;font-weight: 400;}
 .questionbox .managebox{padding:10px;margin-left: 12px;background-color: #FBFBFB;border:1px #E4E4E4 solid;color:#666;}
 .questionbox .managebox h3{font-family: "Microsoft YaHei";font-size: 16px;font-weight: normal;color:333;}
 .questionbox .managebox span{line-height: 40px;margin-right: 15px;}
+.pop-support{color:#FB6E1A;font-weight: 700;position: absolute;z-index: 30;}
 
 
 /*公告查看*/
