@@ -334,7 +334,7 @@ th{font-style: normal;font-weight: 400;}
 .rtitle{margin-left:10px;padding:10px 10px 10px 0; }
 .rcontent{margin-left:10px;margin-bottom: 15px;}
 .rtitle a{font-size:14px;}
-.rcontent h3{line-height: 25px;height: 22px;font-weight:normal;font-size: 16px;font-family:"Microsoft YaHei";}
+.rcontent h3{line-height: 25px;height: 22px;font-weight:normal;font-size: 14px;font-family:"Microsoft YaHei";}
 .rcontent span{float: left;line-height: 22px;width: 230px;margin-top:6px;}
 
 /*提问页面div布局*/
