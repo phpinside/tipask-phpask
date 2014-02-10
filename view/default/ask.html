@@ -8,7 +8,7 @@
             <div class="askbox">
                 <div class="title"><div id="limitNum" class="tips">还可输入 <span>50</span> 字</div>{if isset($touser)}您正在向<a href="{url user/space/$touser['uid']}">{$touser['username']}</a>提问{else}请将您的问题告诉我们{/if}：</div>
                 <div class="inputbox">
-                    <textarea class="qtitle" name="title" id="qtitle" value="{$word}"></textarea>
+                    <textarea class="qtitle" name="title" id="qtitle">{$word}</textarea>
                     <div class='clearfix'></div>
                     <h3>问题补充(选填)</h3>
                     <div id="introContent">

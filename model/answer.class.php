@@ -35,8 +35,7 @@ class answermodel {
         if ($author) {
             $bestanswer['author_groupname'] = $this->base->usergroup[$author['groupid']]['grouptitle'];
             $bestanswer['author_grouptype'] = $this->base->usergroup[$author['groupid']]['grouptype'];
-            $bestanswer['adoption_rate'] = round($author['adopts'] / $author['answers'],2)*100;
-            
+            $bestanswer['adoption_rate'] = round($author['adopts'] / $author['answers'], 2) * 100;
         }
         return $bestanswer;
     }
@@ -209,6 +208,16 @@ class answermodel {
 
     function change_to_verify($aids) {
         $this->db->query("UPDATE `" . DB_TABLEPRE . "answer` SET `status`=1 WHERE `status`=0 AND `id` IN ($aids)");
+    }
+
+    function get_support_by_sid_aid($sid, $aid) {
+        return $this->db->fetch_total("answer_support", " sid='$sid' AND aid=$aid ");
+    }
+
+    function add_support($sid, $aid,$authorid) {
+        $this->db->query("REPLACE INTO " . DB_TABLEPRE . "answer_support(sid,aid,time) VALUES ('$sid',$aid,{$this->base->time})");
+        $this->db->query("UPDATE `" . DB_TABLEPRE . "answer` SET `supports`=supports+1 WHERE `id`=$aid");
+        $this->db->query("UPDATE `" . DB_TABLEPRE . "user` SET `supports`=supports+1 WHERE `uid`=$authorid");
     }
 
 }

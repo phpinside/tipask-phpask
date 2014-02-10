@@ -9,7 +9,7 @@
         <ul class="menu clearfix">
             <li><a href="{url user/answer/1}">回答数</a>{$user['answers']}</li>
             <li><a href="{url user/ask/1}">提问数</a>{$user['questions']}</li>
-            <li><a href="{url user/attention}">关注</a>{$user['attentions']}</li>
+            <li><a href="#">赞同数</a>{$user['supports']}</li>
         </ul>
         <ul class="user-nav">
             <li<!--{if strstr($regular,"user/score")}--> class="on"<!--{/if}-->><!--{if strstr($regular,"user/score")}-->我的首页<!--{else}--><a href="{url user/score}">我的首页</a><!--{/if}--></li>
@@ -24,11 +24,3 @@
         </ul>
     </div>
 </div>
-<script type='text/javascript'>
-
-    $(function() {
-        $(".userprogress").progressbar({
-            value: 70
-        });
-    });
-</script>

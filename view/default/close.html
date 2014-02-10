@@ -339,7 +339,7 @@
                         });
                         function show_comment(answerid) {
                             if ($("#comment_" + answerid).css("display") === "none") {
-                                $("#comment_" + answerid + " .comments-list").load("{SITE_URL}" + query + "answer/viewcomment/" + answerid);
+                                $("#comment_" + answerid + " .comments-list").load("{SITE_URL}" + query + "answer/ajaxviewcomment/" + answerid);
                                 $("#comment_" + answerid).slideDown();
                             } else {
                                 $("#comment_" + answerid).slideUp();
@@ -409,7 +409,7 @@
                                 success: function(status) {
                                     if (status == '1') {
                                         $("#comment_" + answerid + " input[name='content']").val("");
-                                        $("#comment_" + answerid + " .comments-list").load("{SITE_URL}" + query + "answer/viewcomment/" + answerid);
+                                        $("#comment_" + answerid + " .comments-list").load("{SITE_URL}" + query + "answer/ajaxviewcomment/" + answerid);
                                     }
                                 }
                             });
@@ -426,7 +426,7 @@
                                 data: "commentid=" + commentid + "&answerid=" + answerid,
                                 success: function(status) {
                                     if (status == '1') {
-                                        $("#comment_" + answerid + " .comments-list").load("{SITE_URL}" + query + "answer/viewcomment/" + answerid);
+                                        $("#comment_" + answerid + " .comments-list").load("{SITE_URL}" + query + "answer/ajaxviewcomment/" + answerid);
                                     }
                                 }
                             });

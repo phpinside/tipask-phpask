@@ -14,7 +14,7 @@ class expertmodel {
 
     function get_list($showquestion=0, $start=0, $limit=3) {
         $expertlist = array();
-        $query = $this->db->query("SELECT distinct u.uid,u.username,u.credit1,u.signature,u.introduction,u.lastlogin,u.answers,u.questions,u.expert FROM " . DB_TABLEPRE . "expert as e," . DB_TABLEPRE . "user as u WHERE u.uid=e.uid ORDER BY u.credit1 DESC LIMIT $start ,$limit");
+        $query = $this->db->query("SELECT distinct u.uid,u.username,u.credit1,u.supports,u.signature,u.introduction,u.lastlogin,u.answers,u.questions,u.expert FROM " . DB_TABLEPRE . "expert as e," . DB_TABLEPRE . "user as u WHERE u.uid=e.uid ORDER BY u.credit1 DESC LIMIT $start ,$limit");
         while ($expert = $this->db->fetch_array($query)) {
             $expert['avatar'] = get_avatar_dir($expert['uid']);
             $expert['lastlogin'] = tdate($expert['lastlogin']);

@@ -60,7 +60,7 @@
             <form name="answerForm" action="{url question/answer}" method="post">
                 <input type="hidden" value="{$question['id']}" name="qid">
                 <input type="hidden" value="{$question['title']}" name="title">
-                <div  class="your-answer">
+                <div class="your-answer">
                     <script type="text/plain" id="anscontent" name="content" style="height: 122px;"></script>
                     <script type="text/javascript">UE.getEditor('anscontent');</script>
                 </div>
@@ -87,20 +87,34 @@
                             </div>
                             <div class="avarta-name"><a target="_blank" title="{$answer['author']}" href="{url user/space/$answer['authorid']}" onmouseover="pop_user_on(this, '{$answer[authorid]}', 'text');"  onmouseout="pop_user_out();">{eval echo cutstr($answer['author'],7,'');}</a></div>                           
                         </div>
-                        <div class="anscontent">{$answer['content']}</div>
+                        <div class="anscontent">
+                            {$answer['content']}
+                          <div class="appendcontent">
+                            <!--{loop $answer['tags'] $tagindex $tag}-->                        
+                            <!--{if ($tagindex%2) == 0}-->
+                            <!--{if $tagindex!=0}-->
+                            <!--{/if}-->
+                                <span style="color:#5EBB0B;">追问:</span>{$tag}
+                            <!--{else}-->                        
+                                <span style="color:#999999;">回答:</span>{$tag}
+                            <!--{/if}-->
+                            <!--{/loop}-->
+                        </div>
+                        </div>
+
                         <!--{if 0!=$question['authorid'] && ($question['authorid']==$user['uid']) }-->
                         <div class="anscontent mt15">
                             <input type="button" class="button_7" value="采纳为满意回答" onclick="adoptanswer({$answer['id']});" />
-                            <!--{if !$answer['tags']}-->
+                            <!--{if !$answer['tags'] || (count($answer['tags'])%2) == 0}-->
                             <input type="button" class="button_4" value="继续追问" onclick="javascript:document.location = '{url question/appendanswer/$question['id']/$answer['id']}'" />
                             <!--{/if}-->
                         </div>
                         <!--{/if}-->
                         <!--{if $answer['status'] && ($answer['authorid']==$user['uid']) }-->
                         <div class="anscontent mt15">
-                            <input type="button" class="button_4" value="修改答案"  onclick="javascript:document.location = '{url question/editanswer/$answer['id']}'" />
-                            <!--{if !$answer['tags']}-->
-                            <input type="button" class="button_4" value="继续追问" />
+                            <input type="button" class="button_4" value="修改答案"  onclick="javascript:document.location = '{url question/editanswer/$answer['id']/0}'" />
+                            <!--{if $answer['tags']!='' && (count($answer['tags'])%2) != 0}-->
+                            <input type="button"  value="继续回答" name="submit"  onclick="javascript:document.location = '{url question/appendanswer/$question['id']/$answer['id']/1}'" class="button_4"/>
                             <!--{/if}-->
                         </div>
                         <!--{/if}-->
@@ -108,8 +122,8 @@
                     <div class="clr"></div>
                     <div class="comment-box mt10">
                         <div class="comments-hd">
-                            <div class="function">
-                                <span class="number"><a onclick="show_comment('{$answer['id']}');" href="javascript:;">评论({$answer['comments']})</a></span>
+                            <div class="function" id="{$answer['id']}">
+                                <span class="number"><a onclick="show_comment('{$answer['id']}');" href="javascript:void(0)">评论({$answer['comments']})</a></span>
                                 <input type="button" class="button_agree" value="{$answer['supports']}" />                                
                             </div>
                             <span class="time">回答于 {$answer['time']}</span>
@@ -302,7 +316,6 @@
 <link rel="stylesheet" href="{SITE_URL}js/editor/third-party/SyntaxHighlighter/shCoreDefault.css"/>
 <script type="text/javascript" src="{SITE_URL}js/lightbox/lightbox.js"></script>
 <script type="text/javascript" src="{SITE_URL}js/editor/third-party/SyntaxHighlighter/shCore.js"></script>
-
 <script type="text/javascript">
                                 var category1 = {$categoryjs[category1]};
                                 var category2 = {$categoryjs[category2]};
@@ -338,21 +351,69 @@
                                                 }
                                         });
                                     });
+                                    $(".button_agree").hover(function(){  
+                                        var answerid = $(this).parent().attr("id");
+                                        var supportobj = $(this);
+                                        $.ajax({
+                                           type: "GET",
+                                            url:"{SITE_URL}index.php?answer/ajaxhassupport/"+answerid,
+                                            cache: false,
+                                            success: function(hassupport){                                                
+                                                if(hassupport=='1'){
+                                                    supportobj.val("已赞同");
+                                                }else{
+                                                    supportobj.val("赞同");
+                                                }
+                                            }
+                                       });
+                                        $(this).css("font-weight","normal");
+                                    },function(){
+                                        var answerid = $(this).parent().attr("id");   
+                                        var supportobj = $(this);
+                                        $.ajax({
+                                           type: "GET",
+                                            url:"{SITE_URL}index.php?answer/ajaxgetsupport/"+answerid,
+                                            cache: false,
+                                            success: function(support){
+                                                supportobj.val(support);
+                                            }
+                                       });
+                                        $(this).css("font-weight","bold");
+                                    });
                                     $(".button_agree").click(function(){
-                                       var supportobj = $(this);                            
-                                       $("#support_tip").css({height:"0px",opacity:0});
-                                       $("#support_tip").position({my:"top-40",of: supportobj});
-                                       $("#support_tip").animate({"opacity":"1"},500).animate({"opacity":"0"},500);
+                                       var supportobj = $(this);
+                                       var answerid = $(this).parent().attr("id"); 
+                                       $.ajax({
+                                           type: "GET",
+                                            url:"{SITE_URL}index.php?answer/ajaxhassupport/"+answerid,
+                                            cache: false,
+                                            success: function(hassupport){
+                                                if(hassupport!='1'){
+                                                    $("#support_tip").css({height:"0px",opacity:0});
+                                                    $("#support_tip").show();
+                                                    $("#support_tip").position({my:"top-40",of: supportobj});
+                                                    $("#support_tip").animate({"opacity":"1"},500).animate({"opacity":"0"},200);
+                                                    $.ajax({
+                                                         type: "GET",
+                                                         cache:false,
+                                                         url: "{SITE_URL}index.php?answer/ajaxaddsupport/" + answerid,
+                                                         success: function(comments) {
+                                                            supportobj.val("已赞同");
+                                                         }
+                                                     });
+                                                }
+                                            }
+                                       });
                                    });
                                     SyntaxHighlighter.all();
                             });
                                 function show_comment(answerid) {
-                                if ($("#comment_" + answerid).css("display") === "none") {
-                                $("#comment_" + answerid + " .comments-list").load("{SITE_URL}" + query + "answer/viewcomment/" + answerid);
+                                    if ($("#comment_" + answerid).css("display") === "none") {
+                                        load_comment(answerid);
                                         $("#comment_" + answerid).slideDown();
-                                } else {
-                                $("#comment_" + answerid).slideUp();
-                                }
+                                    } else {
+                                        $("#comment_" + answerid).slideUp();
+                                    }
                                 }
 
                         function change_category() {
@@ -410,22 +471,22 @@
 
                         //添加评论
                         function addcomment(answerid) {
-                        var content = $("#comment_" + answerid + " input[name='content']").val();
-                        if (bytes($.trim(content)) < 5){
-                            alert("评论内容不能少于5字");
-                            return false;
-                        }
-                        $.ajax({
-                            type: "POST",
-                            url: "{url answer/addcomment}",
-                            data: "content=" + content + "&answerid=" + answerid,
-                            success: function(status) {
-                                if (status == '1') {
-                                    $("#comment_" + answerid + " input[name='content']").val("");
-                                    $("#comment_" + answerid + " .comments-list").load("{SITE_URL}" + query + "answer/viewcomment/" + answerid);
-                                }
+                            var content = $("#comment_" + answerid + " input[name='content']").val();
+                            if (bytes($.trim(content)) < 5){
+                                alert("评论内容不能少于5字");
+                                return false;
                             }
-                        });
+                            $.ajax({
+                                type: "POST",
+                                url: "{url answer/addcomment}",
+                                data: "content=" + content + "&answerid=" + answerid,
+                                success: function(status) {
+                                    if (status == '1') {
+                                        $("#comment_" + answerid + " input[name='content']").val("");
+                                        load_comment(answerid);
+                                    }
+                                }
+                            });
                         }
 
                         //删除评论
@@ -434,13 +495,23 @@
                                 return false;
                             }
                             $.ajax({
-                                type: "POST",
+                                type: "POST",                                
                                 url: "{url answer/deletecomment}",
                                 data: "commentid=" + commentid + "&answerid=" + answerid,
                                 success: function(status) {
                                     if (status == '1') {
-                                        $("#comment_" + answerid + " .comments-list").load("{SITE_URL}" + query + "answer/viewcomment/" + answerid);
+                                        load_comment(answerid);
                                     }
+                                }
+                            });
+                        }
+                        function load_comment(answerid){
+                            $.ajax({
+                                type: "GET",
+                                cache:false,
+                                url: "{SITE_URL}index.php?answer/ajaxviewcomment/" + answerid,
+                                success: function(comments) {
+                                   $("#comment_" + answerid + " .comments-list").html(comments);
                                 }
                             });
                         }
@@ -448,7 +519,7 @@
                         function inform(name, type) {
                             var content = name + '的回答';
                             if (type == 1) {
-                            content = name + '的提问';
+                                content = name + '的提问';
                             }
                             $("#append_score").dialog({
                                 autoOpen: false,

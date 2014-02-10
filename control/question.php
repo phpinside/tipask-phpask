@@ -97,7 +97,7 @@ class questioncontrol extends base {
                 $this->setting["ucenter_open"] && $this->message("UCenter开启后不能匿名提问!", 'BACK');
             }
             $categoryjs = $_ENV['category']->get_js();
-            @$word = $this->post['word'];
+            $word = $this->post['word'];
             $askfromuid = intval($this->get['2']);
             if ($askfromuid)
                 $touser = $_ENV['user']->get_by_uid($askfromuid);
@@ -137,7 +137,6 @@ class questioncontrol extends base {
         $startindex = ($page - 1) * $pagesize;
         $rownum = $this->db->fetch_total("answer", " qid=$qid AND status>0 AND adopttime =0");
         $answerlistarray = $_ENV['answer']->list_by_qid($qid, $this->get[3], $rownum, $startindex, $pagesize);
-
         $departstr = page($rownum, $pagesize, $page, "question/view/$qid/" . $this->get[3]);
         $answerlist = $answerlistarray[0];
         $already = $answerlistarray[1];
@@ -353,27 +352,20 @@ class questioncontrol extends base {
     }
 
     /* 追问模块---追问 */
-
     function onappendanswer() {
         $this->load("message");
-        $qid = intval($this->get[2]);
-        $aid = intval($this->get[3]);
+        $qid = intval($this->get[2])?$this->get[2]:intval($this->post['qid']);
+        $aid = intval($this->get[3])?$this->get[3]:intval($this->post['aid']);
+        $type = intval($this->get[4])?$this->get[4]:intval($this->post['type']);
         $question = $_ENV['question']->get($qid);
         $answer = $_ENV['answer']->get($aid);
-        if (isset($this->post['submit'])) {
-            //有新回答或者新提问发消息
-            if (isset($this->post['content'])) {
-                $_ENV['answer']->add_tag($aid, $this->post['content'], $answer['tag']);
-                $_ENV['message']->add($question['author'], $question['authorid'], $answer['authorid'], '问题追问:' . $question['title'], $question['description'] . '<br /> <a href="' . url('question/view/' . $qid, 1) . '">点击查看问题</a>');
-            } else {
-                $_ENV['answer']->add_tag($aid, $this->post['content'], $answer['tag']);
-                $_ENV['message']->add($answer['author'], $answer['authorid'], $question['authorid'], '问题有新回答:' . $question['title'], $question['description'] . '<br /> <a href="' . url('question/view/' . $qid, 1) . '">点击查看问题</a>');
-            }
+        if (isset($this->post['submit'])) {            
+            $_ENV['answer']->add_tag($aid, $this->post['content'], $answer['tag']);
+            $_ENV['message']->add($question['author'], $question['authorid'], $answer['authorid'], '问题追问:' . $question['title'], $question['description'] . '<br /> <a href="' . url('question/view/' . $qid, 1) . '">点击查看问题</a>');
             $viewurl = urlmap('question/view/' . $qid, 2);
-            isset($this->post['tag_ask']) ? $this->message('继续提问成功!', $viewurl) : $this->message('继续回答成功!', $viewurl);
-        } else {
-            include template("appendanswer");
+            isset($type) ? $this->message('继续回答成功!', $viewurl) : $this->message('继续提问成功!', $viewurl);
         }
+        include template("appendanswer");
     }
 
     /* 搜索问题 */

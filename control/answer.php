@@ -11,7 +11,7 @@ class answercontrol extends base {
         $this->load('question');
     }
 
-    function onviewcomment() {
+    function onajaxviewcomment() {
         $answerid = intval($this->get[2]);
         $commentlist = $_ENV['answer_comment']->get_by_aid($answerid, 0, 50);
         $commentstr = '<li class="loading">暂无评论 :)</li>';
@@ -43,9 +43,30 @@ class answercontrol extends base {
         if (isset($this->post['commentid'])) {
             $commentid = intval($this->post['commentid']);
             $answerid = intval($this->post['answerid']);
-            $_ENV['answer_comment']->remove($commentid,$answerid);
+            $_ENV['answer_comment']->remove($commentid, $answerid);
             exit('1');
         }
+    }
+
+    function onajaxgetsupport() {
+        $answerid = intval($this->get[2]);
+        $answer = $_ENV['answer']->get($answerid);
+        exit($answer['supports']);
+    }
+
+    function onajaxhassupport() {
+        $answerid = intval($this->get[2]);
+        $supports = $_ENV['answer']->get_support_by_sid_aid($this->user['sid'], $answerid);
+        $ret = $supports ? '1' : '-1';
+        exit($ret);
+    }
+    
+    function onajaxaddsupport(){
+        $answerid = intval($this->get[2]);
+        $answer = $_ENV['answer']->get($answerid);
+        $_ENV['answer']->add_support($this->user['sid'], $answerid,$answer['authorid']);
+        $answer = $_ENV['answer']->get($answerid);
+        exit($answer['supports']);
     }
 
 }

@@ -35,7 +35,7 @@ em {font-style: normal;color:#E63A00;}
 .blue-btn-w80:hover{ background-position:-81px -169px; color:#fff; text-decoration:none;}
 
 .js-fixed {background: none repeat scroll 0 0 #FFFFFF;position: fixed;top: 0;width: 100%;z-index: 99;}
-.search_mod {border-bottom: 1px solid #C5C5C5;}
+.fixed-theme .search_mod {border-bottom: 1px solid #C5C5C5;}
 /*top-bar 顶部导航*/
 .top-bar{ height:35px; background: none repeat scroll 0 0 #F5F5F5;border-bottom: 1px solid #EEEEEE;}
 .goback{float: left;height: 32px;line-height: 32px;padding: 2px 0;margin-left: 10px;}
@@ -423,7 +423,7 @@ th{font-style: normal;font-weight: 400;}
 .questionbox .managebox{padding:10px;margin-left: 12px;background-color: #FBFBFB;border:1px #E4E4E4 solid;color:#666;}
 .questionbox .managebox h3{font-family: "Microsoft YaHei";font-size: 16px;font-weight: normal;color:333;}
 .questionbox .managebox span{line-height: 40px;margin-right: 15px;}
-.pop-support{color:#FB6E1A;font-weight: 700;position: absolute;z-index: 30;}
+.pop-support{color:#FB6E1A;font-weight: 700;position: absolute;z-index: 30;display: none;}
 
 
 /*公告查看*/
@@ -471,6 +471,8 @@ th{font-style: normal;font-weight: 400;}
 .net-answer-list .comments-hd{ padding:10px 0 10px 3px; font-size:12px;}
 .net-answer-list .avatar{float: left;font-size: 12px;margin-top: 6px;width: 52px;text-align: center;}
 .anscontent{float:right;margin-left: 18px;width: 620px;}
+.appendcontent{margin-left:15px;margin-top:5px;width: 600px;font-size:12px;}
+.appendcontent span{float: left;margin-right:5px;}
 .anscontent img,.description img{width: expression(this.width > 300 ? 300: true); max-width: 300px;height: expression(this.height > 200 ? 200: true); max-height: 200px;}
 
 /*comments 评论*/
