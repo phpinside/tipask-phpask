@@ -17,8 +17,7 @@
                     <div class="con">
                         <div class="left fl">
                             <div>为更好推荐您擅长的问题，请设置您的擅长分类</div>
-                            <div>
-                                <input type="hidden" value="" name="cids" id="cate_value">
+                            <div>                                <input type="hidden" value="" name="cids" id="cate_value">
                                 <span class="y_text">您最多可添加3个分类</span>
                             </div>
                             <div><a {if count($user['category'])>=3}class="btn btn-1 btn-disabled-1"{else}class="btn btn-1"{/if} href="javascript:void(0)" id="changecategory"><span>添加擅长分类+</span></a></div>
