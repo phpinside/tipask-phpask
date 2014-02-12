@@ -87,9 +87,11 @@ class questionmodel {
         return $questionlist;
     }
 
-    function list_by_field($fieldname, $start, $limit) {
+    function get_hots($start, $limit) {
         $questionlist = array();
-        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "question ORDER BY $fieldname DESC,`time` DESC LIMIT $start,$limit");
+        $timestart = $this->base->time - 7 * 24 * 3600;
+        $timeend = $this->base->time;
+        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "question WHERE `time`>$timestart AND `time`<$timeend  ORDER BY answers DESC,views DESC, `time` DESC LIMIT $start,$limit");
         while ($question = $this->db->fetch_array($query)) {
             $question['format_time'] = tdate($question['time']);
             $questionlist[] = $question;

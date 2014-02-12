@@ -374,7 +374,7 @@ class questioncontrol extends base {
         $qstatus = $status = $this->get[3] ? $this->get[3] : 1;
         (1 == $status) && ($qstatus = "1,2,6,9");
         (2 == $status) && ($qstatus = "2,6");
-        @$word = urldecode($this->post['word'] ? str_replace("%27", "", $this->post['word']) : $this->get[3]);
+        @$word = urldecode($this->post['word'] ? str_replace("%27", "", $this->post['word']) : $this->get[2]);
         (!trim($word)) && $this->message("搜索关键词不能为空!", 'BACK');
         $navtitle = $word . '-搜索问题';
         @$page = max(1, intval($this->get[4]));

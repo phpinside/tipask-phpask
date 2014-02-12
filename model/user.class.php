@@ -17,6 +17,7 @@ class usermodel {
         $user['avatar'] = get_avatar_dir($uid);
         $user['lastlogin'] = tdate($user['lastlogin']);
         $user['grouptitle'] = $this->base->usergroup[$user['groupid']]['grouptitle'];
+        $user['category'] = $this->get_category($user['uid']);
         $loginstatus && $user['islogin'] = $this->is_login($uid);
         return $user;
     }
@@ -350,6 +351,24 @@ class usermodel {
         } else {
             return TRUE;
         }
+    }
+
+    function add_category($cid, $uid) {
+        $this->db->query("INSERT INTO " . DB_TABLEPRE . "user_category(cid,uid) VALUES ($cid,$uid)");
+    }
+
+    function get_category($uid) {
+        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "user_category WHERE uid=$uid");
+        $categorylist = array();
+        while ($category = $this->db->fetch_array($query)) {
+            $category['categoryname'] = $this->base->category[$category['cid']]['name'];
+            $categorylist[] = $category;
+        }
+        return $categorylist;
+    }
+
+    function remove_category($cid, $uid) {
+        $this->db->query("DELETE FROM " . DB_TABLEPRE . "user_category WHERE cid=$cid AND uid=$uid");
     }
 
     function update_elect($uid, $elect) {

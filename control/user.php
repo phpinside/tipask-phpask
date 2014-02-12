@@ -510,9 +510,33 @@ class usercontrol extends base {
         }
     }
 
+    function onmycategory() {
+        $this->load("category");
+        $categoryjs = $_ENV['category']->get_js();
+        include template("mycategory");
+    }
+
+    function onajaxcategory() {
+        $cid = intval($this->post['cid']);
+        if ($cid && $this->user['uid']) {
+            foreach($this->user['category'] as $category){
+                if($category['cid']==$cid){
+                    exit;
+                }
+            }
+            $_ENV['user']->add_category($cid, $this->user['uid']);
+        }
+    }
+
+    function onajaxdeletecategory() {
+        $cid = intval($this->post['cid']);
+        if ($cid && $this->user['uid']) {
+            $_ENV['user']->remove_category($cid, $this->user['uid']);
+        }
+    }
+
     function onajaxpoplogin() {
         include template("poplogin");
-        
     }
 
     /* 用户查看下详细信息 */

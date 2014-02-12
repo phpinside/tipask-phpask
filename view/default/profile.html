@@ -9,6 +9,7 @@
                     <li class="on">个人资料</li>
                     <li><a href="{url user/uppass}">修改密码</a></li>
                     <li><a href="{url user/editimg}">修改头像</a></li>
+                    <li><a href="{url user/mycategory}">擅长领域</a></li>
                 </ul>
             </div>
             <div class="loginform">
@@ -26,15 +27,15 @@
                     <div class="clr"></div>
                     <div class="input-bar">
                         <h2>消息设置:</h2>
-                        <input class="normal_checkbox" type="checkbox" <!--{if 1 & $user['isnotify']}-->checked<!--{/if}--> value="1" name="messagenotify" />站内消息&nbsp;&nbsp;
-                               <input class="normal_checkbox"  type="checkbox" <!--{if 2 & $user['isnotify']}-->checked<!--{/if}--> value="2" name="mailnotify" />邮件通知
+                        <label><input class="normal_checkbox" type="checkbox" <!--{if 1 & $user['isnotify']}-->checked<!--{/if}--> value="1" name="messagenotify" />站内消息&nbsp;&nbsp;</label>
+                        <label><input class="normal_checkbox"  type="checkbox" <!--{if 2 & $user['isnotify']}-->checked<!--{/if}--> value="2" name="mailnotify" />邮件通知</label>
                     </div>
                     <div class="clr"></div>
                     <div class="input-bar">
                         <h2>性别:</h2>
-                        <input type="radio" value="1" class="normal_radio" name="gender" <!--{if (1 == $user['gender'])}--> checked <!--{/if}--> />男&nbsp;&nbsp;
-                               <input type="radio" value="0" class="normal_radio" name="gender" <!--{if (0 == $user['gender'])}--> checked <!--{/if}-->/>女 &nbsp;&nbsp;
-                               <input type="radio" value="2" class="normal_radio" name="gender" <!--{if (2 == $user['gender'])}--> checked <!--{/if}--> />保密
+                        <label><input type="radio" value="1" class="normal_radio" name="gender" <!--{if (1 == $user['gender'])}--> checked <!--{/if}--> />男&nbsp;&nbsp;</label>
+                        <label><input type="radio" value="0" class="normal_radio" name="gender" <!--{if (0 == $user['gender'])}--> checked <!--{/if}-->/>女 &nbsp;&nbsp;</label>
+                        <label><input type="radio" value="2" class="normal_radio" name="gender" <!--{if (2 == $user['gender'])}--> checked <!--{/if}--> />保密</label>
                     </div>
                     <div class="clr"></div>
                     <div class="input-bar">

@@ -44,7 +44,9 @@ $(document).ready(function() {
         $("#category3").show();
     });
     $("#changecategory").click(function() {
+        if(!$(this).hasClass("btn-disabled-1"))
         $("#catedialog").dialog("open");
+        
     });
 
     //usercard关闭

@@ -44,6 +44,7 @@ class messagecontrol extends base {
 
     function onsend() {
         $navtitle = '发站内消息';
+        $sendto = $_ENV['user']->get_by_uid(intval($this->get[2]));
         if (isset($this->post['submit'])) {
             $touser = $_ENV['user']->get_by_username($this->post['username']);
             (!$touser) && $this->message('该用户不存在!', "message/send");
