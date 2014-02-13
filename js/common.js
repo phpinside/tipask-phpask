@@ -1,7 +1,7 @@
 var popusertimer = null;
 var query = '?';
 if (g_seo_on == 1) {
-    query = '';
+    query = '?';
 }
 $(document).ready(function() {
     //头部header浮动层
@@ -130,11 +130,10 @@ function check_code() {
         return false;
     }
     $.ajax({
-        type: "POST",
+        type: "GET",
         async: false,
         cache: false,
-        url: g_site_url + "index.php" + query + "user/ajaxcode",
-        data: "code=" + $.trim(code),
+        url: g_site_url + "index.php" + query + "user/ajaxcode/"+code,
         success: function(flag) {
             if (1 == flag) {
                 $('#codetip').html("&nbsp;");

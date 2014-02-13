@@ -202,8 +202,11 @@ class usercontrol extends base {
     /* 用于ajax检测验证码是否匹配 */
 
     function onajaxcode() {
-        $code = strtolower(trim($this->post['code']));
-        echo( intval($code == $_ENV['user']->get_code()) );
+        $code = strtolower(trim($this->get[2]));  
+        if($code==$_ENV['user']->get_code()){
+            exit('1');
+        }
+        exit('0');
     }
 
     /* 退出系统 */

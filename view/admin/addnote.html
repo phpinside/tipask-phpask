@@ -1,10 +1,7 @@
 <!--{template header,admin}-->
 <script type="text/javascript">g_site_url='{SITE_URL}';g_prefix='{$setting['seo_prefix']}';g_suffix='{$setting['seo_suffix']}';</script>
-<script type="text/javascript" src="{SITE_URL}js/ueditor/editor_config.js"></script>
-<script type="text/javascript" src="{SITE_URL}js/ueditor/editor_all.js"></script>
-<script type="text/javascript" src="{SITE_URL}js/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
-<link rel="stylesheet" href="{SITE_URL}js/ueditor/themes/default/ueditor.css"/>
-<link rel="stylesheet" href="{SITE_URL}js/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css"/>
+<script type="text/javascript" src="{SITE_URL}js/editor/ueditor.config.js"></script> 
+<script type="text/javascript" src="{SITE_URL}js/editor/ueditor.all.js"></script> 
 <div style="width:100%; height:15px;color:#000;margin:0px 0px 10px;">
   <div style="float:left;"><a href="index.php?admin_main/stat{$setting['seo_suffix']}" target="main"><b>控制面板首页</b></a>&nbsp;&raquo;&nbsp;添加公告</div>
 </div>
@@ -31,11 +28,8 @@
 				<tr>
 					<td class="altbg1" width="30%"><b>公告内容:</b><br><span class="smalltxt">公告显示内容,站外公告不需要填写此项</span></td>
 					<td class="altbg2">
-						<script type="text/plain" id="mycontent" name="content" style="width:800px;">{$note['content']}</script>
-                        <script type="text/javascript">
-                            var mycontent = new baidu.editor.ui.Editor();
-                            mycontent.render("mycontent"); 
-                        </script>
+                                                <script type="text/plain" id="mycontent" name="content" style="width:610px;height:300px;">{$note['content']}</script>
+                                                <script type="text/javascript">UE.getEditor('mycontent',{toolbars: [["autotypeset","link","unlink","fullscreen"]]});</script>
 					</td>
 				</tr>
 			</table>

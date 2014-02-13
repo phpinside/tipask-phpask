@@ -88,9 +88,8 @@
                 type: "POST",
                 async: false,
                 cache: false,
-                url: g_site_url + "index.php" + query + "user/ajaxcode",
-                data: "code=" + $.trim(code),
-                success: function(flag) {
+                url: "<?=SITE_URL?>index.php?user/ajaxcode/"+code,
+                success: function(flag) {                   
                     if (1 == flag) {
                         $('#logincodetip').html("&nbsp;");
                         $('#logincodetip').attr('class', 'input_ok');
