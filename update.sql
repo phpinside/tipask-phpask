@@ -16,3 +16,8 @@ CREATE TABLE IF NOT EXISTS `ask_user_category` (
   `cid` int(4) NOT NULL,
   PRIMARY KEY (`uid`,`cid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+ALTER TABLE `ask_answer` ADD `comment` TINYTEXT NULL AFTER `content` ;
+

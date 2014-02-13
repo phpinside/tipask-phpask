@@ -11,7 +11,6 @@ class questioncontrol extends base {
         $this->load("question");
         $this->load("category");
         $this->load("answer");
-        $this->load("answer_comment");
         $this->load("expert");
         $this->load("tag");
         $this->load("userlog");
@@ -115,11 +114,11 @@ class questioncontrol extends base {
         empty($question) && $this->message('问题已经被删除！');
         (0 == $question['status']) && $this->message('问题正在审核中，请耐心等待！');
         /* 问题过期处理 */
-        if ($question['endtime'] < $this->time && ($question['status'] == 1 || $question['status'] == 4)) {
-            $question['status'] = 9;
-            $_ENV['question']->update_status($qid, 9);
-            $this->send($question['authorid'], $question['id'], 2);
-        }
+//        if ($question['endtime'] < $this->time && ($question['status'] == 1 || $question['status'] == 4)) {
+//            $question['status'] = 9;
+//            $_ENV['question']->update_status($qid, 9);
+//            $this->send($question['authorid'], $question['id'], 2);
+//        }
         $asktime = tdate($question['time']);
         $endtime = timeLength($question['endtime'] - $this->time);
         $solvetime = tdate($question['endtime']);
@@ -148,7 +147,6 @@ class questioncontrol extends base {
         $typedescarray = array('1' => '待解决', '2' => '已解决', '4' => '高悬赏', '6' => '已推荐', '9' => '已关闭');
         $navtitle = $question['title'];
         $dirction = $typearray[$question['status']];
-
         ('solve' == $dirction) && $bestanswer = $_ENV['answer']->get_best($qid);
         $categoryjs = $_ENV['category']->get_js();
         $taglist = $_ENV['tag']->get_by_qid($qid);
@@ -235,19 +233,20 @@ class questioncontrol extends base {
     /* 采纳答案 */
 
     function onadopt() {
-
-        $qid = $this->post['qid'];
-        $aid = $this->post['aid'];
+        $qid = intval($this->post['qid']);
+        $aid = intval($this->post['aid']);
         $comment = $this->post['content'];
         $question = $_ENV['question']->get($qid);
         $answer = $_ENV['answer']->get($aid);
-        $_ENV['answer']->adopt($qid, $answer, $comment);
-        //同步名人堂
-        $this->load('famous');
-        //把问题的悬赏送给被采纳为答案的回答者,同时发消息通知回答者
-        $this->credit($answer['authorid'], $this->setting['credit1_adopt'], intval($question['price'] + $this->setting['credit2_adopt']), 0, 'adopt');
-        $this->send($answer['authorid'], $question['id'], 1);
-        $viewurl = urlmap('question/view/' . $qid, 2);
+        $ret = $_ENV['answer']->adopt($qid, $answer);
+        if ($ret) {
+            $this->load("answer_comment");
+            $_ENV['answer_comment']->add($aid, $comment);
+            //把问题的悬赏送给被采纳为答案的回答者,同时发消息通知回答者
+            $this->credit($answer['authorid'], $this->setting['credit1_adopt'], intval($question['price'] + $this->setting['credit2_adopt']), 0, 'adopt');
+            $this->send($answer['authorid'], $question['id'], 1);
+            $viewurl = urlmap('question/view/' . $qid, 2);
+        }
 
         $this->message('采纳答案成功！', $viewurl);
     }
@@ -352,14 +351,15 @@ class questioncontrol extends base {
     }
 
     /* 追问模块---追问 */
+
     function onappendanswer() {
         $this->load("message");
-        $qid = intval($this->get[2])?$this->get[2]:intval($this->post['qid']);
-        $aid = intval($this->get[3])?$this->get[3]:intval($this->post['aid']);
-        $type = intval($this->get[4])?$this->get[4]:intval($this->post['type']);
+        $qid = intval($this->get[2]) ? $this->get[2] : intval($this->post['qid']);
+        $aid = intval($this->get[3]) ? $this->get[3] : intval($this->post['aid']);
+        $type = intval($this->get[4]) ? $this->get[4] : intval($this->post['type']);
         $question = $_ENV['question']->get($qid);
         $answer = $_ENV['answer']->get($aid);
-        if (isset($this->post['submit'])) {            
+        if (isset($this->post['submit'])) {
             $_ENV['answer']->add_tag($aid, $this->post['content'], $answer['tag']);
             $_ENV['message']->add($question['author'], $question['authorid'], $answer['authorid'], '问题追问:' . $question['title'], $question['description'] . '<br /> <a href="' . url('question/view/' . $qid, 1) . '">点击查看问题</a>');
             $viewurl = urlmap('question/view/' . $qid, 2);
@@ -462,7 +462,6 @@ class questioncontrol extends base {
     }
 
     //编辑标签
-
     function onedittag() {
         $tag = trim($this->post['qtags']);
         $qid = $this->post['qid'];
@@ -523,42 +522,6 @@ class questioncontrol extends base {
         $viewurl = urlmap('question/view/' . $qid, 2);
         $_ENV['answer']->change_to_verify($aid);
         $this->message("回答审核完成!", $viewurl);
-    }
-
-    function onanswercomment() {
-        if (isset($this->post['credit3'])) {
-            $this->load("answer_comment");
-            //魅力值检查
-            (intval($this->user['credit3']) < $this->setting['allow_credit3']) && $this->message("你的魅力太低，禁止回答，如有问题请联系管理员!", 'BACK');
-            if ($this->post['credit3'] && trim($this->post['content'])) {
-                if ($_ENV['answer_comment']->get_by_uid($this->user['uid'], $this->post['aid'])) {
-                    $this->message("您已经评论过该回答了，不能重复评论！", 'BACK');
-                    exit;
-                }
-                $_ENV['answer_comment']->add($this->post['aid'], trim($this->post['content']), intval($this->post['credit3']));
-                //对被操作人进行 魅力值的处理
-                $this->credit($this->post['touid'], 0, 0, intval($this->post['credit3']));
-                $this->send($this->post['touid'], $this->post['qid'], 3, $this->post['aid']);
-                $viewurl = urlmap('question/view/' . $this->post['qid'], 2);
-                $this->message("评论该回答成功！", $viewurl);
-            }
-        }
-    }
-
-    function onviewcomment() {
-        @$page = max(1, intval($this->get[3]));
-        $pagesize = 3;
-        $startindex = ($page - 1) * $pagesize;
-        $answerid = intval($this->get[2]);
-        $commentlist = $_ENV['answer_comment']->get_by_aid($answerid, $startindex, $pagesize);
-        $rownum = $this->db->fetch_total("answer_comment", " `aid`=$answerid");
-        $departstr = page($rownum, $pagesize, $page, "question/viewcomment/$answerid", 1);
-        $pagedata = array(
-            'list' => $commentlist,
-            'rownum' => $rownum,
-            'pagestr' => $departstr
-        );
-        exit(json_encode($pagedata));
     }
 
 }

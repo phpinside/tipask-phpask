@@ -250,7 +250,6 @@
 <div id="dialog_tag" title="编辑标签" style="display: none">
     <form name="edittagForm"  action="{url question/edittag}" method="post" >
         <input type="hidden"  value="{$question['id']}" name="qid"/>
-        <input type="hidden" id="adopt_answer" value="0" name="aid"/>
         <table border="0" cellpadding="0" cellspacing="0" width="470px">
             <tr>            
                 <td>
@@ -296,7 +295,7 @@
 <div id="dialog_inform" title="我来检举" style="display: none">
     <form name="edittagForm"  action="{url question/edittag}" method="post" >
         <input type="hidden"  value="{$question['id']}" name="qid"/>
-        <input type="hidden" id="adopt_answer" value="0" name="aid"/>
+        <input type="hidden" id="tag_answer" value="0" name="aid"/>
         <table border="0" cellpadding="0" cellspacing="0" width="470px">
             <tr>            
                 <td>

@@ -12,10 +12,6 @@
         <div class="questionbox">
             <div class="title pdl3">
                 <h1>{$question['title']} </h1>
-                <i class="q-ico"></i>
-                <div class="same-q-mod">
-                    <input type="button" class="button_attention" value="关注" />
-                </div>
             </div>
             <div class="tags">
                 <!--{loop $taglist $tag}-->
@@ -54,13 +50,31 @@
             <div class="bd">
                 <div class="qa-content">{$bestanswer['content']}</div>
             </div>
+            <div class="clr"></div>
+            <div class="comment-box mt10">
+                <div class="comments-hd">
+                    <div class="function">
+                        <span class="number"><a onclick="show_comment('{$bestanswer['id']}');" href="javascript:;">评论({$bestanswer['comments']})</a></span>
+                        <input type="button" class="button_agree" value="{$bestanswer['supports']}" />                                
+                    </div>
+                </div>
+                <div class="comments-mod" style="display: none;" id="comment_{$bestanswer['id']}">
+                    <div class="areabox clearfix">
+                        <input type="text"  class="comment-input" name="content" />
+                        <input type="button" value="评论"  class="normal-button" name="submit" onclick="addcomment({$bestanswer['id']});"/>
+                    </div>
+                    <ul class="comments-list">
+                        <li class="loading"><img src='{SITE_URL}css/default/loading.gif' align='absmiddle' />&nbsp;加载中...</li>
+                    </ul>
+                </div>
+            </div>
             <div id="gift_box" class="ft">
                 <div class="user-vcard clearfix">
                     <div class="info">
-                        <a target="_blank" href="{url user/space/$bestanswer['authorid']}"><img src="{$bestanswer['author_avartar']}" onmouseover="pop_user_on(this, '{$answer[authorid]}', 'image');"  onmouseout="pop_user_out();"></a>
+                        <a target="_blank" href="{url user/space/$bestanswer['authorid']}"><img src="{$bestanswer['author_avartar']}" onmouseover="pop_user_on(this, '{$bestanswer[authorid]}', 'image');"  onmouseout="pop_user_out();"></a>
                     </div>
                     <div class="text">
-                        <p class="name"><a target="_blank" href="{url user/space/$bestanswer['authorid']}">{$bestanswer['author']}</a></p>
+                        <p class="name"><a target="_blank" href="{url user/space/$bestanswer['authorid']}" onmouseover="pop_user_on(this, '{$bestanswer[authorid]}', 'text');"  onmouseout="pop_user_out();">{$bestanswer['author']}</a></p>
                         <div class="user-info">
                             <span>{$bestanswer['author_groupname']}</span>
                             <span class="span-line">|</span>
@@ -72,7 +86,7 @@
         </div>
         <div class="share-content">{$setting['question_share']}</div>     
         <div id="customerList" class="net-answer mt10">
-            <div class="title">全部回答({$rownum})</div>
+            <div class="title">其他回答({$rownum})</div>
             <ul class="net-answer-list">
                 <!--{loop $answerlist $index $answer}-->
                 <li id="comment_{$index}">
@@ -84,22 +98,6 @@
                             <div class="avarta-name"><a target="_blank" title="{$answer['author']}" href="{url user/space/$answer['authorid']}" onmouseover="pop_user_on(this, '{$answer[authorid]}', 'text');"  onmouseout="pop_user_out();">{eval echo cutstr($answer['author'],7,'');}</a></div>                           
                         </div>
                         <div class="anscontent">{$answer['content']}</div>
-                        <!--{if 0!=$question['authorid'] && ($question['authorid']==$user['uid']) }-->
-                        <div class="anscontent mt15">
-                            <input type="button" class="button_7" value="采纳为满意回答" onclick="adoptanswer({$answer['id']});" />
-                            <!--{if !$answer['tags']}-->
-                            <input type="button" class="button_4" value="继续追问" onclick="javascript:document.location = '{url question/appendanswer/$question['id']/$answer['id']}'" />
-                            <!--{/if}-->
-                        </div>
-                        <!--{/if}-->
-                        <!--{if $answer['status'] && ($answer['authorid']==$user['uid']) }-->
-                        <div class="anscontent mt15">
-                            <input type="button" class="button_4" value="修改答案"  onclick="javascript:document.location = '{url question/editanswer/$answer['id']}'" />
-                            <!--{if !$answer['tags']}-->
-                            <input type="button" class="button_4" value="继续追问" />
-                            <!--{/if}-->
-                        </div>
-                        <!--{/if}-->
                     </div>
                     <div class="clr"></div>
                     <div class="comment-box mt10">
@@ -110,7 +108,7 @@
                             </div>
                             <span class="time">回答于 {$answer['time']}</span>
                             <!--{if $user['grouptype']==1}-->
-                            <span class="admin"><a href="javascript:void(0);" onclick="adoptanswer({$answer['id']});">采纳为最佳答案</a><span class="span-line">|</span><a href="{url question/editanswer/$answer['id']}">编辑内容</a><span class="span-line">|</span><a href="javascript:void(0);" onclick="delete_answer('{$answer['id']}', '{$question['id']}')">删除</a></span>
+                            <span class="admin"><a href="{url question/editanswer/$answer['id']}">编辑内容</a><span class="span-line">|</span><a href="javascript:void(0);" onclick="delete_answer('{$answer['id']}', '{$question['id']}')">删除</a></span>
                             <!--{/if}-->
                         </div>
 
@@ -151,17 +149,14 @@
                         <span><input type="button" class="button_4" value="编辑内容" onclick="javascript:document.location = '{url question/edit/$question[id]}'"/></span>
                         <span><input type="button" class="button_4" value="修改标签" onclick="edittag();" /></span>
                         <span><input type="button" class="button_4" value="移动分类" id="changecategory" /></span>
-                        <span><input type="button" class="button_4" value="关闭问题" id="close_question"/></span>
                         <span><input type="button" class="button_4" value="删除问题" id="delete_question"/></span>
                     </p>
-
                 </div>
             </div>
         </div>
         <!--{/if}-->
         <!--{if $expertlist}-->
         <div class="modbox mt10">
-
             <div class="title">可能帮助到你的专家</div>
             <ul class="left-expert-list">
                 <!--{loop $expertlist $expert}-->
@@ -207,31 +202,10 @@
         </form>
     </div>
 </div>
-<div id="dialogadopt" title="采纳回答" style="display: none">
-    <form name="editanswerForm"  action="{url question/adopt}" method="post" >
-        <input type="hidden"  value="{$question['id']}" name="qid"/>
-        <input type="hidden" id="adopt_answer" value="0" name="aid"/>
-        <table border="0" cellpadding="0" cellspacing="0" width="450px">
-            <tr valign="top">
-                <td>向帮助了您的知道网友说句感谢的话吧!</td>
-            </tr>
-            <tr>            
-                <td>
-                    <div class="inputbox mt15">
-                        <textarea class="adopt_text" name="content">非常感谢!</textarea>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="submit" class="normal-button flright mt15" value="确&nbsp;认" /></td>
-            </tr>
-        </table>
-    </form>
-</div>
+
 <div id="dialog_tag" title="编辑标签" style="display: none">
     <form name="edittagForm"  action="{url question/edittag}" method="post" >
         <input type="hidden"  value="{$question['id']}" name="qid"/>
-        <input type="hidden" id="adopt_answer" value="0" name="aid"/>
         <table border="0" cellpadding="0" cellspacing="0" width="470px">
             <tr>            
                 <td>
@@ -246,34 +220,7 @@
         </table>
     </form>
 </div>
-<div id="append_score" title="提高悬赏" style="display: none">
-    <form name="addscoreForm"  action="{url question/addscore}" method="post" >
-        <input type="hidden" value="{$question['id']}" name="qid">
-        <table border="0" cellpadding="0" cellspacing="0" width="450px">
-            <tr valign="top">
-                <td>提问期内，追加悬赏一次，可延长问题的有效期3天。悬赏越高，会吸引到越多的关注。</td>
-            </tr>
-            <tr>            
-                <td>
-                    <div class="inputbox mt15">
-                        追加悬赏:&nbsp;<select name="score" id="addscore" class="normal_select">
-                            <option value="5" selected="selected">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                            <option value="40">40</option>
-                            <option value="50">50</option>
-                        </select>&nbsp;分
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="submit" class="normal-button flright mt15" value="确&nbsp;认" /></td>
-            </tr>
-        </table>
-    </form>
-</div>
+
 <div id="dialog_inform" title="我来检举" style="display: none">
     <form name="edittagForm"  action="{url question/edittag}" method="post" >
         <input type="hidden"  value="{$question['id']}" name="qid"/>
@@ -297,50 +244,44 @@
 <script type="text/javascript" src="{SITE_URL}js/editor/third-party/SyntaxHighlighter/shCore.js"></script>
 <script type="text/javascript" src="{SITE_URL}js/lightbox/lightbox.js"></script>
 <script type="text/javascript">
-                        var category1 = {$categoryjs[category1]};
-                        var category2 = {$categoryjs[category2]};
-                        var category3 = {$categoryjs[category3]};
-                        var selectedcid = "{$question['cid1']},{$question['cid2']},{$question['cid2']}";
-                        $(document).ready(function() {
-                            initcategory(category1);
-                            fillcategory(category2, $("#category1 option:selected").val(), "category2");
-                            fillcategory(category3, $("#category2 option:selected").val(), "category3");
-                            //关闭问题
-                            $("#close_question").click(function() {
-                                if (confirm('确定关闭该问题?') === true) {
-                                    document.location.href = "{url question/close/$question['id']}";
-                                }
-                            });
-                            //删除问题
-                            $("#delete_question").click(function() {
-                                if (confirm('确定删除问题？该操作不可返回！') === true) {
-                                    document.location.href = "{url question/delete/$question['id']}";
-                                }
-                            });
-                            $(".anscontent img,.description img").each(function(i) {
-                                var img = $(this);
-                                $.ajax({
-                                    type: "POST",
-                                    url: "{url index/ajaxchkimg}",
-                                    async: true,
-                                    data: "imgsrc=" + img.attr("src"),
-                                    success: function(status) {
-                                        if ('1' == status) {
-                                            img.wrap("<a href='" + img.attr("src") + "' title='" + img.attr("title") + "' data-lightbox='comment'></a>");
+                                var category1 = {$categoryjs[category1]};
+                                var category2 = {$categoryjs[category2]};
+                                var category3 = {$categoryjs[category3]};
+                                var selectedcid = "{$question['cid1']},{$question['cid2']},{$question['cid2']}";
+                                $(document).ready(function() {
+                                    initcategory(category1);
+                                    fillcategory(category2, $("#category1 option:selected").val(), "category2");
+                                    fillcategory(category3, $("#category2 option:selected").val(), "category3");
+                                    //删除问题
+                                    $("#delete_question").click(function() {
+                                        if (confirm('确定删除问题？该操作不可返回！') === true) {
+                                            document.location.href = "{url question/delete/$question['id']}";
                                         }
-                                    }
+                                    });
+                                    $(".anscontent img,.description img").each(function(i) {
+                                        var img = $(this);
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "{url index/ajaxchkimg}",
+                                            async: true,
+                                            data: "imgsrc=" + img.attr("src"),
+                                            success: function(status) {
+                                                if ('1' == status) {
+                                                    img.wrap("<a href='" + img.attr("src") + "' title='" + img.attr("title") + "' data-lightbox='comment'></a>");
+                                                }
+                                            }
+                                        });
+                                    });
+                                    SyntaxHighlighter.all();
                                 });
-                            });
-                            SyntaxHighlighter.all();
-                        });
-                        function show_comment(answerid) {
-                            if ($("#comment_" + answerid).css("display") === "none") {
-                                $("#comment_" + answerid + " .comments-list").load("{SITE_URL}" + query + "answer/ajaxviewcomment/" + answerid);
-                                $("#comment_" + answerid).slideDown();
-                            } else {
-                                $("#comment_" + answerid).slideUp();
-                            }
-                        }
+                                function show_comment(answerid) {
+                                    if ($("#comment_" + answerid).css("display") === "none") {
+                                        $("#comment_" + answerid + " .comments-list").load("{SITE_URL}" + query + "answer/ajaxviewcomment/" + answerid);
+                                        $("#comment_" + answerid).slideDown();
+                                    } else {
+                                        $("#comment_" + answerid).slideUp();
+                                    }
+                                }
 
                         function change_category() {
                             var category1 = $("#category1 option:selected").val();
@@ -359,16 +300,7 @@
                             $("form[name='editcategoryForm']").submit();
                         }
 
-                        function adoptanswer(aid) {
-                            $("#dialogadopt").dialog({
-                                autoOpen: false,
-                                width: 480,
-                                modal: true,
-                                resizable: false
-                            });
-                            $("#adopt_answer").val(aid);
-                            $("#dialogadopt").dialog("open");
-                        }
+
                         function edittag() {
                             $("#dialog_tag").dialog({
                                 autoOpen: false,
@@ -378,23 +310,6 @@
                             });
                             $("#dialog_tag").dialog("open");
                         }
-
-                        //提高悬赏
-                        function append_score() {
-                            $("#append_score").dialog({
-                                autoOpen: false,
-                                width: 480,
-                                modal: true,
-                                resizable: false
-                            });
-                            $("#append_score").dialog("open");
-                        }
-                        function close_question() {
-                            if (confirm('确定关闭该问题?') === true) {
-                                document.location.href = "{url question/close/$question['id']}";
-                            }
-                        }
-
                         //添加评论
                         function addcomment(answerid) {
                             var content = $("#comment_" + answerid + " input[name='content']").val();
@@ -429,18 +344,18 @@
                         }
                         //检举
                         function inform(name, type) {
-                            var content = name + '的回答';
-                            if (type == 1) {
-                                content = name + '的提问';
-                            }
+                        var content = name + '的回答';
+                                if (type == 1) {
+                        content = name + '的提问';
+                        }
 
-                            $("#append_score").dialog({
-                                autoOpen: false,
+                        $("#append_score").dialog({
+                        autoOpen: false,
                                 width: 480,
                                 modal: true,
                                 resizable: false
-                            });
-                            $("#append_score").dialog("open");
+                        });
+                                $("#append_score").dialog("open");
                         }
 
 </script>

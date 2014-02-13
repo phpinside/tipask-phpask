@@ -113,11 +113,14 @@ class answermodel {
 
     /* 采纳指定的答案，问题状态变为2 已解决 */
 
-    function adopt($qid, $answer, $comment = '') {
+    function adopt($qid, $answer) {
         $time = $this->base->time;
-        $this->db->query("UPDATE " . DB_TABLEPRE . "answer SET  adopttime='$time',comment='$comment' WHERE id=" . $answer['id']);
-        $this->db->query("UPDATE " . DB_TABLEPRE . "question SET  status=2 ,`endtime`='$time' WHERE id=" . $qid);
-        $this->db->query("UPDATE " . DB_TABLEPRE . "user SET adopts=adopts+1 WHERE  uid=" . $answer['authorid']);
+        $ret = $this->db->query("UPDATE " . DB_TABLEPRE . "answer SET adopttime='$time' WHERE id=" . $answer['id'] . " AND qid=$qid");
+        if ($ret) {
+            $this->db->query("UPDATE " . DB_TABLEPRE . "question SET status=2 ,`endtime`='$time' WHERE id=" . $qid);
+            $this->db->query("UPDATE " . DB_TABLEPRE . "user SET adopts=adopts+1 WHERE  uid=" . $answer['authorid']);
+        }
+        return $ret;
     }
 
     /* 添加追问--追问--回答 */
@@ -214,7 +217,7 @@ class answermodel {
         return $this->db->fetch_total("answer_support", " sid='$sid' AND aid=$aid ");
     }
 
-    function add_support($sid, $aid,$authorid) {
+    function add_support($sid, $aid, $authorid) {
         $this->db->query("REPLACE INTO " . DB_TABLEPRE . "answer_support(sid,aid,time) VALUES ('$sid',$aid,{$this->base->time})");
         $this->db->query("UPDATE `" . DB_TABLEPRE . "answer` SET `supports`=supports+1 WHERE `id`=$aid");
         $this->db->query("UPDATE `" . DB_TABLEPRE . "user` SET `supports`=supports+1 WHERE `uid`=$authorid");

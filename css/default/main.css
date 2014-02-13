@@ -193,7 +193,7 @@ em {font-style: normal;color:#E63A00;}
 .hot-tags a:hover{background:#68B2FC; color:#fff; text-decoration:none;}
 
 .list{ padding:0 10px;}
-.list li{background: url("lidot.gif") no-repeat scroll 1px 10px transparent;padding:0 0 0 8px; height:26px; font-size:14px; line-height:26px;overflow:hidden;}
+.list li{background: url("lidot.gif") no-repeat scroll 1px 10px transparent;padding:0 0 0 10px; height:26px; font-size:14px; line-height:26px;overflow:hidden;}
 .modbox .list li{font-size: 12px;background: url("lidot.gif") no-repeat scroll 1px 12px transparent;padding:0 0 0 10px;}
 .list .answer-number{ float:right; color:#999; font-size:12px;}
 .list .answer-number a{ color:#333;}
