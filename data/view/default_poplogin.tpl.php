@@ -1,7 +1,7 @@
 <? if(!defined('IN_TIPASK')) exit('Access Denied'); global $starttime,$querynum;$mtime = explode(' ', microtime());$runtime=number_format($mtime['1'] + $mtime['0'] - $starttime,6); $setting=$this->setting;$user=$this->user;$headernavlist=$this->nav;$regular=$this->regular; ?><div class="poploginform">
     <form name="loginform"  action="<?=SITE_URL?>?user/login.html" method="post" onsubmit="return checkform();">
         <div class="input-bar">
-            <div id="user_error" class="user_error"></div>
+            <div id="user_error" class="user_error">&nbsp;</div>
             <h2>用户名</h2>
             <input type="text" class="normal-input" id="username" name="username" />
         </div>
@@ -13,11 +13,11 @@
         <? if($setting['code_login']) { ?>        <div class="clr"></div>
         <div class="input-bar">
             <h2>验证码</h2>
-            <input type="text" class="code-input" id="code" name="code" onblur="check_code();"/><span id="codetip"></span>
+            <input type="text" class="code-input" id="login_code" name="code" onblur="check_login_code();"/><span id="logincodetip"></span>
         </div>
         <div class="clr"></div>
         <div class="code-bar">
-            <span class="verifycode"><img  src="<?=SITE_URL?>?user/code.html" onclick="javascript:updatecode();" id="verifycode"></span><a class="changecode" href="javascript:updatecode();">&nbsp;看不清?</a>
+            <span class="verifycode"><img  src="<?=SITE_URL?>?user/code.html" onclick="refresh_code();" id="verifylogincode"></span><a class="changecode" href="javascript:refresh_code();">&nbsp;看不清?</a>
         </div>
         <? } ?>        <div class="clr"></div>
         <div class="auto-login">
@@ -47,8 +47,8 @@
                 return false;
             }
             $("#user_error").html("");
-            check_code();
-            if ($('#codetip').hasClass("input_error")) {
+            check_login_code();
+            if ($('#logincodetip').hasClass("input_error")) {
                 $("#code").focus();
                 return false;
             }
@@ -72,6 +72,37 @@
                 return true;
             }
 
+        }
+        function refresh_code() {
+            var img = g_site_url + "index.php" + query + "user/code/" + Math.random();
+            $('#verifylogincode').attr("src", img);
+        }
+        function check_login_code() {
+            var code = $.trim($('#login_code').val());
+            if ($.trim(code) == '') {
+                $('#logincodetip').html("验证码错误");
+                $('#logincodetip').attr('class', 'input_error');
+                return false;
+            }
+            $.ajax({
+                type: "POST",
+                async: false,
+                cache: false,
+                url: g_site_url + "index.php" + query + "user/ajaxcode",
+                data: "code=" + $.trim(code),
+                success: function(flag) {
+                    if (1 == flag) {
+                        $('#logincodetip').html("&nbsp;");
+                        $('#logincodetip').attr('class', 'input_ok');
+                        return true;
+                    } else {
+                        $('#logincodetip').html("验证码错误");
+                        $('#logincodetip').attr('class', 'input_error');
+                        return false;
+                    }
+
+                }
+            });
         }
     </script>
 

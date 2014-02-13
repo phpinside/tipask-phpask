@@ -53,7 +53,7 @@
             <div class="clr"></div>
             <div class="comment-box mt10">
                 <div class="comments-hd">
-                    <div class="function">
+                    <div class="function" id='{$bestanswer['id']}'>
                         <span class="number"><a onclick="show_comment('{$bestanswer['id']}');" href="javascript:;">评论({$bestanswer['comments']})</a></span>
                         <input type="button" class="button_agree" value="{$bestanswer['supports']}" />                                
                     </div>
@@ -102,7 +102,7 @@
                     <div class="clr"></div>
                     <div class="comment-box mt10">
                         <div class="comments-hd">
-                            <div class="function">
+                            <div class="function" id='{$answer['id']}'>
                                 <span class="number"><a onclick="show_comment('{$answer['id']}');" href="javascript:;">评论({$answer['comments']})</a></span>
                                 <input type="button" class="button_agree" value="{$answer['supports']}" />                                
                             </div>
@@ -210,7 +210,7 @@
             <tr>            
                 <td>
                     <div class="inputbox mt15">
-                        <input type="text" class="tag-input" name="qtags" value="{eval echo implode(' ',$taglist)}"/>
+                        <input type="text" placeholder="多个标签请以空格隔开" class="tag-input" name="qtags" value="{eval echo implode(' ',$taglist)}"/>
                     </div>
                 </td>
             </tr>
@@ -229,7 +229,7 @@
             <tr>            
                 <td>
                     <div class="inputbox mt15">
-                        <input type="text" class="tag-input" name="qtags" value="{eval echo implode(' ',$taglist)}"/>
+                        <input type="text" placeholder="多个标签请以空格隔开" class="tag-input" name="qtags" value="{eval echo implode(' ',$taglist)}"/>
                     </div>
                 </td>
             </tr>
@@ -239,6 +239,7 @@
         </table>
     </form>
 </div>
+<div class="pop-support" id="support_tip">+1</div>
 <link rel="stylesheet" href="{SITE_URL}js/lightbox/lightbox.css"/>
 <link rel="stylesheet" href="{SITE_URL}js/editor/third-party/SyntaxHighlighter/shCoreDefault.css" />
 <script type="text/javascript" src="{SITE_URL}js/editor/third-party/SyntaxHighlighter/shCore.js"></script>
@@ -272,6 +273,60 @@
                                             }
                                         });
                                     });
+                                                                    $(".button_agree").hover(function(){
+                        var answerid = $(this).parent().attr("id");
+                                var supportobj = $(this);
+                                $.ajax({
+                                type: "GET",
+                                        url:"{SITE_URL}index.php?answer/ajaxhassupport/" + answerid,
+                                        cache: false,
+                                        success: function(hassupport){
+                                        if (hassupport == '1'){
+                                        supportobj.val("已赞同");
+                                        } else{
+                                        supportobj.val("赞同");
+                                        }
+                                        }
+                                });
+                                $(this).css("font-weight", "normal");
+                        }, function(){
+                        var answerid = $(this).parent().attr("id");
+                                var supportobj = $(this);
+                                $.ajax({
+                                type: "GET",
+                                        url:"{SITE_URL}index.php?answer/ajaxgetsupport/" + answerid,
+                                        cache: false,
+                                        success: function(support){
+                                        supportobj.val(support);
+                                        }
+                                });
+                                $(this).css("font-weight", "bold");
+                        });
+                                $(".button_agree").click(function(){
+                        var supportobj = $(this);
+                                var answerid = $(this).parent().attr("id");
+                                $.ajax({
+                                type: "GET",
+                                        url:"{SITE_URL}index.php?answer/ajaxhassupport/" + answerid,
+                                        cache: false,
+                                        success: function(hassupport){
+                                        if (hassupport != '1'){
+                                        $("#support_tip").css({height:"0px", opacity:0});
+                                                $("#support_tip").show();
+                                                $("#support_tip").position({my:"top-40", of: supportobj});
+                                                $("#support_tip").animate({"opacity":"1"}, 500).animate({"opacity":"0"}, 200);
+                                                $.ajax({
+                                                type: "GET",
+                                                        cache:false,
+                                                        url: "{SITE_URL}index.php?answer/ajaxaddsupport/" + answerid,
+                                                        success: function(comments) {
+                                                        supportobj.val("已赞同");
+                                                        }
+                                                });
+                                        }
+                                        }
+                                });
+                        });
                                     SyntaxHighlighter.all();
                                 });
                                 function show_comment(answerid) {
@@ -299,8 +354,6 @@
                             $("#catedialog").dialog("close");
                             $("form[name='editcategoryForm']").submit();
                         }
-
-
                         function edittag() {
                             $("#dialog_tag").dialog({
                                 autoOpen: false,

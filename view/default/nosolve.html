@@ -13,10 +13,6 @@
             <div class="title pd40">
                 <span class="ico ico-nosolve"></span>
                 <h1>{$question['title']} </h1>
-                <i class="q-ico"></i>
-                <!--                <div class="same-q-mod">
-                                    <input type="button" class="button_attention" value="关注" />
-                                </div>-->
             </div>
             <div class="tags">
                 <!--{loop $taglist $tag}-->
@@ -188,7 +184,7 @@
                     <h3><a title="{$expert['name']}" target="_blank" href="{url user/space/$expert['uid']}" onmouseover="pop_user_on(this, '{$expert[uid]}', 'text');"  onmouseout="pop_user_out();">{$expert['username']}</a></h3>
                     <span>{$expert['answers']}回答</span>
                     <span>{$expert['supports']}赞同</span>
-                    <p><a href="#" class="invite">向TA求助</a></p>
+                    <p><a href="{url question/add/$expert['uid']}" class="invite">向TA求助</a></p>
                 </li>
                 <!--{/loop}-->
             </ul>
@@ -254,7 +250,7 @@
             <tr>            
                 <td>
                     <div class="inputbox mt15">
-                        <input type="text" class="tag-input" name="qtags" value="{eval echo implode(' ',$taglist)}"/>
+                        <input type="text" placeholder="多个标签请以空格隔开" class="tag-input" name="qtags" value="{eval echo implode(' ',$taglist)}"/>
                     </div>
                 </td>
             </tr>
@@ -300,7 +296,7 @@
             <tr>            
                 <td>
                     <div class="inputbox mt15">
-                        <input type="text" class="tag-input" name="qtags" value="{eval echo implode(' ',$taglist)}"/>
+                        <input type="text" placeholder="多个标签请以空格隔开" class="tag-input" name="qtags" value="{eval echo implode(' ',$taglist)}"/>
                     </div>
                 </td>
             </tr>

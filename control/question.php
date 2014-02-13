@@ -114,11 +114,11 @@ class questioncontrol extends base {
         empty($question) && $this->message('问题已经被删除！');
         (0 == $question['status']) && $this->message('问题正在审核中，请耐心等待！');
         /* 问题过期处理 */
-//        if ($question['endtime'] < $this->time && ($question['status'] == 1 || $question['status'] == 4)) {
-//            $question['status'] = 9;
-//            $_ENV['question']->update_status($qid, 9);
-//            $this->send($question['authorid'], $question['id'], 2);
-//        }
+        if ($question['endtime'] < $this->time && ($question['status'] == 1 || $question['status'] == 4)) {
+            $question['status'] = 9;
+            $_ENV['question']->update_status($qid, 9);
+            $this->send($question['authorid'], $question['id'], 2);
+        }
         $asktime = tdate($question['time']);
         $endtime = timeLength($question['endtime'] - $this->time);
         $solvetime = tdate($question['endtime']);

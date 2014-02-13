@@ -442,11 +442,11 @@ class usercontrol extends base {
     function onspace() {
         $navtitle = "个人空间";
         $userid = intval($this->get[2]);
-        if ($userid) {
-            $member = $_ENV['user']->get_by_uid($userid);
+        $member = $_ENV['user']->get_by_uid($userid);
+        if ($member) {            
             $membergroup = $this->usergroup[$member['groupid']];
             $adoptpercent = $_ENV['user']->adoptpercent($member);
-            $answerlist = $_ENV['answer']->list_by_uid($member['uid'], 'all');
+            $answerlist = $_ENV['answer']->list_by_uid($member['uid'], 'all',0,6);
             $navtitle = $member['username'] . $navtitle;
             include template('space');
         } else {

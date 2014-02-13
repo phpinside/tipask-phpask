@@ -19,22 +19,54 @@
                         </ul>
                     </div>
                     <div class="expert-single-input clearfix">
-                        <p><label>擅长：</label><i>婚姻家庭</i><i>婚姻家庭</i><i>婚姻家庭</i></p>
-                        <p><label>手机：</label><i>13931776617</i></p>
-                        <p><label>qq：</label><i>13931776617</i></p>
-                        <p><label>身份：</label><i>13931776617</i></p>
-                        <p><label>介绍：</label><i><span>专职婚姻家庭律师，从事婚姻家庭业务研究与诉讼，承接全国范围内婚姻家庭纠纷案件，QQ：909795005</span></i></p>
+                        <!--{if $member['introduction']}-->
+                        <p><label>身份：</label><i>{$member['introduction']}</i></p>
+                        <!--{/if}-->
+                        <p>
+                            <label>擅长：</label>
+                            <!--{if $member['category']}-->
+                            <!--{loop $member['category'] $category}-->
+                            <i class="expert-field"><a target="_blank" href="{url category/view/$category['cid']}">{$category['categoryname']}</a></i>
+                            <!--{/loop}-->
+                            <!--{else}-->
+                            暂无
+                            <!--{/if}-->
+                        </p>
+                        <!--{if $member['mobile']}-->
+                        <p><label>手机：</label><i>{$member['mobile']}</i></p>
+                        <!--{/if}-->
+                        <!--{if $member['qq']}-->
+                        <p><label>qq：</label><i>{$member['qq']}</i></p>
+                        <!--{/if}-->
+                        <p><label>介绍：</label><i><span>{if $member['signature']}{$member['signature']}{else}暂无介绍{/if}</span></i></p>
                     </div>
                     <div class="ask-box clearfix">
-                        <input type="text" class="tag-input" />
-                        <input type="submit" name="submit" class="normal-button" value="向TA提问"  />
+                        <form name="askform" action="{url question/add/$member['uid']}" method="POST">
+                            <input type="text" class="tag-input" name="word"/>
+                            <input type="submit" name="post" class="normal-button" value="向TA提问"  />
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="mod-status-info">
                 <div class="hd">
                     <h3>TA的动态</h3>
+
                 </div>
+                <ul class="q-tabmod mt10">
+                    <!--{loop $answerlist $answer}-->
+                    <li id="msg5010" class="">
+                        <div class="msgcontent">
+                            <h3>回答了问题 "<a href='{url question/view/$answer['qid']}' target="_blank">{$answer['title']}</a>"</h3>
+                            <div  class="detail">{eval echo cutstr($answer['content'],250)}</div>
+                            <div class="related">
+                                <div class="pv">{$answer['time']}</div>
+                            </div>
+                        </div>
+                        <div class="clr"></div>
+                    </li>
+                    <!--{/loop}-->
+                </ul>
             </div>
         </div>
     </div>

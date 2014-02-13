@@ -12,11 +12,7 @@
         <div class="questionbox">
             <div class="title pd40">
                 <span class="ico ico-closed"></span>
-                <h1>{$question['title']} </h1>
-                <i class="q-ico"></i>
-                <div class="same-q-mod">
-                    <input type="button" class="button_attention" value="关注" />
-                </div>
+                <h1>{$question['title']}</h1>
             </div>
             <div class="tags">
                 <!--{loop $taglist $tag}-->
@@ -42,39 +38,8 @@
                     <!--{/loop}-->
                 </ul>
             </div>
-            <!--{if 0!=$question['authorid'] && ($question['authorid']==$user['uid'])}-->
-            <div class="managebox mt10">
-                <h3>处理问题：</h3>
-                <p> 如果已获得满意的回答，请及时采纳，感谢回答者。若还没有满意的回答，可以尝试以下操作：</p>
-                <span><input type="button" title="补充提问细节，以得到更准确的答案" class="button_4" name="supply_question" value="问题补充" onclick="javascript:document.location = '{url question/supply/$question['id']}'"/></span>
-                <span><input type="button" title="提高悬赏，以提高问题的关注度" class="button_4" name="append_score" onclick="append_score();" value="提高悬赏" /></span>
-                <span><input type="button" class="button_4" value="添加标签" title="修改问题标签" onclick="edittag();" /></span>
-                <span><input type="button" title="无满意答案的回答，可以直接结束提问，关闭问题" class="button_4" name="close_question" value="关闭问题"  onclick="close_question();"/></span>
-            </div>
-            <!--{/if}-->
         </div>
-        <div class="share-content">{$setting['question_share']}</div>
-        <!--{if !$already && $user['uid']!= $question['authorid']}-->
-        <div id="replyArea" class="your-answer-mod clearfix">
-            <div class="title">我来回答</div>
-            <form name="answerForm" action="{url question/answer}" method="post">
-                <input type="hidden" value="{$question['id']}" name="qid">
-                <input type="hidden" value="{$question['title']}" name="title">
-                <div  class="your-answer">
-                    <script type="text/plain" id="anscontent" name="content" style="height: 122px;"></script>
-                    <script type="text/javascript">UE.getEditor('anscontent');</script>
-                </div>
-                <div class="input-bar">
-                    <!--{if $setting['code_ask']}-->
-                    <h2>验证码</h2>
-                    <input type="text" onblur="check_code()" name="code" id="code" class="code-input">&nbsp;<span class="verifycode"><img id="verifycode" onclick="javascript:updatecode();" src="{url user/code}"></span><a class="changecode" href="javascript:updatecode();">&nbsp;换一个</a>
-                    <span id="codetip"></span>
-                    <!--{/if}-->
-                    <input type="submit" name="submit" class="normal-button flright" class='float:right' value="提&nbsp;交">
-                </div>
-            </form>
-        </div>
-        <!--{/if}-->        
+        <div class="share-content">{$setting['question_share']}</div>  
         <div id="customerList" class="net-answer mt10">
             <div class="title">全部回答({$question['answers']})</div>
             <ul class="net-answer-list">
@@ -88,44 +53,14 @@
                             <div class="avarta-name"><a target="_blank" title="{$answer['author']}" href="{url user/space/$answer['authorid']}" onmouseover="pop_user_on(this, '{$answer[authorid]}', 'text');"  onmouseout="pop_user_out();">{eval echo cutstr($answer['author'],7,'');}</a></div>                           
                         </div>
                         <div class="anscontent">{$answer['content']}</div>
-                        <!--{if 0!=$question['authorid'] && ($question['authorid']==$user['uid']) }-->
-                        <div class="anscontent mt15">
-                            <input type="button" class="button_7" value="采纳为满意回答" onclick="adoptanswer({$answer['id']});" />
-                            <!--{if !$answer['tags']}-->
-                            <input type="button" class="button_4" value="继续追问" onclick="javascript:document.location = '{url question/appendanswer/$question['id']/$answer['id']}'" />
-                            <!--{/if}-->
-                        </div>
-                        <!--{/if}-->
-                        <!--{if $answer['status'] && ($answer['authorid']==$user['uid']) }-->
-                        <div class="anscontent mt15">
-                            <input type="button" class="button_4" value="修改答案"  onclick="javascript:document.location = '{url question/editanswer/$answer['id']}'" />
-                            <!--{if !$answer['tags']}-->
-                            <input type="button" class="button_4" value="继续追问" />
-                            <!--{/if}-->
-                        </div>
-                        <!--{/if}-->
                     </div>
                     <div class="clr"></div>
                     <div class="comment-box mt10">
                         <div class="comments-hd">
-                            <div class="function">
-                                <span class="number"><a onclick="show_comment('{$answer['id']}');" href="javascript:;">评论({$answer['comments']})</a></span>
-                                <input type="button" class="button_agree" value="{$answer['supports']}" />                                
-                            </div>
                             <span class="time">回答于 {$answer['time']}</span>
                             <!--{if $user['grouptype']==1}-->
-                            <span class="admin"><a href="javascript:void(0);" onclick="adoptanswer({$answer['id']});">采纳为最佳答案</a><span class="span-line">|</span><a href="{url question/editanswer/$answer['id']}">编辑内容</a><span class="span-line">|</span><a href="javascript:void(0);" onclick="delete_answer('{$answer['id']}', '{$question['id']}')">删除</a></span>
+                            <span class="admin"><a href="{url question/editanswer/$answer['id']}">编辑内容</a><span class="span-line">|</span><a href="javascript:void(0);" onclick="delete_answer('{$answer['id']}', '{$question['id']}')">删除</a></span>
                             <!--{/if}-->
-                        </div>
-
-                        <div class="comments-mod" style="display: none;" id="comment_{$answer['id']}">
-                            <div class="areabox clearfix">
-                                <input type="text"  class="comment-input" name="content" />
-                                <input type="button" value="评论"  class="normal-button" name="submit" onclick="addcomment({$answer['id']});"/>
-                            </div>
-                            <ul class="comments-list">
-                                <li class="loading"><img src='{SITE_URL}css/default/loading.gif' align='absmiddle' />&nbsp;加载中...</li>
-                            </ul>
                         </div>
                     </div>
                 </li>
@@ -156,7 +91,7 @@
                         <span><input type="button" class="button_4" value="编辑内容" onclick="javascript:document.location = '{url question/edit/$question[id]}'"/></span>
                         <span><input type="button" class="button_4" value="修改标签" onclick="edittag();" /></span>
                         <span><input type="button" class="button_4" value="移动分类" id="changecategory" /></span>
-                        <span><input type="button" class="button_4" value="关闭问题" id="close_question"/></span>
+                        <span><input type="button" class="button_4" value="设置为待解决" id="changetonosolve"/></span>
                         <span><input type="button" class="button_4" value="删除问题" id="delete_question"/></span>
                     </p>
 
@@ -166,7 +101,6 @@
         <!--{/if}-->
         <!--{if $expertlist}-->
         <div class="modbox mt10">
-
             <div class="title">可能帮助到你的专家</div>
             <ul class="left-expert-list">
                 <!--{loop $expertlist $expert}-->
@@ -174,8 +108,8 @@
                     <div class="pic"><a title="{$expert['name']}" target="_blank" href="{url user/space/$expert['uid']}"><img width="50" height="50" alt="{$expert['username']}" src="{$expert['avatar']}"  onmouseover="pop_user_on(this, '{$expert[uid]}', '');"  onmouseout="pop_user_out();"/></a></div>
                     <h3><a title="{$expert['name']}" target="_blank" href="{url user/space/$expert['uid']}" onmouseover="pop_user_on(this, '{$expert[uid]}', 'text');"  onmouseout="pop_user_out();">{$expert['username']}</a></h3>
                     <span>{$expert['answers']}回答</span>
-                    <span>300赞同</span>
-                    <p><a href="#" class="invite">邀请TA回答</a></p>
+                    <span>{$expert['supports']}赞同</span>
+                    <p><a href="{url question/add/$expert['uid']}" class="invite">邀请TA回答</a></p>
                 </li>
                 <!--{/loop}-->
             </ul>
@@ -241,7 +175,7 @@
             <tr>            
                 <td>
                     <div class="inputbox mt15">
-                        <input type="text" class="tag-input" name="qtags" value="{eval echo implode(' ',$taglist)}"/>
+                        <input type="text" placeholder="多个标签请以空格隔开" class="tag-input" name="qtags" value="{eval echo implode(' ',$taglist)}"/>
                     </div>
                 </td>
             </tr>
@@ -287,7 +221,7 @@
             <tr>            
                 <td>
                     <div class="inputbox mt15">
-                        <input type="text" class="tag-input" name="qtags" value="{eval echo implode(' ',$taglist)}"/>
+                        <input type="text"  class="tag-input" name="qtags" value="{eval echo implode(' ',$taglist)}"/>
                     </div>
                 </td>
             </tr>
@@ -310,12 +244,10 @@
                             initcategory(category1);
                             fillcategory(category2, $("#category1 option:selected").val(), "category2");
                             fillcategory(category3, $("#category2 option:selected").val(), "category3");
-                            //关闭问题
-                            $("#close_question").click(function() {
-                                if (confirm('确定关闭该问题?') === true) {
-                                    document.location.href = "{url question/close/$question['id']}";
-                                }
-                            });
+                            //设置为待解决
+                                $("#changetonosolve").click(function() {
+                                    document.location.href="{url question/nosolve/$question['id']}";
+                                });
                             //删除问题
                             $("#delete_question").click(function() {
                                 if (confirm('确定删除问题？该操作不可返回！') === true) {
