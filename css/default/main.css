@@ -468,13 +468,13 @@ th{font-style: normal;font-weight: 400;}
 .net-answer{ padding:15px 10px 10px; border:1px solid #E4E4E4;}
 .net-answer .title{height:28px; font:14px/24px "Microsoft YaHei";font-weight: 600;}
 .net-answer-list{ overflow:hidden; position:relative; zoom:1;}
-.net-answer-list li{ margin:-1px 0 0; padding:15px 0 0; width:690px; word-wrap: break-word; border-top:1px solid #e3e3e3; font-size:14px; line-height:18px;}
+.net-answer-list li{ margin:-1px 0 0; padding:15px 0 0; width:690px; word-wrap: break-word; border-top:1px solid #e3e3e3; font-size:14px;}
 .net-answer-list .comments-hd{ padding:10px 0 10px 3px; font-size:12px;}
 .net-answer-list .avatar{float: left;font-size: 12px;margin-top: 6px;width: 52px;text-align: center;}
 .anscontent{float:right;margin-left: 18px;width: 620px;}
 .appendcontent{margin-left:15px;margin-top:5px;width: 600px;font-size:12px;}
 .appendcontent span{float: left;margin-right:5px;}
-.anscontent img,.description img{width: expression(this.width > 300 ? 300: true); max-width: 300px;height: expression(this.height > 200 ? 200: true); max-height: 200px;}
+.anscontent img,.description img,.qa-content img{width: expression(this.width > 300 ? 300: true); max-width: 300px;height: expression(this.height > 200 ? 200: true); max-height: 200px;}
 
 /*comments 评论*/
 .comments-hd{ padding:6px 0 10px; height:24px; line-height:24px;}

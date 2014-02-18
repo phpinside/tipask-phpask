@@ -27,10 +27,8 @@ class answer_commentmodel {
         return $commentlist;
     }
 
-    function add($answerid, $conmment) {
-        $answermodel = new answermodel($this->base);
-        $answer = $answermodel->get($answerid);
-        $this->db->query('INSERT INTO `' . DB_TABLEPRE . "answer_comment`(`aid`,`authorid`,`author`,`content`,`time`) values ($answerid," . $this->base->user['uid'] . ",'" . $this->base->user['username'] . "','$conmment'," . $this->base->time . ")");
+    function add($answerid, $conmment,$authorid,$author) {
+        $this->db->query('INSERT INTO `' . DB_TABLEPRE . "answer_comment`(`aid`,`authorid`,`author`,`content`,`time`) values ($answerid,$authorid,'$author','$conmment'," . $this->base->time . ")");
         $this->db->query("UPDATE " . DB_TABLEPRE . "answer SET comments=comments+1 WHERE `id`=$answerid");
     }
 

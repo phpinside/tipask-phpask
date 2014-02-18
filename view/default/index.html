@@ -6,8 +6,11 @@
 <div id="scoll-note">
     <ul>
         <!--{eval $notelist=$this->fromcache('notelist');}-->
-        <!--{loop $notelist $note}-->
+        <!--{loop $notelist $nindex $note}-->
+        <!--{eval $nindex++}-->
+        <!--{if $nindex<=3}-->
         <li><a target="_blank" title="{$note['title']}" {if $note['url']}href="{$note['url']}"{else}href="{url note/view/$note['id']}"{/if}>{eval echo cutstr({$note['title']},40,'');}</a><span>( {eval echo cutstr($note['format_time'],10,'')} )</span></li>
+        <!--{/if}-->
         <!--{/loop}-->
     </ul>
 </div>
@@ -163,8 +166,8 @@
             <div class="modbox mt10">
                 <div class="userinfo-box">
                     <div class="userinfo clearfix">
-                        <a target="_blank" href="http://weibo.com/u/2747046691" class="pic"><img width="50" height="50" src="{$user['avatar']}"></a>
-                        <h3><a target="_blank" href="http://weibo.com/u/2747046691">{$user['username']}</a></h3>
+                        <a target="_blank" href="{url user/score}" class="pic"><img width="50" height="50" src="{$user['avatar']}"></a>
+                        <h3><a target="_blank" href="{url user/score}">{$user['username']}</a></h3>
                         <p>{$user['grouptitle']}</p>
                         <p>财富:{$user['credit2']}<span>经验:{$user['credit1']}</span></p>
                     </div>

@@ -154,12 +154,12 @@ class usermodel {
 
     /* 添加用户，本函数需要返回uid */
 
-    function add($username, $password, $email = '', $uid = 0, $access_token = 'none') {
+    function add($username, $password, $email = '', $uid = 0) {
         $password = md5($password);
         if ($uid) {
-            $this->db->query("REPLACE INTO  " . DB_TABLEPRE . "user (uid,username,password,email,regip,`lastlogin`,`access_token`) VALUES ('$uid','$username','$password','$email','" . getip() . "',{$this->base->time},'$access_token')");
+            $this->db->query("REPLACE INTO  " . DB_TABLEPRE . "user (uid,username,password,email,regip,`lastlogin`) VALUES ('$uid','$username','$password','$email','" . getip() . "',{$this->base->time})");
         } else {
-            $this->db->query("INSERT INTO " . DB_TABLEPRE . "user(username,password,email,regip,regtime,`lastlogin`,`access_token`) values ('$username','$password','$email','" . getip() . "',{$this->base->time},{$this->base->time},'$access_token')");
+            $this->db->query("INSERT INTO " . DB_TABLEPRE . "user(username,password,email,regip,regtime,`lastlogin`) values ('$username','$password','$email','" . getip() . "',{$this->base->time},{$this->base->time})");
             $uid = $this->db->insert_id();
         }
         return $uid;

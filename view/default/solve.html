@@ -140,7 +140,7 @@
     </div>
 
     <div class="aside-right">
-        <!--{if 1==$user['grouptype']}-->
+        <!--{if 1==$user['grouptype'] && $user['uid']}-->
         <div class="modbox mb10">
             <div class="userinfo-box">
                 <div class="title">问题管理</div>
@@ -259,7 +259,7 @@
                                             document.location.href = "{url question/delete/$question['id']}";
                                         }
                                     });
-                                    $(".anscontent img,.description img").each(function(i) {
+                                    $(".anscontent img,.description img,.qa-content img").each(function(i) {
                                         var img = $(this);
                                         $.ajax({
                                             type: "POST",

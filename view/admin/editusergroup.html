@@ -77,6 +77,9 @@
                     <input name="regular_code[]" value="user/scorelist"  {if false!==strpos($group['regulars'],'user/scorelist')}checked{/if}  class="checkbox" type="checkbox">用户排行榜
                 </div>
                 <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="user/activelist"  {if false!==strpos($group['regulars'],'user/activelist')}checked{/if}  class="checkbox" type="checkbox">活跃用户
+                </div>
+                <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="expert/default"  {if false!==strpos($group['regulars'],'expert/default')}checked{/if}  class="checkbox" type="checkbox">专家列表
                 </div>
                 <div style="width: 200px; float: left;">
@@ -104,6 +107,9 @@
                     <input name="regular_code[]" value="question/answer"  {if false!==strpos($group['regulars'],'question/answer')}checked{/if}  class="checkbox" type="checkbox">回答问题
                 </div>
                 <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="answer/addcomment"  {if false!==strpos($group['regulars'],'answer/addcomment')}checked{/if}  class="checkbox" type="checkbox">回答评论
+                </div>
+                <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="inform/add"  {if false!==strpos($group['regulars'],'inform/add')}checked{/if}  class="checkbox" type="checkbox">举报回答
                 </div>
                 <!--{if 6!=$group['groupid']}-->
@@ -115,9 +121,6 @@
                 </div>
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="note/addcomment"  {if false!==strpos($group['regulars'],'note/addcomment')}checked{/if}  class="checkbox" type="checkbox" />公告评论
-                </div>
-                <div style="width: 200px; float: left;">
-                    <input name="regular_code[]" value="note/deletecomment"  {if false!==strpos($group['regulars'],'note/deletecomment')}checked{/if}  class="checkbox" type="checkbox" />公告评论删除
                 </div>
                 <!--{/if}-->
             </td>
@@ -145,7 +148,7 @@
                     <input name="regular_code[]" value="user/answer"  {if false!==strpos($group['regulars'],'user/answer')}checked{/if}  class="checkbox" type="checkbox">我的回答
                 </div>
                 <div style="width: 200px; float: left;">
-                    <input name="regular_code[]" value="user/favorite,question/addfavorite"  {if false!==strpos($group['regulars'],'user/favorite,question/addfavorite')}checked{/if}  class="checkbox" type="checkbox">我的收藏
+                    <input name="regular_code[]" value="favorite/default,favorite/delete,question/addfavorite"  {if false!==strpos($group['regulars'],'favorite/default,favorite/delete,question/addfavorite')}checked{/if}  class="checkbox" type="checkbox">我的收藏
                 </div>
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="user/profile"  {if false!==strpos($group['regulars'],'user/profile')}checked{/if}  class="checkbox" type="checkbox">个人资料
@@ -156,6 +159,9 @@
 
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="user/editimg,user/saveimg"  {if false!==strpos($group['regulars'],'user/editimg,user/saveimg')}checked{/if}  class="checkbox" type="checkbox">编辑头像
+                </div>
+                <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="user/mycategory"  {if false!==strpos($group['regulars'],'user/mycategory')}checked{/if}  class="checkbox" type="checkbox">设置擅长
                 </div>
             </td>
         </tr>

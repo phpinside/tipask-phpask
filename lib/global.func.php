@@ -439,7 +439,7 @@ function runlog($file, $message, $halt = 0) {
         $length = strlen($file);
         $maxid = $id = 0;
         while ($entry = readdir($dir)) {
-            if (strexists($entry, $yearmonth . '_' . $file)) {
+            if (strstr($entry, $yearmonth . '_' . $file)) {
                 $id = intval(substr($entry, $length + 8, -4));
                 $id > $maxid && $maxid = $id;
             }

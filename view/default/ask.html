@@ -121,7 +121,7 @@
 
             function  check_form() {
                 var qtitle = $("#qtitle").val();
-                if (bytes($.trim(qtitle)) < 8 || bytes($.trim(qtitle)) > 50) {
+                if (bytes($.trim(qtitle)) < 8 || bytes($.trim(qtitle)) > 100) {
                     alert("问题标题长度不得少于4个字，不能超过50字！");
                     $("#qtitle").focus();
                     return false;

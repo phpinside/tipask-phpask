@@ -33,8 +33,8 @@ class answercontrol extends base {
     function onaddcomment() {
         if (isset($this->post['content'])) {
             $content = $this->post['content'];
-            $answerid = intval($this->post['answerid']);
-            $_ENV['answer_comment']->add($answerid, $content);
+            $answerid = intval($this->post['answerid']); 
+            $_ENV['answer_comment']->add($answerid, $content,$this->user['uid'],$this->user['username']);
             exit('1');
         }
     }

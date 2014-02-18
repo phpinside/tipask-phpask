@@ -177,8 +177,6 @@ class questioncontrol extends base {
     /* 提交回答 */
 
     function onanswer() {
-        //魅力值检查
-        (intval($this->user['credit3']) < $this->setting['allow_credit3']) && $this->message("你的魅力太低，禁止回答，如有问题请联系管理员!", 'BACK');
         //只允许专家回答问题
         if (isset($this->setting['allow_expert']) && $this->setting['allow_expert'] && !$this->user['expert']) {
             $this->message('站点已设置为只允许专家回答问题，如有疑问请联系站长.');
@@ -241,7 +239,7 @@ class questioncontrol extends base {
         $ret = $_ENV['answer']->adopt($qid, $answer);
         if ($ret) {
             $this->load("answer_comment");
-            $_ENV['answer_comment']->add($aid, $comment);
+            $_ENV['answer_comment']->add($aid, $comment,$question['authorid'],$question['author']);
             //把问题的悬赏送给被采纳为答案的回答者,同时发消息通知回答者
             $this->credit($answer['authorid'], $this->setting['credit1_adopt'], intval($question['price'] + $this->setting['credit2_adopt']), 0, 'adopt');
             $this->send($answer['authorid'], $question['id'], 1);
