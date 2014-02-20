@@ -4,8 +4,6 @@
 
 class usercontrol extends base {
 
-    var $imagetypes = array('', 'gif', 'jpg', 'png');
-
     function usercontrol(& $get, & $post) {
         $this->base($get, $post);
         $this->load('user');
@@ -26,24 +24,7 @@ class usercontrol extends base {
     }
 
     function onregister() {
-        if (isset($this->get[2])) {
-            $access_token = $this->get[2];
-            $user = $_ENV['user']->get_by_access_token($access_token);
-            if ($user) {
-                //ucenter登录成功，则不会继续执行后面的代码。
-                if ($this->setting["ucenter_open"]) {
-                    $this->load('ucenter');
-                    $_ENV['ucenter']->login($user['username'], $user['password']);
-                }
-                $_ENV['user']->refresh($user['uid']);
-            }
-            $openid = $_ENV['user']->get_openid($access_token);
-            (!$openid) && $this->message('qq互联错误,请联系管理员!', 'STOP');
-            $userinfo = $_ENV['user']->get_oauth_info($access_token, $openid);
-        }
-
         $navtitle = '注册新用户';
-        $avatardir = "/data/avatar/";
         if (!$this->setting['allow_register']) {
             $this->message("系统注册功能暂时处于关闭状态!", 'STOP');
         }
@@ -74,27 +55,6 @@ class usercontrol extends base {
                 $this->load('ucenter');
                 $_ENV['ucenter']->register();
             }
-            if (isset($this->post['access_token'])) {
-                $uid = $_ENV['user']->add($username, $password, $email, 0, $this->post['access_token']);
-                if (isset($this->post['qqavatar']) && $this->post['qqavatar']) {
-                    $uid = sprintf("%09d", $uid);
-                    $dir1 = $avatardir . substr($uid, 0, 3);
-                    $dir2 = $dir1 . '/' . substr($uid, 3, 2);
-                    $dir3 = $dir2 . '/' . substr($uid, 5, 2);
-                    (!is_dir(TIPASK_ROOT . $dir1)) && forcemkdir(TIPASK_ROOT . $dir1);
-                    (!is_dir(TIPASK_ROOT . $dir2)) && forcemkdir(TIPASK_ROOT . $dir2);
-                    (!is_dir(TIPASK_ROOT . $dir3)) && forcemkdir(TIPASK_ROOT . $dir3);
-                    $smallimg = $dir3 . "/small_" . $uid . '.jpg';
-                    $avatar_dir = glob(TIPASK_ROOT . $dir3 . "/small_{$uid}.*");
-                    foreach ($avatar_dir as $imgfile) {
-                        unlink($imgfile);
-                    }
-                    get_remote_image($this->post['qqavatar'], TIPASK_ROOT . $smallimg);
-                }
-            } else {
-                $uid = $_ENV['user']->add($username, $password, $email);
-            }
-
             $_ENV['user']->refresh($uid);
             $this->credit($this->user['uid'], $this->setting['credit1_register'], $this->setting['credit2_register']); //注册增加积分
             //通行证处理
@@ -105,9 +65,8 @@ class usercontrol extends base {
             $message = '<p>现在您可以登录<a swaped="true" target="_blank" href="' . SITE_URL . '">' . $this->setting['site_name'] . '</a>自由的提问和回答问题。祝您使用愉快。</p>';
             sendmail($this->user, $subject, $message);
             $this->message('恭喜，注册成功！');
-        } else {
-            include template('register');
         }
+        include template('register');
     }
 
     function onlogin() {
@@ -155,17 +114,6 @@ class usercontrol extends base {
         exit('-1');
     }
 
-//qqlogin
-    function onqqlogin() {
-        $state = md5(uniqid(rand(), TRUE));
-        tcookie('state', $state);
-        $login_url = "https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id="
-                . $this->setting['qqlogin_appid'] . "&redirect_uri=" . urlencode(SITE_URL . "plugin/qqlogin/qq_callback.php")
-                . "&state=" . $state
-                . "&scope=get_user_info";
-        header("Location:$login_url");
-    }
-
     /* 用于ajax检测用户名是否存在 */
 
     function onajaxusername() {
@@ -202,8 +150,8 @@ class usercontrol extends base {
     /* 用于ajax检测验证码是否匹配 */
 
     function onajaxcode() {
-        $code = strtolower(trim($this->get[2]));  
-        if($code==$_ENV['user']->get_code()){
+        $code = strtolower(trim($this->get[2]));
+        if ($code == $_ENV['user']->get_code()) {
             exit('1');
         }
         exit('0');
@@ -433,7 +381,7 @@ class usercontrol extends base {
                 $this->message('新密码不能跟当前密码重复!', 'user/uppass');
             } else if (md5(trim($this->post['oldpwd'])) == $this->user['password']) {
                 $_ENV['user']->uppass($this->user['uid'], trim($this->post['newpwd']));
-                $this->message("密码修改成功", 'user/uppass');
+                $this->message("密码修改成功,请重新登录系统!", 'user/login');
             } else {
                 $this->message("旧密码错误！", 'user/uppass');
             }
@@ -446,10 +394,10 @@ class usercontrol extends base {
         $navtitle = "个人空间";
         $userid = intval($this->get[2]);
         $member = $_ENV['user']->get_by_uid($userid);
-        if ($member) {            
+        if ($member) {
             $membergroup = $this->usergroup[$member['groupid']];
             $adoptpercent = $_ENV['user']->adoptpercent($member);
-            $answerlist = $_ENV['answer']->list_by_uid($member['uid'], 'all',0,6);
+            $answerlist = $_ENV['answer']->list_by_uid($member['uid'], 'all', 0, 6);
             $navtitle = $member['username'] . $navtitle;
             include template('space');
         } else {
@@ -522,8 +470,8 @@ class usercontrol extends base {
     function onajaxcategory() {
         $cid = intval($this->post['cid']);
         if ($cid && $this->user['uid']) {
-            foreach($this->user['category'] as $category){
-                if($category['cid']==$cid){
+            foreach ($this->user['category'] as $category) {
+                if ($category['cid'] == $cid) {
                     exit;
                 }
             }

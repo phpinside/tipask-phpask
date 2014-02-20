@@ -393,42 +393,6 @@ class usermodel {
         $end = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60;
         return array($this->db->result_first("SELECT COUNT(DISTINCT `ip`) FROM " . DB_TABLEPRE . "session WHERE time>$end"));
     }
-
-    function get_openid($code) {
-        $graph_url = "https://graph.qq.com/oauth2.0/me?access_token="
-                . $code;
-
-        $str = get_url_contents($graph_url);
-        if (strpos($str, "callback") !== false) {
-            $lpos = strpos($str, "(");
-            $rpos = strrpos($str, ")");
-            $str = substr($str, $lpos + 1, $rpos - $lpos - 1);
-        }
-
-        $user = json_decode($str);
-        if (isset($user->error)) {
-            return false;
-        }
-        return $user->openid;
-    }
-
-    function get_oauth_info($code, $openid) {
-        $get_user_info = "https://graph.qq.com/user/get_user_info?"
-                . "access_token=" . $code
-                . "&oauth_consumer_key=" . $this->base->setting['qqlogin_appid']
-                . "&openid=" . $openid
-                . "&format=json";
-        $info = get_url_contents($get_user_info);
-        $arr = json_decode($info, true);
-        return $arr;
-    }
-
-    /* 第三方登陆 */
-
-    function get_by_access_token($access_token) {
-        return $this->db->fetch_first("SELECT * FROM " . DB_TABLEPRE . "user WHERE `access_token`='$access_token'");
-    }
-
 }
 
 ?>

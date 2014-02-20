@@ -25,7 +25,7 @@ class tipask {
             exit();
         }
         require TIPASK_ROOT . '/config.php';
-        header('Content-type: text/html; charset=' . TIPASK_CHARSET); //给浏览器识别，sbie6
+        header('Content-type: text/html; charset=' . TIPASK_CHARSET);
         $querystring = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
         $pos = strpos($querystring, '.');
         if ($pos !== false) {
@@ -34,7 +34,6 @@ class tipask {
         /* 处理简短url */
         $pos = strpos($querystring, '-');
         ($pos !== false) && $querystring = urlmap($querystring);
-
         $andpos = strpos($querystring, "&");
         $andpos && $querystring = substr($querystring, 0, $andpos);
         $this->get = explode('/', $querystring);

@@ -648,7 +648,7 @@ th{font-style: normal;font-weight: 400;}
 input:hover{border-color:#3EA201;}
 .input-bar{ margin-left:40px;padding-top: 25px;font-size: 14px;}
 .input-bar h2{float: left;font-size: 14px;font-weight: normal;height: 24px;margin-top: 6px;margin-right: 10px;width:60px;text-align: right;}
-.input-bar .text{height:30px;line-height: 24px;margin-left: 6px;}
+.input-bar .text{float: left;font-size: 14px;height: 30px;line-height: 30px;margin: 0 5px 0 6px;}
 .input-bar .avatarbox{float:left;width: 100px;}
 .input-bar .avatarbox_r{float:left;width:450px;}
 .input-bar p,.input-bar label{line-height: 30px;}

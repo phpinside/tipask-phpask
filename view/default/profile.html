@@ -13,7 +13,7 @@
                 </ul>
             </div>
             <div class="loginform">
-                <form method="post" name="upinfoForm"  action="{url user/profile}" method="post">
+                <form method="POST" name="upinfoForm"  action="{url user/profile}">
                     <div class="input-bar">
                         <h2>用户名:</h2>
                         <span class="text">{$user['username']}</span>
@@ -21,8 +21,7 @@
                     <div class="clr"></div>
                     <div class="input-bar">
                         <h2>邮箱地址:</h2>
-                        <input type="text"   name="email" id="email" class="normal-input" value="{$user['email']}" />
-                        <span id="emailtip"></span>
+                        <input type="text" name="email" id="email" class="normal-input" {if $user['email']!='null'} value="{$user['email']}"{else}value=""{/if} />
                     </div>
                     <div class="clr"></div>
                     <div class="input-bar">
@@ -64,18 +63,17 @@
                     <div class="clr"></div>
                     <div class="input-bar">
                         <h2>手机:</h2>
-                        <input type="text"  name="mobile" id="mobile" class="normal-input">
-                        <span  id="emailtip"></span>
+                        <input type="text"  name="phone" id="phone" class="normal-input" value="{$user['phone']}">
                     </div>
                     <div class="clr"></div>
                     <div class="input-bar">
                         <h2>QQ:</h2>
-                        <input type="text"  name="qq" id="qq" class="normal-input" />
+                        <input type="text"  name="qq" id="qq" class="normal-input" value="{$user['qq']}"/>
                     </div>
                     <div class="clr"></div>
                     <div class="input-bar">
                         <h2>MSN:</h2>
-                        <input type="text"  name="msn" id="msn" class="normal-input" />
+                        <input type="text"  name="msn" id="msn" class="normal-input" value="{$user['msn']}"/>
                     </div>
                     <div class="clr"></div>
                     <div class="input-bar">

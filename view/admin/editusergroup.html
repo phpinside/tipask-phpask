@@ -97,8 +97,12 @@
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="question/search"  {if false!==strpos($group['regulars'],'question/search')}checked{/if}  class="checkbox" type="checkbox">问题搜索
                 </div>
+
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="question/add,question/tagask"  {if false!==strpos($group['regulars'],'question/add,question/tagask')}checked{/if}  class="checkbox" type="checkbox">提问题
+                </div>
+                <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="question/edittag"  {if false!==strpos($group['regulars'],'question/edittag')}checked{/if}  class="checkbox" type="checkbox">编辑问题标签
                 </div>
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="favorite/add"  {if false!==strpos($group['regulars'],'favorite/add')}checked{/if}  class="checkbox" type="checkbox">收藏问题
@@ -162,6 +166,9 @@
                 </div>
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="user/mycategory"  {if false!==strpos($group['regulars'],'user/mycategory')}checked{/if}  class="checkbox" type="checkbox">设置擅长
+                </div>
+                <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="user/levels"  {if false!==strpos($group['regulars'],'user/level')}checked{/if}  class="checkbox" type="checkbox">我的等级
                 </div>
             </td>
         </tr>

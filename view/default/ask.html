@@ -37,7 +37,7 @@
                     <input type="hidden" name="cid" id="cid"/>
                     <input type="hidden" value="{$askfromuid}" name="askfromuid" />  
                     <input type="submit" value="提交问题" class="normal-button flright"  name="submit" />
-                    <div class="toweibo"><label style="padding:0;"><input type="checkbox" value="1" name="tobbs" />同步到微博</label></div>
+                    <!--<div class="toweibo"><label style="padding:0;"><input type="checkbox" value="1" name="tobbs" />同步到微博</label></div>-->
                 </div>
             </div>	
         </form>
@@ -80,71 +80,71 @@
     </div>
 </div>
 <script type="text/javascript">
-            var category1 = {$categoryjs[category1]};
+    var category1 = {$categoryjs[category1]};
             var category2 = {$categoryjs[category2]};
             var category3 = {$categoryjs[category3]};
-            $(document).ready(function() {
-                initcategory(category1);
-                $("#qtitle").keyup(function() {
-                    var qbyte = bytes($.trim($(this).val()));
-                    var limit = 100 - qbyte;
-                    if (limit % 2 == 0) {
-                        $("#limitNum span").html((limit / 2));
-                    } else {
-                        $("#limitNum span").html(((limit + 1) / 2));
-                    }
-
-                });
-            });
-
-            function selectcate() {
-                var selectedcatestr = '';
-                var category1 = $("#category1 option:selected").val();
-                var category2 = $("#category2 option:selected").val();
-                var category3 = $("#category3 option:selected").val();
-                if (category1 > 0) {
-                    selectedcatestr = $("#category1 option:selected").html();
-                    $("#cid").val(category1);
-                }
-                if (category2 > 0) {
-                    selectedcatestr += " > " + $("#category2 option:selected").html();
-                    $("#cid").val(category2);
-                }
-                if (category3 > 0) {
-                    selectedcatestr += " > " + $("#category3 option:selected").html();
-                    $("#cid").val(category3);
-                }
-                $("#selectedcate").html(selectedcatestr);
-                $("#changecategory").html("更改");
-                $("#catedialog").dialog("close");
+    $(document).ready(function() {
+        initcategory(category1);
+        $("#qtitle").keyup(function() {
+            var qbyte = bytes($.trim($(this).val()));
+            var limit = 100 - qbyte;
+            if (limit % 2 == 0) {
+                $("#limitNum span").html((limit / 2));
+            } else {
+                $("#limitNum span").html(((limit + 1) / 2));
             }
 
-            function  check_form() {
-                var qtitle = $("#qtitle").val();
-                if (bytes($.trim(qtitle)) < 8 || bytes($.trim(qtitle)) > 100) {
-                    alert("问题标题长度不得少于4个字，不能超过50字！");
-                    $("#qtitle").focus();
-                    return false;
-                }
-                if ($("#selectedcate").html() == '') {
-                    initcategory(category1);
-                    $("#catedialog").dialog("open");
-                    return false;
-                }
-                {if $user['uid']}
-                //检查财富值是否够用
-                var offerscore = 0;
-                var selectsocre = $("#givescore").val();
-                if ($("#hidanswer:selected").val() == 1) {
-                    offerscore += 10;
-                }
-                offerscore += parseInt(selectsocre);
-                if (offerscore > $user['credit2']) {
-                    alert("你的财富值不够!");
-                    return false;
-                }
-                {/if}   
-            }
+        });
+    });
+
+    function selectcate() {
+        var selectedcatestr = '';
+        var category1 = $("#category1 option:selected").val();
+        var category2 = $("#category2 option:selected").val();
+        var category3 = $("#category3 option:selected").val();
+        if (category1 > 0) {
+            selectedcatestr = $("#category1 option:selected").html();
+            $("#cid").val(category1);
+        }
+        if (category2 > 0) {
+            selectedcatestr += " > " + $("#category2 option:selected").html();
+            $("#cid").val(category2);
+        }
+        if (category3 > 0) {
+            selectedcatestr += " > " + $("#category3 option:selected").html();
+            $("#cid").val(category3);
+        }
+        $("#selectedcate").html(selectedcatestr);
+        $("#changecategory").html("更改");
+        $("#catedialog").dialog("close");
+    }
+
+    function  check_form() {
+        var qtitle = $("#qtitle").val();
+        if (bytes($.trim(qtitle)) < 8 || bytes($.trim(qtitle)) > 100) {
+            alert("问题标题长度不得少于4个字，不能超过50字！");
+            $("#qtitle").focus();
+            return false;
+        }
+        if ($("#selectedcate").html() == '') {
+        initcategory(category1);
+                $("#catedialog").dialog("open");
+                return false;
+        }
+        {if $user['uid']}
+        //检查财富值是否够用
+        var offerscore = 0;
+        var selectsocre = $("#givescore").val();
+        if ($("#hidanswer:selected").val() == 1) {
+            offerscore += 10;
+        }
+        offerscore += parseInt(selectsocre);
+        if (offerscore > $user['credit2']) {
+        alert("你的财富值不够!");
+                return false;
+        }
+        {/if}   
+    }
 
 </script>
 <!--{template footer}-->

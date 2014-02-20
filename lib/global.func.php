@@ -1046,47 +1046,15 @@ function highlight($content, $words, $highlightcolor = 'red') {
     return $content;
 }
 
-function do_post($url, $data) {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($ch, CURLOPT_POST, TRUE);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    curl_setopt($ch, CURLOPT_URL, $url);
-    $ret = curl_exec($ch);
-
-    curl_close($ch);
-    return $ret;
-}
-
-function get_url_contents($url) {
-    if (ini_get("allow_url_fopen") == "1")
-        return file_get_contents($url);
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($ch, CURLOPT_URL, $url);
-    $result = curl_exec($ch);
-    curl_close($ch);
-
-    return $result;
-}
-
 function get_remote_image($url, $savepath) {
     ob_start();
     readfile($url);
     $img = ob_get_contents();
     ob_end_clean();
     $size = strlen($img);
-    $fp2 = @fopen(TIPASK_ROOT . $savepath, "a");
+    $fp2 = @fopen($savepath, "a");
     fwrite($fp2, $img);
     fclose($fp2);
     return $savepath;
 }
-
-function get_host_ip($hostid) {
-    global $db;
-    $ret = $db->query("SELECT * FROM ".DB_TABLEPRE."host WHERE 1=1 LIMIT 0,1")->fetch(PDO::FETCH_ASSOC);
-    print_r($ret);
-}
-
 ?>
