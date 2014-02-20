@@ -11,7 +11,7 @@ class admin_linkcontrol extends base {
 
     function ondefault($message='') {
         if(empty($message)) unset($message);
-        $linklist = $_ENV['link']->get_list();
+        $linklist = $_ENV['link']->get_list(0,100);
         include template('linklist','admin');
     }
 

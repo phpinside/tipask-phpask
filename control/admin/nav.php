@@ -11,7 +11,7 @@ class admin_navcontrol extends base {
 
     function ondefault($message='') {
         if(empty($message)) unset($message);
-        $navlist = $_ENV['nav']->get_list();
+        $navlist = $_ENV['nav']->get_list(0,100);
         include template('navlist','admin');
     }
 

@@ -17,8 +17,8 @@
         <tr class="header" align="center">
             <td width="5%"><input class="checkbox" id="chkall" onclick="checkall('delete[]')" type="checkbox" name="chkall"><label for="chkall">&nbsp;删除</label></td>
             <td  width="25%">公告标题</td>
-            <td  width="30%">更新人</td>
-            <td  width="15%">更新时间</td>
+            <td  width="30%">发布人</td>
+            <td  width="15%">发布时间</td>
             <td  width="10%">编辑</td>
         </tr>
         <!--{loop $notelist $note}-->
@@ -26,7 +26,7 @@
             <td class="altbg2">&nbsp;<input class="checkbox" type="checkbox" value="{$note['id']}" name="delete[]"></td>
             <td  class="altbg2"><strong>{$note['title']}</strong></td>
             <td  class="altbg2">{$note['author']}</td>
-            <td class="altbg2">{$note['time']}</td>
+            <td class="altbg2">{$note['format_time']}</td>
             <td class="altbg2"><a href="index.php?admin_note/edit/$note['id']{$setting['seo_suffix']}">编辑</a></td>
         </tr>
         <!--{/loop}-->

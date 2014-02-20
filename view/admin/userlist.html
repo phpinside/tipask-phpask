@@ -67,7 +67,9 @@
         </tr>
         <!--{/loop}-->
         <!--{if $departstr}-->
-        <tr><td colspan="7" class="altbg2" align="right">{$departstr}</td></tr>
+        <tr class="smalltxt">
+            <td class="altbg2" colspan="7" align="right"><div class="scott">{$departstr}</div></td>
+        </tr>
         <!--{/if}-->
         <tr><td colspan="7" class="altbg1" align="left"><input class="button" type="button" name="elect" onclick="commenduser(1);" value="推荐为本周之星" />&nbsp;&nbsp;<input class="button" type="button" name="elect" onclick="commenduser(0);" value="取消推荐" />&nbsp;&nbsp;<input class="button" type="button" name="delete" onclick="remove();" value="删除" /></td></tr>
     </table>

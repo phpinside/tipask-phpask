@@ -55,8 +55,8 @@ function remove(lid){
 					<td width="20%" class="altbg1"><input name="order[]" type="hidden" value="{$link['id']}"/><a href="{$link['url']}" target="_blank">{$link['name']}</a></td>
 					<td width="25%" class="altbg2" align="center">{if $link['logo']}<img src="$link['logo']" height="30" width="60"/>{else}无{/if}</td>
 					<td width="30%" class="altbg1" align="center">{$link['description']}</td>
-					<td width="15%" class="altbg2" align="center"><img src="{SITE_URL}css/common/admin/edit.png" onclick="document.location.href='index.php?admin_link/edit/$link['id']{$setting['seo_suffix']}'"></td>
-					<td width="10%" class="altbg1" align="center"><img src="{SITE_URL}css/common/admin/remove.png" onclick="remove({$link['id']});"></td>
+					<td width="15%" class="altbg2" align="center"><img src="{SITE_URL}css/admin/edit.png" onclick="document.location.href='index.php?admin_link/edit/$link['id']{$setting['seo_suffix']}'"></td>
+					<td width="10%" class="altbg1" align="center"><img src="{SITE_URL}css/admin/remove.png" onclick="remove({$link['id']});"></td>
 				</tr>
 			</table>
 		</li>

@@ -71,9 +71,11 @@
             <td class="altbg2">{if !$log['status']}<font color="Red">等待兑换...</font>{else}<font color="green">已送出</font>{/if}</td>
         </tr>
 	<!--{/loop}-->
-	<!--{if $departstr}-->
-	<tr><td colspan="12" class="altbg2" align="right">{$departstr}</td></tr>
-	<!--{/if}-->
+      <!--{if $departstr}-->
+        <tr class="smalltxt">
+            <td class="altbg2" colspan="12" align="right"><div class="scott">{$departstr}</div></td>
+        </tr>
+        <!--{/if}-->
 	<tr><td colspan="12" class="altbg1" align="left"><input class="btn" type="button" name="available" onclick="onavailable(1);" value="设为已寄送" /></td></tr>
 </table>
 </form>
