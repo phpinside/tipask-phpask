@@ -1,5 +1,4 @@
 <!--{template header,admin}-->
-<script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -33,7 +32,7 @@
 <form name="answerlist" onsubmit="return confirm('确定删除?');" action="index.php?admin_topic/remove{$setting['seo_suffix']}" method="post">
     <table cellspacing="1" cellpadding="4" width="100%" align="center" style="border: 0 none !important; border-collapse: separate !important;empty-cells: show;margin-bottom: 0px;">
         <tr class="header" align="center">
-            <td width="10%"><input class="checkbox" id="chkall" onclick="checkall('tid[]')" type="checkbox" name="chkall"><label for="chkall">删除</label></td>
+            <td width="10%"><input class="checkbox" value="chkall" id="chkall" onclick="checkall('tid[]')" type="checkbox" name="chkall"><label for="chkall">删除</label></td>
             <td  width="10%">专题图片</td>
             <td width="20%">专题名称</td>
             <td  width="20%">专题描述</td>

@@ -7,124 +7,137 @@
 
 DROP TABLE IF EXISTS ask_message;
 CREATE TABLE ask_message (
-  id int(10) unsigned NOT NULL auto_increment,
-  `from` varchar(15) NOT NULL default '',
-  fromuid mediumint(8) unsigned NOT NULL default '0',
-  touid mediumint(8) unsigned NOT NULL default '0',
-  new tinyint(1) NOT NULL default '1',
-  subject varchar(75) NOT NULL default '',
-  time int(10) unsigned NOT NULL default '0',
-  content text NOT NULL,
-  status tinyint(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY  (id),
-  KEY touid (touid,time),
-  KEY fromuid (fromuid,time)
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `from` varchar(15) NOT NULL DEFAULT '',
+  `fromuid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `touid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `new` tinyint(1) NOT NULL DEFAULT '1',
+  `subject` varchar(75) NOT NULL DEFAULT '',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `content` text NOT NULL,
+  `status` tinyint(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `touid` (`touid`,`time`),
+  KEY `fromuid` (`fromuid`,`time`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS ask_answer;
 CREATE TABLE ask_answer (
-  id int(10) unsigned NOT NULL auto_increment,
-  qid int(10) unsigned NOT NULL default '0',
-  title char(50) NOT NULL,
-  author varchar(15) NOT NULL default '',
-  authorid mediumint(8) unsigned NOT NULL default '0',
-  time int(10) unsigned NOT NULL default '0',
-  adopttime int(10) unsigned NOT NULL default '0',
-  content mediumtext NOT NULL,
-  comment tinytext NOT NULL default '',
-  status tinyint(1) unsigned NOT NULL default '1',
-  `ip` VARCHAR( 20 ) NULL,
-  `tag` TEXT NOT NULL default '',
-  `support` INT( 10 ) NOT NULL DEFAULT '0',
-  `against` INT( 10 ) NOT NULL DEFAULT '0',
-  PRIMARY KEY  (id),
-  KEY qid (qid),
-  KEY authorid (authorid),
-  KEY time (time)
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `qid` int(10) unsigned NOT NULL DEFAULT '0',
+  `title` char(50) NOT NULL,
+  `author` varchar(15) NOT NULL DEFAULT '',
+  `authorid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `adopttime` int(10) unsigned NOT NULL DEFAULT '0',
+  `content` mediumtext NOT NULL,
+  `comments` int(10) NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `ip` varchar(20) DEFAULT NULL,
+  `tag` text NOT NULL COMMENT '追问',
+  `supports` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `qid` (`qid`),
+  KEY `authorid` (`authorid`),
+  KEY `adopttime` (`adopttime`),
+  KEY `time` (`time`)
 ) ENGINE=MyISAM;
 
 
 DROP TABLE IF EXISTS ask_category;
 CREATE TABLE ask_category (
-  id smallint(5) unsigned NOT NULL auto_increment,
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(30) NOT NULL,
   `dir` char(30) NOT NULL,
-  pid smallint(5) unsigned NOT NULL default '0',
-  grade tinyint(1) unsigned NOT NULL default '0',
-  displayorder tinyint(3) NOT NULL default '0',
-  questions int(10) unsigned NOT NULL default '0',
-  PRIMARY KEY  (id)
+  `pid` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `grade` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `displayorder` tinyint(3) NOT NULL DEFAULT '0',
+  `questions` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 INSERT INTO ask_category(`name` ,`dir` , `pid` , `grade` , `displayorder`,`questions`) VALUES ('默认分类','default', 0,1,0,0);
 
 DROP TABLE IF EXISTS ask_credit;
 CREATE TABLE ask_credit (
-  uid int(10) unsigned NOT NULL,
-  time int(10) unsigned NOT NULL default '0',
-  operation varchar(100) NOT NULL default '',
-  credit1 smallint(6) NOT NULL default '0',
-  credit2 smallint(6) NOT NULL default '0',
-  credit3 smallint( 6 ) NOT NULL DEFAULT '0',
-  KEY uid (uid,time)
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uid` int(10) unsigned NOT NULL,
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `operation` varchar(100) NOT NULL DEFAULT '',
+  `credit1` smallint(6) NOT NULL DEFAULT '0',
+  `credit2` smallint(6) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
 
 DROP TABLE IF EXISTS ask_note;
 CREATE TABLE ask_note (
-  id smallint(5) unsigned NOT NULL auto_increment,
-  author char(18) NOT NULL,
-  title varchar(100) NOT NULL,
-  content text NOT NULL,
-  time int(10) unsigned NOT NULL default '0',
-  url varchar(250) NOT NULL,
-  PRIMARY KEY  (id)
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `authorid` int(10) NOT NULL DEFAULT '0',
+  `author` char(18) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `content` text NOT NULL,
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `comments` int(10) NOT NULL DEFAULT '0',
+  `views` int(10) NOT NULL DEFAULT '0',
+  `url` varchar(250) NOT NULL,
+  PRIMARY KEY (`id`)
 )ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS ask_note_comment;
+CREATE TABLE ask_note_comment (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `noteid` int(10) NOT NULL,
+  `authorid` int(10) NOT NULL,
+  `author` varchar(50) NOT NULL,
+  `content` text NOT NULL,
+  `time` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+)ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS ask_question;
 CREATE TABLE ask_question (
-  id int(10) unsigned NOT NULL auto_increment,
-  cid smallint(5) unsigned NOT NULL default '0',
-  cid1 smallint(5) unsigned NOT NULL default '0',
-  cid2 smallint(5) unsigned NOT NULL default '0',
-  cid3 smallint(5) unsigned NOT NULL default '0',
-  price smallint(6) unsigned NOT NULL default '0',
-  author char(15) NOT NULL default '',
-  authorid mediumint(8) unsigned NOT NULL default '0',
-  title char(50) NOT NULL,
-  description text NOT NULL default '',
-  supply text NOT NULL default '',
-  `url` varchar(255) NOT NULL default '1',
-  `time` int(10) unsigned NOT NULL default '0',
-  endtime int(10) unsigned NOT NULL default '0',
-  hidden tinyint(1) unsigned NOT NULL default '0',
-  answers smallint(5) unsigned NOT NULL default '0',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cid` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `cid1` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `cid2` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `cid3` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `price` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `author` char(15) NOT NULL DEFAULT '',
+  `authorid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `title` char(50) NOT NULL,
+  `description` text NOT NULL,
+  `supply` text NOT NULL,
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `endtime` int(10) unsigned NOT NULL DEFAULT '0',
+  `hidden` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `answers` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `attentions` int(10) NOT NULL DEFAULT '0',
+  `goods` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `ip` varchar(20) DEFAULT NULL COMMENT 'ipåœ°å€',
   `views` int(10) unsigned NOT NULL DEFAULT '0',
-  goods mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `status` tinyint(1) unsigned NOT NULL default '1',
-  `ip` VARCHAR( 20 ) NULL,
-  search_words varchar(500) null,
-  PRIMARY KEY  (id),
+  PRIMARY KEY (`id`),
   KEY cid1 (cid1),
   KEY cid2 (cid2),
   KEY cid3 (cid3),
-  KEY time (time),
+  KEY `time` (`time`),
   KEY price (price),
   KEY answers (answers),
   KEY authorid (authorid)
 ) ENGINE=MyISAM;
-alter table ask_question add fulltext(search_words);
 
 
 DROP TABLE IF EXISTS ask_session;
 CREATE TABLE ask_session (
-  sid char(6) NOT NULL default '',
-  uid mediumint(8) unsigned NOT NULL default '0',
-  `code` char(4) NOT NULL default '',
-  islogin tinyint(1) NOT NULL default '0',
-  `ip` VARCHAR( 20 ) NULL,
-  time int(10) unsigned NOT NULL default '0',
-  UNIQUE KEY sid (sid)
+  `sid` char(16) NOT NULL DEFAULT '',
+  `uid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `code` char(4) NOT NULL DEFAULT '',
+  `islogin` tinyint(1) NOT NULL DEFAULT '0',
+  `ip` varchar(20) DEFAULT NULL COMMENT 'ip地址',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  UNIQUE KEY `sid` (`sid`),
+  KEY `uid` (`uid`),
+  KEY `time` (`time`)
 ) ENGINE=MyISAM;
 
 
@@ -157,7 +170,7 @@ INSERT INTO ask_setting VALUES ('mailsend', '1');
 INSERT INTO ask_setting VALUES ('mailserver', 'smtp.domain.com');
 INSERT INTO ask_setting VALUES ('mailport', '25');
 INSERT INTO ask_setting VALUES ('mailauth', '0');
-INSERT INTO ask_setting VALUES ('mailfrom', 'tpask <tipask@domain.com>');
+INSERT INTO ask_setting VALUES ('mailfrom', 'tipask <tipask@domain.com>');
 INSERT INTO ask_setting VALUES ('mailauth_username', 'tipask@domain.com');
 INSERT INTO ask_setting VALUES ('mailauth_password', '');
 INSERT INTO ask_setting VALUES ('maildelimiter', '0');
@@ -175,12 +188,14 @@ INSERT INTO ask_setting VALUES ('credit1_message', '-1');
 INSERT INTO ask_setting VALUES ('credit2_message', '0');
 INSERT INTO ask_setting VALUES ('credit1_adopt', '5');
 INSERT INTO ask_setting VALUES ('credit2_adopt', '2');
-INSERT INTO ask_setting VALUES ('list_indexnosolve', '5');
-INSERT INTO ask_setting VALUES ('list_indexcommend', '5');
-INSERT INTO ask_setting VALUES ('list_indexreward', '5');
-INSERT INTO ask_setting VALUES ('list_indexnote', '5');
-INSERT INTO ask_setting VALUES ('list_indexallscore', '5');
-INSERT INTO ask_setting VALUES ('list_indexweekscore', '5');
+INSERT INTO ask_setting VALUES ('list_indexnosolve', '10');
+INSERT INTO ask_setting VALUES ('list_indexcommend', '10');
+INSERT INTO ask_setting VALUES ('list_indexreward', '8');
+INSERT INTO ask_setting VALUES ('list_indexnote', '10');
+INSERT INTO ask_setting VALUES ('list_indexhottag', '20');
+INSERT INTO ask_setting VALUES ('list_indexexpert', '3');
+INSERT INTO ask_setting VALUES ('list_indexallscore', '8');
+INSERT INTO ask_setting VALUES ('list_indexweekscore', '8');
 INSERT INTO ask_setting VALUES ('list_default', '20');
 INSERT INTO ask_setting VALUES ('rss_ttl', '60');
 INSERT INTO ask_setting VALUES ('code_register', '0');
@@ -234,113 +249,133 @@ INSERT INTO ask_setting VALUES ('del_tmp_crontab', '1440');
 INSERT INTO ask_setting VALUES ('allow_credit3', '-10');
 INSERT INTO ask_setting VALUES ('apend_question_num', '5');
 INSERT INTO ask_setting VALUES ('time_friendly', '1');
+INSERT INTO ask_setting VALUES ('register_clause', '<p>&nbsp; &nbsp; &nbsp; &nbsp;当您申请用户时，表示您已经同意遵守本规章。 <br/>欢迎您加入本站点参加交流和讨论，本站点为公共论坛，为维护网上公共秩序和社会稳定，请您自觉遵守以下条款： <br/><br/>一、不得利用本站危害国家安全、泄露国家秘密，不得侵犯国家社会集体的和公民的合法权益，不得利用本站制作、复制和传播下列信息：<br/>　 （一）煽动抗拒、破坏宪法和法律、行政法规实施的；<br/>　（二）煽动颠覆国家政权，推翻社会主义制度的；<br/>　（三）煽动分裂国家、破坏国家统一的；<br/>　（四）煽动民族仇恨、民族歧视，破坏民族团结的；<br/>　（五）捏造或者歪曲事实，散布谣言，扰乱社会秩序的；<br/>　（六）宣扬封建迷信、淫秽、色情、赌博、暴力、凶杀、恐怖、教唆犯罪的；<br/>　（七）公然侮辱他人或者捏造事实诽谤他人的，或者进行其他恶意攻击的；<br/>　（八）损害国家机关信誉的；<br/>　（九）其他违反宪法和法律行政法规的；<br/>　（十）进行商业广告行为的。<br/><br/>二、互相尊重，对自己的言论和行为负责。<br/>三、禁止在申请用户时使用相关本站的词汇，或是带有侮辱、毁谤、造谣类的或是有其含义的各种语言进行注册用户，否则我们会将其删除。<br/>四、禁止以任何方式对本站进行各种破坏行为。<br/>五、如果您有违反国家相关法律法规的行为，本站概不负责，您的登录论坛信息均被记录无疑，必要时，我们会向相关的国家管理部门提供此类信息。</p><p><br/></p><p><br/> </p><p><br/></p>');
 
 DROP TABLE IF EXISTS ask_user;
 CREATE TABLE ask_user (
-  uid mediumint(8) unsigned NOT NULL auto_increment,
-  username char(18) NOT NULL,
-  `password` char(32) NOT NULL,
-  email varchar(40) NOT NULL,
-  avatar varchar(100) NOT NULL,
-  groupid tinyint(3) unsigned NOT NULL default '7',
-  credits int(10) NOT NULL default '0',
-  credit1 int(10) NOT NULL default '0',
-  credit2 int(10) NOT NULL default '0',
-  credit3 INT( 10 ) NOT NULL DEFAULT '0',
-  regip char(15) NOT NULL,
-  regtime INT( 10 ) NOT NULL DEFAULT '0',
-  lastlogin int(10) unsigned NOT NULL default '0',
-  gender tinyint(1) unsigned NOT NULL default '0',
-  bday date NOT NULL,
-  phone varchar(30) NOT NULL,
-  qq varchar(15) NOT NULL,
-  msn varchar(40) NOT NULL,
-  signature mediumtext NOT NULL,
-  authstr varchar(20) NOT NULL default '',
-  access_token VARCHAR( 50 )  NULL,
-  questions int(10) unsigned NOT NULL default '0',
-  answers int(10) unsigned NOT NULL default '0',
-  adopts int(10) unsigned NOT NULL default '0',
-  isnotify tinyint(1) unsigned NOT NULL default '7',
+  `uid` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `username` char(18) NOT NULL,
+  `password` char(32) DEFAULT NULL,
+  `email` varchar(40) DEFAULT NULL,
+  `groupid` tinyint(3) unsigned NOT NULL DEFAULT '7',
+  `credits` int(10) NOT NULL DEFAULT '0',
+  `credit1` int(10) NOT NULL DEFAULT '0',
+  `credit2` int(10) NOT NULL DEFAULT '0',
+  `credit3` int(10) NOT NULL DEFAULT '0',
+  `regip` char(15) DEFAULT NULL,
+  `regtime` int(10) NOT NULL DEFAULT '0',
+  `lastlogin` int(10) unsigned NOT NULL DEFAULT '0',
+  `gender` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `bday` date DEFAULT NULL,
+  `phone` varchar(30) DEFAULT NULL,
+  `qq` varchar(15) DEFAULT NULL,
+  `msn` varchar(40) DEFAULT NULL,
+  `signature` mediumtext,
+  `introduction` varchar(200) DEFAULT NULL,
+  `questions` int(10) unsigned NOT NULL DEFAULT '0',
+  `answers` int(10) unsigned NOT NULL DEFAULT '0',
+  `adopts` int(10) unsigned NOT NULL DEFAULT '0',
+  `supports` int(10) NOT NULL DEFAULT '0' COMMENT '赞同',
+  `isnotify` tinyint(1) unsigned NOT NULL DEFAULT '7',
   `elect` int(10) NOT NULL DEFAULT '0',
-  `expert` TINYINT( 2 ) NOT NULL DEFAULT '0',
-  PRIMARY KEY  (uid),
+  `expert` tinyint(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`),
   KEY username (username),
   KEY email (email)
 ) ENGINE=MyISAM;
 
 
-DROP TABLE IF EXISTS ask_usergroup;
-CREATE TABLE ask_usergroup (
-  groupid smallint(6) unsigned NOT NULL auto_increment,
-  grouptitle char(30) NOT NULL default '',
-  grouptype tinyint(1) NOT NULL default '2',
-  creditslower int(10) NOT NULL,
-  creditshigher int(10) NOT NULL DEFAULT '0',
-  questionlimits INT( 10 ) NOT NULL DEFAULT '0',
-  answerlimits INT( 10 ) NOT NULL DEFAULT '0',
-  credit3limits INT( 10 ) NOT NULL DEFAULT '0',
-  regulars text NOT NULL,
-  PRIMARY KEY  (groupid)
+DROP TABLE IF EXISTS ask_user_category;
+CREATE TABLE ask_user_category (
+  `uid` int(10) NOT NULL,
+  `cid` int(4) NOT NULL,
+  PRIMARY KEY (`uid`,`cid`)
 ) ENGINE=MyISAM;
 
-INSERT INTO ask_usergroup VALUES (1, '超级管理员', 1, 0, 1,0,0,0, '');
-INSERT INTO ask_usergroup VALUES (2, '管理员', 1, 0, 1, 0,0,0,'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove,admin_main/default,admin_main/header,admin_main/menu,admin_main/stat,admin_main/login,admin_main/logout,admin_category/default,admin_category/add,admin_category/edit,admin_category/view,admin_category/remove,admin_category/reorder,admin_question/default,admin_question/searchquestion,admin_question/searchanswer,admin_question/removequestion,admin_question/removeanswer,admin_question/edit,admin_question/editanswer,admin_question/verifyanswer,admin_question/verify,admin_question/recommend,admin_question/inrecommend,admin_question/close,admin_question/delete,admin_question/renametitle,admin_question/editquescont,admin_question/movecategory,admin_question/nosolve,admin_question/editanswercont,admin_question/deleteanswer,admin_user/default,admin_user/search,admin_user/add,admin_user/remove,admin_user/edit,admin_usergroup/default,admin_usergroup/add,admin_usergroup/remove,admin_usergroup/edit,admin_note/default,admin_note/add,admin_note/edit,admin_note/remove');
-INSERT INTO ask_usergroup VALUES (3, '分类员', 1, 0, 1,0,0,0, 'user/scorelist,index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,gift/default,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove,admin_main/default,admin_main/header,admin_main/menu,admin_main/stat,admin_main/login,admin_main/logout');
-INSERT INTO ask_usergroup VALUES (6, '游客', 1, 0, 1,1,1,0, 'user/qqlogin,index/tagquestion,expert/default,index/taglist,user/famouslist,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,question/search,user/editimg');
-INSERT INTO ask_usergroup VALUES (7, '书童', 2, 0, 80,3,3,1, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (8, '书生', 2, 80, 400,5,3,3, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (9, '秀才', 2, 400, 800,5,5,5, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (10, '举人', 2, 800, 2000,6,6,6, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (11, '解元', 2, 2000, 4000,7,7,7, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (12, '贡士', 2, 4000, 7000,8,8,8, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (13, '会元', 2, 7000, 10000,9,9,9, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (14, '同进士出身', 2, 10000, 14000,10,10,10, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (15, '大学士', 2, 14000, 18000, 11,11,10,'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (16, '探花', 2, 18000, 22000,12,12,11, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (17, '榜眼', 2, 22000, 32000,13,13,11, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (18, '状元', 2, 32000, 45000,14,14,12, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (19, '编修', 2, 45000, 60000,14,15,12, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (20, '府丞', 2, 60000, 100000,14,16,12, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (21, '翰林学士', 2, 100000, 150000,15,14,13, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (22, '御史中丞', 2, 150000, 250000,16,15,13, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (23, '詹士', 2, 250000, 400000,18,16,14, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (24, '侍郎', 2, 400000, 700000, 20,18,16,'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (25, '大学士', 2, 700000, 1000000,24,20,18, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
-INSERT INTO ask_usergroup VALUES (26, '文曲星', 2, 1000000, 999999999,0,0,0, 'index/tagquestion,question/answercomment,user/exchange,expert/default,index/taglist,user/famouslist,user/favorite,question/addfavorite,user/space_ask,user/space_answer,user/saveimg,user/editimg,category/recommend,user/register,index/default,category/view,category/list,question/view,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,question/tagask,gift/default,gift/search,gift/add,user/register,user/default,user/score,user/ask,user/answer,user/profile,user/uppass,attach/upload,question/answer,question/adopt,question/govote,question/close,question/supply,question/add,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove');
+DROP TABLE IF EXISTS ask_login_auth;
+CREATE TABLE ask_login_auth (
+  `uid` int(10) NOT NULL,
+  `type` enum('qq','sina') NOT NULL,
+  `token` varchar(50) NOT NULL,
+  `openid` varchar(50) NOT NULL,
+  `time` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`uid`,`type`)
+) ENGINE=MyISAM;
+
+
+DROP TABLE IF EXISTS ask_usergroup;
+CREATE TABLE ask_usergroup (
+  `groupid` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `level` int(4) NOT NULL DEFAULT '1' COMMENT '用户级别',
+  `grouptitle` char(30) NOT NULL DEFAULT '',
+  `grouptype` tinyint(1) NOT NULL DEFAULT '2',
+  `creditslower` int(10) NOT NULL,
+  `creditshigher` int(10) NOT NULL DEFAULT '0',
+  `questionlimits` int(10) NOT NULL DEFAULT '0',
+  `answerlimits` int(10) NOT NULL DEFAULT '0',
+  `credit3limits` int(10) NOT NULL DEFAULT '0',
+  `regulars` text NOT NULL,
+  PRIMARY KEY (`groupid`)
+) ENGINE=MyISAM;
+
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(1, '超级管理员', 1, 0, 1, 0, 0, 0, 'user/qqlogin,user/register,index/default,category/view,category/list,question/view,category/recommend,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,gift/default,gift/search,gift/add\r\n', 0);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(2, '管理员', 1, 0, 1, 0, 0, 0, 'user/qqlogin,user/register,index/default,category/view,category/list,question/view,category/recommend,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,gift/default,gift/search,gift/add\r\n', 0);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(3, '分类员', 1, 0, 1, 0, 0, 0, 'user/qqlogin,user/register,index/default,category/view,category/list,question/view,category/recommend,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,gift/default,gift/search,gift/add\r\n', 0);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(6, '游客', 3, 0, 1, 0, 0, 0, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search', 0);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(7, '书童', 2, 0, 80, 3, 3, 5, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 1);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(8, '书生', 2, 80, 400, 5, 5, 8, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 2);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(9, '秀才', 2, 400, 800, 10, 10, 10, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 3);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(10, '举人', 2, 800, 2000, 15, 15, 12, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 4);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(11, '解元', 2, 2000, 4000, 10, 10, 10, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 5);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(12, '贡士', 2, 4000, 7000, 15, 15, 20, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 6);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(13, '会元', 2, 7000, 10000, 15, 15, 20, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 7);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(14, '同进士出身', 2, 10000, 14000, 0, 0, 0, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 8);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(15, '大学士', 2, 14000, 18000, 0, 0, 0, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 9);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(16, '探花', 2, 18000, 22000, 0, 0, 0, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 10);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(17, '榜眼', 2, 22000, 32000, 0, 0, 0, 'user/qqlogin,user/register,index/default,category/view,category/list,question/view,category/recommend,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,gift/default,gift/search,gift/add\r\n', 11);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(18, '状元', 2, 32000, 45000, 0, 0, 0, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/tagask,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 12);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(19, '编修', 2, 45000, 60000, 0, 0, 0, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 13);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(20, '府丞', 2, 60000, 100000, 0, 0, 0, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 14);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(21, '翰林学士', 2, 100000, 150000, 0, 0, 0, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 15);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(22, '御史中丞', 2, 150000, 250000, 0, 0, 0, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 16);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(23, '詹士', 2, 250000, 400000, 0, 0, 0, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 17);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(24, '侍郎', 2, 400000, 700000, 0, 0, 0, 'user/register,user/editimg,index/default,category/view,category/list,question/view,topic/default,note/list,note/view,rss/category,rss/list,rss/question,user/scorelist,user/activelist,expert/default,user/famouslist,index/taglist,question/tag,user/qqlogin,gift/default,gift/search,gift/add,question/search,question/add,question/appendanswer,question/edittag,favorite/add,question/answer,answer/addcomment,inform/add,user/space_ask,user/space_answer,user/space,question/answercomment,note/addcomment,user/register,user/default,user/score,user/recharge,ebank/aliapyback,ebank/aliapytransfer,user/ask,user/answer,favorite/default,favorite/delete,question/addfavorite,user/profile,user/uppass,user/editimg,user/saveimg,user/mycategory,user/level,attach/uploadimage,question/adopt,question/close,question/supply,question/addscore,question/editanswer,question/search,message/send,message/new,message/personal,message/system,message/outbox,message/view,message/remove', 18);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(25, '大学士', 2, 700000, 1000000, 0, 0, 0, 'user/qqlogin,user/register,index/default,category/view,category/list,question/view,category/recommend,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,gift/default,gift/search,gift/add\r\n', 19);
+INSERT INTO ask_usergroup (`groupid`, `grouptitle`, `grouptype`, `creditslower`, `creditshigher`, `questionlimits`, `answerlimits`, `credit3limits`, `regulars`, `level`) VALUES(26, '文曲星', 2, 1000000, 999999999, 0, 0, 0, 'user/qqlogin,user/register,index/default,category/view,category/list,question/view,category/recommend,note/list,note/view,rss/category,rss/list,rss/question,user/space,user/scorelist,question/search,question/add,gift/default,gift/search,gift/add\r\n', 20);
+
 
 
 DROP TABLE IF EXISTS ask_datacall;
 CREATE TABLE ask_datacall (
-  `id` smallint(5) unsigned NOT NULL auto_increment,
-  `title` varchar(50) NOT NULL default '',
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) NOT NULL DEFAULT '',
   `expression` text NOT NULL,
-  `time` int(10) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
 
 DROP TABLE IF EXISTS ask_badword;
 CREATE TABLE ask_badword (
-  id smallint(6) unsigned NOT NULL auto_increment,
-  admin varchar(15) NOT NULL default '',
-  find varchar(255) NOT NULL default '',
-  replacement varchar(255) NOT NULL default '',
-  findpattern varchar(255) NOT NULL default '',
-  PRIMARY KEY  (id),
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `admin` varchar(15) NOT NULL DEFAULT '',
+  `find` varchar(255) NOT NULL DEFAULT '',
+  `replacement` varchar(255) NOT NULL DEFAULT '',
+  `findpattern` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
   UNIQUE KEY `find` (`find`)
 ) ENGINE=MyISAM;
 
 
 DROP TABLE IF EXISTS ask_link;
 CREATE TABLE ask_link (
-  id smallint(6) unsigned NOT NULL AUTO_INCREMENT,
-  displayorder tinyint(3) NOT NULL DEFAULT '0',
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `displayorder` tinyint(3) NOT NULL DEFAULT '0',
   `name` varchar(100) NOT NULL DEFAULT '',
-  url varchar(255) NOT NULL DEFAULT '',
-  description mediumtext NOT NULL,
-  logo varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (id)
+  `url` varchar(255) NOT NULL DEFAULT '',
+  `description` mediumtext NOT NULL,
+  `logo` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
 INSERT INTO ask_link (`id`, `displayorder`, `name`, `url`, `description`, `logo`) VALUES (1, 0, 'Tipask问答平台', 'http://help.tipask.com', 'Tipask建站问答！', '');
@@ -348,51 +383,47 @@ INSERT INTO ask_link (`id`, `displayorder`, `name`, `url`, `description`, `logo`
 
 DROP TABLE IF EXISTS ask_nav;
 CREATE TABLE ask_nav (
-  id smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
   `name` char(50) NOT NULL,
-  title char(255) NOT NULL,
-  url char(255) NOT NULL,
-  target tinyint(1) NOT NULL DEFAULT '0',
-  available tinyint(1) NOT NULL DEFAULT '0',
-  type tinyint(1) not null default 0,
-  displayorder tinyint(3) NOT NULL,
-  PRIMARY KEY (id)
+  `title` char(255) NOT NULL,
+  `url` char(255) NOT NULL,
+  `target` tinyint(1) NOT NULL DEFAULT '0',
+  `available` tinyint(1) NOT NULL DEFAULT '0',
+  `type` tinyint(1) NOT NULL DEFAULT '0',
+  `displayorder` tinyint(3) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '问答首页', '问答首页', 'index/default', 0, 1, 1, 1);
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '问题库', '分类大全', 'category/view/all', 0, 1, 1, 2);
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '问答专家', '问答专家', 'expert/default', 0, 1, 1, 3);
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '知识专题', '知识专题', 'topic/default', 0, 1, 1, 4);
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '活跃用户', '活跃用户', 'user/activelist', 0, 1, 1, 5);
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '财富商城', '财富商城', 'gift/default', 0, 1, 1,6);
 
-INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(1, '问答首页', '问答首页', 'index/default', 0, 1, 1, 1);
-INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(2, '分类大全', '分类大全', 'category/view', 0, 1, 1, 6);
-INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(3, '问答专家', '问答专家', 'expert/default', 0, 1, 1, 5);
-INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(4, '知识专题', '知识专题', 'category/recommend', 0, 1, 1, 3);
-INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(5, '问答之星', '问答之星', 'user/famouslist', 0, 1, 1, 4);
-INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(6, '标签大全', '标签大全', 'index/taglist', 0, 1, 1, 7);
-INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(7, '礼品商店', '礼品商店', 'gift/default', 0, 1, 1, 8);
 
 DROP TABLE IF EXISTS ask_ad;
 CREATE TABLE ask_ad (
-  html text NULL,
-  page varchar(50) NOT NULL DEFAULT '',
-  position varchar(50) NOT NULL DEFAULT '',
+  `html` tinytext,
+  `page` varchar(50) NOT NULL DEFAULT '',
+  `position` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`page`,`position`)
 ) ENGINE=MyISAM;
 
 
 DROP TABLE IF EXISTS ask_attach;
 CREATE TABLE ask_attach (
-  id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  qid mediumint(8) unsigned NOT NULL DEFAULT '0',
-  aid int(10) unsigned NOT NULL DEFAULT '0',
-  time int(10) unsigned NOT NULL DEFAULT '0',
-  filename char(100) NOT NULL DEFAULT '',
-  filetype char(50) NOT NULL DEFAULT '',
-  filesize int(10) unsigned NOT NULL DEFAULT '0',
-  location char(100) NOT NULL DEFAULT '',
-  downloads mediumint(8) NOT NULL DEFAULT '0',
-  isimage tinyint(1) NOT NULL DEFAULT '0',
-  uid mediumint(8) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (id),
-  KEY qid (qid,aid),
-  KEY uid (uid),
-  KEY time (time, isimage, downloads)
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  `filename` char(100) NOT NULL DEFAULT '',
+  `filetype` char(50) NOT NULL DEFAULT '',
+  `filesize` int(10) unsigned NOT NULL DEFAULT '0',
+  `location` char(100) NOT NULL DEFAULT '',
+  `downloads` mediumint(8) NOT NULL DEFAULT '0',
+  `isimage` tinyint(1) NOT NULL DEFAULT '0',
+  `uid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `uid` (`uid`),
+  KEY `time` (`time`,`isimage`,`downloads`)
 ) ENGINE=MyISAM;
 
 
@@ -411,135 +442,171 @@ CREATE TABLE ask_banned (
 
 DROP TABLE IF EXISTS ask_visit;
 CREATE TABLE ask_visit (
-  ip varchar(15) NOT NULL,
-  time int(10) NOT NULL default '0',
-  KEY time(time,ip)
+  `ip` varchar(15) NOT NULL,
+  `time` int(10) NOT NULL DEFAULT '0',
+  KEY `ip` (`ip`),
+  KEY `time` (`time`)
 ) ENGINE=MyISAM ;
 
 DROP TABLE IF EXISTS ask_editor;
 CREATE TABLE ask_editor (
-  id smallint(6) unsigned NOT NULL auto_increment,
-  available tinyint(1) NOT NULL default '1',
-  tag varchar(100) NOT NULL default '',
-  icon varchar(255) NOT NULL default '',
-  code text NOT NULL,
-  displayorder smallint(3) unsigned NOT NULL default '0',
-  description text NOT NULL,
-  PRIMARY KEY  (id)
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `available` tinyint(1) NOT NULL DEFAULT '1',
+  `tag` varchar(100) NOT NULL DEFAULT '',
+  `icon` varchar(255) NOT NULL DEFAULT '',
+  `code` text NOT NULL,
+  `displayorder` smallint(3) unsigned NOT NULL DEFAULT '0',
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM ;
 
 DROP TABLE IF EXISTS ask_gift;
 CREATE TABLE ask_gift (
-  id smallint(6) unsigned NOT NULL AUTO_INCREMENT,
-  title varchar(80) NOT NULL,
-  description varchar(250) NOT NULL,
-  image varchar(250) NOT NULL,
-  credit int(10) NOT NULL DEFAULT '0',
-  time int(11) NOT NULL,
-  available tinyint(1) NOT NULL DEFAULT '1',
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(80) NOT NULL,
+  `description` varchar(250) NOT NULL,
+  `image` varchar(250) NOT NULL,
+  `credit` int(10) NOT NULL DEFAULT '0',
+  `time` int(11) NOT NULL,
+  `available` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS ask_giftlog;
 CREATE TABLE ask_giftlog (
-  id smallint(6) unsigned NOT NULL AUTO_INCREMENT,
-  uid int(10) unsigned NOT NULL,
-  username char(20) NOT NULL,
-  realname char(20) NOT NULL,
-  gid int(10) NOT NULL,
-  giftname varchar(30) NOT NULL,
-  address varchar(100) NOT NULL,
-  postcode char(10) NOT NULL,
-  phone char(15) NOT NULL,
-  qq char(15) NOT NULL,
-  email varchar(30) NOT NULL DEFAULT '',
-  notes text NOT NULL,
-  credit int(10) NOT NULL,
-  time int(11) NOT NULL,
-  status tinyint(1) NOT NULL DEFAULT '0',
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(10) unsigned NOT NULL,
+  `username` char(20) NOT NULL,
+  `realname` char(20) NOT NULL,
+  `gid` int(10) NOT NULL,
+  `giftname` varchar(30) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `postcode` char(10) NOT NULL,
+  `phone` char(15) NOT NULL,
+  `qq` char(15) NOT NULL,
+  `email` varchar(30) NOT NULL DEFAULT '',
+  `notes` text NOT NULL,
+  `credit` int(10) NOT NULL,
+  `time` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS ask_favorite;
 CREATE TABLE ask_favorite (
-  uid mediumint(8) unsigned NOT NULL DEFAULT '0',
-  qid mediumint(10) unsigned NOT NULL DEFAULT '0',
-  cid smallint(5) unsigned NOT NULL DEFAULT '0',
-  KEY uid(uid)
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `qid` mediumint(10) unsigned NOT NULL DEFAULT '0',
+  `time` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uid` (`uid`),
+  KEY `qid` (`qid`),
+  KEY `time` (`time`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS ask_inform;
 CREATE TABLE ask_inform (
-  qid int(10) NOT NULL,
-  title varchar(100) NOT NULL,
-  content text NOT NULL,
-  keywords varchar(100) NOT NULL,
-  counts int(11) NOT NULL DEFAULT '1',
-  time int(10) NOT NULL,
-  PRIMARY KEY (qid)
+  `qid` int(10) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `content` text NOT NULL,
+  `keywords` varchar(100) NOT NULL,
+  `counts` int(11) NOT NULL DEFAULT '1',
+  `time` int(10) NOT NULL,
+  PRIMARY KEY (`qid`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS ask_answer_comment;
 CREATE TABLE ask_answer_comment (
-  id int(10) NOT NULL AUTO_INCREMENT,
-  aid int(10) NOT NULL,
-  authorid int(10) NOT NULL,
-  author char(18) NOT NULL,
-  content varchar(100) NOT NULL,
-  credit smallint(6) NOT NULL DEFAULT '0',
-  time int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (id)
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `aid` int(10) NOT NULL,
+  `authorid` int(10) NOT NULL,
+  `author` char(18) NOT NULL,
+  `content` varchar(100) NOT NULL,
+  `time` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS ask_answer_support;
+CREATE TABLE ask_answer_support (
+  `sid` char(16) NOT NULL,
+  `aid` int(10) NOT NULL,
+  `time` int(10) NOT NULL,
+  PRIMARY KEY (`sid`,`aid`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS ask_expert;
 CREATE TABLE ask_expert (
-  uid int(10) NOT NULL,
-  cid INT( 10 ) NOT NULL,
-  PRIMARY KEY (uid,cid)
+  `uid` int(10) NOT NULL,
+  `cid` int(10) NOT NULL,
+  PRIMARY KEY (`uid`,`cid`)
 )ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS ask_famous;
 CREATE TABLE IF NOT EXISTS ask_famous(
-  id int(10) NOT NULL AUTO_INCREMENT,
-  uid mediumint(8) unsigned NOT NULL DEFAULT '0',
-  reason char(50) DEFAULT NULL,
-  time int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (id),
-  KEY time (`time`)
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `reason` char(50) DEFAULT NULL,
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `time` (`time`)
 )ENGINE=MyISAM;
+
+
+DROP TABLE IF EXISTS ask_recommend;
+CREATE TABLE IF NOT EXISTS ask_recommend(
+  `qid` int(10) unsigned NOT NULL DEFAULT '0',
+  `cid` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `title` char(50) NOT NULL,
+  `description` text NOT NULL,
+  `image` varchar(255) NOT NULL DEFAULT '',
+  `url` varchar(255) NOT NULL DEFAULT '',
+  `time` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`qid`)
+)ENGINE=MyISAM;
+
+
 
 DROP TABLE IF EXISTS ask_topic;
 CREATE TABLE ask_topic (
-  id int(10) NOT NULL AUTO_INCREMENT,
-  title varchar(50) DEFAULT NULL,
-  describtion varchar(200) DEFAULT NULL,
-  image varchar(100) DEFAULT NULL,
-  displayorder INT( 10 ) NOT NULL DEFAULT '0',
-  PRIMARY KEY (id)
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) DEFAULT NULL,
+  `describtion` varchar(200) DEFAULT NULL,
+  `image` varchar(100) DEFAULT NULL,
+  `displayorder` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 )ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS ask_tid_qid;
 CREATE TABLE ask_tid_qid (
-  tid int(10) NOT NULL DEFAULT '0',
-  qid int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (tid,qid)
+  `tid` int(10) NOT NULL DEFAULT '0',
+  `qid` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`tid`,`qid`)
 )ENGINE=MyISAM;
 
-DROP TABLE IF EXISTS ask_tag;
-CREATE TABLE ask_tag(
-`id` INT( 10 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`letter` CHAR( 2 ) NULL ,
-`name` VARCHAR( 20 ) NULL ,
-`questions` INT( 10 ) NOT NULL DEFAULT '0'
-) ENGINE = MYISAM ;
+
 
 DROP TABLE IF EXISTS ask_question_tag;
 CREATE TABLE ask_question_tag (
-  tid int(10) NOT NULL,
-  qid int(10) NOT NULL,
-  tname varchar(20) NOT NULL,
-  PRIMARY KEY (tid,qid)
+  `qid` int(10) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `time` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`qid`,`name`),
+  KEY `time` (`time`)
 )ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS ask_question_supply;
+CREATE TABLE ask_question_supply (
+  `id` int(4) NOT NULL AUTO_INCREMENT,
+  `qid` int(10) NOT NULL,
+  `content` text NOT NULL,
+  `time` int(10) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `time` (`time`),
+  KEY `qid` (`qid`)
+)ENGINE=MyISAM;
+
+
 
 DROP TABLE IF EXISTS ask_crontab;
 CREATE TABLE ask_crontab(
@@ -557,7 +624,6 @@ CREATE TABLE ask_crontab(
   PRIMARY KEY (`id`),
   KEY `nextrun` (`available`,`nextrun`)
 ) ENGINE=MyISAM ;
-INSERT INTO ask_crontab (`id`, `available`, `type`, `name`, `method`, `lastrun`, `nextrun`, `weekday`, `day`, `hour`, `minute`) VALUES(1, 1, 'system', '每日分类统计', 'sum_category_question', 1341160751, 1341164351, -1, -1, -1, '60');
 
 DROP TABLE IF EXISTS ask_userlog;
 CREATE TABLE ask_userlog (
@@ -569,5 +635,7 @@ CREATE TABLE ask_userlog (
   KEY `sid` (`sid`),
   KEY `time` (`time`)
 )ENGINE=MyISAM ;
+
+
 
 

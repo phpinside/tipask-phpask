@@ -34,8 +34,8 @@
             <td class="altbg2"><input value="{$setting['list_indexreward']}" name="list_indexreward"></td>
         </tr>	
         <tr>
-            <td class="altbg1" width="45%"><b>首页站内公告:</b><br><span class="smalltxt">首页公告列表显示数目</span></td>
-            <td class="altbg2"><input value="{$setting['list_indexnote']}" name="list_indexnote"></td>
+            <td class="altbg1" width="45%"><b>首页推荐专家:</b><br><span class="smalltxt">首页专家显示数目</span></td>
+            <td class="altbg2"><input value="{$setting['list_indexexpert']}" name="list_indexexpert"></td>
         </tr>
         <tr>
             <td class="altbg1" width="45%"><b>首页上周经验排行榜:</b><br><span class="smalltxt">首页上周经验排行榜列表显示数目</span></td>
@@ -52,10 +52,6 @@
         <tr>
             <td class="altbg1" width="45%"><b>热点关键词:</b><br><span class="smalltxt">热点关键词设置，设置说明:<font color="red">关键词，对应问题qid</font>&nbsp;&nbsp;&nbsp;注意一行一个关键词，若qid为空则调用搜索模块。如：<font color="green">tipask，1</font></span></td>
             <td class="altbg2"><textarea style="height: 200px; width: 200px;"  name="list_hot_words" class="area">{$setting['list_hot_words']}</textarea></td>
-        </tr>
-        <tr>
-            <td class="altbg1" width="45%"><b>首页缓存时间:</b><br><span class="smalltxt">首页数据缓存时间设置，包括待解决、悬赏、公告、积分排行、分类等的数据缓存时间更新时间</span></td>
-            <td class="altbg2"><input value="{$setting['index_life']}" name="index_life"></td>
         </tr>
     </table>
     <br>

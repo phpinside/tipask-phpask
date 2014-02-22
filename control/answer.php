@@ -9,6 +9,7 @@ class answercontrol extends base {
         $this->load('answer');
         $this->load('answer_comment');
         $this->load('question');
+        $this->load('message');
     }
 
     function onajaxviewcomment() {
@@ -33,8 +34,11 @@ class answercontrol extends base {
     function onaddcomment() {
         if (isset($this->post['content'])) {
             $content = $this->post['content'];
-            $answerid = intval($this->post['answerid']); 
-            $_ENV['answer_comment']->add($answerid, $content,$this->user['uid'],$this->user['username']);
+            $answerid = intval($this->post['answerid']);
+            $answer = $_ENV['answer']->get($answerid);
+            $_ENV['answer_comment']->add($answerid, $content, $this->user['uid'], $this->user['username']);
+            if ($answer['authorid'] != $this->user['uid'])
+                $_ENV['message']->add($this->user['username'], $this->user['uid'], $answer['authorid'], '您的回答有了新评论', '您对于问题 "' . $answer['title'] . '" 的回答 "' . $answer['content'] . '" 有了新评论 "' . $content . '"<br /> <a href="' . url('question/view/' . $answer['qid'], 1) . '">点击查看</a>');
             exit('1');
         }
     }
@@ -60,11 +64,11 @@ class answercontrol extends base {
         $ret = $supports ? '1' : '-1';
         exit($ret);
     }
-    
-    function onajaxaddsupport(){
+
+    function onajaxaddsupport() {
         $answerid = intval($this->get[2]);
         $answer = $_ENV['answer']->get($answerid);
-        $_ENV['answer']->add_support($this->user['sid'], $answerid,$answer['authorid']);
+        $_ENV['answer']->add_support($this->user['sid'], $answerid, $answer['authorid']);
         $answer = $_ENV['answer']->get($answerid);
         exit($answer['supports']);
     }

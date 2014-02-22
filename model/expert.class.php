@@ -14,11 +14,11 @@ class expertmodel {
 
     function get_list($showquestion=0, $start=0, $limit=3) {
         $expertlist = array();
-        $query = $this->db->query("SELECT distinct u.uid,u.username,u.credit1,u.supports,u.signature,u.introduction,u.lastlogin,u.answers,u.questions,u.expert FROM " . DB_TABLEPRE . "expert as e," . DB_TABLEPRE . "user as u WHERE u.uid=e.uid ORDER BY u.credit1 DESC LIMIT $start ,$limit");
+        $query = $this->db->query("SELECT *  FROM " . DB_TABLEPRE . "user WHERE expert=1 ORDER BY credit1 DESC,answers DESC LIMIT $start ,$limit");
         while ($expert = $this->db->fetch_array($query)) {
             $expert['avatar'] = get_avatar_dir($expert['uid']);
             $expert['lastlogin'] = tdate($expert['lastlogin']);
-            $expert['categoryname'] = $this->get_category($expert['uid']);
+            $expert['category'] = $this->get_category($expert['uid']);
             $showquestion && $expert['bestanswer'] = $this->get_solve_answer($expert['uid'], 0, 6);
             $expertlist[] = $expert;
         }
@@ -58,12 +58,13 @@ class expertmodel {
     }
 
     function get_category($uid) {
-        $categoryname = array();
-        $query = $this->db->query("SELECT c.name,c.id FROM " . DB_TABLEPRE . "category as c," . DB_TABLEPRE . "expert as e WHERE c.id=e.cid AND e.uid=$uid");
+        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "user_category WHERE uid=$uid");
+        $categorylist = array();
         while ($category = $this->db->fetch_array($query)) {
-            $categoryname[] = "<a href='index.php?category/view/$category[id].html' target='_blank'>" . $category['name'] . '</a>';
+            $category['categoryname'] = $this->base->category[$category['cid']]['name'];
+            $categorylist[] = $category;
         }
-        return implode(",", $categoryname);
+        return $categorylist;
     }
 
     function get_solves($start=0, $limit=20) {

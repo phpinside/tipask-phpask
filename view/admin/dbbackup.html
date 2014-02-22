@@ -2,8 +2,6 @@
 <script type="text/javascript">
         g_site_url='{SITE_URL}';
 </script>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
 <div style="width:100%; height:15px;color:#000;margin:0px 0px 10px;">
   <div style="float:left;"><a href="index.php?admin_main/stat{$setting['seo_suffix']}" target="main"><b>控制面板首页</b></a>&nbsp;&raquo;&nbsp;数据库备份</div>
 </div>
@@ -32,7 +30,7 @@
 		
 		<tbody id="showtables" style="display:none">
 			<tr>
-				<td colspan="4" class="altbg1"><input name="chkall" class="checkbox" id="chkall" onClick="selectAll('tip','chkall','tables[]');" type="checkbox"><label id="tip"> 全选 </label></td>
+				<td colspan="4" class="altbg1"><input name="chkall" class="checkbox" value="chkall" id="chkall" onClick="selectAll('tip','chkall','tables[]');" type="checkbox"><label id="tip"> 全选 </label></td>
 			</tr>
 			<tr>
 			<!--{loop $tables $key $value}-->

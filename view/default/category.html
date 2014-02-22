@@ -1,4 +1,6 @@
 <!--{template header}-->
+<!--{eval $adlist = $this->fromcache("adlist");}-->
+
 <div class="nav-line">
     <a class="first" href="{url category/view/all}">全部分类</a>
     <!--{loop $navlist $nav}-->
@@ -26,6 +28,10 @@
                 <!--{/loop}-->
             </ul>
         </div>
+        <!--广告位1-->
+        <!--{if (isset($adlist['category']['left1']) && trim($adlist['category']['left1']))}-->
+        <div>{$adlist['category']['left1']}</div>
+        <!--{/if}-->
         <div id="mod-answer-list" class="mod-answer-list mt10">
             <div class="hd">
                 <ul class="tab-card">
@@ -83,6 +89,10 @@
                 <!--{/loop}-->
             </ul>
         </div>
+        <!--{/if}-->
+        <!--广告位2-->
+        <!--{if (isset($adlist['category']['right1']) && trim($adlist['category']['right1']))}-->
+        <div>{$adlist['category']['right1']}</div>
         <!--{/if}-->
         <!-- 关注问题排行榜 -->
         <div class="modbox">

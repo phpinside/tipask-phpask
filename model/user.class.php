@@ -110,9 +110,9 @@ class usermodel {
             $starttime = $this->base->time - 30 * 24 * 3600;
         }
         $sqlarray = array(
-            'SELECT u.uid,u.groupid, u.username,u.gender,u.lastlogin,u.avatar,u.credit2,u.questions,u.answers,u.adopts FROM ' . DB_TABLEPRE . "user  u ORDER BY `credit2` DESC,u.answers DESC  LIMIT 0,$limit",
-            "SELECT u.uid,u.groupid, u.username,u.gender,u.lastlogin,u.avatar,sum( c.credit2 ) credit2,u.questions,u.answers,u.adopts FROM " . DB_TABLEPRE . "user u," . DB_TABLEPRE . "credit c   WHERE u.uid=c.uid AND c.time>$starttime   GROUP BY u.uid ORDER BY credit2  DESC,u.answers DESC LIMIT 0,$limit",
-            "SELECT u.uid,u.groupid, u.username,u.gender,u.lastlogin,u.avatar,sum( c.credit2 ) credit2,u.questions,u.answers,u.adopts  FROM " . DB_TABLEPRE . "user u," . DB_TABLEPRE . "credit c   WHERE u.uid=c.uid AND c.time>$starttime   GROUP BY u.uid ORDER BY credit2  DESC,u.answers DESC LIMIT 0,$limit"
+            'SELECT u.uid,u.groupid, u.username,u.gender,u.lastlogin,u.credit2,u.questions,u.answers,u.adopts FROM ' . DB_TABLEPRE . "user  u ORDER BY `credit2` DESC,u.answers DESC  LIMIT 0,$limit",
+            "SELECT u.uid,u.groupid, u.username,u.gender,u.lastlogin,sum( c.credit2 ) credit2,u.questions,u.answers,u.adopts FROM " . DB_TABLEPRE . "user u," . DB_TABLEPRE . "credit c   WHERE u.uid=c.uid AND c.time>$starttime   GROUP BY u.uid ORDER BY credit2  DESC,u.answers DESC LIMIT 0,$limit",
+            "SELECT u.uid,u.groupid, u.username,u.gender,u.lastlogin,sum( c.credit2 ) credit2,u.questions,u.answers,u.adopts  FROM " . DB_TABLEPRE . "user u," . DB_TABLEPRE . "credit c   WHERE u.uid=c.uid AND c.time>$starttime   GROUP BY u.uid ORDER BY credit2  DESC,u.answers DESC LIMIT 0,$limit"
         );
         $query = $this->db->query($sqlarray[$type]);
         while ($user = $this->db->fetch_array($query)) {
@@ -144,10 +144,16 @@ class usermodel {
     function refresh_session_time($sid, $uid) {
         $lastrefresh = tcookie("lastrefresh");
         if (!$lastrefresh) {
-            if ($uid)
+            if ($uid){ 
                 $this->db->query("UPDATE " . DB_TABLEPRE . "session SET `time` = {$this->base->time} WHERE sid='$sid'");
-            else
-                $this->db->query("REPLACE INTO " . DB_TABLEPRE . "session (sid,`ip`,`time`) VALUES ('$sid','{$this->base->ip}',{$this->base->time})");
+            }else{
+            	$session = $this->db->fetch_first("SELECT * FROM ".DB_TABLEPRE."session WHERE sid='$sid'");
+            	if($session){
+            		$this->db->query("UPDATE " . DB_TABLEPRE . "session SET `time` = {$this->base->time} WHERE sid='$sid'");
+            	}else{
+                	$this->db->query("INSERT INTO " . DB_TABLEPRE . "session (sid,`ip`,`time`) VALUES ('$sid','{$this->base->ip}',{$this->base->time})");
+                }
+            }
             tcookie("lastrefresh", '1', 60);
         }
     }
@@ -215,7 +221,6 @@ class usermodel {
 
     function remove($uids, $all = 0) {
         $this->db->query("DELETE FROM `" . DB_TABLEPRE . "user` WHERE `uid` IN ($uids)");
-        $this->db->query("DELETE FROM `" . DB_TABLEPRE . "expert` WHERE `uid` IN ($uids)");
         $this->db->query("DELETE FROM `" . DB_TABLEPRE . "famous` WHERE `uid` IN ($uids)");
         /* 删除问题和回答 */
         if ($all) {
@@ -376,10 +381,10 @@ class usermodel {
         $this->db->query("UPDATE `" . DB_TABLEPRE . "user` SET `elect`=$elect WHERE `uid`=$uid");
     }
 
-    function update_avatar($avatar = '', $uid = 0) {
-        (!$uid) && $uid = $this->base->user['uid'];
-        $this->db->query("UPDATE `" . DB_TABLEPRE . "user` SET `avatar`='$avatar' WHERE `uid`=$uid");
+    function update_expert($uids, $type) {
+        $this->db->query("UPDATE " . DB_TABLEPRE . "user SET expert=$type WHERE uid IN (" . implode(",",$uids) . ")");
     }
+
 
     /* 获取所有注册用户数目 */
 
@@ -393,6 +398,7 @@ class usermodel {
         $end = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60;
         return array($this->db->result_first("SELECT COUNT(DISTINCT `ip`) FROM " . DB_TABLEPRE . "session WHERE time>$end"));
     }
+
 }
 
 ?>

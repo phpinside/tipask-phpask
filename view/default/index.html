@@ -1,4 +1,5 @@
 <!--{template header}-->
+<!--{eval $adlist = $this->fromcache("adlist");}-->
 <!--{eval $statistics=$this->fromcache('statistics');}-->
 <!--{eval $onlineusernum=$this->fromcache('onlineusernum');}-->
 <div class="nav-line">
@@ -82,10 +83,12 @@
     </div>
     <div class="content">
         <div class="main">
+            <!--{eval $topiclist=$this->fromcache('topiclist');}-->
+            <!--{if $topiclist}-->
             <div class="focusbox mt10">
                 <div class="slidermod" >
                     <div class="slider-box clearfix">
-                        <!--{eval $topiclist=$this->fromcache('topiclist');}-->
+                        
                         <!--{loop $topiclist $index $topic}-->
                         <div class="topic" id="{$topic['id']}" <!--{if $index!=0}-->style="display:none"<!--{/if}-->>
                              <img width="228" height="170" src="{SITE_URL}{$topic['image']}"/>
@@ -108,6 +111,11 @@
                     </div>
                 </div>
             </div>
+            <!--{/if}-->
+            <!--广告位1-->
+            <!--{if (isset($adlist['index']['middle1']) && trim($adlist['index']['middle1']))}-->
+            <div class="question-mod mt10">{$adlist['index']['middle1']}</div>
+            <!--{/if}-->
             <!-- 待解决 -->
             <div class="question-mod mt10">
                 <h3 class="title">待解决问题</h3>
@@ -123,7 +131,10 @@
                 </ul>
                 <!--{/loop}-->
             </div>
-
+            <!--广告位2-->
+            <!--{if (isset($adlist['index']['middle2']) && trim($adlist['index']['middle2']))}-->
+            <div class="question-mod mt10">{$adlist['index']['middle2']}</div>
+            <!--{/if}-->
             <!-- 悬赏问题 -->
             <div class="question-mod mt10">
                 <h3 class="title">高分悬赏问题</h3>
@@ -160,6 +171,10 @@
                 </ul>
                 <!--{/loop}-->
             </div>
+            <!--广告位3-->
+            <!--{if (isset($adlist['index']['middle3']) && trim($adlist['index']['middle3']))}-->
+            <div class="question-mod mt10">{$adlist['index']['middle3']}</div>
+            <!--{/if}-->
         </div>
         <div class="side">
             <!--{if $user['uid']}-->
@@ -178,17 +193,22 @@
                 <div class="title">推荐专家</div>
                 <ul class="left-expert-list">
                     <!--{eval $expertlist=$this->fromcache('expertlist');}-->
-                    <!--{loop $expertlist $indexstat $expert}-->
+                    <!--{loop $expertlist $expert}-->
                     <li>
                         <div class="pic"><a title="{$expert['name']}" target="_blank" href="{url user/space/$expert['uid']}"><img width="50" height="50" alt="{$expert['username']}" src="{$expert['avatar']}"  onmouseover="pop_user_on(this, '{$expert[uid]}', '');"  onmouseout="pop_user_out();"/></a></div>
                         <h3><a title="{$expert['name']}" target="_blank" href="{url user/space/$expert['uid']}" onmouseover="pop_user_on(this, '{$expert[uid]}', 'text');"  onmouseout="pop_user_out();">{$expert['username']}</a></h3>
-                        <p>擅长:{$expert['categoryname']}</p>
                         <span>{$expert['answers']}回答</span>
                         <span>{$expert['supports']}赞同</span>
+                        <input type="button" value="向TA求助" class="button_4" onclick="javascript:document.location = '{url question/add/$expert['uid']}'">
                     </li>
                     <!--{/loop}-->
                 </ul>
             </div>
+
+            <!--广告位4-->
+            <!--{if (isset($adlist['index']['right1']) && trim($adlist['index']['right1']))}-->
+            <div>{$adlist['index']['right1']}</div>
+            <!--{/if}-->
             <div class="modbox mt10">
                 <h3 class="title">热门标签</h3>
                 <div class="hot-tags">
@@ -251,7 +271,7 @@
             }, 400, function() {
                 $(this).css({marginTop: "0px"}).find("li:first").appendTo(this);
             });
-             $(".pagination ul:first").animate();
+            $(".pagination ul:first").animate();
         }, 3000);
         //slider
         $(".pagination li").hover(function() {

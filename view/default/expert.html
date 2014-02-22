@@ -5,9 +5,13 @@
             <!--{loop $expertlist $expert}-->
             <div class="expert">
                 <a class="pic" target="_blank" title="{$expert['username']}" href="{url user/space/$expert['uid']}"><img width="80" height="80" src="{$expert['avatar']}" alt="{$expert['username']}"></a>
-                <a class="name" target="_blank" title="{$expert['username']}" href="{url user/space/$expert['uid']}">{$expert['username']}</a><span>&nbsp;<!--{if $expert['introduction']}-->({$expert['introduction']})<!--{/if}--></span><input type="button" onclick="javascript:document.location='{url question/add/$expert[uid]}'" class="button_4 flright" value="向TA求助"/>
+                <a class="name" target="_blank" title="{$expert['username']}" href="{url user/space/$expert['uid']}">{$expert['username']}</a><span>&nbsp;<!--{if $expert['introduction']}-->({$expert['introduction']})<!--{/if}--></span><input type="button" onclick="javascript:document.location = '{url question/add/$expert[uid]}'" class="button_4 flright" value="向TA求助"/>
                 <div class="general">
-                    <span>擅长领域：{$expert['categoryname']}</span>
+                    <span>擅长领域：
+                        <!--{loop $expert['category'] $category}-->
+                        <a target="_blank" href="{url category/view/$category['cid']}">{$category['categoryname']}</a>
+                        <!--{/loop}-->
+                    </span>
                     <span><em><a href="{url user/space_answer/$expert['uid']}">{$expert['answers']}</a></em>回答</span>
                     <span><em>{$expert['supports']}</em>赞同</span>
                     <p>简介：{$expert['signature']}</p>

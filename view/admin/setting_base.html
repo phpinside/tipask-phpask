@@ -127,11 +127,6 @@
             <td class="altbg2"><input class="radio" type="radio" {if $setting['allow_expert']}checked{/if} value="1" name="allow_expert">&nbsp;是&nbsp;&nbsp;<input class="radio" type="radio" {if !$setting['allow_expert']}checked{/if} value="0" name="allow_expert">&nbsp;否</td>
         </tr>
         <tr>
-            <td class="altbg1" width="45%"><b>站内提问回答需要达到的魅力值:</b><br>
-                <span class="smalltxt">填写魅力值（整数，包括负数）之后，当用户的魅力值小于该值时，将不能提问和回答，合理的设置可以让站内用户相互监督</span></td>
-            <td class="altbg2"><input type="text" name="allow_credit3" value="{$setting['allow_credit3']}" /></td>
-        </tr>
-        <tr>
             <td class="altbg1" width="45%"><b>启用验证码:</b><br>
                 <span class="smalltxt">验证码可以避免恶意注册及恶意灌水，请选择需要打开验证码的操作</span></td>
             <td class="altbg2">

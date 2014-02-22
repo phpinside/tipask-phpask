@@ -1,4 +1,6 @@
 <!--{template header}-->
+<!--{eval $adlist = $this->fromcache("adlist");}-->
+
 <script type="text/javascript" src="{SITE_URL}js/editor/ueditor.config.js"></script> 
 <script type="text/javascript" src="{SITE_URL}js/editor/ueditor.all.js"></script> 
 <div class="nav-line"><a class="first" href="{SITE_URL}">{$setting['site_name']}</a> &gt; <a href="{url question/view/$question['id']}">{$question['title']}</a> &gt; <span>编辑回答</span></div>
@@ -24,6 +26,11 @@
             </div>	
         </form>
     </div>
-    <div class="aside-right">法师打发似的</div>
+    <div class="aside-right">
+        <!--广告位5-->
+        <!--{if (isset($adlist['question_view']['right1']) && trim($adlist['question_view']['right1']))}-->
+        <div>{$adlist['question_view']['right1']}</div>
+        <!--{/if}-->
+    </div>
 </div>
 <!--{template footer}-->

@@ -152,7 +152,7 @@ class categorymodel {
             if (empty($line))
                 continue;
             @list($name, $categorydir) = explode('，', $line);
-            $categorydir = empty($categorydir) ? getpinyin($name) : $categorydir;
+            $categorydir = empty($categorydir) ?$name : $categorydir;
             $sql .= "('$name','$categorydir', $pid,$grade,$displayorder,$questions),";
             $displayorder++;
         }

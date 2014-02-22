@@ -55,6 +55,7 @@ class usercontrol extends base {
                 $this->load('ucenter');
                 $_ENV['ucenter']->register();
             }
+            $uid = $_ENV['user']->add($username, $password, $email);
             $_ENV['user']->refresh($uid);
             $this->credit($this->user['uid'], $this->setting['credit1_register'], $this->setting['credit2_register']); //注册增加积分
             //通行证处理

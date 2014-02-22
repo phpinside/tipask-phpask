@@ -111,8 +111,6 @@ function fillcategory(category2, value1, cateid) {
         }
     }
     $("#" + cateid).html(optionhtml);
-
-
 }
 
 //验证码

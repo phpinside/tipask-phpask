@@ -67,7 +67,6 @@ if ($user) {
         $content = '您可以正常提问和回答了!您的登录用户名是 '. $user['username'] . ',登录密码是 '.$randpasswd.',为了保证您的账号安全，请及时修改密码，完善个人信息!<br /><a href="'.$redirect.'">请点击此处完善个人信息</a>';
         $db->query('INSERT INTO ' . DB_TABLEPRE . "message  SET `from`='" . $setting['site_name'] . "' , `fromuid`=0 , `touid`=$userid  , `subject`='$subject' , `time`=" . time() . " , `content`='$content'");
         refresh($user);
-        exit('INSERT INTO ' . DB_TABLEPRE . "message  SET `from`='" . $setting['site_name'] . "' , `fromuid`=0 , `touid`=$userid  , `subject`='$subject' , `time`=" . time() . " , `content`='$content'");
     }
     header("Location:" . SITE_URL);
 }

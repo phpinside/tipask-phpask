@@ -1,4 +1,5 @@
 <!--{template header}-->
+<!--{eval $adlist = $this->fromcache("adlist");}-->
 <script type="text/javascript" src="{SITE_URL}js/editor/ueditor.config.js"></script> 
 <script type="text/javascript" src="{SITE_URL}js/editor/ueditor.all.js"></script> 
 <div class="nav-line">
@@ -28,7 +29,7 @@
                     <span><a  href="{url user/space/$question['authorid']}" target="_blank" onmouseover="pop_user_on(this, '{$question[authorid]}', 'text');"  onmouseout="pop_user_out();">{$question['author']}</a></span><span class="span-line">|</span>
                     <span>浏览{$question['views']}次</span>
                 </div>
-                <div class="timeright"><span><a href="#">检举</a></span><span class="span-line">|</span><span><a href="{url favorite/add/$question['id']}">收藏</a></span><span class="span-line">|</span>{$question['format_time']}</div>                    
+                <div class="timeright"><span><a href="{url favorite/add/$question['id']}">收藏</a></span><span class="span-line">|</span>{$question['format_time']}</div>                    
             </div>
             <div class="description">{$question['description']}</div> 
             <div class="mainbox mt10">
@@ -48,8 +49,16 @@
                 <span><input type="button" title="无满意答案的回答，可以直接结束提问，关闭问题" class="button_4" name="close_question" value="关闭问题"  onclick="close_question();"/></span>
             </div>
             <!--{/if}-->
+            <!--广告位1-->
+            <!--{if (isset($adlist['question_view']['inner1']) && trim($adlist['question_view']['inner1']))}-->
+            <div class="description">{$adlist['question_view']['inner1']}</div>
+            <!--{/if}-->
         </div>
         <div class="share-content">{$setting['question_share']}</div>
+        <!--广告位2-->
+        <!--{if (isset($adlist['question_view']['left1']) && trim($adlist['question_view']['left1']))}-->
+        <div class="share-content">{$adlist['question_view']['left1']}</div>
+        <!--{/if}-->
         <!--{if !$already && $user['uid']!= $question['authorid']}-->
         <div id="replyArea" class="your-answer-mod clearfix">
             <div class="title">我来回答</div>
@@ -141,7 +150,10 @@
                 </li>
                 <!--{/loop}-->
             </ul>
-
+         <!--广告位3-->
+        <!--{if (isset($adlist['question_view']['left2']) && trim($adlist['question_view']['left2']))}-->
+        <div>{$adlist['question_view']['left2']}</div>
+        <!--{/if}-->
         </div>
         <div class="pages">{$departstr}</div>
         <!--{if $solvelist}-->
@@ -153,6 +165,10 @@
                 <!--{/loop}-->
             </ul>
         </div>
+        <!--{/if}-->
+        <!--广告位4-->
+        <!--{if (isset($adlist['question_view']['left3']) && trim($adlist['question_view']['left3']))}-->
+        <div>{$adlist['question_view']['left3']}</div>
         <!--{/if}-->
     </div>
 
@@ -190,8 +206,12 @@
             </ul>
         </div>
         <!--{/if}-->
-       
+       <!--广告位5-->
+        <!--{if (isset($adlist['question_view']['right1']) && trim($adlist['question_view']['right1']))}-->
+        <div>{$adlist['question_view']['right1']}</div>
+        <!--{/if}-->
     </div>
+
 </div>
 <div id="catedialog" title="修改分类" style="display: none">
     <div id="dialogcate">
@@ -317,7 +337,7 @@
                                 var category3 = {$categoryjs[category3]};
                                 var selectedcid = "{$question['cid1']},{$question['cid2']},{$question['cid2']}";
                                 $(document).ready(function() {
-                        initcategory(category1);
+                                initcategory(category1);
                                 fillcategory(category2, $("#category1 option:selected").val(), "category2");
                                 fillcategory(category3, $("#category2 option:selected").val(), "category3");
                                 //关闭问题
@@ -465,23 +485,27 @@
                         }
 
                         //添加评论
-                        function addcomment(answerid) {                           
-                            var content = $("#comment_" + answerid + " input[name='content']").val();
-                            if (bytes($.trim(content)) < 5){
-                                alert("评论内容不能少于5字");
+                        function addcomment(answerid) {
+                        var content = $("#comment_" + answerid + " input[name='content']").val();
+                                if (g_uid == 0){
+                        login();
                                 return false;
-                            }
-                            $.ajax({
-                                type: "POST",
+                        }
+                        if (bytes($.trim(content)) < 5){
+                        alert("评论内容不能少于5字");
+                                return false;
+                        }
+                        $.ajax({
+                        type: "POST",
                                 url: "{url answer/addcomment}",
                                 data: "content=" + content + "&answerid=" + answerid,
                                 success: function(status) {
-                                    if (status == '1') {
-                                        $("#comment_" + answerid + " input[name='content']").val("");
+                                if (status == '1') {
+                                $("#comment_" + answerid + " input[name='content']").val("");
                                         load_comment(answerid);
-                                    }
                                 }
-                            });
+                                }
+                        });
                         }
 
                         //删除评论

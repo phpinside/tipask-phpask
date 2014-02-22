@@ -357,6 +357,17 @@ class admin_settingcontrol extends base {
             $this->setting['qqlogin_appid'] = trim($this->post['qqlogin_appid']);
             $this->setting['qqlogin_key'] = trim($this->post['qqlogin_key']);
             $_ENV['setting']->update($this->setting);
+            $this->setting = $this->cache->load('setting');
+            $logininc = array();
+            $logininc['appid'] = $this->setting['qqlogin_appid'];
+            $logininc['appkey'] = $this->setting['qqlogin_key'];
+            $logininc['callback'] = SITE_URL.'plugin/qqlogin/callback.php';
+            $logininc['scope'] = "get_user_info";
+            $logininc['errorReport'] = "true";
+            $logininc['storageType'] = "file";
+            $loginincstr = "<?php die('forbidden'); ?>\n".json_encode($logininc); 
+            $loginincstr = str_replace("\\", "", $loginincstr);
+            writetofile(TIPASK_ROOT."/plugin/qqlogin/API/comm/inc.php",$loginincstr);
             $message = 'qq互联参数保存成功！';
         }
         include template("setting_qqlogin", "admin");

@@ -89,17 +89,9 @@ class base {
                 $this->load('category');
                 $cachedata = $_ENV['category']->list_by_grade();
                 break;
-            case 'recommendlist'://精彩推荐问题
-                $this->load('question');
-                $cachedata = $_ENV['question']->list_by_condition("`status`=6");
-                break;
             case 'notelist'://首页右侧公告列表
                 $this->load('note');
-                $cachedata = $_ENV['note']->get_list(0,10);
-                break;
-            case 'famouslist'://问答名人堂
-                $this->load('famous');
-                $cachedata = $_ENV['famous']->get_list();
+                $cachedata = $_ENV['note']->get_list(0, 10);
                 break;
             case 'statistics'://首页统计，包含已解决、待解决
                 $this->load('question');
@@ -108,13 +100,13 @@ class base {
                 $cachedata['nosolves'] = $this->db->fetch_total('question', 'status=1'); //待解决问题数
                 $cachedata['bestadopt'] = round($cachedata['solves'] / ($cachedata['solves'] + $cachedata['nosolves']), 4) * 100;
                 break;
-            case 'expertlist':
-                $this->load('expert');
-                $cachedata = $_ENV['expert']->get_list();
-                break;
             case 'topiclist':
                 $this->load('topic');
-                $cachedata = $_ENV['topic']->get_list(1);
+                $cachedata = $_ENV['topic']->get_list(1,0,3);
+                break;
+            case 'expertlist':
+                $this->load('expert');
+                $cachedata = $_ENV['expert']->get_list(0, 0, $this->setting['list_indexexpert']);
                 break;
             case 'onlineusernum':
                 $this->load('user');

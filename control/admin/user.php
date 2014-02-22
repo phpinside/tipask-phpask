@@ -5,13 +5,13 @@
 class admin_usercontrol extends base {
 
     function admin_usercontrol(& $get, & $post) {
-        $this->base($get,$post);
+        $this->base($get, $post);
         $this->load('user');
         $this->load('usergroup');
         $this->load('famous');
     }
 
-    function ondefault($msg='') {
+    function ondefault($msg = '') {
         @$page = max(1, intval($this->get[2]));
         $pagesize = $this->setting['list_default'];
         $startindex = ($page - 1) * $pagesize;
@@ -79,6 +79,15 @@ class admin_usercontrol extends base {
             }
         }
         include template('adduser', 'admin');
+    }
+
+    function onexpert() {
+        if (isset($this->post['uid'])) {
+            $type = intval($this->get[2]);
+            $uids = $this->post['uid'];
+            $uids = $_ENV['user']->update_expert($uids, $type);
+            $this->ondefault("专家设置完成");
+        }
     }
 
     function onremove() {
