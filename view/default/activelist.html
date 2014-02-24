@@ -5,7 +5,7 @@
         <div class="modbox">
             <ul class="active-list clearfix">
                 <!--{loop $userlist $activeuser}-->
-                <li><a title="{$activeuser['username']}" href="#"><img width="80" height="80" src="{$activeuser['avatar']}" onmouseout="pop_user_out();" onmouseover="pop_user_on(this, '{$activeuser['uid']}', 'image_active');"></a><a class="name" title="{$activeuser['username']}" target="_blank" href="{url user/space/$activeuser['uid']}">{$activeuser['username']}</a></li>
+                <li><a title="{$activeuser['username']}" target="_blank" href="{url user/space/$activeuser['uid']}"><img width="80" height="80" src="{$activeuser['avatar']}" onmouseout="pop_user_out();" onmouseover="pop_user_on(this, '{$activeuser['uid']}', 'image_active');"></a><a class="name" title="{$activeuser['username']}" target="_blank" href="{url user/space/$activeuser['uid']}">{$activeuser['username']}</a></li>
                 <!--{/loop}-->
             </ul>
         </div>

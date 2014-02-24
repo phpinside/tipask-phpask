@@ -164,12 +164,18 @@ class questioncontrol extends base {
             $seo_description = str_replace("{wtbt}", $question['title'], $seo_description);
             $seo_description = str_replace("{wtzt}", $typedescarray[$question['status']], $seo_description);
             $seo_description = str_replace("{flmc}", $curnavname, $seo_description);
+            if (isset($bestanswer) && $bestanswer) {
+                $seo_description = str_replace("{zjda}", strip_tags($bestanswer['content']), $seo_description);
+            }
         }
         if ($this->setting['seo_question_keywords']) {
             $seo_keywords = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_question_keywords']);
             $seo_keywords = str_replace("{wtbt}", $question['title'], $seo_keywords);
             $seo_keywords = str_replace("{wtzt}", $typedescarray[$question['status']], $seo_keywords);
             $seo_keywords = str_replace("{flmc}", $curnavname, $seo_keywords);
+            if (isset($bestanswer) && $bestanswer) {
+                $seo_keywords = str_replace("{zjda}", strip_tags($bestanswer['content']), $seo_keywords);
+            }
         }
         include template($dirction);
     }
@@ -239,7 +245,7 @@ class questioncontrol extends base {
         $ret = $_ENV['answer']->adopt($qid, $answer);
         if ($ret) {
             $this->load("answer_comment");
-            $_ENV['answer_comment']->add($aid, $comment,$question['authorid'],$question['author']);
+            $_ENV['answer_comment']->add($aid, $comment, $question['authorid'], $question['author']);
             //把问题的悬赏送给被采纳为答案的回答者,同时发消息通知回答者
             $this->credit($answer['authorid'], $this->setting['credit1_adopt'], intval($question['price'] + $this->setting['credit2_adopt']), 0, 'adopt');
             $this->send($answer['authorid'], $question['id'], 1);
