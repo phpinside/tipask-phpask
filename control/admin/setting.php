@@ -327,16 +327,17 @@ class admin_settingcontrol extends base {
      */
     function onsearch() {
         if (isset($this->post['submit'])) {
+            $this->setting['search_placeholder'] = $this->post['search_placeholder'];
             $this->setting['xunsearch_open'] = $this->post['xunsearch_open'];
             $this->setting['xunsearch_sdk_file'] = $this->post['xunsearch_sdk_file'];
-            if (!file_exists($this->setting['xunsearch_sdk_file'])) {
+            if ($this->setting['xunsearch_open'] && !file_exists($this->setting['xunsearch_sdk_file'])) {
                 $type = 'errormsg';
                 $message = 'SDK文件不存在，请核实!';
-            } else {
-                $_ENV['setting']->update($this->setting);
+            } else {                
                 $type = 'correctmsg';
                 $message = '搜索设置成功!';
             }
+            $_ENV['setting']->update($this->setting);
         }
         include template('setting_search', 'admin');
     }

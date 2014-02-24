@@ -96,7 +96,7 @@
                     </div>            
                     <div class="searchbox">
                         <form name="searchform"  action="{url question/search}" method="post">
-                            <span class="round"><input autocomplete="off" maxlength="100"  class="js-sh-ipt input_key" tabindex="1" name="word" id="search-kw" value="{$word}"></span>
+                            <span class="round"><input autocomplete="off" maxlength="100" placeholder="{$setting['search_placeholder']}" class="js-sh-ipt input_key" tabindex="1" name="word" id="search-kw" value="{$word}" /></span>
                             <span class="button"><input type="button" id="search_btn" class="js-search-bt s_btn" value="搜索答案" /></span>
                             <span class="button"><input type="button" id="ask_btn" class="js-ask-bt s_btn" value="我要提问" /></span>
                         </form>

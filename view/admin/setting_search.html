@@ -24,6 +24,10 @@
             <td colspan="2">参数设置</td>
         </tr>
         <tr>
+            <td width="45%" class="altbg1"><b>搜索框提示文字</b><br><span class="smalltxt">可以留空</span></td>
+            <td class="altbg2"><input type="text" style="width:332px;" name="search_placeholder" value="{$setting['search_placeholder']}" /></td>
+        </tr>
+        <tr>
             <td class="altbg1" width="45%"><b>开启全文检索:</b><br><span class="smalltxt">需要先安装xunsearch程序</span></td>
             <td class="altbg2">
                 <input class="radio"  type="radio"  {if 1==$setting['xunsearch_open'] }checked{/if}  value="1" name="xunsearch_open"><label for="yes">是</label>&nbsp;&nbsp;&nbsp;&nbsp;

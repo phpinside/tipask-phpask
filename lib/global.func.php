@@ -31,12 +31,7 @@ function url($var, $url = '') {
     global $setting;
     $location = '?' . $var . $setting['seo_suffix'];
     if ($setting['seo_on']) {
-        $rewritearray = array('question/view/', 'category/view/', 'category/list/', 'category/recommend/', 'user/space/', 'user/scorelist/');
-        foreach ($rewritearray as $item) {
-            if (false !== strpos($var, $item)) {
-                $location = $var . $setting['seo_suffix'];
-            }
-        }
+        $location = $var . $setting['seo_suffix'];
     }
     $location = urlmap($location, 2);
     if ($url)
@@ -1057,4 +1052,5 @@ function get_remote_image($url, $savepath) {
     fclose($fp2);
     return $savepath;
 }
+
 ?>

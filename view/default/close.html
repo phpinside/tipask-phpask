@@ -267,7 +267,7 @@
                                     document.location.href = "{url question/delete/$question['id']}";
                                 }
                             });
-                            $(".anscontent img,.description img").each(function(i) {
+                            $(".anscontent img,.description img,.mainbox img,.qa-content img").each(function(i) {
                                 var img = $(this);
                                 $.ajax({
                                     type: "POST",
