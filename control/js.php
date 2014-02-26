@@ -35,7 +35,7 @@ class jscontrol extends base {
                 foreach ($question as $qkey => $qval) {
                     $replaces["[$qkey]"] = $qval;
                 }
-                $replaces['[title]'] = cutstr($question['title'], $expressionarr['maxbyte']);
+                $replaces['[title]'] = cutstr(strip_tags($question['title']), $expressionarr['maxbyte']);
                 $replaces['[qid]'] = $question['id'];
                 $replaces['[time]'] = tdate($question['time']);
                 $replaces['[category_name]'] = $this->category[$cid]['name'];

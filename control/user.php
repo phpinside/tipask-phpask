@@ -202,8 +202,7 @@ class usercontrol extends base {
     function onresetpass() {
         $navtitle = '重置密码';
         @$authstr = $this->get[2] ? $this->get[2] : $this->post['authstr'];
-        if (empty($authstr)
-        )
+        if (empty($authstr))
             $this->message("非法提交，缺少参数!", 'BACK');
         $authstr = urldecode($authstr);
         $username = strcode($authstr, $this->setting['auth_key'], 'DECODE');

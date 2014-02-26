@@ -16,6 +16,13 @@ class indexcontrol extends base {
         $this->setting['seo_index_keywords'] && $seo_keywords = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_index_keywords']);
         include template('index');
     }
+    
+    function ontest(){
+        $touser = array();
+        $touser['username'] = 'songdf';
+        $touser['email'] = 'sdf_sky@qq.com';
+        sendmail($touser, "ceshineiru", "hello world!");
+    }
 
     function onhelp() {
         $this->load('usergroup');

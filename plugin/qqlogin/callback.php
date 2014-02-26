@@ -56,10 +56,6 @@ if ($user) {
         (!is_dir(TIPASK_ROOT . $dir2)) && forcemkdir(TIPASK_ROOT . $dir2);
         (!is_dir(TIPASK_ROOT . $dir3)) && forcemkdir(TIPASK_ROOT . $dir3);
         $smallimg = $dir3 . "/small_" . $uid . '.jpg';
-        $avatar_dir = glob(TIPASK_ROOT . $dir3 . "/small_{$uid}.*");
-        foreach ($avatar_dir as $imgfile) {
-            unlink($imgfile);
-        }
         get_remote_image($userinfo['figureurl_qq_2'], TIPASK_ROOT . $smallimg);
         $user = get_user($uid);
         $redirect = url("user/profile",1);
@@ -67,7 +63,11 @@ if ($user) {
         $content = '您可以正常提问和回答了!您的登录用户名是 '. $user['username'] . ',登录密码是 '.$randpasswd.',为了保证您的账号安全，请及时修改密码，完善个人信息!<br /><a href="'.$redirect.'">请点击此处完善个人信息</a>';
         $db->query('INSERT INTO ' . DB_TABLEPRE . "message  SET `from`='" . $setting['site_name'] . "' , `fromuid`=0 , `touid`=$userid  , `subject`='$subject' , `time`=" . time() . " , `content`='$content'");
         refresh($user);
+        header("Location:" . SITE_URL);
+        exit;
     }
+    $user = get_user($userid);
+    refresh($user);
     header("Location:" . SITE_URL);
 }
 

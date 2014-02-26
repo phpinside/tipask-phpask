@@ -27,6 +27,7 @@
                                 <!--{else}-->
                                 <input type='checkbox' value="{$message['fromuid']}" name="message_author[]"/>
                                 <a href="{url user/space/$message['fromuid']}">{$message['from']}</a> 对 <a href="{url user/score}">您</a> 说：
+                                {$message['subject']}
                                 <!--{/if}-->
                             </h3>
                             <div class="detail" onclick="javascript:document.location = '{url message/view/$type/$message[fromuid]}';">{eval echo cutstr($message['content'],300,'')}</div>

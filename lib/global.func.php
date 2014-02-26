@@ -423,7 +423,7 @@ function tcookie($var, $value = 0, $life = 0) {
 
 function runlog($file, $message, $halt = 0) {
     $nowurl = $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : ($_SERVER['PHP_SELF'] ? $_SERVER['PHP_SELF'] : $_SERVER['SCRIPT_NAME']);
-    $log = tdate($_SERVER['REQUEST_TIME'], 'Y-m-d H:i:s') . "\t" . $_SERVER['REMOTE_ADDR'] . "\t{$nowurl}\t" . str_replace(array("\r", "\n"), array(' ', ' '), trim($message)) . "\n";
+    $log = date($_SERVER['REQUEST_TIME'], 'Y-m-d H:i:s') . "\t" . $_SERVER['REMOTE_ADDR'] . "\t{$nowurl}\t" . str_replace(array("\r", "\n"), array(' ', ' '), trim($message)) . "\n";
     $yearmonth = gmdate('Ym', $_SERVER['REQUEST_TIME']);
     $logdir = TIPASK_ROOT . '/data/logs/';
     if (!is_dir($logdir))
@@ -590,6 +590,8 @@ function topen($url, $timeout = 15, $post = '', $cookie = '', $limit = 0, $ip = 
 function sendmail($touser, $subject, $message, $from = '') {
     global $setting;
     $toemail = $touser['email'];
+    if (!$toemail || $toemail == 'null')
+        return false;
     $tousername = $touser['username'];
     $message = <<<EOT
 		<html>
@@ -617,10 +619,7 @@ EOT;
     } else {
         $email_from = $from == '' ? '=?' . TIPASK_CHARSET . '?B?' . base64_encode($setting['site_name']) . "?= <" . $setting['maildefault'] . ">" : (preg_match('/^(.+?) \<(.+?)\>$/', $from, $mats) ? '=?' . TIPASK_CHARSET . '?B?' . base64_encode($mats[1]) . "?= <$mats[2]>" : $from);
     }
-
-    $email_to = preg_match('/^(.+?) \<(.+?)\>$/', $toemail, $mats) ? ($mailusername ? '=?' . CHARSET . '?B?' . base64_encode($mats[1]) . "?= <$mats[2]>" : $mats[2]) : $toemail;
-    ;
-
+    $email_to = preg_match('/^(.+?) \<(.+?)\>$/', $toemail, $mats) ? ($mailusername ? '=?' . TIPASK_CHARSET . '?B?' . base64_encode($mats[1]) . "?= <$mats[2]>" : $mats[2]) : $toemail;
     $email_subject = '=?' . TIPASK_CHARSET . '?B?' . base64_encode(preg_replace("/[\r|\n]/", '', '[' . $setting['site_name'] . '] ' . $subject)) . '?=';
     $email_message = chunk_split(base64_encode(str_replace("\n", "\r\n", str_replace("\r", "\n", str_replace("\r\n", "\n", str_replace("\n\r", "\r", $message))))));
 
@@ -632,13 +631,11 @@ EOT;
         }
         return false;
     } elseif ($mailsend == 2) {
-
         if (!$fp = fsockopen($mailserver, $mailport, $errno, $errstr, 30)) {
             runlog('SMTP', "($mailserver:$mailport) CONNECT - Unable to connect to the SMTP server", 0);
             return false;
         }
         stream_set_blocking($fp, true);
-
         $lastmessage = fgets($fp, 512);
         if (substr($lastmessage, 0, 3) != '220') {
             runlog('SMTP', "($mailserver:$mailport) CONNECT - $lastmessage", 0);
@@ -651,7 +648,6 @@ EOT;
             runlog('SMTP', "($mailserver:$mailport) HELO/EHLO - $lastmessage", 0);
             return false;
         }
-
         while (1) {
             if (substr($lastmessage, 3, 1) != '-' || empty($lastmessage)) {
                 break;
@@ -731,7 +727,6 @@ EOT;
         ini_set('SMTP', $mailserver);
         ini_set('smtp_port', $mailport);
         ini_set('sendmail_from', $email_from);
-
         if (function_exists('mail') && @mail($email_to, $email_subject, $email_message, $headers)) {
             return true;
         }

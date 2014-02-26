@@ -14,7 +14,7 @@ $(document).ready(function() {
 		}
 	});
 });
-function remove(nid){
+function removenav(nid){
 	if(confirm('删除该导航，确定继续?')){
 		window.location="index.php?admin_nav/remove/"+nid+"{$setting['seo_suffix']}";
 	}
@@ -58,7 +58,7 @@ function remove(nid){
 					<td width="8%" align="center" class="altbg1">{if $nav['target']}新窗口{else}本窗口{/if}</td>
 					<td width="7%" align="center" class="altbg2"><a href="index.php?admin_nav/available/$nav['id']/$nav['available']{$setting['seo_suffix']}">{if $nav['available']}点击禁用{else}<font color="green">点击启用</font>{/if}</a></td>
 					<td width="5%" align="center" class="altbg1"><img src="css/admin/edit.png" onclick="document.location.href='index.php?admin_nav/edit/$nav['id']{$setting['seo_suffix']}'"></td>
-					<td width="5%" align="center" class="altbg2">{if $nav['type']}不可删除{else}<img src="css/admin/remove.png" onclick="remove({$nav['id']})">{/if}</td>
+					<td width="5%" align="center" class="altbg2">{if $nav['type']}不可删除{else}<img src="css/admin/remove.png" onclick="removenav({$nav['id']})">{/if}</td>
 				</tr>
 			</table>
 		</li>
