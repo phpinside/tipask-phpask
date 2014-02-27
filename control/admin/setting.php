@@ -357,6 +357,7 @@ class admin_settingcontrol extends base {
             $this->setting['qqlogin_open'] = $this->post['qqlogin_open'];
             $this->setting['qqlogin_appid'] = trim($this->post['qqlogin_appid']);
             $this->setting['qqlogin_key'] = trim($this->post['qqlogin_key']);
+            $this->setting['qqlogin_avatar'] = trim($this->post['qqlogin_avatar']);
             $_ENV['setting']->update($this->setting);
             $this->setting = $this->cache->load('setting');
             $logininc = array();

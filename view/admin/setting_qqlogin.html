@@ -32,6 +32,12 @@
             <td width="45%"><b>KEY:</b><br><span class="smalltxt">qq互联平台管理中心的KEY值</span></td>
             <td><input type="text" size="60" value="{$setting['qqlogin_key']}" name="qqlogin_key"></td>
         </tr>
+        <tr>
+            <td width="45%"><b>是否自动下载QQ头像：</b><br><span class="smalltxt">设置之后将设置用户头像为qq头像，会导致qq登录速度较慢。</span></td>
+            <td>
+                <input type="radio" value="1" name="qqlogin_avatar" {if $setting['qqlogin_avatar']}checked{/if}/>是&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="0" name="qqlogin_avatar" {if !$setting['qqlogin_open']}checked{/if}/>否
+            </td>
+        </tr>
 
     </table>
     <br>

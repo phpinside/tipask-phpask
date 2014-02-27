@@ -46,7 +46,7 @@ if ($user) {
     $randpasswd = strtolower(random(6, 1));
     $uid = add_user($userinfo['nickname'], $randpasswd, $gender, $token, $openid);
     $userid = $uid;
-    if ($uid) {
+    if ($uid && $setting['qqlogin_avatar']) {
         $avatardir = "/data/avatar/";
         $uid = sprintf("%09d", $uid);
         $dir1 = $avatardir . substr($uid, 0, 3);
@@ -58,15 +58,19 @@ if ($user) {
         $smallimg = $dir3 . "/small_" . $uid . '.jpg';
         get_remote_image($userinfo['figureurl_qq_2'], TIPASK_ROOT . $smallimg);
         $user = get_user($uid);
-        $redirect = url("user/profile",1);
+        $redirect = url("user/profile", 1);
         $subject = "恭喜您在" . $setting['site_name'] . "注册成功！";
-        $content = '您可以正常提问和回答了!您的登录用户名是 '. $user['username'] . ',登录密码是 '.$randpasswd.',为了保证您的账号安全，请及时修改密码，完善个人信息!<br /><a href="'.$redirect.'">请点击此处完善个人信息</a>';
+        $content = '您可以正常提问和回答了!您的登录用户名是 ' . $user['username'] . ',登录密码是 ' . $randpasswd . ',为了保证您的账号安全，请及时修改密码，完善个人信息!<br /><a href="' . $redirect . '">请点击此处完善个人信息</a>';
         $db->query('INSERT INTO ' . DB_TABLEPRE . "message  SET `from`='" . $setting['site_name'] . "' , `fromuid`=0 , `touid`=$userid  , `subject`='$subject' , `time`=" . time() . " , `content`='$content'");
         refresh($user);
         header("Location:" . SITE_URL);
         exit;
     }
     $user = get_user($userid);
+    $redirect = url("user/profile", 1);
+    $subject = "恭喜您在" . $setting['site_name'] . "注册成功！";
+    $content = '您可以正常提问和回答了!您的登录用户名是 ' . $user['username'] . ',登录密码是 ' . $randpasswd . ',为了保证您的账号安全，请及时修改密码，完善个人信息!<br /><a href="' . $redirect . '">请点击此处完善个人信息</a>';
+    $db->query('INSERT INTO ' . DB_TABLEPRE . "message  SET `from`='" . $setting['site_name'] . "' , `fromuid`=0 , `touid`=$userid  , `subject`='$subject' , `time`=" . time() . " , `content`='$content'");
     refresh($user);
     header("Location:" . SITE_URL);
 }

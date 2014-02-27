@@ -30,6 +30,7 @@ class answermodel {
         $bestanswer['format_adopttime'] = tdate($bestanswer['adopttime']);
         $bestanswer['format_time'] = tdate($bestanswer['time']);
         $bestanswer['author_avartar'] = get_avatar_dir($bestanswer['authorid']);
+        $bestanswer['tags'] = tstripslashes(unserialize($bestanswer['tag']));
         $bestanswer['userinfo'] = array();
         $author = $this->db->fetch_first("SELECT * FROM " . DB_TABLEPRE . "user WHERE uid='" . $bestanswer['authorid'] . "'");
         if ($author) {

@@ -49,7 +49,20 @@
                 </p>
             </div>
             <div class="bd">
-                <div class="qa-content">{$bestanswer['content']}</div>
+                <div class="qa-content">
+                            {$bestanswer['content']}
+                            <div class="appendcontent">
+                                <!--{loop $bestanswer['tags'] $tagindex $tag}-->                        
+                                <!--{if ($tagindex%2) == 0}-->
+                                <!--{if $tagindex!=0}-->
+                                <!--{/if}-->
+                                <span style="color:#5EBB0B;">追问:</span>{$tag}
+                                <!--{else}-->                        
+                                <span style="color:#999999;">回答:</span>{$tag}
+                                <!--{/if}-->
+                                <!--{/loop}-->
+                            </div>
+                        </div>
             </div>
             <div class="clr"></div>
             <div class="comment-box mt10">
@@ -106,7 +119,20 @@
                             </div>
                             <div class="avarta-name"><a target="_blank" title="{$answer['author']}" href="{url user/space/$answer['authorid']}" onmouseover="pop_user_on(this, '{$answer[authorid]}', 'text');"  onmouseout="pop_user_out();">{eval echo cutstr($answer['author'],7,'');}</a></div>                           
                         </div>
-                        <div class="anscontent">{$answer['content']}</div>
+                        <div class="anscontent">
+                            {$answer['content']}
+                            <div class="appendcontent">
+                                <!--{loop $answer['tags'] $tagindex $tag}-->                        
+                                <!--{if ($tagindex%2) == 0}-->
+                                <!--{if $tagindex!=0}-->
+                                <!--{/if}-->
+                                <span style="color:#5EBB0B;">追问:</span>{$tag}
+                                <!--{else}-->                        
+                                <span style="color:#999999;">回答:</span>{$tag}
+                                <!--{/if}-->
+                                <!--{/loop}-->
+                            </div>
+                        </div>
                     </div>
                     <div class="clr"></div>
                     <div class="comment-box mt10">
