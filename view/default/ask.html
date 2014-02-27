@@ -36,6 +36,9 @@
                     <span id="codetip"></span>
                     <!--{/if}-->
                     <input type="hidden" name="cid" id="cid"/>
+                    <input type="hidden" name="cid1" id="cid1" value="0"/>
+                    <input type="hidden" name="cid2" id="cid2" value="0"/>
+                    <input type="hidden" name="cid3" id="cid3" value="0"/>
                     <input type="hidden" value="{$askfromuid}" name="askfromuid" />  
                     <input type="submit" value="提交问题" class="normal-button flright"  name="submit" />
                     <!--<div class="toweibo"><label style="padding:0;"><input type="checkbox" value="1" name="tobbs" />同步到微博</label></div>-->
@@ -110,14 +113,17 @@
         if (category1 > 0) {
             selectedcatestr = $("#category1 option:selected").html();
             $("#cid").val(category1);
+            $("#cid1").val(category1);
         }
         if (category2 > 0) {
             selectedcatestr += " > " + $("#category2 option:selected").html();
             $("#cid").val(category2);
+            $("#cid2").val(category2);
         }
         if (category3 > 0) {
             selectedcatestr += " > " + $("#category3 option:selected").html();
             $("#cid").val(category3);
+            $("#cid3").val(category3);
         }
         $("#selectedcate").html(selectedcatestr);
         $("#changecategory").html("更改");

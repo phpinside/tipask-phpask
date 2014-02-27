@@ -23,11 +23,10 @@ class questioncontrol extends base {
         if (isset($this->post['submit'])) {
             $title = htmlspecialchars($this->post['title']);
             $description = $this->post['description'];
-            $cid1 = $this->post['classlevel1'];
-            $cid2 = $this->post['classlevel2'];
-            $cid3 = $this->post['classlevel3'];
+            $cid1 = $this->post['cid1'];
+            $cid2 = $this->post['cid2'];
+            $cid3 = $this->post['cid3'];
             $cid = $this->post['cid'];
-            $tags = explode(" ", trim($this->post['qtags']));
             $hidanswer = intval($this->post['hidanswer']) ? 1 : 0;
             $price = intval($this->post['givescore']);
             $askfromuid = $this->post['askfromuid'];
@@ -62,7 +61,6 @@ class questioncontrol extends base {
                     $this->message("你已超过每小时最大提问数" . $this->user['questionlimits'] . ',请稍后再试！', 'BACK');
 
             $qid = $_ENV['question']->add($title, $description, $hidanswer, $price, $cid, $cid1, $cid2, $cid3, $status);
-            $tags && $_ENV['tag']->multi_add(array_splice($tags, 0, 5), $qid);
 
             //增加用户积分，扣除用户悬赏的财富
             if ($this->user['uid']) {
@@ -91,7 +89,7 @@ class questioncontrol extends base {
             }
         } else {
             if (0 == $this->user['uid']) {
-                $this->setting["ucenter_open"] && $this->message("UCenter开启后不能匿名提问!", 'BACK');
+                $this->setting["ucenter_open"] && $this->message("UCenter开启后游客不能提问!", 'BACK');
             }
             $categoryjs = $_ENV['category']->get_js();
             $word = $this->post['word'];
