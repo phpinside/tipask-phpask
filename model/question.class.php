@@ -139,6 +139,7 @@ class questionmodel {
         while ($question = $this->db->fetch_array($query)) {
             $question['category_name'] = $this->base->category[$question['cid']]['name'];
             $question['format_time'] = tdate($question['time']);
+            $question['description'] = strip_tags($question['description']);
             $questionlist[] = $question;
         }
         return $questionlist;

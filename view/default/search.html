@@ -47,6 +47,7 @@
             <!--{if $departstr}-->
             <div class="pages">{$departstr}</div>
             <!--{/if}-->
+            <!--{if $setting['xunsearch_open']}-->
             <div class="mod-relation">
                 <div id="rs">
                     <table>
@@ -65,14 +66,22 @@
                     </table>
                 </div>
             </div>
+            <!--{/if}-->
         </div>
         <div class="hot-search">
             <div class="hd"><h3>热门搜索</h3></div>
             <div class="bd">
                 <ul>
+                    <!--{if $hot_words}-->
                     <!--{loop $hot_words $hostword}-->
                     <li><a href="{url question/search/$hostword}">{$hostword}</a></li>
                     <!--{/loop}-->
+                    <!--{else}-->
+                    <!--{eval $wordslist = unserialize($this->setting['hot_words']);}-->
+                    <!--{loop $wordslist $hotword}-->
+                    <li><a {if $hotword['qid']}href="{url question/view/$hotword['qid']}" {else}href="{url question/search/$hotword['w']}"{/if}>{$hotword['w']}</a></li>
+                    <!--{/loop}-->    
+                    <!--{/if}-->
                 </ul>
             </div>
         </div>
