@@ -5,7 +5,7 @@
     <div class="usercard_c1 clearfix">
         <div class="usercard_c1_l"><a href="{url user/space/$userinfo['uid']}" class="avatar"><img src="{$userinfo['avatar']}" alt="{$userinfo['username']}"/></a></div>
         <div class="usercard_c1_r">
-            <h2 class="tit"><a class="tx_user" href="{url user/space/$userinfo['uid']}">{$userinfo['username']}</a> <span class="tx_id">({$userinfo_group['grouptitle']})</span></h2>
+            <h2 class="tit"><a class="tx_user" href="{url user/space/$userinfo['uid']}">{$userinfo['username']}</a>{if $userinfo['expert']}<i class="icon_expert" title='专家'></i>{/if}<span class="tx_id">({$userinfo_group['grouptitle']})</span></h2>
             <!--{if $userinfo['introduction']}-->
             <p class="info">{$userinfo['introduction']}</p>
             <!--{/if}-->
