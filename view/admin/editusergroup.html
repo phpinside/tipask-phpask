@@ -82,12 +82,6 @@
                     <input name="regular_code[]" value="expert/default"  {if false!==strpos($group['regulars'],'expert/default')}checked{/if}  class="checkbox" type="checkbox">专家列表
                 </div>
                 <div style="width: 200px; float: left;">
-                    <input name="regular_code[]" value="user/famouslist"  {if false!==strpos($group['regulars'],'user/famouslist')}checked{/if}  class="checkbox" type="checkbox">推荐之星
-                </div>
-                <div style="width: 200px; float: left;">
-                    <input name="regular_code[]" value="index/taglist,question/tag"  {if false!==(strpos($group['regulars'],'index/taglist') && strpos($group['regulars'],'question/tag'))}checked{/if}  class="checkbox" type="checkbox">标签大全
-                </div>
-                <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="user/qqlogin"  {if false!==strpos($group['regulars'],'user/qqlogin')}checked{/if}  class="checkbox" type="checkbox">QQ登录
                 </div>
                 <div style="width: 200px; float: left;">
@@ -101,7 +95,17 @@
                     <input name="regular_code[]" value="question/add"  {if false!==strpos($group['regulars'],'question/add')}checked{/if}  class="checkbox" type="checkbox">提问题
                 </div>
                 <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="question/answer"  {if false!==strpos($group['regulars'],'question/answer')}checked{/if}  class="checkbox" type="checkbox">回答问题
+                </div>
+                <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="user/space_ask,user/space_answer,user/space"  {if false!==strpos($group['regulars'],'user/space_ask,user/space_answer,user/space')}checked{/if}  class="checkbox" type="checkbox">用户空间
+                </div>
+                <!--{if 3!=$group['grouptype']}-->
+                <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="question/appendanswer"  {if false!==strpos($group['regulars'],'question/appendanswer')}checked{/if}  class="checkbox" type="checkbox">追问
+                </div>
+                <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="answer/addcomment"  {if false!==strpos($group['regulars'],'answer/addcomment')}checked{/if}  class="checkbox" type="checkbox">回答评论
                 </div>
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="question/edittag"  {if false!==strpos($group['regulars'],'question/edittag')}checked{/if}  class="checkbox" type="checkbox">编辑问题标签
@@ -110,17 +114,7 @@
                     <input name="regular_code[]" value="favorite/add"  {if false!==strpos($group['regulars'],'favorite/add')}checked{/if}  class="checkbox" type="checkbox">收藏问题
                 </div>
                 <div style="width: 200px; float: left;">
-                    <input name="regular_code[]" value="question/answer"  {if false!==strpos($group['regulars'],'question/answer')}checked{/if}  class="checkbox" type="checkbox">回答问题
-                </div>
-                <div style="width: 200px; float: left;">
-                    <input name="regular_code[]" value="answer/addcomment"  {if false!==strpos($group['regulars'],'answer/addcomment')}checked{/if}  class="checkbox" type="checkbox">回答评论
-                </div>
-                <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="inform/add"  {if false!==strpos($group['regulars'],'inform/add')}checked{/if}  class="checkbox" type="checkbox">举报回答
-                </div>
-                <!--{if 6!=$group['groupid']}-->
-                <div style="width: 200px; float: left;">
-                    <input name="regular_code[]" value="user/space_ask,user/space_answer,user/space"  {if false!==strpos($group['regulars'],'user/space_ask,user/space_answer,user/space')}checked{/if}  class="checkbox" type="checkbox">用户空间
                 </div>
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="question/answercomment"  {if false!==strpos($group['regulars'],'question/answercomment')}checked{/if}  class="checkbox" type="checkbox">问题评论
@@ -132,7 +126,7 @@
             </td>
         </tr>
 
-        <!--{if 6!=$group['groupid']}-->
+        <!--{if 3!=$group['grouptype']}-->
         <tr id="regular_user">
             <td class="altbg1" width="18%">
                 <input name="chkGroup" value="regular_user"  class="checkbox" type="checkbox" onclick="selectCell(this);">用户相关（前台）
@@ -185,11 +179,6 @@
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="question/adopt"  {if false!==strpos($group['regulars'],'question/adopt')}checked{/if}  class="checkbox" type="checkbox">采纳答案
                 </div>
-                <!--
-                <div style="width: 200px; float: left;">
-                    <input name="regular_code[]" value="question/govote"  {if false!==strpos($group['regulars'],'question/govote')}checked{/if}  class="checkbox" type="checkbox">问题投票
-                </div>
-                -->
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="question/close"  {if false!==strpos($group['regulars'],'question/close')}checked{/if}  class="checkbox" type="checkbox">关闭问题
                 </div>

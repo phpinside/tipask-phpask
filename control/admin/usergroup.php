@@ -18,7 +18,7 @@ class admin_usergroupcontrol extends base {
 
     /*系统用户组列表*/
     function onsystem() {
-        $usergrouplist = $_ENV['usergroup']->get_list(1);
+        $usergrouplist = $_ENV['usergroup']->get_list(array(1,3));
         include template('systemgrouplist','admin');
     }
 

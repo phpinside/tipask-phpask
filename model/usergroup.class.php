@@ -33,7 +33,10 @@ class usergroupmodel {
      */
     function get_list($grouptype=2) {
         $grouplist = array();
-        $query = $this->db->query("SELECT * FROM `" .DB_TABLEPRE."usergroup` WHERE grouptype=$grouptype ORDER BY `groupid`  ");
+        if(is_array($grouptype)){
+            $grouptype = implode(",", $grouptype);
+        }
+        $query = $this->db->query("SELECT * FROM `" .DB_TABLEPRE."usergroup` WHERE grouptype IN ($grouptype) ORDER BY `groupid`  ");
         while($group = $this->db->fetch_array($query)) {
             $grouplist[] = $group;
         }
