@@ -18,12 +18,12 @@ class topicmodel {
         return $this->db->fetch_first("SELECT * FROM " . DB_TABLEPRE . "topic WHERE id='$id'");
     }
 
-    function get_list($showquestion=0, $start=0, $limit=6) {
+    function get_list($showquestion=0, $start=0, $limit=6,$questionsize=10) {
         $topiclist = array();
         $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "topic order by displayorder asc LIMIT $start,$limit");
         while ($topic = $this->db->fetch_array($query)) {
             ($showquestion == 1) && $topic['questionlist'] = $this->get_questions($topic['id']); //首页专题掉用
-            ($showquestion == 2) && $topic['questionlist'] = $this->get_questions($topic['id'], 0, 10); //专题列表页掉用
+            ($showquestion == 2) && $topic['questionlist'] = $this->get_questions($topic['id'], 0, $questionsize); //专题列表页掉用
             $topiclist[] = $topic;
         }
         return $topiclist;

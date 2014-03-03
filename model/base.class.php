@@ -102,7 +102,7 @@ class base {
                 break;
             case 'topiclist':
                 $this->load('topic');
-                $cachedata = $_ENV['topic']->get_list(1,0,3);
+                $cachedata = $_ENV['topic']->get_list(1,0,3,4);
                 break;
             case 'expertlist':
                 $this->load('expert');
