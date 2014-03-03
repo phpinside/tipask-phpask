@@ -212,7 +212,7 @@ em {font-style: normal;color:#E63A00;}
 .topic_content .topic_r p{margin-left: 15px;padding-bottom: 3px;}
 
 /*专家模块*/
-.experts .expert{ position:relative; margin-bottom:5px; padding:10px 10px 3px 110px; border:1px solid #D5D5D5; background:#FCFCFC; zoom:1;}
+.experts .expert{ position:relative; margin-bottom:5px; padding:10px 10px 3px 110px; border:1px solid #D5D5D5; background:#FCFCFC; zoom:1;min-height: 100px;}
 .experts .expert ul{margin-bottom:10px;}
 .experts .expert ul li{width: 260px;float:left;height: 23px;background: url("lidot.gif") no-repeat scroll 2px 10px transparent;padding:0 0 0 8px;}
 .experts .pic{ position:absolute; top:10px; left:10px;}
