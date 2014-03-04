@@ -18,22 +18,29 @@
             <tr class="header" ><td colspan="7">用户列表</td></tr>
             <tr class="altbg1"><td colspan="7">可以通过如下搜索条件，检索用户</td></tr>
             <tr>
-                <td width="20%" >用户名:<input class="txt" name="srchname"></td>
-                <td  width="20%">UID:<input class="txt" name="srchuid"></td>
-                <td  width="20%">Email:<input class="txt" name="srchemail"></td>
+                <td width="20%" >用户名:<input class="txt" name="srchname" value="{$search['srchname']}" /></td>
+                <td  width="20%">UID:<input class="txt" name="srchuid" value="{$search['srchuid']}" /></td>
+                <td  width="20%">Email:<input class="txt" name="srchemail" value="{$search['srchemail']}" /></td>
                 <td rowspan="2" ><input class="btn" type="submit" value="提 交"></td>
             </tr>
             <tr>
-                <td  width="30%">注册日期:<input class="txt" id="timestart" name="srchregdatestart">到<input class="txt" id="timeend" name="srchregdateend"></td>
+                <td  width="30%">注册日期:<input class="txt" id="timestart" name="srchregdatestart" value="{$search['srchregdatestart']}" />到<input class="txt" id="timeend" name="srchregdateend" value="{$search['srchregdateend']}" /></td>
                 <td  width="20%">用户组：
                     <select name="srchgroupid">
                         <option value="0">--不限--</option>
-                        <!--{loop $usergrouplist $group}-->
-                        <option value="{$group['groupid']}">{$group['grouptitle']}</option>
-                        <!--{/loop}-->
+                        <optgroup label="会员用户组">
+                            <!--{loop $usergrouplist $group}-->
+                            <option {if $search['srchgroupid'] == $group['groupid']}selected{/if} value="{$group['groupid']}">{$group['grouptitle']}</option>
+                            <!--{/loop}-->
+                        </optgroup>
+                        <optgroup label="系统用户组">
+                            <!--{loop $sysgrouplist $group}-->
+                            <option {if $search['srchgroupid'] == $group['groupid']}selected{/if} value="{$group['groupid']}">{$group['grouptitle']}</option>
+                            <!--{/loop}-->
+                        </optgroup>
                     </select>
                 </td>
-                <td  width="20%">注册IP:<input class="txt" name="srchregip"></td>
+                <td  width="20%">注册IP:<input class="txt" name="srchregip" value="{$search['srchregip']}"></td>
             </tr>
         </tbody>
     </table>
@@ -79,7 +86,7 @@
             alert('你没有选择任何用户');
             return false;
         }
-        document.userForm.action = "index.php?admin_user/expert/"+type;
+        document.userForm.action = "index.php?admin_user/expert/" + type;
         document.userForm.submit();
 
     }

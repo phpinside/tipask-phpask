@@ -19,54 +19,56 @@ class admin_usercontrol extends base {
         $usernum = $this->db->fetch_total('user');
         $departstr = page($usernum, $pagesize, $page, "admin_user/default");
         $msg && $message = $msg;
-        $usergrouplist = $_ENV['usergroup']->get_list(1);
+        $usergrouplist = $_ENV['usergroup']->get_list();
+        $sysgrouplist = $_ENV['usergroup']->get_list(1);
         include template('userlist', 'admin');
     }
 
     function onsearch() {
-        $user = array();
+        $search = array();
         if (count($this->get) > 2) {
-            $user['srchname'] = $this->get[2];
-            $user['srchuid'] = $this->get[3];
-            $user['srchemail'] = $this->get[4];
-            $user['srchregdatestart'] = $this->get[5];
-            $user['srchregdateend'] = $this->get[6];
-            $user['srchregip'] = $this->get[7];
-            $user['srchgroupid'] = $this->get[8];
+            $search['srchname'] = $this->get[2];
+            $search['srchuid'] = $this->get[3];
+            $search['srchemail'] = $this->get[4];
+            $search['srchregdatestart'] = $this->get[5];
+            $search['srchregdateend'] = $this->get[6];
+            $search['srchregip'] = $this->get[7];
+            $search['srchgroupid'] = $this->get[8];
         } else {
-            $user = $this->post;
+            $search = $this->post;
         }
         @$page = max(1, intval($this->get[8]));
         $pagesize = $this->setting['list_default'];
         $startindex = ($page - 1) * $pagesize;
         $condition = '1=1 ';
-        if (isset($user['srchname']) && '' != trim($user['srchname'])) {
-            $condition .=" AND `username` like '" . trim($user['srchname']) . "%' ";
+        if (isset($search['srchname']) && '' != trim($search['srchname'])) {
+            $condition .=" AND `username` like '" . trim($search['srchname']) . "%' ";
         }
-        if (isset($user['srchuid']) && '' != trim($user['srchuid'])) {
-            $condition .= " AND `uid`=" . intval($user['srchuid']);
+        if (isset($search['srchuid']) && '' != trim($search['srchuid'])) {
+            $condition .= " AND `uid`=" . intval($search['srchuid']);
         }
-        if (isset($user['srchemail']) && '' != trim($user['srchemail'])) {
-            $condition .= " AND `email` = '" . trim($user['srchemail']) . "'";
+        if (isset($search['srchemail']) && '' != trim($search['srchemail'])) {
+            $condition .= " AND `email` = '" . trim($search['srchemail']) . "'";
         }
-        if (isset($user['srchregdatestart']) && '' != trim($user['srchregdatestart'])) {
-            $datestart = strtotime($user['srchregdatestart']);
+        if (isset($search['srchregdatestart']) && '' != trim($search['srchregdatestart'])) {
+            $datestart = strtotime($search['srchregdatestart']);
             $condition .= " AND `regtime` >= $datestart ";
         }
-        if (isset($user['srchregdateend']) && '' != trim($user['srchregdateend'])) {
-            $dateend = strtotime($user['srchregdateend']);
+        if (isset($search['srchregdateend']) && '' != trim($search['srchregdateend'])) {
+            $dateend = strtotime($search['srchregdateend']);
             $condition .= " AND `regtime` <= " . $dateend;
         }
-        if (isset($user['srchregip']) && '' != trim($user['srchregip'])) {
-            $condition .= " AND `regip` = '" . $user['srchregip'] . "' ";
+        if (isset($search['srchregip']) && '' != trim($search['srchregip'])) {
+            $condition .= " AND `regip` = '" . $search['srchregip'] . "' ";
         }
-        if (isset($user['srchgroupid']) && 0 != trim($user['srchgroupid'])) {
-            $condition .= " AND `groupid` = '" . $user['srchgroupid'] . "' ";
+        if (isset($search['srchgroupid']) && 0 != trim($search['srchgroupid'])) {
+            $condition .= " AND `groupid` = '" . $search['srchgroupid'] . "' ";
         }
-        $usergrouplist = $_ENV['usergroup']->get_list(1);
+        $usergrouplist = $_ENV['usergroup']->get_list();
+        $sysgrouplist = $_ENV['usergroup']->get_list(1);
         $userlist = $_ENV['user']->list_by_search_condition($condition, $startindex, $pagesize);
         $usernum = $this->db->fetch_total('user', $condition);
-        $departstr = page($usernum, $pagesize, $page, "admin_user/search/$user[srchname]/$user[srchuid]/$user[srchemail]/$user[srchregdatestart]/$user[srchregdateend]/$user[srchregip]/$user[srcgroupid]");
+        $departstr = page($usernum, $pagesize, $page, "admin_user/search/$search[srchname]/$search[srchuid]/$search[srchemail]/$search[srchregdatestart]/$search[srchregdateend]/$search[srchregip]/$search[srcgroupid]");
         include template('userlist', 'admin');
     }
 
