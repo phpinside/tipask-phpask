@@ -144,14 +144,14 @@ class usermodel {
     function refresh_session_time($sid, $uid) {
         $lastrefresh = tcookie("lastrefresh");
         if (!$lastrefresh) {
-            if ($uid){ 
+            if ($uid) {
                 $this->db->query("UPDATE " . DB_TABLEPRE . "session SET `time` = {$this->base->time} WHERE sid='$sid'");
-            }else{
-            	$session = $this->db->fetch_first("SELECT * FROM ".DB_TABLEPRE."session WHERE sid='$sid'");
-            	if($session){
-            		$this->db->query("UPDATE " . DB_TABLEPRE . "session SET `time` = {$this->base->time} WHERE sid='$sid'");
-            	}else{
-                	$this->db->query("INSERT INTO " . DB_TABLEPRE . "session (sid,`ip`,`time`) VALUES ('$sid','{$this->base->ip}',{$this->base->time})");
+            } else {
+                $session = $this->db->fetch_first("SELECT * FROM " . DB_TABLEPRE . "session WHERE sid='$sid'");
+                if ($session) {
+                    $this->db->query("UPDATE " . DB_TABLEPRE . "session SET `time` = {$this->base->time} WHERE sid='$sid'");
+                } else {
+                    $this->db->query("INSERT INTO " . DB_TABLEPRE . "session (sid,`ip`,`time`) VALUES ('$sid','{$this->base->ip}',{$this->base->time})");
                 }
             }
             tcookie("lastrefresh", '1', 60);
@@ -382,9 +382,16 @@ class usermodel {
     }
 
     function update_expert($uids, $type) {
-        $this->db->query("UPDATE " . DB_TABLEPRE . "user SET expert=$type WHERE uid IN (" . implode(",",$uids) . ")");
+        $this->db->query("UPDATE " . DB_TABLEPRE . "user SET expert=$type WHERE uid IN (" . implode(",", $uids) . ")");
     }
 
+    function get_login_auth($uid, $type = 'qq') {
+        return $this->db->fetch_first("SELECT * FROM " . DB_TABLEPRE . "login_auth WHERE type='$type' AND uid=$uid");
+    }
+
+    function remove_login_auth($uid, $type='qq') {
+        $this->db->query("DELETE FROM " . DB_TABLEPRE . "login_auth WHERE type='$type' AND uid=$uid");
+    }
 
     /* 获取所有注册用户数目 */
 

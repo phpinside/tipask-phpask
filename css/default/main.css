@@ -324,6 +324,7 @@ th{font-style: normal;font-weight: 400;}
 .right-list .n2,.left-expert-list .n2{ background:#e5e5e5; color:#666;}
 .right-list .credit{float: right;color:#FF8100;margin-right: 5px;}
 
+
 /*专家列表*/
 .left-expert-list li{ height:68px; line-height:20px; overflow:hidden; vertical-align:middle;}
 .left-expert-list h3{ display:inline-block; width:120px; font-size:12px; font-weight:normal; vertical-align:baseline;}
@@ -679,7 +680,9 @@ input:hover{border-color:#3EA201;}
 .btn-disabled-1 span, .btn-disabled-1:hover span, .btn-disabled-1 button, .btn-disabled-1:hover button {color: #EEEEEE;cursor: default;}
 
 .section {margin-left: 24px;margin-top: 16px;}
-.section .con {background: none repeat scroll 0 0 #FAFAFA;border: 1px solid #D1D1D3;line-height: 24px;width: 650px;border-radius: 2px;}
+.section h3{font-family: "microsoft yahei";font-size: 16px;font-weight: normal;}
+.section .con {border: 1px solid #D1D1D3;line-height: 24px;width: 650px;border-radius: 2px;}
+.bg1{background: none repeat scroll 0 0 #FAFAFA;}
 .con .left {float: left;padding: 5px 13px 13px;width: 270px;}
 .con .right {border-left-color: #EDEDED;border-left: 1px solid #D1D1D3;margin-left: 300px;padding: 5px 13px 13px;height:80px;}
 .section .y_text {color: #CCCCCC;}

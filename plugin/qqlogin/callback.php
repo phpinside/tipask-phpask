@@ -28,13 +28,20 @@ if ($uid && $password) {
         $user = array();
     }
 }
+
 if (!$user) {
     $user = get_by_openid($openid);
+} else {
+    remove_auth($openid);
+    add_auth($token, $openid, $uid);
+    header("Location:" . SITE_URL . "index.php?user/mycategory");
+    exit;
 }
 if ($user) {
     add_auth($token, $openid, $uid);
     refresh($user);
     header("Location:" . SITE_URL);
+    exit;
 } else {
     $userinfo = $qc->get_user_info();
     $gender = 2;
@@ -119,6 +126,11 @@ function add_auth($token, $openid, $uid) {
     global $db;
     $time = time();
     $db->query("REPLACE INTO " . DB_TABLEPRE . "login_auth(uid,type,token,openid,time) values ($uid,'qq','$token','$openid',$time)");
+}
+
+function remove_auth($openid) {
+    global $db;
+    $db->query("DELETE FROM " . DB_TABLEPRE . "login_auth WHERE openid='$openid'");
 }
 
 function refresh($user) {

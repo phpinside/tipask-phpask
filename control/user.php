@@ -464,7 +464,15 @@ class usercontrol extends base {
     function onmycategory() {
         $this->load("category");
         $categoryjs = $_ENV['category']->get_js();
+        $qqlogin = $_ENV['user']->get_login_auth($this->user['uid'],'qq');
         include template("mycategory");
+    }
+    
+    //解除绑定
+    function onunchainauth(){
+        $type = ($this->get[2]=='qq')?'qq':'sina';
+        $_ENV['user']->remove_login_auth($this->user['uid'],$type);
+        $this->message($type."绑定解除成功!",'user/mycategory');        
     }
 
     function onajaxcategory() {

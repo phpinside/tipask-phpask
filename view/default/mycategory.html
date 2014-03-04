@@ -3,18 +3,19 @@
     <!--{template user_menu}-->
     <div class="user-content">
         <div class="my-answerbox">
-            <div class="title">擅长领域</div>
+            <div class="title">我的设置</div>
             <div id="qa-tabcard">
                 <ul>
                     <li><a href="{url user/profile}">个人资料</a></li>
                     <li><a href="{url user/uppass}">修改密码</a></li>
                     <li><a href="{url user/editimg}">修改头像</a></li>
-                    <li class="on">擅长领域</li>
+                    <li class="on">我的设置</li>
                 </ul>
             </div>
             <div class="bd">
                 <div class="section">
-                    <div class="con">
+                    <h3 class="mt10">擅长分类</h3>
+                    <div class="con bg1">
                         <div class="left fl">
                             <div>为更好推荐您擅长的问题，请设置您的擅长分类</div>
                             <div>                                <input type="hidden" value="" name="cids" id="cate_value">
@@ -29,6 +30,30 @@
                                 <li class="item" id="{$category['cid']}">{$category['categoryname']}<a class="close"></a></li>
                                 <!--{/loop}-->
                             </ul>
+                        </div>
+                    </div>
+                    <div class="clr"></div>
+                    <h3 class="mt10">外部账号绑定</h3>
+                    <div class="con">
+                        <div class="cls-qa-table">
+                            <table>
+                                <tbody>
+                                    <tr><th class="s0">登录方式</th><th class="s2">状态</th><th class="s3">管理</th></tr>
+                                    <!--{if $qqlogin}-->
+                                    <tr>
+                                        <td>QQ登录</td>
+                                        <td><font color="green">已绑定</font></td>
+                                        <td><a href="{url user/unchainauth/qq}">解除绑定</a></td>
+                                    </tr> 
+                                    <!--{else}-->
+                                    <tr>
+                                        <td>QQ登录</td>
+                                        <td>未绑定</td>
+                                        <td><a href="{SITE_URL}plugin/qqlogin/index.php">点击绑定</a></td>
+                                    </tr> 
+                                    <!--{/if}-->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="clr"></div>
