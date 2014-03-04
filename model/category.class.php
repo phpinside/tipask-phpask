@@ -151,8 +151,8 @@ class categorymodel {
             $line = str_replace(array("\r\n", "\n", "\r"), '', $line);
             if (empty($line))
                 continue;
-            @list($name, $categorydir) = explode('，', $line);
-            $categorydir = empty($categorydir) ?$name : $categorydir;
+            $name = trim($line);
+            $categorydir = '';
             $sql .= "('$name','$categorydir', $pid,$grade,$displayorder,$questions),";
             $displayorder++;
         }

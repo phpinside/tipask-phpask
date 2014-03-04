@@ -53,8 +53,7 @@ class admin_categorycontrol extends base {
         $id = (isset($this->get[2])) ? $this->get[2] : $this->post['id'];
         if (isset($this->post['submit'])) {
             $name = trim($this->post['name']);
-            $categorydir = trim($this->post['dir']);
-            $categorydir = empty($categorydir) ? $name : $categorydir;
+            $categorydir = '';
             $cid = 0;
             $category1 = $this->post['category1'];
             $category2 = $this->post['category2'];
