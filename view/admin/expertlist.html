@@ -34,192 +34,151 @@
         <tr>
             <td width="20" class="altbg2"><input class="checkbox" type="checkbox" value="{$expert['uid']}" name="delete[]"></td>
             <td width="300" class="altbg2"><strong>{$expert['username']}</strong></td>
-            <td width="100" class="altbg2">{$expert['categoryname']}</td>
+            <td width="100" class="altbg2">
+                <!--{loop $expert['category'] $category}-->
+                <a href="{url category/view/$category['cid']}" target="_blank">{$category['categoryname']}</a>&nbsp;&nbsp;
+                <!--{/loop}-->
+            </td>
         </tr>
         <!--{/loop}-->
+        <!--{if $departstr}-->
+        <tr class="smalltxt">
+            <td class="altbg2" colspan="3"><div class="scott">{$departstr}</div></td>
+        </tr>
+        <!--{/if}-->
         <tr class="altbg1"><td colspan="3" class="altbg1"  align="left"><input type="submit" name="submit" class="button" value="提&nbsp;交" /></td></tr>
-    </table>
+    </table>    
 </form>
+<div id="catedialog" title="选择分类" style="display: none">
+    <div id="dialogcate">
+        <table border="0" cellpadding="0" cellspacing="0" width="460px">
+            <tr valign="top">
+                <td width="125px">
+                    <select  id="category1" class="catselect" size="8" name="category1" ></select>
+                </td>
+                <td align="center" valign="middle" width="25px"><div style="display: none;" id="jiantou1">>></div></td>
+                <td width="125px">                                        
+                    <select  id="category2"  class="catselect" size="8" name="category2" style="display:none"></select>                                        
+                </td>
+                <td align="center" valign="middle" width="25px"><div style="display: none;" id="jiantou2">>>&nbsp;</div></td>
+                <td width="125px">
+                    <select id="category3"  class="catselect" size="8"  name="category3" style="display:none"></select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5"><span><input type="button" class="button" value="添&nbsp;&nbsp;加" onclick="add_category();"/></span></td>
+            </tr>
+        </table>
+        <div>
+            <p>已选分类</p>
+            <ul id="select_category"></ul>
+            <input type="button" class="button" value="确认添加" onclick="save_change();"/>
+        </div>
+        
+    </div>
+</div>
+
 <br>
 <div id="ulid" style="display: none"></div>
 <script type="text/javascript">
-    var sortobj=eval('($category_js)');
-    var g_ClassLevel1;
-    var g_ClassLevel2;
-    var g_ClassLevel3;
-    var class_level_1=sortobj.category1;
-    var class_level_2=sortobj.category2;
-    var class_level_3=sortobj.category3;
-    var button_noselect="不选择";
-
-    function getCidValue()
-    {
-        var _cl1 = document.askform.ClassLevel1;
-        var _cl2 = document.askform.ClassLevel2;
-        var _cl3 = document.askform.ClassLevel3;
-        var _cid = document.askform.cid;
-        if(_cl1.value!=0) _cid.value = _cl1.value;
-        if(_cl2.value!=0) _cid.value = _cl2.value;
-        if(_cl3.value!=0) _cid.value = _cl3.value;
-    }
-    function FillClassLevel1(ClassLevel1)
-    {
-        ClassLevel1.options[0] = new Option("aa", "0");
-        for(i=0; i<class_level_1.length; i++)
-        {
-            ClassLevel1.options[i] = new Option(class_level_1[i][1], class_level_1[i][0]);
-        }
-        // ClassLevel1.options[0].selected = true;
-        ClassLevel1.length = i;
-    }
-    function FillClassLevel2(ClassLevel2, class_level_1_id)
-    {
-        ClassLevel2.options[0] = new Option(button_noselect, "");
-        count = 1;
-        for(i=0; i<class_level_2.length; i++){
-            if(class_level_2[i][0].toString() == class_level_1_id) {
-                ClassLevel2.options[count] = new Option(class_level_2[i][2], class_level_2[i][1]);
-                count = count+1;}
-        }
-        ClassLevel2.options[0].selected = true;
-        ClassLevel2.length = count;
-    }
-    function FillClassLevel3(ClassLevel3, class_level_2_id)
-    {
-        ClassLevel3.options[0] = new Option(button_noselect, "");
-        count = 1;
-        for(i=0; i<class_level_3.length; i++) {
-            if(class_level_3[i][0].toString() == class_level_2_id) {
-                ClassLevel3.options[count] = new Option(class_level_3[i][2], class_level_3[i][1]);
-                count = count+1;}
-        }
-        ClassLevel3.options[0].selected = true;
-        ClassLevel3.length = count;
-    }
-    function ClassLevel2_onchange()
-    {
-        getCidValue();
-        FillClassLevel3(g_ClassLevel3, g_ClassLevel2.value);
-        if (g_ClassLevel3.length <= 1) {
-            g_ClassLevel3.style.display = "none";
-            document.getElementById("jiantou").style.display = "none";
-        }
-        else {
-            g_ClassLevel3.style.display = "";
-            document.getElementById("jiantou").style.display = "";
+    var category1 = {$categoryjs[category1]};
+    var category2 = {$categoryjs[category2]};
+    var category3 = {$categoryjs[category3]};
+    $(document).ready(function() {
+        init_category1(category1);
+        fill_sub_category(category2, $("#category1 option:selected").val(), "category2");
+        //分类选择
+        $("#category1").change(function() {
+            fillcategory(category2, $("#category1 option:selected").val(), "category2");
+            $("#jiantou1").show();
+            $("#category2").show();
+        });
+        $("#category2").change(function() {
+            fillcategory(category3, $("#category2 option:selected").val(), "category3");
+            $("#jiantou2").show();
+            $("#category3").show();
+        });
+    });
+    function init_category1(category1) {
+        var selectedcid1 = $("#selectcid1").val();
+        $("#category1").append("<option value='0'>根分类</option>");
+        for (var i = 0; i < category1.length; i++) {
+            var selected = '';
+            if (selectedcid1 === category1[i][0]) {
+                selected = ' selected';
+            }
+            $("#category1").append("<option value='" + category1[i][0] + "' " + selected + ">" + category1[i][1] + "</option>");
         }
     }
- 
-    function ClassLevel1_onchange()
-    {
-        getCidValue();
-        FillClassLevel2(g_ClassLevel2, g_ClassLevel1.value);
-        ClassLevel2_onchange();
-	
+    function fill_sub_category(category2, value1, cateid) {
+        var optionhtml = '<option value="0">父分类</option>';
+        var selectedcid = 0;
+        if (cateid === "category2") {
+            selectedcid = $("#selectcid2").val();
+        } else if (cateid === "category3") {
+            selectedcid = $("#selectcid3").val();
+        }
+        for (var i = 0; i < category2.length; i++) {
+            if (value1 === category2[i][0]) {
+                var selected = '';
+                if (selectedcid === category2[i][1]) {
+                    selected = ' selected';
+                    $("#" + cateid).show();
+                }
+                optionhtml += "<option value='" + category2[i][1] + "' " + selected + ">" + category2[i][2] + "</option>";
+            }
+        }
+        $("#" + cateid).html(optionhtml);
     }
-    function InitClassLevelList(ClassLevel1, ClassLevel2, ClassLevel3)
-    {
-        g_ClassLevel1=ClassLevel1;
-        g_ClassLevel2=ClassLevel2;
-        g_ClassLevel3=ClassLevel3;
-        g_ClassLevel1.onchange = Function("ClassLevel1_onchange();");
-        g_ClassLevel2.onchange = Function("ClassLevel2_onchange();");
-        FillClassLevel1(g_ClassLevel1);
-        ClassLevel1_onchange();
-    }
-
-    function checkform(form){
+    function checkform(form) {
         var username = form.username.value;
         var goodatcate = form.goodatcategory.value;
-        if(username == '' || goodatcate == '' ){
+        if (username == '' || goodatcate == '') {
             alert("用户名或分类不能为空");
             return false;
         }
         return true;
     }
 
-    function showselect(){
- 
-        var select = $("#selectcategory").html();
-        $.dialog({
-            id:'addreason',
-            position:'center',
-            align:'left',
-            width:600,
-            height:200,
-            title:'选择专家擅长分类',
-            fnOk:function(){ 
-                var cids='';
-                $("input[name='cids[]']").each(function(){
-                    cids +=$(this).val()+' ';
-                });
-                $("#categorys").val(cids);
-                $("#ulid").html($("#selectedcate").html());
-                $.dialog.close('addreason');            
-            },
-            fnCancel:function(){$.dialog.close('addreason')},
-            content:'已选中的分类：<br /><ul id="selectedcate"></ul><form name="askform" method="POST" action="index.php?adimin_expert/add">'+'<table border="0" cellpadding="0" cellspacing="0" width="100%">'+
-                '<tr valign="top">'+
-                '<td width="15%">'+
-                '<select  id="ClassLevel1" class="catselect2" size="8" name="classlevel1" style="width:100%" >'+
-                '<option selected></option>'+
-                '</select>'+
-                '</td>'+
-                '<td align="center" valign="middle" width="3%">'+
-                '<div><b>→</b></div>'+
-                '</td>'+
-                '<td width="15%">'+
-                '<select  id="ClassLevel2"  class="catselect2" size="8" name="classlevel2" style="width:100%">'+
-                '<option selected></option>'+
-                '</select>'+
-                '<td align="center" valign="middle" width="3%">'+
-                '<div style="display: none;" id="jiantou"><b>→</b></div>'+
-                '</td>'+
-                '<td width="15%">'+
-                '<select id="ClassLevel3"  class="catselect2" size="8" onchange="getCidValue();"  name="classlevel3" style="width:100%">'+
-                '<option selected></option>'+
-                '</select>'+
-                '</td>'+
-                '<td width="30%" valign="middle">&nbsp;<input type="button" value="添加分类" onclick="addcategory();" /></td>'+
-                '</tr>'+
-                '<tr valign="top">'+
-                '<td class="tiw_biaozhu" colspan="6" align="left" valign="middle">所选分类不能重叠，不能相互包含！</td></tr>'+
-                '</table>'+
-                '<input type="hidden" value="0" name="cid" />'+
-                '<input type="hidden" value="0" name="allcid" />'+
-                '</form>'
+    function showselect() {
+        $("#catedialog").dialog({
+            width: 520,
+            modal: true,
+            resizable: false,
+            position:{my:"bottom-60"}
         });
-        InitClassLevelList(document.askform.ClassLevel1, document.askform.ClassLevel2, document.askform.ClassLevel3);
-        var selected_id_list="0"
-        var blank_pos = selected_id_list.indexOf(" ");
-        var find_blank = true;
-        if (blank_pos == -1) {
-            find_blank = false;
-            blank_pos = selected_id_list.length;
-        }
-        $("#selectedcate").html($("#ulid").html());
+        $("#catedialog").dialog("open");
     }
 
-    function addcategory(){
-        var curcid = $("input[name='cid']").val();
-        if(curcid == 0){
-            alert("您还未选择分类！");
+    function add_category() {
+        var current = null;
+        var select_category1 = $("#category1 option:selected");
+        var select_category2 = $("#category2 option:selected");
+        var select_category3 = $("#category3 option:selected");
+        if(select_category3.val()){
+            current = select_category3
+        }else if(select_category2.val()){
+            current = select_category2
+        }else if(select_category1.val()){
+            current = select_category1;
+        }
+        if(!current){
+            alert("您还未选择任何分类!");
             return false;
         }
-        $.ajax({
-            type: "POST",
-            url: "index.php?admin_expert/ajaxgetname.html",
-            data: "cid="+curcid,
-            success: function(categorystr){
-                if($("#selectedcate li").size()<=2)
-                    $("#selectedcate").append('<li style="color:#3F92F8;"><input type="hidden" name="cids[]"  value="'+curcid+'" />'+categorystr+'&nbsp;&nbsp;<a href="#" onclick="delcategory(this);">删除</a></li>');
-
-            }
-        });    
+        $("#select_category").append('<li id="'+current.val()+'" style="list-style-type: none;">'+current.html()+'   <a href="javascript:void(0)" onclick="remove_category('+current.val()+')">删除</a></li>');        
     }
-    function delcategory(a){
-        $(a).parent().remove();
-        $("input[name='cid']").val("0");
+    function remove_category(cid) {
+        $("#"+cid).remove();
+    }
+    
+    function save_change(){
+        var categoryids = "";
+        $("#select_category li").each(function(){
+            categoryids+=" "+$(this).attr("id");
+        });
+        $("#categorys").val(categoryids);
+        $("#catedialog").dialog("close");
     }
 </script>
 <!--{template footer,admin}-->

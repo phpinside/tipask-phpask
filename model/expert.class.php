@@ -44,7 +44,7 @@ class expertmodel {
     }
 
     function add($uid, $cids) {
-        $sql = "INSERT INTO " . DB_TABLEPRE . "expert(`uid`,`cid`) VALUES ";
+        $sql = "INSERT INTO " . DB_TABLEPRE . "user_category(`uid`,`cid`) VALUES ";
         foreach ($cids as $cid) {
             $sql .= "($uid,$cid),";
         }
@@ -54,7 +54,7 @@ class expertmodel {
 
     function remove($uids) {
         $this->db->query("UPDATE " . DB_TABLEPRE . "user SET `expert`=0 WHERE uid IN ($uids)");
-        $this->db->query("DELETE FROM " . DB_TABLEPRE . "expert WHERE uid IN ($uids)");
+        $this->db->query("DELETE FROM " . DB_TABLEPRE . "user_category WHERE uid IN ($uids)");
     }
 
     function get_category($uid) {
