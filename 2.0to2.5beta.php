@@ -72,6 +72,7 @@ ALTER TABLE ask_question_tag  DROP tid;
 ALTER TABLE ask_question_tag  DROP tname;
 ALTER TABLE ask_question_tag  ADD `name` varchar(20) NOT NULL;
 ALTER TABLE ask_question_tag  ADD `time` int(10) NOT NULL DEFAULT '0';
+TRUNCATE TABLE ask_session;
 ALTER TABLE ask_session CHANGE sid sid char(16) NOT NULL ; 
 ALTER TABLE ask_user DROP authstr;
 ALTER TABLE ask_user DROP access_token;
