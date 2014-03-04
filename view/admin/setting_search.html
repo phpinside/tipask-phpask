@@ -13,7 +13,7 @@
 <table width="100%" cellspacing="1" cellpadding="4" align="center" class="tableborder">
     <tbody><tr class="header"><td>设置说明</td></tr>
         <tr><td>1、开启全文检索之前系统要开启了PHP iconv库,否则系统不支持<br />
-                2、全文检索目前是用的是mysql的fulltext，需要设置mysql的全文检索长度（mysql的配置文件中加入ft_min_word_len=1）。
+                2、全文检索目前整合的是第三方搜全文检索引擎xunsearch，整合前请先确认已配置好xunsearch。
             </td></tr>
     </tbody></table>
 <br />
@@ -44,25 +44,4 @@
     <center><input type="submit" class="button" name="submit" value="提 交"></center><br>
 </form>
 <br>
-<table width="100%" cellspacing="1" cellpadding="4" align="center" class="tableborder">
-    <tbody>
-        <tr class="altbg1"><td style="color:green"><span id="msg"></span></td></tr>
-    </tbody>
-</table>
-<script type="text/javascript">
-                    function createfulltext() {
-                        var t;
-                        $.ajax({
-                            type: "POST",
-                            url: "index.php?admin_setting/makewords{$setting['seo_suffix']}",
-                            success: function(msg) {
-                                if (msg == 'ok') {
-                                    clearTimeout(t);
-                                }
-                                $("#msg").html(msg);
-                            }
-                        });
-                        t = setTimeout("createfulltext()", 1000);
-                    }
-</script>
 <!--{template footer,admin}-->
