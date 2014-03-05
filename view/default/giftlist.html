@@ -7,9 +7,10 @@
                 <!--{loop $giftlist $gift}-->
                 <li>
                     <img width="138" height="138" src="{SITE_URL}{$gift['image']}" alt="{$gift['title']}" />
-                    <a class="name" title="{$gift['title']}"  href="javascript:void(0);" onclick="show_desc('{$gift[title]}', '{$gift[description]}');">{$gift['title']}</a>
+                    <a class="name" title="{$gift['title']}"  href="javascript:void(0);" onclick="show_desc('{$gift[title]}',{$gift['id']});">{$gift['title']}</a>
                     <span>(售价：{$gift['credit']}财富）</span>
-                    <span><input type="button" class="button_4_red" value="立即兑换" onclick="exchange();"/></span>
+                    <div style="display:none" id="{$gift['id']}_desc">{$gift['description']}</div>
+                    <span><input type="button" class="button_4_red" value="立即兑换" onclick="exchange({$gift['id']},{$gift['credit']});"/></span>
                 </li>                
                 <!--{/loop}-->
             </ul>
@@ -114,9 +115,9 @@
     <div class="clr mt15"></div>
 </div>
 <script type="text/javascript">
-                        function show_desc(title, desc) {
-                            $("#gift_desc").html(desc);
+                        function show_desc(title,gid) {                            
                             $("#gift_desc").attr("title", title + "详情");
+                            $("#gift_desc").html($("#"+gid+"_desc").html());
                             $("#gift_desc").dialog({
                                 autoOpen: false,
                                 width: 500,
