@@ -160,7 +160,7 @@ class usermodel {
 
     /* 添加用户，本函数需要返回uid */
 
-    function add($username, $password, $email = '', $uid = 2) {
+    function add($username, $password, $email = '', $uid = 0) {
         $password = md5($password);
         if ($uid) {
             $this->db->query("REPLACE INTO  " . DB_TABLEPRE . "user (uid,username,password,email,regip,`lastlogin`) VALUES ('$uid','$username','$password','$email','" . getip() . "',{$this->base->time})");

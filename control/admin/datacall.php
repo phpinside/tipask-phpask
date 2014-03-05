@@ -24,14 +24,14 @@ class admin_datacallcontrol extends base {
             $expressionarr['tpl'] = base64_encode($this->post['tpl']);
             $expressionarr['status'] = $this->post['status'];
             $categorystr='';
-            if(isset($this->post['classlevel1'])) {
-                $categorystr .= intval($this->post['classlevel1']).':';
+            if(isset($this->post['category1'])) {
+                $categorystr .= intval($this->post['category1']).':';
             }
-            if(isset($this->post['classlevel2'])) {
-                $categorystr .= intval($this->post['classlevel2']).':';
+            if(isset($this->post['category2'])) {
+                $categorystr .= intval($this->post['category2']).':';
             }
-            if(isset($this->post['classlevel3'])) {
-                $categorystr .= intval($this->post['classlevel3']).':';
+            if(isset($this->post['category2'])) {
+                $categorystr .= intval($this->post['category2']).':';
             }
             $expressionarr['category']=$categorystr;
             $expressionarr['cachelife']=intval($this->post['cachelife']);
@@ -42,7 +42,7 @@ class admin_datacallcontrol extends base {
             $_ENV['datacall']->add(trim($this->post['title']),$expression);
             $this->ondefault();
         }else {
-            $category_js=$_ENV['category']->get_js();
+            $categoryjs=$_ENV['category']->get_js();
             $status_list = array(array('all','全部问题'),array(1,'待解决'),array(2,'已解决'),array(4,'悬赏'));
             include template('adddatacall','admin');
         }
@@ -61,17 +61,17 @@ class admin_datacallcontrol extends base {
         $id = isset($this->get[2])?intval($this->get[2]):intval($this->post['id']);
         if(isset($this->post['submit'])) {
             $expressionarr = array();
-            $expressionarr['tpl'] = base64_encode($this->post['tpl']);
+            $expressionarr['tpl'] = trim(base64_encode($this->post['tpl']));
             $expressionarr['status'] = $this->post['status'];
             $categorystr='';
-            if(isset($this->post['classlevel1'])) {
-                $categorystr .= intval($this->post['classlevel1']).':';
+            if(isset($this->post['category1'])) {
+                $categorystr .= intval($this->post['category1']).':';
             }
-            if(isset($this->post['classlevel2'])) {
-                $categorystr .= intval($this->post['classlevel2']).':';
+            if(isset($this->post['category2'])) {
+                $categorystr .= intval($this->post['category2']).':';
             }
-            if(isset($this->post['classlevel3'])) {
-                $categorystr .= intval($this->post['classlevel3']).':';
+            if(isset($this->post['category2'])) {
+                $categorystr .= intval($this->post['category2']).':';
             }
             $expressionarr['category']=$categorystr;
             $expressionarr['cachelife']=intval($this->post['cachelife']);
@@ -95,7 +95,7 @@ class admin_datacallcontrol extends base {
                 isset($category[1]) && $cid2=$category[1];
                 isset($category[2]) && $cid3=$category[2];
             }
-            $category_js=$_ENV['category']->get_js();
+            $categoryjs=$_ENV['category']->get_js();
             $status_list = array(array('all','全部问题'),array(1,'待解决'),array(2,'已解决'),array(4,'悬赏'));
             include template('editdatacall','admin');
         }

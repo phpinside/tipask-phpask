@@ -1,8 +1,8 @@
 <!--{template header,admin}-->
 <script type="text/javascript">
-    function checkform(){
-        var title=document.askform.title.value;
-        if(''==title){
+    function checkform() {
+        var title = document.askform.title.value;
+        if ('' == title) {
             alert('请填写调用名称!');
             return false;
         }
@@ -21,6 +21,9 @@
 </table>
 <!--{/if}-->
 <form name="askform" action="index.php?admin_datacall/edit{$setting['seo_suffix']}" method="post" onsubmit="return checkform();">
+    <input type="hidden" name="selectcid1" id="selectcid1" value="{$cid1}" />
+    <input type="hidden" name="selectcid2" id="selectcid2" value="{$cid2}" />
+    <input type="hidden" name="selectcid3" id="selectcid3" value="{$cid3}" />
     <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
         <tr>
             <td class="altbg1" width="45%"><b>调用名称:</b><br><span class="smalltxt">数据调用名称</span></td>
@@ -55,33 +58,21 @@
         <tr>
             <td class="altbg1" width="45%"><b>问题分类:</b><br><span class="smalltxt">请选择问题的分类</span></td>
             <td class="altbg2">
-                <span id="classid">
-                    <table cellspacing="0" cellpadding="0" border="0">
-                        <tr>
-                            <td>
-                                <select id="ClassLevel1" style="WIDTH: 125px" size="8" name="classlevel1">
-                                    <option selected></option>
-                                </select>
-                            </td>
-                            <td width="20">
-                                <div align="center"><b>→</b></div>
-                            </td>
-                            <td>
-                                <select id="ClassLevel2" style="WIDTH: 125px" size="8" name="classlevel2">
-                                    <option selected></option>
-                                </select>
-                            </td>
-                            <td width="20">
-                                <div id="jiantou" align="center"><b>→</b></div>
-                            </td>
-                            <td>
-                                <select id="ClassLevel3" style="WIDTH: 125px" onchange="getCidValue();" size="8" name="classlevel3">
-                                    <option selected></option>
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
-                </span>
+                <table border="0" cellpadding="0" cellspacing="0" width="460px">
+                    <tr valign="top">
+                        <td width="125px">
+                            <select  id="category1" class="catselect" size="8" name="category1" ></select>
+                        </td>
+                        <td align="center" valign="middle" width="25px"><div style="display: none;" id="jiantou1">>></div></td>
+                        <td width="125px">                                        
+                            <select  id="category2"  class="catselect" size="8" name="category2" style="display:none"></select>                                        
+                        </td>
+                        <td align="center" valign="middle" width="25px"><div style="display: none;" id="jiantou2">>>&nbsp;</div></td>
+                        <td width="125px">
+                            <select id="category3"  class="catselect" size="8"  name="category3" style="display:none"></select>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
         <tr>
@@ -111,140 +102,56 @@
     </table>
 </form>
 <script type="text/javascript">
-    var sortobj=eval('($category_js)');
-    var g_ClassLevel1;
-    var g_ClassLevel2;
-    var g_ClassLevel3;
-    var class_level_1=sortobj.category1;
-    var class_level_2=sortobj.category2;
-    var class_level_3=sortobj.category3;
-    var button_noselect="不选择";
-
-    function getCidValue()
-    {
-        var _cl1 = document.askform.ClassLevel1;
-        var _cl2 = document.askform.ClassLevel2;
-        var _cl3 = document.askform.ClassLevel3;
-        var _cid = document.askform.cid;
-        if(_cl1.value!=0) _cid.value = _cl1.value;
-        if(_cl2.value!=0) _cid.value = _cl2.value;
-        if(_cl3.value!=0) _cid.value = _cl3.value;
-    }
-    function FillClassLevel1(ClassLevel1)
-    {
-        ClassLevel1.options[0] = new Option("aa", "0");
-        var selectindex = 0;
-        for(i=0; i<class_level_1.length; i++)
-        {
-            ClassLevel1.options[i] = new Option(class_level_1[i][1], class_level_1[i][0]);
-            if(class_level_1[i][0] == {$cid1}){
-                selectindex = i;
+    var category1 = {$categoryjs[category1]};
+            var category2 = {$categoryjs[category2]};
+            var category3 = {$categoryjs[category3]};
+    $(document).ready(function() {
+        init_category1(category1);
+        fill_sub_category(category2, $("#category1 option:selected").val(), "category2");
+        //分类选择
+        $("#category1").change(function() {
+            fillcategory(category2, $("#category1 option:selected").val(), "category2");
+            $("#jiantou1").show();
+            $("#category2").show();
+        });
+        $("#category2").change(function() {
+            fillcategory(category3, $("#category2 option:selected").val(), "category3");
+            $("#jiantou2").show();
+            $("#category3").show();
+        });
+    });
+    function init_category1(category1) {
+        var selectedcid1 = $("#selectcid1").val();
+        $("#category1").append("<option value='0'>不选择</option>");
+        for (var i = 0; i < category1.length; i++) {
+            var selected = '';
+            if (selectedcid1 === category1[i][0]) {
+                selected = ' selected';
             }
-        
+            $("#category1").append("<option value='" + category1[i][0] + "' " + selected + ">" + category1[i][1] + "</option>");
         }
-        ClassLevel1.options[selectindex].selected = true;
-        ClassLevel1.length = i;
     }
-    function FillClassLevel2(ClassLevel2, class_level_1_id)
-    {
-        ClassLevel2.options[0] = new Option(button_noselect, "");
-        count = 1;
-        var selectindex = 0;
-        for(i=0; i<class_level_2.length; i++){
-            if(class_level_2[i][0].toString() == class_level_1_id) {
-                ClassLevel2.options[count] = new Option(class_level_2[i][2], class_level_2[i][1]);
-                if(class_level_2[i][1] == {$cid2}){
-                    selectindex = count;
+    function fill_sub_category(category2, value1, cateid) {
+        var optionhtml = '<option value="0">父分类</option>';
+        var selectedcid = 0;
+        if (cateid === "category2") {
+            selectedcid = $("#selectcid2").val();
+        } else if (cateid === "category3") {
+            selectedcid = $("#selectcid3").val();
+        }
+        for (var i = 0; i < category2.length; i++) {
+            if (value1 === category2[i][0]) {
+                var selected = '';
+                if (selectedcid === category2[i][1]) {
+                    selected = ' selected';
+                    $("#" + cateid).show();
                 }
-                count = count+1;    
+                optionhtml += "<option value='" + category2[i][1] + "' " + selected + ">" + category2[i][2] + "</option>";
             }
         }
-        ClassLevel2.options[selectindex].selected = true;
-        ClassLevel2.length = count;
+        $("#" + cateid).html(optionhtml);
     }
-    function FillClassLevel3(ClassLevel3, class_level_2_id)
-    {
-        ClassLevel3.options[0] = new Option(button_noselect, "");
-        count = 1;
-        var selectindex = 0;
-        for(i=0; i<class_level_3.length; i++) {
-            if(class_level_3[i][0].toString() == class_level_2_id) {
-                ClassLevel3.options[count] = new Option(class_level_3[i][2], class_level_3[i][1]);
-                if(class_level_3[i][1] == {$cid3}){
-                    selectindex = count;
-                }
-                count = count+1;
-            }
-        }
-        ClassLevel3.options[selectindex].selected = true;
-        ClassLevel3.length = count;       
-    }
-    function ClassLevel2_onchange()
-    {
-        getCidValue();
-        FillClassLevel3(g_ClassLevel3, g_ClassLevel2.value); 
-        if (g_ClassLevel3.length <= 1) {  
-            g_ClassLevel3.style.display = "none";
-            document.getElementById("jiantou").style.display = "none";
-        }
-        else {
-            g_ClassLevel3.style.display = "";     
-            document.getElementById("jiantou").style.display = "";	 
-        }       
-    }
- 
-    function ClassLevel1_onchange()
-    {
-        getCidValue();
-        FillClassLevel2(g_ClassLevel2, g_ClassLevel1.value);
-        ClassLevel2_onchange();
-	
-    }
-    function InitClassLevelList(ClassLevel1, ClassLevel2, ClassLevel3)
-    {
-        g_ClassLevel1=ClassLevel1;
-        g_ClassLevel2=ClassLevel2;
-        g_ClassLevel3=ClassLevel3;
-        g_ClassLevel1.onchange = Function("ClassLevel1_onchange();");
-        g_ClassLevel2.onchange = Function("ClassLevel2_onchange();");
-        FillClassLevel1(g_ClassLevel1);
-        ClassLevel1_onchange();
-    }
-    InitClassLevelList(document.askform.ClassLevel1, document.askform.ClassLevel2, document.askform.ClassLevel3);
 
-    var selected_id_list="0"
-    var blank_pos = selected_id_list.indexOf(" ");
-    var find_blank = true;
-    if (blank_pos == -1) {
-        find_blank = false;
-        blank_pos = selected_id_list.length;
-    }
-    var id_str = selected_id_list.substr(0, blank_pos);
-    g_ClassLevel1.value = id_str;
-    ClassLevel1_onchange();
-
-    if (find_blank == true) {
-        selected_id_list = selected_id_list.substr(blank_pos + 1,   selected_id_list.length - blank_pos - 1);
-        blank_pos = selected_id_list.indexOf(" ");
-        if (blank_pos == -1) {
-            find_blank = false;
-            blank_pos = selected_id_list.length;
-        }
-        id_str = selected_id_list.substr(0, blank_pos);
-        g_ClassLevel2.value = id_str;
-        ClassLevel2_onchange();
-
-        if (find_blank == true) {
-            selected_id_list = selected_id_list.substr(blank_pos + 1,  selected_id_list.length - blank_pos - 1);
-            blank_pos = selected_id_list.indexOf(" ");
-            if (blank_pos == -1) {
-                find_blank = false;
-                blank_pos = selected_id_list.length;
-            }
-            id_str = selected_id_list.substr(0, blank_pos);
-            g_ClassLevel3.value = id_str;
-        }
-    }		
 </script>
 </body>
 
