@@ -59,6 +59,7 @@
                 $("#code").focus();
                 return false;
             }
+            {if !$setting['ucenter_open']}
             $.ajax({
                 type: "POST",
                 async: false,
@@ -73,6 +74,7 @@
                     }
                 }
             });
+            {/if}
             if ($("#user_error").html() != '') {
                 return false;
             } else {
