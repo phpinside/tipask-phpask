@@ -37,7 +37,7 @@ class admin_usercontrol extends base {
         } else {
             $search = $this->post;
         }
-        @$page = max(1, intval($this->get[8]));
+        @$page = max(1, intval($this->get[9]));
         $pagesize = $this->setting['list_default'];
         $startindex = ($page - 1) * $pagesize;
         $condition = '1=1 ';
@@ -61,14 +61,14 @@ class admin_usercontrol extends base {
         if (isset($search['srchregip']) && '' != trim($search['srchregip'])) {
             $condition .= " AND `regip` = '" . $search['srchregip'] . "' ";
         }
-        if (isset($search['srchgroupid']) && 0 != trim($search['srchgroupid'])) {
+        if (isset($search['srchgroupid']) && 0 != $search['srchgroupid']) {
             $condition .= " AND `groupid` = '" . $search['srchgroupid'] . "' ";
         }
         $usergrouplist = $_ENV['usergroup']->get_list();
         $sysgrouplist = $_ENV['usergroup']->get_list(1);
         $userlist = $_ENV['user']->list_by_search_condition($condition, $startindex, $pagesize);
         $usernum = $this->db->fetch_total('user', $condition);
-        $departstr = page($usernum, $pagesize, $page, "admin_user/search/$search[srchname]/$search[srchuid]/$search[srchemail]/$search[srchregdatestart]/$search[srchregdateend]/$search[srchregip]/$search[srcgroupid]");
+        $departstr = page($usernum, $pagesize, $page, "admin_user/search/$search[srchname]/$search[srchuid]/$search[srchemail]/$search[srchregdatestart]/$search[srchregdateend]/$search[srchregip]/$search[srchgroupid]");
         include template('userlist', 'admin');
     }
 
