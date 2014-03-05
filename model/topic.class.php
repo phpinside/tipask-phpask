@@ -22,8 +22,8 @@ class topicmodel {
         $topiclist = array();
         $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "topic order by displayorder asc LIMIT $start,$limit");
         while ($topic = $this->db->fetch_array($query)) {
-            ($showquestion == 1) && $topic['questionlist'] = $this->get_questions($topic['id']); //首页专题掉用
-            ($showquestion == 2) && $topic['questionlist'] = $this->get_questions($topic['id'], 0, $questionsize); //专题列表页掉用
+            ($showquestion == 1) && $topic['questionlist'] = $this->get_questions($topic['id'],0,$questionsize); //首页专题掉用
+            ($showquestion == 2) && $topic['questionlist'] = $this->get_questions($topic['id']); //专题列表页掉用
             $topiclist[] = $topic;
         }
         return $topiclist;
