@@ -239,7 +239,7 @@ INSERT INTO ask_setting VALUES ('stopcopy_stopagent', '');
 INSERT INTO ask_setting VALUES ('stopcopy_maxnum', '60');
 INSERT INTO ask_setting VALUES ('editor_wordcount', 'false');
 INSERT INTO ask_setting VALUES ('editor_elementpath', 'false');
-INSERT INTO ask_setting VALUES ('editor_toolbars', 'FullScreen,Source,Undo,Redo,RemoveFormat,|,Bold,Italic,FontSize,FontFamily,ForeColor,|,InsertImage,attachment,Emotion,Map,|,JustifyLeft,JustifyCenter,JustifyRight,|,HighlightCode');
+INSERT INTO ask_setting VALUES ('editor_toolbars', 'insertimage,autotypeset,attachment,link,unlink,insertvideo,insertcode,fullscreen');
 INSERT INTO ask_setting VALUES ('gift_range', 'a:3:{i:0;s:2:"50";i:50;s:3:"100";i:100;s:3:"300";}');
 INSERT INTO ask_setting VALUES ('usernamepre', 'tipask_');
 INSERT INTO ask_setting VALUES ('usercount', '0');
