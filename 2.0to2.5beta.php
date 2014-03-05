@@ -1,4 +1,3 @@
-
 <?php
 
 //本程序用于把Tipask2.0beta 升级到V2.0正式版
@@ -67,7 +66,8 @@ CREATE TABLE  ask_question_supply (
   PRIMARY KEY (`id`),
   KEY `time` (`time`),
   KEY `qid` (`qid`)
-) ENGINE=MyISAM;  
+) ENGINE=MyISAM;
+UPDATE ask_setting SET v='insertimage,autotypeset,attachment,link,unlink,insertvideo,insertcode,fullscreen' WHERE k='editor_toolbars';
 ALTER TABLE ask_question_tag  DROP tid;
 ALTER TABLE ask_question_tag  DROP tname;
 ALTER TABLE ask_question_tag  ADD `name` varchar(20) NOT NULL;
