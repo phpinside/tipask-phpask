@@ -1,6 +1,6 @@
 <!--{eval global $starttime,$querynum;$mtime = explode(' ', microtime());$runtime=number_format($mtime[1] + $mtime[0] - $starttime,6); $setting=$this->setting;$user=$this->user;$headernavlist=$this->nav;$regular=$this->regular;}-->
 <div class="poploginform">
-    <form name="loginform"  action="{url user/login}" method="post" onsubmit="return checkform();">
+    <form name="loginform"  action="{url user/login}" method="post"    {if $setting['ucenter_open']==0}onsubmit="return checkform();"{/if}>
         <div class="input-bar">
             <div id="user_error" class="user_error">&nbsp;</div>
             <h2>用户名</h2>
@@ -59,7 +59,7 @@
                 $("#code").focus();
                 return false;
             }
-            {if !$setting['ucenter_open']}
+         
             $.ajax({
                 type: "POST",
                 async: false,
@@ -74,7 +74,6 @@
                     }
                 }
             });
-            {/if}
             if ($("#user_error").html() != '') {
                 return false;
             } else {

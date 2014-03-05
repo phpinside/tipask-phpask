@@ -78,6 +78,7 @@ function bytes(str) {
 //问题分类选择函数
 function initcategory(category1) {
     var selectedcid1 = $("#selectcid1").val();
+    $("#category1").html('');
     for (var i = 0; i < category1.length; i++) {
         var selected = '';
         if (selectedcid1 === category1[i][0]) {
@@ -100,6 +101,7 @@ function fillcategory(category2, value1, cateid) {
     } else if (cateid === "category3") {
         selectedcid = $("#selectcid3").val();
     }
+    $("#" + cateid).html("");
     for (var i = 0; i < category2.length; i++) {
         if (value1 === category2[i][0]) {
             var selected = '';

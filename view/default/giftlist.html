@@ -66,39 +66,45 @@
 </div>
 <div id="gift_desc" title="礼品详情" style="display: none"></div>
 <div id="exchangeform" title="兑换礼品" style="display: none">
-    <form name="loginform"  action="{url user/register}" method="post">
+    <form name="loginform"  action="{url gift/add}" method="post">
+        <input type="hidden" name="gid"  id="gid" value="" />
         <div class="input-bar">
             <h2>真实姓名</h2>
-            <input type="text" class="normal-input" id="username" name="username" onblur="check_username();"/>
+            <input type="text" class="normal-input" id="realname" name="realname" />
             <span class="input_warming">请务必填入真实姓名</span>
         </div>
         <div class="clr"></div>
         <div class="input-bar">
             <h2>电子邮箱</h2>
-            <input type="text" class="normal-input" id="password" name="password" onblur="check_passwd();" />
+            <input type="text" class="normal-input" id="email" name="email" />
             <span class="input_warming">常用邮箱地址</span>
         </div>
         <div class="clr"></div>
         <div class="input-bar">
             <h2>联系电话</h2>
-            <input type="password" class="normal-input" id="repassword" name="repassword"  onblur="check_repasswd();"/>
+            <input type="password" class="normal-input" id="phone" name="phone"  />
             <span id="repasswordtip" class="input_warming">您的联系电话</span>
         </div>
         <div class="clr"></div>
         <div class="input-bar">
             <h2>邮寄地址</h2>
-            <input type="text" class="normal-input" id="email" name="email"  onblur="check_email();"/>
+            <input type="text" class="normal-input" id="addr" name="addr"  onblur="check_email();"/>
             <span id="emailtip" class="input_warming">您的联系地址</span>
         </div>
         <div class="clr"></div>
         <div class="input-bar">
             <h2>邮政编码</h2>
-            <input type="text" class="normal-input" id="email" name="email"  onblur="check_email();"/>
+            <input type="text" class="normal-input" id="postcode" name="postcode" />
         </div>
         <div class="clr"></div>
         <div class="input-bar">
             <h2>QQ</h2>
-            <input type="text" class="normal-input" id="email" name="email"  onblur="check_email();"/>
+            <input type="text" class="normal-input" id="qq" name="qq" />
+        </div>
+        <div class="clr"></div>
+        <div class="input-bar">
+            <h2>备注</h2>
+            <input type="text" class="normal-input" id="notes" name="notes" />
         </div>
         <div class="clr"></div>
         <div class="auto-login">
@@ -123,9 +129,14 @@
                             var uid = "{$user['uid']}";
                             var usercredit = "{$user['credit2']}";
                             if (uid == 0) {
-                                alert("登陆之后才可以进行礼品兑换!");
+                                login();
                                 return false;
                             }
+                            if(credit>usercredit){
+                                alert("抱歉!您的财富值不够!");
+                                return false;
+                            }
+                            $("#gid").val(id);
                             $("#exchangeform").dialog({
                                 autoOpen: false,
                                 width: 560,
