@@ -124,7 +124,7 @@ em {font-style: normal;color:#E63A00;}
 #qaresult {margin-top: 18px;width: 570px}
 #qaresult .qa-list {margin-top: 20px;width: 570px;}
 #qaresult .item {font-size: 13px;line-height: 18px;margin-bottom: 1.5em;}
-#qaresult .item h3 {display: inline;font-size: medium;font-weight: 400;}
+#qaresult .item h3 {display: inline;font-size: medium;font-weight: 400;font-family: "microsoft yahei";}
 #qaresult .item b {color: #CC0000;}
 #qaresult .item .qa-i-bd, #qaresult .item .qa-i-ft {font-size: 1em;line-height: 1.7;word-break: break-all;word-wrap: break-word;}
 #qaresult .item .qa-i-ft {color: #666666;}
