@@ -52,7 +52,7 @@
                         </div>
                         <div class="msgcontent">
                             <script type="text/plain" id="content" name="content" style="height: 122px;"></script>
-                            <script type="text/javascript">UE.getEditor('content');</script>
+                            <script type="text/javascript">UE.getEditor('content', UE.utils.extend({toolbars:[[{$toolbars}]]}));</script>
                             <div class="related">
                                 <input type="text" class="code-input" id="code" name="code" onblur="check_code()">&nbsp;<span class="verifycode"><img src="{url user/code}" onclick="javascript:updatecode();" id="verifycode"></span><a href="javascript:updatecode();" class="changecode">&nbsp;换一个</a>
                                 <span id="codetip"></span>

@@ -18,7 +18,7 @@
 				<!--<input type="button" value="编辑器功能" onclick="document.location.href='index.php?admin_editor/default{$setting['seo_suffix']}'" style="cursor:pointer">-->
 			</td>
 		</tr>
-		<tr>
+<!--		<tr>
 			<td class="altbg1" width="45%"><b>开启数字统计:</b><br><span class="smalltxt">开启后编辑器会自动统计输入字数</span></td>
 			<td class="altbg2">
                     <input class="radio"  type="radio"  {if 'true'==$setting['editor_wordcount'] }checked{/if}  value="true" name="editor_wordcount"><label for="yes">是</label>&nbsp;&nbsp;&nbsp;
@@ -31,9 +31,9 @@
                     <input class="radio"  type="radio"  {if 'true' == $setting['editor_elementpath'] }checked{/if}  value="true" name="editor_elementpath"><label for="yes">是</label>&nbsp;&nbsp;&nbsp;
                     <input class="radio"  type="radio"  {if 'false' == $setting['editor_elementpath'] }checked{/if} value="false" name="editor_elementpath"><label for="no">否</label>
 			</td>
-		</tr>
+		</tr>-->
 		<tr>
-			<td class="altbg1" width="45%"><b>其它信息:</b><br><span class="smalltxt">在编辑器功能管理可以手动调整，FullScreen,Source,Undo,Redo,Bold</span></td>
+			<td class="altbg1" width="45%"><b>编辑器功能定义：</b><br><span class="smalltxt">在编辑器功能管理可以手动调整，FullScreen,Source,Undo,Redo,Bold</span></td>
 			<td class="altbg2"><textarea class="area" name="editor_toolbars"  style="height:200px;width:500px;">{$setting['editor_toolbars']}</textarea></td>
 		</tr>
 	</table>

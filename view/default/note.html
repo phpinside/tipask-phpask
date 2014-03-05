@@ -27,7 +27,7 @@
                 <input type="hidden" value="{$note['id']}" name="noteid">
                 <div class="your-answer">
                     <script type="text/plain" id="content" name="content" style="height: 122px;"></script>
-                    <script type="text/javascript">UE.getEditor('content');</script>
+                    <script type="text/javascript">UE.getEditor('content', UE.utils.extend({toolbars:[[{$toolbars}]]}));</script>
                 </div>
                 <div class="input-bar">
                     <h2>验证码</h2>

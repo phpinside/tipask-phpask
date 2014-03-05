@@ -67,7 +67,7 @@
                 <input type="hidden" value="{$question['title']}" name="title">
                 <div class="your-answer">
                     <script type="text/plain" id="anscontent" name="content" style="height: 122px;"></script>
-                    <script type="text/javascript">UE.getEditor('anscontent');</script>
+                    <script type="text/javascript">UE.getEditor('anscontent', UE.utils.extend({toolbars:[[{$toolbars}]]}));</script>
                 </div>
                 <div class="input-bar">
                     <!--{if $setting['code_ask']}-->
