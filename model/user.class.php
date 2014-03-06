@@ -61,7 +61,7 @@ class usermodel {
 
     function get_active_list($start = 0, $limit = 10) {
         $userlist = array();
-        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "user ORDER BY credit2 DESC,answers DESC,lastlogin DESC LIMIT $start,$limit");
+        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "user ORDER BY answers DESC,lastlogin DESC,credit2 DESC LIMIT $start,$limit");
         while ($user = $this->db->fetch_array($query)) {
             $user['avatar'] = get_avatar_dir($user['uid']);
             $userlist[] = $user;

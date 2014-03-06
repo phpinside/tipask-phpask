@@ -1,8 +1,5 @@
 var popusertimer = null;
 var query = '?';
-if (g_seo_on == 1) {
-    query = '?';
-}
 $(document).ready(function() {
     //头部header浮动层
     $(".ismore a").hover(function() {
@@ -182,7 +179,7 @@ function pop_user_out() {
 /*用户登陆*/
 function login() {
     $("#poplogin").remove();
-    $("body").append('<div id="poplogin" title="欢迎登陆tipask问答网"></div>');
+    $("body").append('<div id="poplogin" title="欢迎登陆'+g_site_name+'"></div>');
     $("#poplogin").load(g_site_url + "index.php?user/ajaxpoplogin");
     $("#poplogin").dialog({
         width: 520,
