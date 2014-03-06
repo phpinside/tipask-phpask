@@ -184,7 +184,7 @@
                     }
                     $.ajax({
                         type: "POST",
-                        url: "{url admin_topic/ajaxgetselect}",
+                        url: "{SITE_URL}index.php?admin_topic/ajaxgetselect{$setting['seo_suffix']}",
                         success: function(selectstr) {
                             $("#topic_select").html(selectstr);
                             $("#topic_qid").val(num);
