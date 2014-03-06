@@ -16,7 +16,7 @@
                 <div class="cls-qa-table">
                     <table>
                         <tbody>
-                            <tr><th class="s0">标题</th><th class="s1">回答数</th><th class="s1">评论数</th><th class="s2">时间</th></tr>
+                            <tr><th class="s0">标题</th><th class="s1">评论数</th><th class="s1">已采纳</th><th class="s2">时间</th></tr>
                             <!--{loop $answerlist $answer}-->
                             <tr>
                                 <td class="title">
@@ -25,8 +25,8 @@
                                             <a target="_blank" title="{$answer['title']}" href="{url question/view/$answer['qid']}">{eval echo cutstr($answer['title'],54)}</a>
                                         </div>
                                 </td>
-                                <td>{if $answer['adopttime']>0}<font color="green">√</font>{else}否{/if}</td>
                                 <td>{$answer['comments']}</td>
+                                <td>{if $answer['adopttime']>0}<font color="green">√</font>{else}否{/if}</td>
                                 <td>{$answer['time']}</td>
                             </tr>                   
                             <!--{/loop}-->
