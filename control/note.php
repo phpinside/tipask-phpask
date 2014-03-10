@@ -26,7 +26,7 @@ class notecontrol extends base {
     /* 浏览公告 */
 
     function onview() {
-        $navtitle = '浏览公告';
+        $navtitle = '查看公告';
         $page = max(1, intval($this->get[3]));
         $pagesize = $this->setting['list_default'];
         $startindex = ($page - 1) * $pagesize;
@@ -36,6 +36,9 @@ class notecontrol extends base {
         $commentlist = $_ENV['note_comment']->get_by_noteid($note['id'], $startindex, $pagesize);
         $departstr = page($rownum, $pagesize, $page, "note/view/" . $note['id']);
         $_ENV['note']->update_views($note['id']);
+        $seo_title = $note['title'].' - '.$navtitle.' - '.$this->setting['site_name'];
+        $seo_description = $seo_title;
+        $seo_keywords = $note['title'];
         include template('note');
     }
 
