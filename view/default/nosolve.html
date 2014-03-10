@@ -26,8 +26,14 @@
                     <span class="gold"><img src="{SITE_URL}css/default/gold.gif">{$question['price']}</span>
                     <span class="span-line">|</span>                    
                     <!--{/if}-->
-                    <span><a  href="{url user/space/$question['authorid']}" target="_blank" onmouseover="pop_user_on(this, '{$question[authorid]}', 'text');"  onmouseout="pop_user_out();">{$question['author']}</a></span><span class="span-line">|</span>
-                    <span>浏览{$question['views']}次</span>
+                    <!--{if $question['hidden']}-->
+                        <span>匿名</span>
+                    <!--{elseif $question['authorid']==0}-->
+                    <span><!--{if $question['ip']}-->{$question['ip']}<!--{else}-->游客<!--{/if}--></span>
+                    <!--{else}-->
+                        <span><a  href="{url user/space/$question['authorid']}" target="_blank" onmouseover="pop_user_on(this, '{$question[authorid]}', 'text');"  onmouseout="pop_user_out();">{$question['author']}</a></span>
+                    <!--{/if}-->
+                    <span class="span-line">|</span><span>浏览{$question['views']}次</span>
                 </div>
                 <div class="timeright"><span><a href="{url favorite/add/$question['id']}">收藏</a></span><span class="span-line">|</span>{$question['format_time']}</div>                    
             </div>
@@ -150,10 +156,10 @@
                 </li>
                 <!--{/loop}-->
             </ul>
-         <!--广告位3-->
-        <!--{if (isset($adlist['question_view']['left2']) && trim($adlist['question_view']['left2']))}-->
-        <div>{$adlist['question_view']['left2']}</div>
-        <!--{/if}-->
+            <!--广告位3-->
+            <!--{if (isset($adlist['question_view']['left2']) && trim($adlist['question_view']['left2']))}-->
+            <div>{$adlist['question_view']['left2']}</div>
+            <!--{/if}-->
         </div>
         <div class="pages">{$departstr}</div>
         <!--{if $solvelist}-->
@@ -206,7 +212,7 @@
             </ul>
         </div>
         <!--{/if}-->
-       <!--广告位5-->
+        <!--广告位5-->
         <!--{if (isset($adlist['question_view']['right1']) && trim($adlist['question_view']['right1']))}-->
         <div>{$adlist['question_view']['right1']}</div>
         <!--{/if}-->
@@ -337,7 +343,7 @@
                                 var category3 = {$categoryjs[category3]};
                                 var selectedcid = "{$question['cid1']},{$question['cid2']},{$question['cid2']}";
                                 $(document).ready(function() {
-                                initcategory(category1);
+                        initcategory(category1);
                                 fillcategory(category2, $("#category1 option:selected").val(), "category2");
                                 fillcategory(category3, $("#category2 option:selected").val(), "category3");
                                 //关闭问题

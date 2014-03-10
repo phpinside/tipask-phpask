@@ -30,7 +30,11 @@
                                 {$message['subject']}
                                 <!--{/if}-->
                             </h3>
+                            <!--{if $type!='system'}-->
                             <div class="detail" onclick="javascript:document.location = '{url message/view/$type/$message[fromuid]}';">{eval echo cutstr($message['content'],300,'')}</div>
+                            <!--{else}-->
+                            <div class="detail">{$message['content']}</div>
+                            <!--{/if}-->
                             <div class="related">
                                 <div class="pv">{$message['format_time']}</div>
                             </div>
@@ -39,12 +43,17 @@
                     </li>
                     <!--{/loop}-->
                 </ul>
-                <div class="manage-box"><input type="checkbox" value="chkall" id="chkall" onclick="checkall('message');"/> 全选  <input type="submit" value="删除" name="submit" class="button_2" /></div>
-                <div class="pages">{$departstr}</div>
+                <div class="q-tabmod mt10">                    
+                    <input type="checkbox" value="chkall" id="chkall" onclick="checkall('message');"/> 全选  <input type="submit" value="删除" name="submit" class="button_2" />
+                    <div class="pages flright">{$departstr}</div>
+                    <div class="clearfix"></div>
+                </div>
+                
             </div>
         </form>
     </div>
 </div>
+<!--{if $type=='personal'}-->
 <script type="text/javascript">
     $(document).ready(function() {
         $(".q-tabmod li").hover(function() {
@@ -54,4 +63,5 @@
         });
     });
 </script>
+<!--{/if}-->
 <!--{template footer}-->
