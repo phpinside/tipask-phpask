@@ -31,16 +31,15 @@
                 </ul>
             </div>
             <? } else { ?>            <div id="no-result">
-                <p>抱歉，未找到和 <span>"</span><em><?=$word?></em><span>"</span>相关的网页。</p>
+                <p>抱歉，未找到和 <span>"</span><em><?=$word?></em><span>"</span>相关的内容。</p>
                 <strong>建议您：</strong>
                 <ul>
                     <li><span>检查输入是否正确</span></li>
                     <li><span>简化查询词或尝试其他相关词</span></li>
-                    <li><span>阅读</span><a target="_blank" href="<?=SITE_URL?>?index/help.html">帮助</a><span>或</span><a target="_blank" href="http://info.so.360.cn/feedback.html">提出意见反馈</a></li>
                 </ul>
             </div>
             <? } ?>            <? if($departstr) { ?>            <div class="pages"><?=$departstr?></div>
-            <? } ?>            <div class="mod-relation">
+            <? } ?>            <? if($setting['xunsearch_open']) { ?>            <div class="mod-relation">
                 <div id="rs">
                     <table>
                         <tbody>
@@ -58,17 +57,23 @@
                     </table>
                 </div>
             </div>
-        </div>
+            <? } ?>        </div>
         <div class="hot-search">
             <div class="hd"><h3>热门搜索</h3></div>
             <div class="bd">
                 <ul>
-                    
+                    <? if($hot_words) { ?>                    
 <? if(is_array($hot_words)) { foreach($hot_words as $hostword) { ?>
                     <li><a href="<?=SITE_URL?>?question/search/<?=$hostword?>.html"><?=$hostword?></a></li>
                     
 <? } } ?>
-                </ul>
+                    <? } else { ?>                    <? $wordslist = unserialize($this->setting['hot_words']); ?>                    
+<? if(is_array($wordslist)) { foreach($wordslist as $hotword) { ?>
+                    <li><a <? if($hotword['qid']) { ?>href="<?=SITE_URL?>?q-<?=$hotword['qid']?>.html" <? } else { ?>href="<?=SITE_URL?>?question/search/<?=$hotword['w']?>.html"<? } ?>><?=$hotword['w']?></a></li>
+                    
+<? } } ?>
+    
+                    <? } ?>                </ul>
             </div>
         </div>
     </div>

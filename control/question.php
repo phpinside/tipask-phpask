@@ -467,10 +467,11 @@ class questioncontrol extends base {
     //编辑标签
     function onedittag() {
         $tag = trim($this->post['qtags']);
-        $qid = $this->post['qid'];
+        $qid = intval($this->post['qid']);
         $viewurl = urlmap("question/view/$qid", 2);
         $message = $tag ? "标签修改成功!" : "标签不能为空!";
-        $tag && $_ENV['tag']->multi_add(explode(" ", $tag), $qid);
+        $taglist = explode(" ",$tag);
+        $taglist && $_ENV['tag']->multi_add(array_unique($taglist), $qid);
         $this->message($message, $viewurl);
     }
 

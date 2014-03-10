@@ -33,8 +33,8 @@ class tagmodel {
         }
         return $taglist;
     }
-    
-    function rownum(){
+
+    function rownum() {
         $query = $this->db->query("SELECT count(name) FROM " . DB_TABLEPRE . "question_tag GROUP BY name");
         return $this->db->num_rows($query);
     }
@@ -42,17 +42,12 @@ class tagmodel {
     function multi_add($namelist, $qid) {
         if (empty($namelist))
             return false;
-
         $this->db->query("DELETE FROM " . DB_TABLEPRE . "question_tag WHERE qid=$qid");
         $insertsql = "INSERT INTO " . DB_TABLEPRE . "question_tag(`qid`,`name`,`time`) VALUES ";
-        $values = "";
         foreach ($namelist as $name) {
-            if (!$name)
-                continue;
-            $values .= " ($qid,'$name',{$this->base->time}),";
+            $insertsql .= "($qid,'$name',{$this->base->time}),";
         }
-        if ($values)
-            $this->db->query(substr($insertsql . $values, 0, -1));
+        $this->db->query(substr($insertsql, 0, -1));
     }
 
     function remove_by_name($names) {
