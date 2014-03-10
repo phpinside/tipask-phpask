@@ -169,6 +169,9 @@ class questioncontrol extends base {
             $seo_keywords = str_replace("{wtbt}", $question['title'], $seo_keywords);
             $seo_keywords = str_replace("{wtzt}", $typedescarray[$question['status']], $seo_keywords);
             $seo_keywords = str_replace("{flmc}", $curnavname, $seo_keywords);
+            if ($taglist) {
+                $seo_keywords = str_replace("{wtbq}", implode(",", $taglist), $seo_keywords);
+            }
             if (isset($bestanswer) && $bestanswer) {
                 $seo_keywords = str_replace("{zjda}", strip_tags($bestanswer['content']), $seo_keywords);
             }
