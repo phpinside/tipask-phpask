@@ -291,7 +291,7 @@ table {border-collapse: collapse;border-spacing: 0;font-size: inherit;}
 .cls-qa-table table tr:hover{background:#f8f8f8;}
 caption, th {text-align: left;}
 .cls-qa-table table {table-layout: fixed;width: 100%;}
-.cls-qa-table th, .cls-qa-table td {border-bottom: 1px dotted #F0F0F0;line-height: 26px;padding:3px 0 3px 10px;text-align: center;vertical-align: top;}
+.cls-qa-table th, .cls-qa-table td {border-bottom: 1px dotted #F0F0F0;line-height: 26px;padding:3px 0 3px 10px;text-align: left;vertical-align: top;}
 .cls-qa-table td {color: #888888;}
 .cls-qa-table table .s0 {text-align: left;}
 .cls-qa-table table .s1 {width: 60px;}
