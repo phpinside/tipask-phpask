@@ -34,23 +34,10 @@ class settingmodel {
         return $tpllist;
     }
 
-    function update_counter() {
-        /*
-		$query = $this->db->query("SELECT * FROM ".DB_TABLEPRE."question");
-        while($question = $this->db->fetch_array($query)) {
- 			$category=$this->base->category[$question['cid']];
- 			if(1==$category['grade']){
- 				$cid1=$category['id'];$cid2=0;$cid3=0;
- 			}
-			if(2==$category['grade']){
- 				$cid1=$category['pid'];$cid2=$category['id'];$cid3=0;
- 			}
-			if(3==$category['grade']){
- 				$cid1=$this->base->category[$category['pid']]['pid'];$cid2=$category['pid'];$cid3=$category['id'];
- 			}
-            $this->db->query("UPDATE ".DB_TABLEPRE."question set cid1=$cid1,cid2=$cid3,cid3=$cid3  where id=".$question['id']);
-        }
-        */
+    /**
+     * 分类问题数目校正
+     */
+    function regulate_category() {
         $query = $this->db->query("SELECT * FROM ".DB_TABLEPRE."category");
         while($category = $this->db->fetch_array($query)) {
             $q1=$this->db->fetch_total('question','cid1='.$category['id']);
@@ -59,8 +46,29 @@ class settingmodel {
             $questions=$q1+$q2+$q3;
             $this->db->query("UPDATE ".DB_TABLEPRE."category set questions=$questions where id=".$category['id']);
         }
-
     }
+    /**
+     * 问题回答数数目校正
+     */
+    function regulate_question() {
+        $query = $this->db->query("SELECT * FROM ".DB_TABLEPRE."question");
+        while($question = $this->db->fetch_array($query)) {
+            $answers = $this->db->fetch_total('answer','qid='.$question['id']);
+            $this->db->query("UPDATE ".DB_TABLEPRE."question set answers=$answers where id=".$question['id']);
+        }
+    }
+    /**
+     * 用户问题回答数目校正
+     */
+    function regulate_user() {
+        $query = $this->db->query("SELECT * FROM ".DB_TABLEPRE."user");
+        while($user = $this->db->fetch_array($query)) {
+            $questions=$this->db->fetch_total('question','authorid='.$user['uid']);
+            $answers=$this->db->fetch_total('answer','authorid='.$user['uid']);
+            $this->db->query("UPDATE ".DB_TABLEPRE."user SET questions=$questions,answers=$answers where uid=".$user['uid']);
+        }
+    }
+    
     function get_hot_words($hot_words) {
         $lines = explode("\n",$hot_words);
         $wordslist = array();
