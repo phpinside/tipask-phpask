@@ -333,7 +333,7 @@ class admin_settingcontrol extends base {
             if ($this->setting['xunsearch_open'] && !file_exists($this->setting['xunsearch_sdk_file'])) {
                 $type = 'errormsg';
                 $message = 'SDK文件不存在，请核实!';
-            } else {                
+            } else {
                 $type = 'correctmsg';
                 $message = '搜索设置成功!';
             }
@@ -363,16 +363,31 @@ class admin_settingcontrol extends base {
             $logininc = array();
             $logininc['appid'] = $this->setting['qqlogin_appid'];
             $logininc['appkey'] = $this->setting['qqlogin_key'];
-            $logininc['callback'] = SITE_URL.'plugin/qqlogin/callback.php';
+            $logininc['callback'] = SITE_URL . 'plugin/qqlogin/callback.php';
             $logininc['scope'] = "get_user_info";
             $logininc['errorReport'] = "true";
             $logininc['storageType'] = "file";
-            $loginincstr = "<?php die('forbidden'); ?>\n".json_encode($logininc); 
+            $loginincstr = "<?php die('forbidden'); ?>\n" . json_encode($logininc);
             $loginincstr = str_replace("\\", "", $loginincstr);
-            writetofile(TIPASK_ROOT."/plugin/qqlogin/API/comm/inc.php",$loginincstr);
+            writetofile(TIPASK_ROOT . "/plugin/qqlogin/API/comm/inc.php", $loginincstr);
             $message = 'qq互联参数保存成功！';
         }
         include template("setting_qqlogin", "admin");
+    }
+
+    /* sina互联设置 */
+
+    function onsinalogin() {
+        if (isset($this->post['submit'])) {
+            $this->setting['sinalogin_open'] = $this->post['sinalogin_open'];
+            $this->setting['sinalogin_appid'] = trim($this->post['sinalogin_appid']);
+            $this->setting['sinalogin_key'] = trim($this->post['sinalogin_key']);
+            $this->setting['sinalogin_avatar'] = trim($this->post['sinalogin_avatar']);
+            $_ENV['setting']->update($this->setting);
+            $this->setting = $this->cache->load('setting');
+            $message = 'sina互联参数保存成功！';
+        }
+        include template("setting_sinalogin", "admin");
     }
 
     /* 财富充值设置 */

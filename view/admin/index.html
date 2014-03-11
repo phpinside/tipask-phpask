@@ -1,8 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     {eval $user=$this->user; $setting=$this->setting;}
-    <HEAD><TITLE>Tipask后台管理系统</TITLE>
-        <META http-equiv=Content-Type content="text/html; charset={TIPASK_CHARSET}">
-        <META http-equiv=x-ua-compatible content=ie=7><LINK href="css/admin/admin_m.css" type="text/css" rel="stylesheet">
+    <head>
+        <title>Tipask后台管理系统</title>
+        <meta http-equiv=Content-Type content="text/html; charset={TIPASK_CHARSET}" />
+            <LINK href="css/admin/admin_m.css" type="text/css" rel="stylesheet" />
+     </head>
     <BODY style="HEIGHT: 100%" scroll="yes">
         <SCRIPT type="text/javascript">
             function setTab(name,cursel,n){
@@ -90,6 +92,7 @@
                                     <li><a href="index.php?admin_setting/stopcopy{$setting['seo_suffix']}" target="main">防采集设置</a> </li>
                                     <li><a href="index.php?admin_editor/setting{$setting['seo_suffix']}" target="main">编辑器设置</a> </li>
                                     <li><a href="index.php?admin_setting/qqlogin{$setting['seo_suffix']}" target="main">qq互联设置</a> </li>
+                                    <li><a href="index.php?admin_setting/sinalogin{$setting['seo_suffix']}" target="main">sina互联设置</a> </li>
                                 </ul>
                             </DIV>
                             <DIV id="con_nav_3" style="DISPLAY: none">
