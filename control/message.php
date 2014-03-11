@@ -34,6 +34,7 @@ class messagecontrol extends base {
         $page = max(1, intval($this->get[2]));
         $pagesize = $this->setting['list_default'];
         $startindex = ($page - 1) * $pagesize;
+        $_ENV['message']->read_by_fromuid(0);
         $messagelist = $_ENV['message']->list_by_touid($this->user['uid'], $startindex, $pagesize);
         $messagenum = $this->db->fetch_total('message', 'touid=' . $this->user['uid'] . ' AND fromuid=0 AND status<>2 ');
         $departstr = page($messagenum, $pagesize, $page, "message/system");
