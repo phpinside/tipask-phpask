@@ -465,6 +465,7 @@ class usercontrol extends base {
         $this->load("category");
         $categoryjs = $_ENV['category']->get_js();
         $qqlogin = $_ENV['user']->get_login_auth($this->user['uid'],'qq');
+        $sinalogin = $_ENV['user']->get_login_auth($this->user['uid'],'sina');
         include template("mycategory");
     }
     

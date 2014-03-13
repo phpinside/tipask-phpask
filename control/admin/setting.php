@@ -385,6 +385,10 @@ class admin_settingcontrol extends base {
             $this->setting['sinalogin_avatar'] = trim($this->post['sinalogin_avatar']);
             $_ENV['setting']->update($this->setting);
             $this->setting = $this->cache->load('setting');
+            $config = "<?php \r\ndefine('WB_AKEY',  '" . $this->setting['sinalogin_appid'] . "');\r\n";
+            $config .= "define('WB_SKEY',  '" . $this->setting['sinalogin_key'] . "');\r\n";
+            $config .= "define('WB_CALLBACK_URL',  '" . SITE_URL . 'plugin/sinalogin/callback.php' . "');\r\n";
+            writetofile(TIPASK_ROOT . '/plugin/sinalogin/config.php',$config);
             $message = 'sina互联参数保存成功！';
         }
         include template("setting_sinalogin", "admin");

@@ -44,8 +44,11 @@
             <div class="rtitle"><a href="{url user/register}">还没有账号？立即注册!</a></div>
             <div class="rcontent clearfix">
                 <h3>更多登录方式</h3>
+                <!--{if $setting['sinalogin_open']}-->
+                <span><a href="{SITE_URL}plugin/sinalogin/index.php"><img src="{SITE_URL}css/default/sina_login_btn.png" alt="Connect_logo_3.png"></a></span>
+                <!--{/if}-->
                 <!--{if $setting['qqlogin_open']}-->
-                <a href="{SITE_URL}plugin/qqlogin/index.php"><img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_3.png" alt="Connect_logo_3.png"></a>
+                <span><a href="{SITE_URL}plugin/qqlogin/index.php"><img src="{SITE_URL}css/default/qq_login_btn.png" alt="Connect_logo_3.png"></a></span>
                 <!--{/if}-->
             </div>
         </div>		

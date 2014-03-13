@@ -641,7 +641,7 @@ th{font-style: normal;font-weight: 400;}
 .verifycode{border: 1px solid #DDDDDD;float: left;height: 29px;width:80px;}
 .changecode{line-height: 32px;}
 .qqLogin s,.sinaWebLogin s {background: url("thirdfast_login_all.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);display: inline-block;height: 18px;margin-bottom: -5px;width: 19px;}
-.qqLogin a,.sinaWebLogin a {height: 18px;left: 2px;line-height: 18px;padding-right: 10px;position: relative;text-decoration: none;top: -3px;}
+.qqLogin a,.sinaWebLogin a {height: 18px;left: 2px;line-height: 18px;position: relative;text-decoration: none;top: -3px;}
 .qqLogin s {background-position: -185px 0;}
 .sinaWebLogin s {background-position: 0 0;}
 .right-tips dd {background: url("lidot.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);background-position: 0 10px;color: #999999;line-height: 22px;padding: 0 5px 5px 10px;}

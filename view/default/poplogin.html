@@ -32,7 +32,9 @@
         </div>
         <div class="auto-login">
             其他账号登陆：
-            <!--<span title="新浪登录" class="sinaWebLogin"><a href="{SITE_URL}plugin/qqlogin/index.php"><s></s></a></span>-->
+            <!--{if $setting['sinalogin_open']}-->
+            <span title="新浪微博登陆" class="sinaWebLogin"><a href="{SITE_URL}plugin/sinalogin/index.php"><s></s></a></span>
+            <!--{/if}-->
             <!--{if $setting['qqlogin_open']}-->
             <span title="QQ登录" class="qqLogin"><a href="{SITE_URL}plugin/qqlogin/index.php"><s></s></a></span>
             <!--{/if}-->
