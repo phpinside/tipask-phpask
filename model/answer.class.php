@@ -198,6 +198,8 @@ class answermodel {
             $this->db->query("UPDATE " . DB_TABLEPRE . "user SET answers=answers-$answers WHERE `uid`=$authorid");
         }
         //删除回答
+        $this->db->query("DELETE FROM `" . DB_TABLEPRE . "answer_comment ` WHERE `aid` IN ($aids)");
+        $this->db->query("DELETE FROM `" . DB_TABLEPRE . "answer_support ` WHERE `aid` IN ($aids)");
         $this->db->query("DELETE FROM `" . DB_TABLEPRE . "answer` WHERE `id` IN ($aids)");
     }
 
