@@ -407,8 +407,9 @@ th{font-style: normal;font-weight: 400;}
 .questionbox .pdl3{ padding:0 0 0 3px;}
 .questionbox .ico {display: inline-block;height: 32px;left: -26px;position: absolute;top: 2px;width: 55px;}
 .questionbox .tags{padding:0 0 0 40px;}
-.questionbox .tags a{ display:inline-block; padding:2px 8px 1px; margin:0 4px 4px 0; height:18px; line-height:15px; color:#666; background:#E7F3F9; }
-.questionbox .tags a:hover{background:#68B2FC; color:#fff; text-decoration:none;}
+.questionbox .solve-tag{padding:0 0 0 3px;}
+.questionbox .tags a,.questionbox .solve-tag a{ display:inline-block; padding:2px 8px 1px; margin:0 4px 4px 0; height:18px; line-height:15px; color:#666; background:#E7F3F9; }
+.questionbox .tags a:hover,.questionbox .solve-tag a:hover{background:#68B2FC; color:#fff; text-decoration:none;}
 .questionbox .description,.notebox .description{font-size:14px;margin-top: 10px;line-height: 22px;eoverflow: hidden; white-space: pre-wrap; word-break: break-all;word-wrap: normal;}
 .user-label{margin-left: 12px;margin-top: 5px;color: #666666;}
 .user-label:before, .user-label:after {content: "";display: table;}
