@@ -18,7 +18,8 @@
                     <div class="con bg1">
                         <div class="left fl">
                             <div>为更好推荐您擅长的问题，请设置您的擅长分类</div>
-                            <div>                                <input type="hidden" value="" name="cids" id="cate_value">
+                            <div>
+                                <input type="hidden" value="" name="cids" id="cate_value" />
                                 <span class="y_text">您最多可添加3个分类</span>
                             </div>
                             <div><a {if count($user['category'])>=3}class="btn btn-1 btn-disabled-1"{else}class="btn btn-1"{/if} href="javascript:void(0)" id="changecategory"><span>添加擅长分类+</span></a></div>
@@ -41,15 +42,28 @@
                                     <tr><th class="s0">登录方式</th><th class="s2">状态</th><th class="s3">管理</th></tr>
                                     <!--{if $qqlogin}-->
                                     <tr>
-                                        <td>QQ登录</td>
+                                        <td>QQ账号</td>
                                         <td><font color="green">已绑定</font></td>
                                         <td><a href="{url user/unchainauth/qq}">解除绑定</a></td>
                                     </tr> 
                                     <!--{else}-->
                                     <tr>
-                                        <td>QQ登录</td>
+                                        <td>QQ账号</td>
                                         <td>未绑定</td>
                                         <td><a href="{SITE_URL}plugin/qqlogin/index.php">点击绑定</a></td>
+                                    </tr> 
+                                    <!--{/if}-->
+                                    <!--{if $sinalogin}-->
+                                    <tr>
+                                        <td>sina微博</td>
+                                        <td><font color="green">已绑定</font></td>
+                                        <td><a href="{url user/unchainauth/sina}">解除绑定</a></td>
+                                    </tr> 
+                                    <!--{else}-->
+                                    <tr>
+                                        <td>sina微博</td>
+                                        <td>未绑定</td>
+                                        <td><a href="{SITE_URL}plugin/sinalogin/index.php">点击绑定</a></td>
                                     </tr> 
                                     <!--{/if}-->
                                 </tbody>

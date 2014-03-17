@@ -17,15 +17,16 @@ if (isset($_REQUEST['code'])) {
     $keys['code'] = $_REQUEST['code'];
     $keys['redirect_uri'] = WB_CALLBACK_URL;
     try {
-        $token = $o->getAccessToken('code', $keys);
+        $token_arr = $o->getAccessToken('code', $keys);
     } catch (OAuthException $e) {
         echo $e->getMessage();
         exit;
     }
 }
-if ($token) {
-    $openid = $token['uid'];
-    $c = new SaeTClientV2(WB_AKEY, WB_SKEY, $token['access_token']);
+if ($token_arr) {
+    $openid = $token_arr['uid'];
+    $token = $token_arr['access_token'];
+    $c = new SaeTClientV2(WB_AKEY, WB_SKEY, $token);
     $sid = tcookie('sid');
     $auth = tcookie('auth');
     $user = array();
@@ -35,6 +36,14 @@ if ($token) {
         if ($password != $user['password']) {
             $user = array();
         }
+    }
+    if (!$user) {
+        $user = get_by_openid($openid);
+    } else {
+        remove_auth($openid);
+        add_auth($token, $openid, $uid);
+        header("Location:" . SITE_URL . "index.php?user/mycategory");
+        exit;
     }
     if ($user) {
         add_auth($token, $openid, $uid);
@@ -145,4 +154,5 @@ function refresh($user) {
     tcookie('auth', $auth);
     tcookie('loginuser', '');
 }
+
 ?>

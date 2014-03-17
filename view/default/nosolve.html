@@ -197,7 +197,7 @@
         </div>
         <!--{/if}-->
         <!--{if $expertlist}-->
-        <div class="modbox mt10">
+        <div class="modbox mb10">
             <div class="title">推荐专家</div>
             <ul class="left-expert-list">
                 <!--{loop $expertlist $expert}-->
@@ -494,7 +494,7 @@
                         function addcomment(answerid) {
                         var content = $("#comment_" + answerid + " input[name='content']").val();
                                 if (g_uid == 0){
-                        login();
+                                login();
                                 return false;
                         }
                         if (bytes($.trim(content)) < 5){
