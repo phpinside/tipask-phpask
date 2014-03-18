@@ -417,7 +417,7 @@ class questioncontrol extends base {
     /* 提问自动搜索已经解决的问题 */
 
     function onajaxsearch() {
-        $title = urldecode($this->get[2]);
+        $title = $this->get[2];
         $questionlist = $_ENV['question']->search_title($title, 2, 1, 0, 5);
         include template('ajaxsearch');
     }
