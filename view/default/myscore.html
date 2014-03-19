@@ -39,7 +39,8 @@
                             <select class="normal_select" onchange="init_exchange()" name="tocredits" id="tocredits">                        
                                 <!--{loop $outextcredits $index $credits}-->
                                 <option value="{$credits[creditsrc]}|{$credits[creditdesc]}" src="{$credits[creditsrc]}" unit="{$credits[unit]}" title="{$credits[title]}" index="{$index}" ratio="{$credits[ratio]}">{$credits[title]}</option>
-                                <!--{/loop}-->                            </select>
+                                <!--{/loop}-->
+                                </select>
                             &nbsp;
                             所需&nbsp;<input type="text" value="0" class="credit_input" disabled="disabled" size="5" name="needamount" id="needamount" />
                             <select class="normal_select" name="fromcredits" id="fromcredits"></select>
