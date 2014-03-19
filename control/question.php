@@ -188,6 +188,12 @@ class questioncontrol extends base {
         }
         $qid = $this->post['qid'];
         $question = $_ENV['question']->get($qid);
+//        if(!$question){
+//            $this->message('提交回答失败,问题不存在!');
+//        }
+        print_r($this->post);
+        print_r($this->get);
+        exit;
         if ($this->user['uid'] == $question['authorid']) {
             $this->message('提交回答失败，不能自问自答！', 'question/view/' . $qid);
         }
