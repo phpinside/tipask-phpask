@@ -38,16 +38,16 @@
 <!--{template footer,admin}-->
 <script type="text/javascript">
 function jscode(id){
-	$.dialog({
-	    id:'jscodeDiv',
-	    position:'center',
-	    align:'left',
-	    fixed:1,
-	    width:680,
-	    height:100,
-	    title:'获取js调用代码',
-	    fnCancel:function(){$.dialog.close('jscodeDiv')},
-	    content:'JS调用 (复制代码到您网站文件中的相应位置)<textarea rows="2" style="width: 95%;" onfocus="this.select()">&lt;script type="text/javascript" src="{SITE_URL}index.php?js/view/'+id+'{$setting['seo_suffix']}" &gt;&lt;/script&gt;</textarea>'
-	  });
+    $.dialog({
+        id:'jscodeDiv',
+        position:'center',
+        align:'left',
+        fixed:1,
+        width:680,
+        height:100,
+        title:'获取js调用代码',
+        fnCancel:function(){$.dialog.close('jscodeDiv')},
+        content:'JS调用 (复制代码到您网站文件中的相应位置)<textarea rows="2" style="width: 95%;" onfocus="this.select()">&lt;script type="text/javascript" src="{SITE_URL}index.php?js/view/'+id+'{$setting['seo_suffix']}" &gt;&lt;/script&gt;</textarea>'
+      });
 }
 </script>
