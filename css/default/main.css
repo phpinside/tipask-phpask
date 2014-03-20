@@ -479,8 +479,12 @@ th{font-style: normal;font-weight: 400;}
 .net-answer-list .avatar{float: left;font-size: 12px;margin-top: 6px;width: 52px;text-align: center;}
 .anscontent{float:right;margin-left: 18px;width: 620px;}
 .appendcontent{margin-left:15px;margin-top:5px;width: 600px;font-size:12px;}
-.appendcontent span{float: left;margin-right:5px;}
-.appendcontent p{width: 560px;float: left;}
+.appendcontent .appendbox{width: 590px;margin-top:5px;word-wrap:break-word;word-break:break-all;overflow:hidden;}
+.appendcontent .appendbox h4{font-family: "microsoft yahei";font-size: 12px;font-weight: normal;float: left;}
+.appendcontent .appendbox .appendask{color:#FF8100;}
+.appendcontent .appendbox .appendanswer{color:#5EBB0B;}
+.appendcontent .appendbox .time{color:#999999;margin-left: 5px;}
+.appendcontent .appendbox p{width: 580px;float: left;line-height: 22px;}
 .anscontent img,.description img,.mainbox img,.qa-content img{width: expression(this.width > 300 ? 300: true); max-width: 300px;height: expression(this.height > 200 ? 200: true); max-height: 200px;}
 
 /*comments 评论*/

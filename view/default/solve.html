@@ -58,14 +58,17 @@
                 <div class="qa-content">
                             {$bestanswer['content']}
                             <div class="appendcontent">
-                                <!--{loop $bestanswer['tags'] $tagindex $tag}-->                        
+                                <!--{loop $answer['tags'] $tagindex $tag}-->       
                                 <!--{if ($tagindex%2) == 0}-->
-                                <!--{if $tagindex!=0}-->
-                                <!--{/if}-->
-                                <span style="color:#5EBB0B;">追问:</span>{$tag}
+                                <div class="appendbox">
+                                    <h4 class="appendask">追问:</h4>{$tag}
+                                </div>
                                 <!--{else}-->                        
-                                <span style="color:#999999;">回答:</span>{$tag}
+                                <div class="appendbox">
+                                    <h4 class="appendanswer">回答:</h4>{$tag}                                    
+                                </div>
                                 <!--{/if}-->
+                                <div class="clr"></div>
                                 <!--{/loop}-->
                             </div>
                         </div>
