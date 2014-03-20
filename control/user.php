@@ -24,6 +24,9 @@ class usercontrol extends base {
     }
 
     function onregister() {
+        if ($this->user['uid']) {
+            header("Location:" . SITE_URL);
+        }
         $navtitle = '注册新用户';
         if (!$this->setting['allow_register']) {
             $this->message("系统注册功能暂时处于关闭状态!", 'STOP');
@@ -71,6 +74,9 @@ class usercontrol extends base {
     }
 
     function onlogin() {
+        if ($this->user['uid']) {
+            header("Location:" . SITE_URL);
+        }
         $navtitle = '用户登录';
         $this->setting['passport_open'] && !$this->setting['passport_type'] && $_ENV['user']->passport_client(); //通行证处理
         if (isset($this->post['submit'])) {
@@ -94,7 +100,7 @@ class usercontrol extends base {
                 $this->message('用户名或密码错误！', 'user/login');
             }
         } else {
-            $forward = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : SITE_URL;
+            $forward = (isset($_SERVER['HTTP_REFERER']) && false!==strpos($group['regulars'],'question/answer'))  ? $_SERVER['HTTP_REFERER'] : SITE_URL;
             include template('login');
         }
     }
@@ -464,16 +470,16 @@ class usercontrol extends base {
     function onmycategory() {
         $this->load("category");
         $categoryjs = $_ENV['category']->get_js();
-        $qqlogin = $_ENV['user']->get_login_auth($this->user['uid'],'qq');
-        $sinalogin = $_ENV['user']->get_login_auth($this->user['uid'],'sina');
+        $qqlogin = $_ENV['user']->get_login_auth($this->user['uid'], 'qq');
+        $sinalogin = $_ENV['user']->get_login_auth($this->user['uid'], 'sina');
         include template("mycategory");
     }
-    
+
     //解除绑定
-    function onunchainauth(){
-        $type = ($this->get[2]=='qq')?'qq':'sina';
-        $_ENV['user']->remove_login_auth($this->user['uid'],$type);
-        $this->message($type."绑定解除成功!",'user/mycategory');        
+    function onunchainauth() {
+        $type = ($this->get[2] == 'qq') ? 'qq' : 'sina';
+        $_ENV['user']->remove_login_auth($this->user['uid'], $type);
+        $this->message($type . "绑定解除成功!", 'user/mycategory');
     }
 
     function onajaxcategory() {

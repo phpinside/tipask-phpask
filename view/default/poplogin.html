@@ -4,12 +4,12 @@
         <div class="input-bar">
             <div id="user_error" class="user_error">&nbsp;</div>
             <h2>用户名</h2>
-            <input type="text" class="normal-input" id="username" name="username" />
+            <input type="text" class="normal-input" id="popusername" name="username" />
         </div>
         <div class="clr"></div>
         <div class="input-bar">
             <h2>密&nbsp;&nbsp;码</h2>
-            <input type="password" class="normal-input" id="password" name="password" />
+            <input type="password" class="normal-input" id="poppassword" name="password" />
         </div>
         <!--{if $setting['code_login']}-->
         <div class="clr"></div>
@@ -43,8 +43,8 @@
     <div class="clr"></div>
     <script type="text/javascript">
         function checkform() {
-            var username = $("#username").val();
-            var password = $("#password").val();
+            var username = $("#popusername").val();
+            var password = $("#poppassword").val();
             if ($.trim(username) === '') {
                 $("#user_error").html("请输入您的账号");
                 $("#username").focus();
