@@ -439,10 +439,13 @@ th{font-style: normal;font-weight: 400;}
 .btns:hover{ background-position:-91px -231px; color:#666; text-decoration:none;}
 /*按钮*/
 .button_2{background: url("btn_2.png") repeat-x scroll 0 0 transparent;border:0;width:50px;line-height: 25px;height:25px;font-size:12px;padding-bottom: 1px;color:#60A506;cursor: pointer;}
+.button_2:hover{background: url("btn_2_hover.png") repeat-x scroll 0 0 transparent;}
 .button_4{background: url("btn_4.png") repeat-x scroll 0 0 transparent;border:0;width:76px;line-height: 25px;height:25px;font-size:12px;padding-bottom: 1px;color:#60A506;cursor: pointer;}
-.button_4_red{background: url("btn_4.png") repeat-x scroll 0 0 transparent;border:0;width:76px;line-height: 25px;height:25px;font-size:12px;padding-bottom: 1px;color:#CC0000;cursor: pointer;}
+.button_4:hover{background: url("btn_4_hover.png") repeat-x scroll 0 0 transparent;}
 .button_7{background: url("btn_7.png") repeat-x scroll 0 0 transparent;border:0;width:116px;line-height: 25px;height:25px;font-size:12px;padding-bottom: 1px;color:#60A506;cursor: pointer;}
+.button_7:hover{background: url("btn_7_hover.png") repeat-x scroll 0 0 transparent;}
 .button_attention{background: url("btn_attention.png") repeat-x scroll 0 0 transparent;border:0;width:66px;line-height: 20px;height:24px;font-size:12px;cursor: pointer;color:#34A305;}
+.button_attention:hover{background: url("btn_attention_hover.png") repeat-x scroll 0 0 transparent;}
 .button_agree{background: url("btn_agree.png") repeat-x scroll 0 0 transparent;border:0;width:67px;line-height: 25px;height:25px;font-size:12px;color:#DB4F1F;font-weight: bold;padding-left:21px; text-align: center;cursor: pointer;}
 
 /*问题关注*/
