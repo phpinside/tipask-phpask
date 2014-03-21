@@ -722,6 +722,7 @@ input:hover{border-color:#3EA201;}
 .links .friendlink a {margin: 0 2px; line-height:28px;}
 
 /*footer 页底*/
+#scrollUp {background: url("scrolltop.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);bottom: 20px;height: 38px;right:130px;width: 38px;}
 .footer{border-top: 1px solid #E3E3E3;margin-top: 15px;padding: 15px 0;}
 .bottom {color: #999999;padding: 0 0 5px;text-align: center;}
 .bottom a {color: #666666;margin: 0 3px;}

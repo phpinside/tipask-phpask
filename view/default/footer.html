@@ -14,10 +14,22 @@
         <p>Powered by <a rel="nofollow" target="_blank" href="http://www.tipask.com/">Tipask v{TIPASK_VERSION}</a> &copy;2009-2014 <a rel="nofollow" target="_blank" href="http://www.tipask.com">tipask.com</a>，Processed in {$runtime} second(s), {$querynum} queries.</p>
     </div>
 </div>
-
+<a id="scrollUp" href="#top" title="" style="position: fixed; z-index: 2147483647; display: block;"></a>
 <div class="usercard" id="usercard"></div>
 <script type="text/javascript" src="{SITE_URL}js/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript" src="{SITE_URL}js/jquery.scrollup.js"></script>
 <script type="text/javascript" src="{SITE_URL}js/common.js"></script>
-
+<script type="text/javascript">
+                $.scrollUp({
+                scrollName: 'scrollUp', // Element ID
+                topDistance: '260', // Distance from top before showing element (px)
+                topSpeed: 300, // Speed back to top (ms)
+                animation: 'fade', // Fade, slide, none
+                animationInSpeed: 200, // Animation in speed (ms)
+                animationOutSpeed: 200, // Animation out speed (ms)
+                scrollText: '', // Text for element
+                activeOverlay: false  // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+            });
+</script>
 </body>
 </html>
