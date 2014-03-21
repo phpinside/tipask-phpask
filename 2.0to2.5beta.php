@@ -68,10 +68,10 @@ CREATE TABLE  ask_question_supply (
   KEY `qid` (`qid`)
 ) ENGINE=MyISAM;
 UPDATE ask_setting SET v='insertimage,autotypeset,attachment,link,unlink,insertvideo,insertcode,fullscreen' WHERE k='editor_toolbars';
+ALTER TABLE ask_question_tag DROP PRIMARY KEY ;       
 ALTER TABLE ask_question_tag  DROP tid;
 ALTER TABLE ask_question_tag  change tname  name varchar(20) NOT NULL;
 ALTER TABLE ask_question_tag  ADD `time` int(10) NOT NULL DEFAULT '0';
-ALTER TABLE ask_question_tag DROP PRIMARY KEY ;
 ALTER TABLE ask_question_tag ADD PRIMARY KEY ( `qid` , `name` ) ;
 TRUNCATE TABLE ask_session;
 ALTER TABLE ask_session CHANGE sid sid char(16) NOT NULL ; 
