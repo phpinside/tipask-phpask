@@ -12,13 +12,11 @@ if(!defined('IN_TIPASK')) {
 }
 
 define('TIPASK_VERSION', '2.5Beta');
-define('TIPASK_RELEASE', '20140221');
+define('TIPASK_RELEASE', '20140322');
 define('INSTALL_LANG', 'SC_UTF8');
 define('TIPASK_ROOT', dirname(__FILE__).'/../');
 define('CONFIG', TIPASK_ROOT.'./config.php');
-
 $sqlfile = TIPASK_ROOT.'./install/tipask.sql';
-
 $lockfile = TIPASK_ROOT.'./data/install.lock';
 
 define('CHARSET', 'UTF-8');

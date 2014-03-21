@@ -108,7 +108,7 @@ if (!$action) {
     $config .= "define('DB_CONNECT', 0);\r\n";
     $config .= "define('TIPASK_CHARSET', '" . TIPASK_CHARSET . "');\r\n";
     $config .= "define('TIPASK_VERSION', '2.5Beta');\r\n";
-    $config .= "define('TIPASK_RELEASE', '20140213');\r\n";
+    $config .= "define('TIPASK_RELEASE', '20140322');\r\n";
     $fp = fopen(TIPASK_ROOT . '/config.php', 'w');
     fwrite($fp, $config);
     fclose($fp);
