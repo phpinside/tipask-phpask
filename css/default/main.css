@@ -644,14 +644,13 @@ th{font-style: normal;font-weight: 400;}
 /*用户登陆*/
 .loginform{ margin-left:20px; margin-right:20px; margin-top:5px;margin-bottom: 30px;}
 .poploginform{ margin-left:0px;margin-top:5px;margin-bottom: 30px;}
-.auto-login,.code-bar{ margin-left:116px;margin-top: 15px;}
+.auto-login,.code-bar,.thirdpart_login{ margin-left:116px;margin-top: 15px;}
 .auto-login a{margin-left: 10px;}
 .verifycode{border: 1px solid #DDDDDD;float: left;height: 29px;width:80px;}
 .changecode{line-height: 32px;}
-.qqLogin s,.sinaWebLogin s {background: url("thirdfast_login_all.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);display: inline-block;height: 18px;margin-bottom: -5px;width: 19px;}
-.qqLogin a,.sinaWebLogin a {height: 18px;left: 2px;line-height: 18px;position: relative;text-decoration: none;top: -3px;}
-.qqLogin s {background-position: -185px 0;}
-.sinaWebLogin s {background-position: 0 0;}
+.thirdpart_login a{height: 18px;left: 2px;line-height: 18px;position: relative;text-decoration: none;top: -3px;background-image: url("thirdfast_login_all.png");display: inline-block;height: 18px;margin-bottom: -5px;width: 19px;}
+.thirdpart_login .qqLogin{background-position: -185px 0;}
+.thirdpart_login .sinaWebLogin{background-position: 0 0;}
 .right-tips dd {background: url("lidot.gif") no-repeat scroll 0 0 rgba(0, 0, 0, 0);background-position: 0 10px;color: #999999;line-height: 22px;padding: 0 5px 5px 10px;}
 
 

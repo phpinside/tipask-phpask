@@ -30,13 +30,13 @@
             <input type="hidden" name="forward" value="{$forward}"/>
             <input type="submit" value="登&nbsp;录" class="normal-button" name="submit" /><a href="{url user/getpass}" class="red">忘记密码?</a><a href="{url user/register}" class="red">注册新账号</a>
         </div>
-        <div class="auto-login">
+        <div class="thirdpart_login">
             其他账号登陆：
             <!--{if $setting['sinalogin_open']}-->
-            <span title="新浪微博登陆" class="sinaWebLogin"><a href="{SITE_URL}plugin/sinalogin/index.php"><s></s></a></span>
+            <a title="新浪微博登陆" href="{SITE_URL}plugin/sinalogin/index.php" title="新浪微博登陆" class="sinaWebLogin"></a>
             <!--{/if}-->
             <!--{if $setting['qqlogin_open']}-->
-            <span title="QQ登录" class="qqLogin"><a href="{SITE_URL}plugin/qqlogin/index.php"><s></s></a></span>
+            <a  class="qqLogin" title="QQ账号登陆" href="{SITE_URL}plugin/qqlogin/index.php"></a>
             <!--{/if}-->
         </div>
     </form>
