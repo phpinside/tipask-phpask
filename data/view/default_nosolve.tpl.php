@@ -14,6 +14,10 @@
             <div class="title pd40">
                 <span class="ico ico-nosolve"></span>
                 <h1><?=$question['title']?> </h1>
+                <div class="same-q-mod">
+                    <input type="button" class="button_attention" value="关注" />
+                </div>
+
             </div>
             <div class="tags">
                 
@@ -26,9 +30,9 @@
                 <div class="user-label-info">
                     <? if($question['price']) { ?>                    <span class="gold"><img src="<?=SITE_URL?>css/default/gold.gif"><?=$question['price']?></span>
                     <span class="span-line">|</span>                    
-                    <? } ?>                    <? if($question['hidden']) { ?>                        <span>匿名</span>
+                    <? } ?>                    <? if($question['hidden']) { ?>                    <span>匿名</span>
                     <? } elseif($question['authorid']==0) { ?>                    <span><? if($question['ip']) { ?><?=$question['ip']?><? } else { ?>游客<? } ?></span>
-                    <? } else { ?>                        <span><a  href="<?=SITE_URL?>?u-<?=$question['authorid']?>.html" target="_blank" onmouseover="pop_user_on(this, '<?=$question['authorid']?>', 'text');"  onmouseout="pop_user_out();"><?=$question['author']?></a></span>
+                    <? } else { ?>                    <span><a  href="<?=SITE_URL?>?u-<?=$question['authorid']?>.html" target="_blank" onmouseover="pop_user_on(this, '<?=$question['authorid']?>', 'text');"  onmouseout="pop_user_out();"><?=$question['author']?></a></span>
                     <? } ?>                    <span class="span-line">|</span><span>浏览<?=$question['views']?>次</span>
                 </div>
                 <div class="timeright"><span><a href="<?=SITE_URL?>?favorite/add/<?=$question['id']?>.html">收藏</a></span><span class="span-line">|</span><?=$question['format_time']?></div>                    
@@ -88,16 +92,22 @@
                             </div>
                             <div class="avarta-name"><a target="_blank" title="<?=$answer['author']?>" href="<?=SITE_URL?>?u-<?=$answer['authorid']?>.html" onmouseover="pop_user_on(this, '<?=$answer['authorid']?>', 'text');"  onmouseout="pop_user_out();"><? echo cutstr($answer['author'],7,''); ?></a></div>                           
                         </div>
+
                         <div class="anscontent">
-                            <?=$answer['content']?>
+                            <?=$answer['content']?>                            
                             <div class="appendcontent">
                                 
 <? if(is_array($answer['tags'])) { foreach($answer['tags'] as $tagindex => $tag) { ?>
-                        
-                                <? if(($tagindex%2) == 0) { ?>                                <? if($tagindex!=0) { ?>                                <? } ?>                                <span style="color:#5EBB0B;">追问:</span><?=$tag?>
+       
+                                <? if(($tagindex%2) == 0) { ?>                                <div class="appendbox">
+                                    <h4 class="appendask">追问:</h4><?=$tag?>
+                                </div>
                                 <? } else { ?>                        
-                                <span style="color:#999999;">回答:</span><?=$tag?>
-                                <? } ?>                                
+                                <div class="appendbox">
+                                    <h4 class="appendanswer">回答:</h4><?=$tag?>                                    
+                                </div>
+                                <? } ?>                                <div class="clr"></div>
+                                
 <? } } ?>
                             </div>
                         </div>
@@ -170,7 +180,7 @@
                 </div>
             </div>
         </div>
-        <? } ?>        <? if($expertlist) { ?>        <div class="modbox mt10">
+        <? } ?>        <? if($expertlist) { ?>        <div class="modbox mb10">
             <div class="title">推荐专家</div>
             <ul class="left-expert-list">
                 
