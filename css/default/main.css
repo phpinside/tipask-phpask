@@ -34,7 +34,7 @@ em {font-style: normal;color:#E63A00;}
 .blue-btn-w80{ display:block; width:80px; height:30px; background-position:0 -169px; font-size:14px; line-height:30px; color:#fff; text-align:center; border:0 none; cursor:pointer; font-weight:bold;}
 .blue-btn-w80:hover{ background-position:-81px -169px; color:#fff; text-decoration:none;}
 
-.js-fixed {background: none repeat scroll 0 0 #FFFFFF;position: fixed;top: 0;width: 100%;z-index: 99;}
+.js-fixed {background: none repeat scroll 0 0 #FFFFFF;position: fixed;top: 0;width: 100%;z-index: 1002;}
 .fixed-theme .search_mod {border-bottom: 1px solid #C5C5C5;}
 /*top-bar 顶部导航*/
 .top-bar{ height:35px; background: none repeat scroll 0 0 #F5F5F5;border-bottom: 1px solid #EEEEEE;}
