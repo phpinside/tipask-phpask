@@ -330,7 +330,7 @@ class admin_settingcontrol extends base {
             $this->setting['search_placeholder'] = $this->post['search_placeholder'];
             $this->setting['xunsearch_open'] = $this->post['xunsearch_open'];
             $this->setting['xunsearch_sdk_file'] = $this->post['xunsearch_sdk_file'];
-            if ($this->setting['xunsearch_open'] && !file_exists(TIPASK_ROOT.'/'.$this->setting['xunsearch_sdk_file'])) {
+            if ($this->setting['xunsearch_open'] && !file_exists($this->setting['xunsearch_sdk_file'])) {
                 $type = 'errormsg';
                 $message = 'SDK文件不存在，请核实!';
             } else {

@@ -31,7 +31,7 @@ class questionmodel {
         $this->base = $base;
         $this->db = $base->db;
         if ($this->base->setting['xunsearch_open']) {
-            require_once TIPASK_ROOT.'/'.$this->base->setting['xunsearch_sdk_file'];
+            require_once $this->base->setting['xunsearch_sdk_file'];
             $xs = new XS('question');
             $this->search = $xs->search;
             $this->index = $xs->index;
