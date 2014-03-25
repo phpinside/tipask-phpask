@@ -413,11 +413,6 @@ class questionmodel {
     function search_title_num($title, $status = '1,2,6') {
         $questionnum = 0;
         if ($this->base->setting['xunsearch_open']) {
-            $statusarr = explode(",", $status);
-            $size = count($statusarr);
-            $to = $statusarr[$size - 1];
-            $from = $statusarr[0];
-            $this->search->setQuery($title)->addRange('status', $from, $to)->search();
             $questionnum = $this->search->getLastCount();
         } else {
             $condition = " STATUS IN ($status) AND title LIKE '%$title%' ";

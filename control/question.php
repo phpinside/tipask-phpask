@@ -188,7 +188,7 @@ class questioncontrol extends base {
         }
         $qid = $this->post['qid'];
         $question = $_ENV['question']->get($qid);
-        if(!$question){
+        if (!$question) {
             $this->message('提交回答失败,问题不存在!');
         }
         if ($this->user['uid'] == $question['authorid']) {
@@ -391,8 +391,8 @@ class questioncontrol extends base {
             $rownum = $_ENV['question']->rownum_by_tag($tag, $qstatus);
             $questionlist = $_ENV['question']->list_by_tag($tag, $qstatus, $startindex, $pagesize);
         } else {
-            $rownum = $_ENV['question']->search_title_num($word, $qstatus);
             $questionlist = $_ENV['question']->search_title($word, $qstatus, 0, $startindex, $pagesize);
+            $rownum = $_ENV['question']->search_title_num($word, $qstatus);
         }
         $related_words = $_ENV['question']->get_related_words();
         $hot_words = $_ENV['question']->get_hot_words();
@@ -473,7 +473,7 @@ class questioncontrol extends base {
         $qid = intval($this->post['qid']);
         $viewurl = urlmap("question/view/$qid", 2);
         $message = $tag ? "标签修改成功!" : "标签不能为空!";
-        $taglist = explode(" ",$tag);
+        $taglist = explode(" ", $tag);
         $taglist && $_ENV['tag']->multi_add(array_unique($taglist), $qid);
         $this->message($message, $viewurl);
     }
