@@ -208,7 +208,7 @@ em {font-style: normal;color:#E63A00;}
 .topics .topic_content{ position:relative; margin:10px 0 0; padding:5px 5px 10px 5px; border-bottom:1px solid #D5D5D5;}
 .topic_content .topic_l{float: left;}
 .topic_content .topic_r{float: left;margin-left: 10px;width:460px;}
-.topic_content .topic_r h3{font: 16px/22px "Microsoft YaHei";padding: 0 0 0 15px;}
+.topic_content .topic_r h3{padding: 0 0 0 15px;font-size: 14px;}
 .topic_content .topic_r p{margin-left: 15px;padding-bottom: 3px;}
 
 /*专家模块*/
