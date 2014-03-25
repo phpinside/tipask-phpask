@@ -31,7 +31,7 @@ class questionmodel {
         $this->base = $base;
         $this->db = $base->db;
         if ($this->base->setting['xunsearch_open']) {
-            require_once TIPASK_ROOT.'/'.$this->base->setting['xunsearch_sdk_file'];
+            require_once $this->base->setting['xunsearch_sdk_file'];
             $xs = new XS('question');
             $this->search = $xs->search;
             $this->index = $xs->index;
@@ -155,7 +155,7 @@ class questionmodel {
     function remove($qids) {
         $this->db->query("DELETE FROM `" . DB_TABLEPRE . "question` WHERE `id` IN ($qids)");
         $this->db->query("DELETE FROM `" . DB_TABLEPRE . "question_tag` WHERE `qid` IN ($qids)");
-        $this->remove_supply_by_qid($qids);       
+        $this->remove_supply_by_qid($qids);
         $this->db->query("DELETE FROM `" . DB_TABLEPRE . "answer_comment ` WHERE `aid` IN (SELECT id FROM " . DB_TABLEPRE . "answer WHERE `qid` IN($qids))");
         $this->db->query("DELETE FROM `" . DB_TABLEPRE . "answer_support ` WHERE `aid` IN (SELECT id FROM " . DB_TABLEPRE . "answer WHERE `qid` IN($qids))");
         $this->db->query("DELETE FROM `" . DB_TABLEPRE . "answer` WHERE `qid` IN ($qids)");
@@ -529,13 +529,29 @@ class questionmodel {
         }
     }
 
-    function make_words() {
-        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "question WHERE search_words='' OR search_words IS NULL LIMIT 0,1");
-        $question = $this->db->fetch_array($query);
-        if (!$question)
-            exit("<b>所有问题全文检索设置成功!</b>");
-        $this->db->query("UPDATE " . DB_TABLEPRE . "question SET search_words='$search_words' WHERE id=" . $question['id']);
-        exit('已完成:"' . $question['title'] . '" 的全文检索索引。');
+    function makeindex() {
+        if ($this->base->setting['xunsearch_open']) {
+            $this->index->clean();
+            $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "question ");
+            while ($question = $this->db->fetch_array($query)) {
+                $data = array();
+                $data['id'] = $question['id'];
+                $data['cid'] = $question['cid'];
+                $data['cid1'] = $question['cid1'];
+                $data['cid2'] = $question['cid2'];
+                $data['cid3'] = $question['cid3'];
+                $data['author'] = $question['author'];
+                $data['authorid'] = $question['authorid'];
+                $data['answers'] = $question['answers'];
+                $data['status'] = $question['status'];
+                $data['time'] = $question['time'];
+                $data['title'] = $question['title'];
+                $data['description'] = $question['description'];
+                $doc = new XSDocument;
+                $doc->setFields($data);
+                $this->index->add($doc);
+            }
+        }
     }
 
 }

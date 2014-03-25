@@ -36,12 +36,27 @@
             </td>
         </tr>
         <tr>
-            <td width="45%" class="altbg1"><b>PHP-SDK文件相对路径</b><br><span class="smalltxt">xunsearch PHP-SDK相对于tipask问答系统根目录的路径，例如../../xunsearch/sdk/php/lib/XS.php</span></td>
+            <td width="45%" class="altbg1"><b>PHP-SDK文件绝对路径</b><br><span class="smalltxt">默认路径是/usr/local/xunsearch/</span></td>
             <td class="altbg2"><input type="text" style="width:332px;" name="xunsearch_sdk_file" value="{$setting['xunsearch_sdk_file']}"></td>
         </tr>
+        <!--{if 0==$setting['xunsearch_open'] }-->
+        <tr>
+            <td width="45%" class="altbg1"><b>重建索引</b><br><span class="smalltxt">如果安装xunsearch前已有问答数据，请在xunsearch配置后重建索引</span></td>
+            <td class="altbg2"><a href="javascript:makeindex();" id="makeindex" style="color:green;">点击此处开始建立索引</a></td>
+        </tr>
+        <!--{/if}-->
     </table>
     <br>
     <center><input type="submit" class="button" name="submit" value="提 交"></center><br>
 </form>
-<br>
+<script type="text/javascript">
+    function makeindex() {
+        $("#makeindex").parent().html("<font color='orange'>正在重新建立索引,请稍后...</font>");
+        $.get("{SITE_URL}index.php?admin_question/makeindex", function(msg) {
+            if (msg == 'ok') {
+                $("#makeindex").parent().html("<font color='green'>已完成</font>");
+            }
+        });
+    }
+</script>
 <!--{template footer,admin}-->
