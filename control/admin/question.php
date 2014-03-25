@@ -291,6 +291,11 @@ class admin_questioncontrol extends base {
         $departstr = page($rownum, $pagesize, $page, "admin_question/examineanswer");
         include template("verifyanswers", "admin");
     }
+    
+    function makeindex(){
+        $_ENV['question']->makeindex();
+        exit('ok');
+    }
 
 }
 

@@ -415,7 +415,7 @@ class admin_settingcontrol extends base {
         }
         include template("setting_ebank", "admin");
     }
-
+    
 }
 
 ?>
