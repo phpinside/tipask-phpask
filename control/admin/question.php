@@ -292,9 +292,12 @@ class admin_questioncontrol extends base {
         include template("verifyanswers", "admin");
     }
     
-    function makeindex(){
+    function onmakeindex(){
+        ignore_user_abort();
+        set_time_limit(0);
         $_ENV['question']->makeindex();
-        exit('ok');
+        echo 'ok';
+        exit;
     }
 
 }
