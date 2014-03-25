@@ -30,9 +30,13 @@
                 <td  rowspan="2" class="altbg2"><input class="btn" type="submit" value="提 交"></td>
             </tr>
             <tr>
-                <td  colspan="3" rowspan="2" class="altbg2">时间:
+
+                <td  colspan="2" rowspan="2" class="altbg2">时间:
                     <input class="txt"  name="srchdatestart" id="timestart" {if isset($srchdatestart)}value="{$srchdatestart}" {/if} />&nbsp; 到&nbsp; 
                            <input class="txt"  name="srchdateend" id="timeend" {if isset($srchdateend)}value="{$srchdateend}" {/if} />
+                </td>
+                <td  width="200" class="altbg2">分类:					
+                    <select name="srchcategory" id="srchcategory"><option value="0">--不限--</option>{$catetree}</select>
                 </td>
             </tr>
         </tbody>
@@ -204,35 +208,6 @@
             }
         }
     }
-    function renametitle() {
-        if ($("input[name='qid[]']:checked").length > 1) {
-            alert('只能同时对一个问题进行操作！');
-            return false;
-        } else if ($("input[name='qid[]']:checked").length == 0) {
-            alert('你没有选择任何问题');
-            return false;
-        } else {
-            var qid = $("input[name='qid[]']:checked").val();
-            var title = $('#title_' + qid).text();
-            $.dialog({
-                id: 'renametitle',
-                position: 'center',
-                align: 'left',
-                fixed: 1,
-                width: 300,
-                height: 100,
-                title: '修改问题标题',
-                fnOk: function() {
-                    document.renameForm.submit();
-                    $.dialog.close('renametitle')
-                },
-                fnCancel: function() {
-                    $.dialog.close('renametitle')
-                },
-                content: '<div class="mainbox"><form name="renameForm"  action="index.php?admin_question/renametitle{$setting['seo_suffix']}" method="post" ><input type="hidden" value="' + qid + '" name="qid"/>问题标题：<br /><input type="text" name="title" value="' + title + '" class="txt" size="45" /></form></div>'
-            });
-        }
-    }
     function movecate() {
         if ($("input[name='qid[]']:checked").length == 0) {
             alert('你没有选择任何问题');
@@ -256,7 +231,13 @@
             $("#dialog_category").dialog("open");
         }
     }
-
+    $(document).ready(function(){
+        $("#srchcategory option").each(function(){
+            if($(this).val()==$srchcategory){
+                $(this).prop("selected","true");
+            }
+        });
+    });
 </script>
 
 

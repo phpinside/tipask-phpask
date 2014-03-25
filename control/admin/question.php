@@ -22,12 +22,13 @@ class admin_questioncontrol extends base {
         $srchdatestart = isset($this->get[4]) ? $this->get[4] : $this->post['srchdatestart'];
         $srchdateend = isset($this->get[5]) ? $this->get[5] : $this->post['srchdateend'];
         $srchstatus = isset($this->get[6]) ? $this->get[6] : $this->post['srchstatus'];
-        @$page = max(1, intval($this->get[7]));
+        $srchcategory = isset($this->get[7]) ? $this->get[7] : $this->post['srchcategory'];
+        @$page = max(1, intval($this->get[8]));
         $pagesize = $this->setting['list_default'];
         $startindex = ($page - 1) * $pagesize;
-        $questionlist = $_ENV['question']->list_by_search($srchtitle, $srchauthor, $srchdatestart, $srchdateend, $srchstatus, $startindex, $pagesize);
-        $rownum = $_ENV['question']->rownum_by_search($srchtitle, $srchauthor, $srchdatestart, $srchdateend, $srchstatus);
-        $departstr = page($rownum, $pagesize, $page, "admin_question/searchquestion/$srchtitle/$srchauthor/$srchdatestart/$srchdateend/$srchstatus");
+        $questionlist = $_ENV['question']->list_by_search($srchtitle, $srchauthor, $srchdatestart, $srchdateend, $srchstatus,$srchcategory,$startindex, $pagesize);
+        $rownum = $_ENV['question']->rownum_by_search($srchtitle, $srchauthor, $srchdatestart, $srchdateend, $srchstatus,$srchcategory);
+        $departstr = page($rownum, $pagesize, $page, "admin_question/searchquestion/$srchtitle/$srchauthor/$srchdatestart/$srchdateend/$srchstatus/$srchcategory");
         $msg && $message = $msg;
         $ty && $type = $ty;
         $catetree = $_ENV['category']->get_categrory_tree($_ENV['category']->get_list());

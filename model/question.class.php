@@ -101,24 +101,27 @@ class questionmodel {
 
     /* 后台问题数目 */
 
-    function rownum_by_search($title = '', $author = '', $datestart = '', $dateend = '', $status = '') {
+    function rownum_by_search($title = '', $author = '', $datestart = '', $dateend = '', $status = '',$cid=0) {
         $condition = " 1=1 ";
         $title && ($condition .= " AND `title` like '$title%' ");
         $author && ($condition .= " AND `author`='$author'");
         $datestart && ($condition .= " AND `time`>= " . strtotime($datestart));
         $dateend && ($condition .=" AND `time`<= " . strtotime($dateend));
+        $cid && ($condition .= " AND `cid`= $cid ");
         isset($this->statustable[$status]) && $condition.=$this->statustable[$status];
+        echo $condition;
         return $this->db->fetch_total('question', $condition);
     }
 
     /* 后台问题搜索 */
 
-    function list_by_search($title = '', $author = '', $datestart = '', $dateend = '', $status = '', $start = 0, $limit = 10) {
+    function list_by_search($title = '', $author = '', $datestart = '', $dateend = '', $status = '', $cid = 0, $start = 0, $limit = 10) {
         $sql = "SELECT * FROM `" . DB_TABLEPRE . "question` WHERE 1=1 ";
         $title && ($sql .= " AND `title` like '$title%' ");
         $author && ($sql .= " AND `author`='$author'");
         $datestart && ($sql .= " AND `time` >= " . strtotime($datestart));
         $dateend && ($sql .=" AND `time` <= " . strtotime($dateend));
+        $cid && ($sql .= " AND `cid`= $cid ");
         isset($this->statustable[$status]) && $sql.=$this->statustable[$status];
         $sql.=" ORDER BY `time` DESC LIMIT $start,$limit";
         $questionlist = array();
