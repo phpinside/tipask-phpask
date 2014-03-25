@@ -109,7 +109,6 @@ class questionmodel {
         $dateend && ($condition .=" AND `time`<= " . strtotime($dateend));
         $cid && ($condition .= " AND `cid`= $cid ");
         isset($this->statustable[$status]) && $condition.=$this->statustable[$status];
-        echo $condition;
         return $this->db->fetch_total('question', $condition);
     }
 
