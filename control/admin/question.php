@@ -273,7 +273,7 @@ class admin_questioncontrol extends base {
         @$page = max(1, intval($this->get[2]));
         $pagesize = 20;
         $startindex = ($page - 1) * $pagesize;
-        $questionlist = $_ENV['question']->list_by_search(0, 0, 0, 0, 0, $startindex, $pagesize);
+        $questionlist = $_ENV['question']->list_by_search(0, 0, 0, 0, 0,0, $startindex, $pagesize);
         $rownum = $_ENV['question']->rownum_by_search(0, 0, 0, 0, 0);
         $departstr = page($rownum, $pagesize, $page, "admin_question/examine");
         include template("verifyquestions", "admin");
