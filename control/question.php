@@ -149,6 +149,10 @@ class questioncontrol extends base {
         $expertlist = $_ENV['expert']->get_by_cid($question['cid']);
         /* SEO */
         $curnavname = $navlist[count($navlist) - 1]['name'];
+        if (!$bestanswer) {
+            $bestanswer = array();
+            $bestanswer['content'] = '';
+        }
         if ($this->setting['seo_question_title']) {
             $seo_title = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_question_title']);
             $seo_title = str_replace("{wtbt}", $question['title'], $seo_title);
@@ -160,21 +164,17 @@ class questioncontrol extends base {
             $seo_description = str_replace("{wtbt}", $question['title'], $seo_description);
             $seo_description = str_replace("{wtzt}", $typedescarray[$question['status']], $seo_description);
             $seo_description = str_replace("{flmc}", $curnavname, $seo_description);
-            if (isset($bestanswer) && $bestanswer) {
-                $seo_description = str_replace("{zjda}", strip_tags($bestanswer['content']), $seo_description);
-            }
+            $seo_description = str_replace("{wtms}", $question['description'], $seo_description);
+            $seo_description = str_replace("{zjda}", strip_tags($bestanswer['content']), $seo_description);
         }
         if ($this->setting['seo_question_keywords']) {
             $seo_keywords = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_question_keywords']);
             $seo_keywords = str_replace("{wtbt}", $question['title'], $seo_keywords);
             $seo_keywords = str_replace("{wtzt}", $typedescarray[$question['status']], $seo_keywords);
             $seo_keywords = str_replace("{flmc}", $curnavname, $seo_keywords);
-            if ($taglist) {
-                $seo_keywords = str_replace("{wtbq}", implode(",", $taglist), $seo_keywords);
-            }
-            if (isset($bestanswer) && $bestanswer) {
-                $seo_keywords = str_replace("{zjda}", strip_tags($bestanswer['content']), $seo_keywords);
-            }
+            $seo_keywords = str_replace("{wtbq}", implode(",", $taglist), $seo_keywords);
+            $seo_description = str_replace("{description}", $question['description'], $seo_keywords);
+            $seo_keywords = str_replace("{zjda}", strip_tags($bestanswer['content']), $seo_keywords);
         }
         include template($dirction);
     }
