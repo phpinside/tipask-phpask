@@ -67,7 +67,7 @@ CREATE TABLE  ask_question_supply (
   KEY `time` (`time`),
   KEY `qid` (`qid`)
 ) ENGINE=MyISAM;
-UPDATE ask_setting SET v='insertimage,autotypeset,attachment,link,unlink,insertvideo,insertcode,fullscreen' WHERE k='editor_toolbars';
+UPDATE ask_setting SET v='bold,forecolor,insertimage,autotypeset,attachment,link,unlink,insertvideo,map,insertcode,fullscreen' WHERE k='editor_toolbars';
 ALTER TABLE ask_question_tag DROP PRIMARY KEY ;       
 ALTER TABLE ask_question_tag  DROP tid;
 ALTER TABLE ask_question_tag  change tname  name varchar(20) NOT NULL;
@@ -108,7 +108,7 @@ if (!$action) {
     $config .= "define('DB_CONNECT', 0);\r\n";
     $config .= "define('TIPASK_CHARSET', '" . TIPASK_CHARSET . "');\r\n";
     $config .= "define('TIPASK_VERSION', '2.5Beta');\r\n";
-    $config .= "define('TIPASK_RELEASE', '20140322');\r\n";
+    $config .= "define('TIPASK_RELEASE', '20140326');\r\n";
     $fp = fopen(TIPASK_ROOT . '/config.php', 'w');
     fwrite($fp, $config);
     fclose($fp);
