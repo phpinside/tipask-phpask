@@ -606,8 +606,6 @@ CREATE TABLE ask_question_supply (
   KEY `qid` (`qid`)
 )ENGINE=MyISAM;
 
-
-
 DROP TABLE IF EXISTS ask_crontab;
 CREATE TABLE ask_crontab(
   `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,

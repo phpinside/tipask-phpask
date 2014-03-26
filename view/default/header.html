@@ -106,7 +106,7 @@
                     <!--{loop $headernavlist $nav}-->
                     <!--{if $nav['type']==1 && $nav['available']}-->
                     <li  <!--{if strstr($nav['url'],$regular)}-->class="on"<!--{/if}-->>
-                        <a title="{$nav['title']}" href="{url $nav['url']}"  {if $nav['target']}target="_blank"{/if}><span text="hd-home" >{$nav['name']}</span></a>
+                        <a title="{$nav['title']}" {if $nav['url']=='index'}href="{SITE_URL}"{else} href="{url $nav['url']}"{/if}  {if $nav['target']}target="_blank"{/if}><span text="hd-home" >{$nav['name']}</span></a>
                     </li>
                     <!--{/if}-->
                     <!--{/loop}-->
