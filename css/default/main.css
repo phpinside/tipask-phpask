@@ -351,8 +351,8 @@ th{font-style: normal;font-weight: 400;}
 .inputbox .adopt_text {height:20px;background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #D6D6D6;border-radius: 2px 2px 2px 2px;box-shadow: 1px 1px 1px #F8F8F8 inset;float: left;font-size: 16px;height: 22px;line-height: 22px;outline: 0 none;overflow: hidden;padding: 12px;resize: none;width:430px;}
 .inputbox .qtitle:hover,.inputbox .adopt_text  {border: 2px solid #50B30E;padding:11px;}
 .inputbox h3{margin-top:20px;}
-.ask-input-bar{padding-top: 20px;font-size: 14px;}
-.ask-input-bar h2{float: left;font-size: 14px;font-weight: normal;height: 28px;margin-top: 2px;margin-right: 10px;text-align: right;}
+.ask-input-bar{padding-top: 10px;padding-bottom: 10px;font-size: 14px;}
+.ask-input-bar h2{float: left;font-size: 12px;font-weight: normal;height: 28px;margin-top: 6px;text-align: right;}
 .ask-input-bar a,.ask-input-bar span{font-size: 12px;}
 .ask-input-bar ul{font-size: 12px;width: 185px;float: left;}
 .ask-input-bar .bar_l{float: left;}
