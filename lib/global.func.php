@@ -30,7 +30,7 @@ function get_avatar_dir($uid) {
 function url($var, $url = '') {
     global $setting;
     $location = '?' . $var . $setting['seo_suffix'];
-    if ($setting['seo_on']) {
+    if ((false===strpos($var,'admin_')) && $setting['seo_on']) {
         $location = $var . $setting['seo_suffix'];
     }
     $location = urlmap($location, 2);
