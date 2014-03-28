@@ -231,6 +231,7 @@
             $("#dialog_category").dialog("open");
         }
     }
+    {if $srchcategory}
     $(document).ready(function(){
         $("#srchcategory option").each(function(){
             if($(this).val()==$srchcategory){
@@ -238,6 +239,7 @@
             }
         });
     });
+    {/if}
 </script>
 
 
