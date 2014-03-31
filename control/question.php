@@ -401,22 +401,6 @@ class questioncontrol extends base {
         include template('search');
     }
 
-    /* 按标签搜索问题 */
-
-    function ontag() {
-        $tag = urldecode($this->get['2']);
-        $navtitle = $tag . '-标签搜索';
-        @$page = max(1, intval($this->get[4]));
-        $qstatus = $status = intval($this->get[3]);
-        (!$status) && ($qstatus = "1,2,6");
-        $startindex = ($page - 1) * $pagesize;
-        $rownum = $this->db->fetch_total("question_tag", " tname='$tag' ");
-        $pagesize = $this->setting['list_default'];
-        $questionlist = $_ENV['question']->list_by_tag($tag, $qstatus, $startindex, $pagesize);
-        $departstr = page($rownum, $pagesize, $page, "question/tag/$tag/$status");
-        include template('search');
-    }
-
     /* 提问自动搜索已经解决的问题 */
 
     function onajaxsearch() {
