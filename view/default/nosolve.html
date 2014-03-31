@@ -106,34 +106,26 @@
                         <div class="anscontent">
                             {$answer['content']}                            
                             <div class="appendcontent">
-                                <!--{loop $answer['tags'] $tagindex $tag}-->       
-                                <!--{if ($tagindex%2) == 0}-->
+                                <!--{loop $answer['appends'] $append}-->       
                                 <div class="appendbox">
-                                    <h4 class="appendask">追问:</h4>{$tag}
-                                </div>
-                                <!--{else}-->                        
-                                <div class="appendbox">
-                                    <h4 class="appendanswer">回答:</h4>{$tag}                                    
-                                </div>
-                                <!--{/if}-->
+                                    <!--{if $append['authorid']==$answer['authorid']}-->
+                                    <h4 class="appendanswer">回答:<span class="time">{$append['format_time']}</span></h4>
+                                    <!--{else}-->
+                                    <h4 class="appendask">追问:<span class='time'>{$append['format_time']}</span></h4>
+                                    <!--{/if}-->
+                                    {$append['content']}                                    
                                 <div class="clr"></div>
+                                </div>
                                 <!--{/loop}-->
-                            </div>
                         </div>
-
-                        <!--{if 0!=$question['authorid'] && ($question['authorid']==$user['uid']) }-->
-                        <div class="anscontent mt15">
+                        <!--{if $user['uid']>0}-->
+                        <div class="mt10">
+                            <!--{if $user['uid']==$question['authorid']}-->
                             <input type="button" class="button_7" value="采纳为满意回答" onclick="adoptanswer({$answer['id']});" />
-                            <!--{if !$answer['tags'] || (count($answer['tags'])%2) == 0}-->
-                            <input type="button" class="button_4" value="继续追问" onclick="javascript:document.location = '{url question/appendanswer/$question['id']/$answer['id']}'" />
-                            <!--{/if}-->
-                        </div>
-                        <!--{/if}-->
-                        <!--{if $answer['status'] && ($answer['authorid']==$user['uid']) }-->
-                        <div class="anscontent mt15">
+                            <input type="button" class="button_4" value="继续追问" onclick="javascript:document.location = '{url answer/append/$question['id']/$answer['id']}'" />
+                            <!--{elseif $user['uid']==$answer['authorid']}-->
                             <input type="button" class="button_4" value="修改答案"  onclick="javascript:document.location = '{url question/editanswer/$answer['id']/0}'" />
-                            <!--{if $answer['tags']!='' && (count($answer['tags'])%2) != 0}-->
-                            <input type="button"  value="继续回答" name="submit"  onclick="javascript:document.location = '{url question/appendanswer/$question['id']/$answer['id']/1}'" class="button_4"/>
+                            <input type="button"  value="继续回答" name="submit"  onclick="javascript:document.location = '{url answer/append/$question['id']/$answer['id']}'" class="button_4"/>
                             <!--{/if}-->
                         </div>
                         <!--{/if}-->
@@ -151,7 +143,7 @@
                             <!--{/if}-->
                         </div>
 
-                        <div class="comments-mod" style="display: none;" id="comment_{$answer['id']}">
+                        <div class="comments-mod" style="display: none;margin-left: 70px;" id="comment_{$answer['id']}">
                             <div class="areabox clearfix">
                                 <input type="text"  class="comment-input" name="content" />
                                 <input type="button" value="评论"  class="normal-button" name="submit" onclick="addcomment({$answer['id']});"/>

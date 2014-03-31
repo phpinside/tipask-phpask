@@ -6,7 +6,7 @@
 <div class="nav-line"><a class="first" href="{SITE_URL}">{$setting['site_name']}</a> &gt; <a href="{url question/view/$question['id']}">{$question['title']}</a> &gt; <span><!--{if $type}-->继续回答<!--{else}-->继续提问<!--{/if}--></span></div>
 <div class="wrapper clearfix">
     <div class="content-left">
-        <form name="answerform"  action="{url question/appendanswer}" method="post" onsubmit="return check_form();" >
+        <form name="answerform"  action="{url answer/append}" method="post" onsubmit="return check_form();" >
             <div class="askbox">
                 <div class="inputbox pdt15">
                     <div id="introContent">
@@ -22,7 +22,6 @@
                     <!--{/if}-->
                     <input type="hidden" value="{$qid}" name="qid"/>
                     <input type="hidden" value="{$aid}" name="aid"/>
-                    <input type="hidden" value="{$type}" name="type"/>
                     <input type="submit" value="添加" class="normal-button flright"  name="submit" />
                 </div>
             </div>	

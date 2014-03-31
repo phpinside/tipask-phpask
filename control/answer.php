@@ -12,6 +12,32 @@ class answercontrol extends base {
         $this->load('message');
     }
 
+    /* 追问模块---追问 */
+
+    function onappend() {
+        $this->load("message");
+        $qid = intval($this->get[2]) ? $this->get[2] : intval($this->post['qid']);
+        $aid = intval($this->get[3]) ? $this->get[3] : intval($this->post['aid']);
+        $question = $_ENV['question']->get($qid);
+        $answer = $_ENV['answer']->get($aid);
+        if (!$question || !$answer) {
+            $this->message("回答内容不存在!");
+            exit;
+        }
+        $viewurl = urlmap('question/view/' . $qid, 2);
+        if (isset($this->post['submit'])) {
+            $_ENV['answer']->append($answer['id'], $this->user['username'], $this->user['uid'], $this->post['content']);
+            if ($answer['authorid'] == $this->user['uid']) {//继续回答
+                $_ENV['message']->add($this->user['username'], $this->user['uid'], $question['authorid'], $this->user['username'] . '继续回答了您的问题:' . $question['title'], $this->post['content'] . '<br /> <a href="' . url('question/view/' . $qid, 1) . '">点击查看</a>');
+                $this->message('继续回答成功!', $viewurl);
+            } else {//继续追问
+                $_ENV['message']->add($this->user['username'], $this->user['uid'], $answer['authorid'], $this->user['username'] . '对您的回答进行了追问', $this->post['content'] . '<br /> <a href="' . url('question/view/' . $qid, 1) . '">点击查看问题</a>');
+                $this->message('继续提问成功!', $viewurl);
+            }
+        }
+        include template("appendanswer");
+    }
+
     function onajaxviewcomment() {
         $answerid = intval($this->get[2]);
         $commentlist = $_ENV['answer_comment']->get_by_aid($answerid, 0, 50);
