@@ -14,9 +14,9 @@
             <div class="title pd40">
                 <span class="ico ico-nosolve"></span>
                 <h1>{$question['title']} </h1>
-<!--                <div class="same-q-mod">
-                    <input type="button" class="button_attention" value="关注" />
-                </div>-->
+                <!--                <div class="same-q-mod">
+                                    <input type="button" class="button_attention" value="关注" />
+                                </div>-->
 
             </div>
             <div class="tags">
@@ -233,6 +233,19 @@
         <!--广告位5-->
         <!--{if (isset($adlist['question_view']['right1']) && trim($adlist['question_view']['right1']))}-->
         <div>{$adlist['question_view']['right1']}</div>
+        <!--{/if}-->
+        <!--{eval $topiclist=$this->fromcache('topiclist');}-->
+        <!--{if $topiclist}-->
+        <!--{eval $topic = $topiclist[0];}-->
+        <div class="modbox mt10">
+            <div class="title">{eval echo cutstr($topic['title'],14,'');}</div>
+            <div style="margin-left: 10px;"><img width="230" height="170" src="{SITE_URL}{$topic['image']}"/></div>
+            <ul class="list">
+                <!--{loop $topic['questionlist'] $question}-->
+                <li><a title="{$question['title']}" target="_blank" href="{url question/view/$question['qid']}">{eval echo cutstr($question['title'],30,'');}</a></li>
+                <!--{/loop}-->
+            </ul>
+        </div>
         <!--{/if}-->
     </div>
 
