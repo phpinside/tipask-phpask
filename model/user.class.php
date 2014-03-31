@@ -131,7 +131,7 @@ class usermodel {
         $this->db->query("UPDATE " . DB_TABLEPRE . "user SET `lastlogin`={$this->base->time}  WHERE `uid`=$uid"); //更新最后登录时间
         $this->db->query("REPLACE INTO " . DB_TABLEPRE . "session (sid,uid,islogin,ip,`time`) VALUES ('$sid',$uid,$islogin,'{$this->base->ip}',{$this->base->time})");
         $password = $this->base->user['password'];
-        $auth = strcode("$uid\t$password", $this->base->setting['auth_key'], 'ENCODE');
+        $auth = authcode("$uid\t$password",'ENCODE');
         if ($cookietime)
             tcookie('auth', $auth, $cookietime);
         else
@@ -142,7 +142,7 @@ class usermodel {
     }
 
     function refresh_session_time($sid, $uid) {
-        $lastrefresh = tcookie("lastrefresh");
+        $lastrefresh = intval(tcookie("lastrefresh"));
         if (!$lastrefresh) {
             if ($uid) {
                 $this->db->query("UPDATE " . DB_TABLEPRE . "session SET `time` = {$this->base->time} WHERE sid='$sid'");
@@ -287,7 +287,7 @@ class usermodel {
         foreach ($member as $key => $val) {
             $userstr .= "&$key=$val";
         }
-        $userdb = strcode($userstr, $this->base->setting['passport_key'], 'ENCODE');
+        $userdb = authcode($userstr,'ENCODE', $this->base->setting['passport_key']);
         $verify = md5($action . $userdb . $forward . $this->base->setting['passport_key']);
         $location = $this->base->setting['passport_client'] . '?action=' . $action . '&userdb=' . urlencode($userdb) . '&forward=' . urlencode($forward) . '&verify=' . $verify;
         header('location:' . $location);

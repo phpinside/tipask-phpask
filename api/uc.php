@@ -147,7 +147,7 @@ class uc_note {
 		header('P3P: CP="CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR"');
 		$member = $db->fetch_first("select * from ".DB_TABLEPRE."user  where username='$username'");
 		if(is_array($member)){
-			$auth = strcode("$uid\t".$member['password'],$setting['auth_key'],'ENCODE');
+			$auth = authcode("$uid\t".$member['password'],'ENCODE');
 			tcookie('auth', $auth, 31536000);
 		}else{
 			tcookie('loginuser', $username, $cookietime);

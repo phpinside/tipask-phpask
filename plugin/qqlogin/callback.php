@@ -20,7 +20,7 @@ $qc = new QC($token, $openid);
 $sid = tcookie('sid');
 $auth = tcookie('auth');
 $user = array();
-list($uid, $password) = empty($auth) ? array(0, 0) : taddslashes(explode("\t", strcode($auth, $setting['auth_key'], 'DECODE')), 1);
+list($uid, $password) = empty($auth) ? array(0, 0) : taddslashes(explode("\t", authcode($auth,'DECODE')), 1);
 $user = array();
 if ($uid && $password) {
     $user = get_user($uid);
@@ -141,7 +141,7 @@ function refresh($user) {
     $sid = tcookie('sid');
     $db->query("UPDATE " . DB_TABLEPRE . "user SET `lastlogin`=$time  WHERE `uid`=$uid"); //更新最后登录时间
     $db->query("REPLACE INTO " . DB_TABLEPRE . "session (sid,uid,islogin,ip,`time`) VALUES ('$sid',$uid,1,'" . getip() . "',$time)");
-    $auth = strcode("$uid\t$password", $setting['auth_key'], 'ENCODE');
+    $auth = authcode("$uid\t$password",'ENCODE');
     tcookie('auth', $auth);
     tcookie('loginuser', '');
 }

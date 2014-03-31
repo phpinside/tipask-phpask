@@ -18,7 +18,7 @@
 	elseif($verify != md5($action.$userdb.$forward.$setting['passport_key'])){
 		exit('Illegal request!');
 	}
-	parse_str(strcode($userdb,$setting['passport_key'],'DECODE'), $member);
+	parse_str(authcode($userdb,'DECODE',$setting['passport_key']), $member);
 	$member['cookietime'] = $member['cktime'] ? $member['cktime'] - TIME : 0;
 
 	
@@ -40,7 +40,7 @@
 			$db->query("INSERT INTO ".DB_TABLEPRE."credit(uid,time,operation,credit1,credit2) VALUES ($uid,".TIME.",'user/register',$credit1,$credit2) ");
 		}
 		$forward = empty($forward) ? $setting['passport_server'] : $forward;
-		$auth = strcode("$uid\t".$member['password'],$setting['auth_key'],'ENCODE');
+		$auth = authcode("$uid\t".$member['password'],'ENCODE');
 		tcookie('auth', $auth, 24*3600*365);
 	}elseif ($action == 'logout' || $action == 'quit'){
 		tcookie('sid','');

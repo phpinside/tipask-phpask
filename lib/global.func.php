@@ -30,7 +30,7 @@ function get_avatar_dir($uid) {
 function url($var, $url = '') {
     global $setting;
     $location = '?' . $var . $setting['seo_suffix'];
-    if ((false===strpos($var,'admin_')) && $setting['seo_on']) {
+    if ((false === strpos($var, 'admin_')) && $setting['seo_on']) {
         $location = $var . $setting['seo_suffix'];
     }
     $location = urlmap($location, 2);
@@ -365,19 +365,54 @@ function makecode($code, $width = 80, $height = 28, $quality = 3) {
     imagedestroy($im);
 }
 
-/* 通用加密解密函数，phpwind、phpcms、dedecms都用此函数 */
+/*通用php加解密函数*/
+function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0) {
+    global $setting;
+    $ckey_length = 4;
+    $key = md5($key ? $key : $setting['auth_key']);
+    $keya = md5(substr($key, 0, 16));
+    $keyb = md5(substr($key, 16, 16));
+    $keyc = $ckey_length ? ($operation == 'DECODE' ? substr($string, 0, $ckey_length) : substr(md5(microtime()), -$ckey_length)) : '';
 
-function strcode($string, $auth_key, $action = 'ENCODE') {
-    $key = substr(md5($_SERVER["HTTP_USER_AGENT"] . $auth_key), 8, 18);
-    $string = $action == 'ENCODE' ? $string : base64_decode($string);
-    $len = strlen($key);
-    $code = '';
-    for ($i = 0; $i < strlen($string); $i++) {
-        $k = $i % $len;
-        $code .= $string[$i] ^ $key[$k];
+    $cryptkey = $keya . md5($keya . $keyc);
+    $key_length = strlen($cryptkey);
+
+    $string = $operation == 'DECODE' ? base64_decode(substr($string, $ckey_length)) : sprintf('%010d', $expiry ? $expiry + time() : 0) . substr(md5($string . $keyb), 0, 16) . $string;
+    $string_length = strlen($string);
+
+    $result = '';
+    $box = range(0, 255);
+
+    $rndkey = array();
+    for ($i = 0; $i <= 255; $i++) {
+        $rndkey[$i] = ord($cryptkey[$i % $key_length]);
     }
-    $code = $action == 'DECODE' ? $code : base64_encode($code);
-    return $code;
+
+    for ($j = $i = 0; $i < 256; $i++) {
+        $j = ($j + $box[$i] + $rndkey[$i]) % 256;
+        $tmp = $box[$i];
+        $box[$i] = $box[$j];
+        $box[$j] = $tmp;
+    }
+
+    for ($a = $j = $i = 0; $i < $string_length; $i++) {
+        $a = ($a + 1) % 256;
+        $j = ($j + $box[$a]) % 256;
+        $tmp = $box[$a];
+        $box[$a] = $box[$j];
+        $box[$j] = $tmp;
+        $result .= chr(ord($string[$i]) ^ ($box[($box[$a] + $box[$j]) % 256]));
+    }
+
+    if ($operation == 'DECODE') {
+        if ((substr($result, 0, 10) == 0 || substr($result, 0, 10) - time() > 0) && substr($result, 10, 16) == substr(md5(substr($result, 26) . $keyb), 0, 16)) {
+            return substr($result, 26);
+        } else {
+            return '';
+        }
+    } else {
+        return $keyc . str_replace('=', '', base64_encode($result));
+    }
 }
 
 /* 日期格式显示 */
@@ -412,12 +447,12 @@ function tcookie($var, $value = 0, $life = 0) {
     global $setting;
     $cookiepre = $setting['cookie_pre'] ? $setting['cookie_pre'] : 't_';
     if (0 === $value) {
-        $ret =  isset($_COOKIE[$cookiepre . $var]) ? $_COOKIE[$cookiepre . $var] : '';
-        checkattack($var,'cookie');
+        $ret = isset($_COOKIE[$cookiepre . $var]) ? $_COOKIE[$cookiepre . $var] : '';
+        checkattack($var, 'cookie');
         return $ret;
     } else {
         $domain = $setting['cookie_domain'] ? $setting['cookie_domain'] : '';
-        checkattack($var,'cookie');
+        checkattack($var, 'cookie');
         setcookie($cookiepre . $var, $value, $life ? time() + $life : 0, '/', $domain, $_SERVER['SERVER_PORT'] == 443 ? 1 : 0);
     }
 }

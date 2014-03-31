@@ -190,7 +190,7 @@ class usercontrol extends base {
             $this->checkcode(); //检查验证码
             $touser = $_ENV['user']->get_by_name_email($name, $email);
             if ($touser) {
-                $authstr = strcode($touser['username'], $this->setting['auth_key']);
+                $authstr = authcode($touser['username'],"ENCODE");
                 $_ENV['user']->update_authstr($touser['uid'], $authstr);
                 $getpassurl = SITE_URL . '?user/resetpass/' . urlencode($authstr);
                 $subject = "找回您在" . $this->setting['site_name'] . "的密码";
@@ -211,7 +211,7 @@ class usercontrol extends base {
         if (empty($authstr))
             $this->message("非法提交，缺少参数!", 'BACK');
         $authstr = urldecode($authstr);
-        $username = strcode($authstr, $this->setting['auth_key'], 'DECODE');
+        $username = authcode($authstr,'DECODE');
         $theuser = $_ENV['user']->get_by_username($username);
         if (!$theuser || ($authstr != $theuser['authstr']))
             $this->message("本网址已过期，请重新使用找回密码的功能!", 'BACK');

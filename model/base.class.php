@@ -145,7 +145,7 @@ class base {
         @$sid = tcookie('sid');
         @$auth = tcookie('auth');
         $user = array();
-        @list($uid, $password) = empty($auth) ? array(0, 0) : taddslashes(explode("\t", strcode($auth, $this->setting['auth_key'], 'DECODE')), 1);
+        @list($uid, $password) = empty($auth) ? array(0, 0) : taddslashes(explode("\t", authcode($auth,'DECODE')), 1);
         if (!$sid) {
             $sid = substr(md5(time() . $this->ip . random(6)), 16, 16);
             tcookie('sid', $sid, 31536000);
