@@ -180,7 +180,17 @@
             <div class="title">相关已解决</div>
             <ul class="list">
                 <!--{loop $solvelist $solve}-->
-                <li><span class="answer-number">{$solve['answers']}个回答</span><a title="{$solve['title']}" href="{url question/view/$solve['id']}">{$solve['title']}</a></li>
+                <li><span class="answer-number">{$solve['answers']}个回答</span><a title="{$solve['title']}" target="_blank"  href="{url question/view/$solve['id']}">{$solve['title']}</a></li>
+                <!--{/loop}-->
+            </ul>
+        </div>
+        <!--{/if}-->
+        <!--{if $nosolvelist}-->
+        <div class="module mt10">
+            <div class="title">等你来帮忙</div>
+            <ul class="list">
+                <!--{loop $nosolvelist $nosolve}-->
+                <li><span class="answer-number">{$nosolve['answers']}个回答</span><a title="{$nosolve['title']}" target="_blank" href="{url question/view/$nosolve['id']}">{$nosolve['title']}</a></li>
                 <!--{/loop}-->
             </ul>
         </div>
