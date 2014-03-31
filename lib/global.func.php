@@ -412,9 +412,12 @@ function tcookie($var, $value = 0, $life = 0) {
     global $setting;
     $cookiepre = $setting['cookie_pre'] ? $setting['cookie_pre'] : 't_';
     if (0 === $value) {
-        return isset($_COOKIE[$cookiepre . $var]) ? $_COOKIE[$cookiepre . $var] : '';
+        $ret =  isset($_COOKIE[$cookiepre . $var]) ? $_COOKIE[$cookiepre . $var] : '';
+        checkattack($var,'cookie');
+        return $ret;
     } else {
         $domain = $setting['cookie_domain'] ? $setting['cookie_domain'] : '';
+        checkattack($var,'cookie');
         setcookie($cookiepre . $var, $value, $life ? time() + $life : 0, '/', $domain, $_SERVER['SERVER_PORT'] == 443 ? 1 : 0);
     }
 }
