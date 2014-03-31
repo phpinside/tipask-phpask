@@ -65,7 +65,7 @@ class usercontrol extends base {
             $forward = isset($this->post['forward']) ? $this->post['forward'] : SITE_URL;
             $this->setting['passport_open'] && $this->setting['passport_type'] && $_ENV['user']->passport_server($forward);
             //发送邮件通知
-            $subject = "恭喜你在" . $this->setting['site_name'] . "注册成功！";
+            $subject = "恭喜您在" . $this->setting['site_name'] . "注册成功！";
             $message = '<p>现在您可以登录<a swaped="true" target="_blank" href="' . SITE_URL . '">' . $this->setting['site_name'] . '</a>自由的提问和回答问题。祝您使用愉快。</p>';
             sendmail($this->user, $subject, $message);
             $this->message('恭喜，注册成功！');
