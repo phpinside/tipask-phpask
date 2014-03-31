@@ -276,7 +276,7 @@ function checkattack($reqarr, $reqtype = 'post') {
         'cookie' => '\\b(and|or)\\b.{1,6}?(=|>|<|\\bin\\b|\\blike\\b)|\\/\\*.+?\\*\\/|<\\s*script\\b|\\bEXEC\\b|UNION.+?SELECT|UPDATE.+?SET|INSERT\\s+INTO.+?VALUES|(SELECT|DELETE).+?FROM|(CREATE|ALTER|DROP|TRUNCATE)\\s+(TABLE|DATABASE)'
     );
     foreach ($reqarr as $reqkey => $reqvalue) {
-        if (preg_match("/" . $filtertable[$reqtype] . "/is", $reqvalue) == 1) {
+        if (preg_match("/" . $filtertable[$reqtype] . "/is", $reqvalue) == 1 && !in_array($reqkey, array('content'))) {
             print('Illegal operation!');
             exit(-1);
         }

@@ -98,7 +98,6 @@ class base {
                 $cachedata = array();
                 $cachedata['solves'] = $this->db->fetch_total('question', 'status IN (2,6)');   //已解决问题数
                 $cachedata['nosolves'] = $this->db->fetch_total('question', 'status=1'); //待解决问题数
-                $cachedata['bestadopt'] = round($cachedata['solves'] / ($cachedata['solves'] + $cachedata['nosolves']), 4) * 100;
                 break;
             case 'topiclist':
                 $this->load('topic');
