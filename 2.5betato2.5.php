@@ -12,7 +12,7 @@ header("Content-Type: text/html; charset=" . TIPASK_CHARSET);
 require TIPASK_ROOT . '/lib/global.func.php';
 require TIPASK_ROOT . '/lib/db.class.php';
 $action = ($_POST['action']) ? $_POST['action'] : $_GET['action'];
-if (!stristr(strtolower(TIPASK_VERSION), '2.0')) {
+if (!stristr(strtolower(TIPASK_VERSION), '2.5beta')) {
     exit('本程序只能升级Tipask 2.0版release 201201210 到Tipask2.5请不要重复升级！');
 }
 $upgrade = <<<EOT
@@ -31,6 +31,9 @@ CREATE TABLE ask_answer_append (
     KEY `time` (`time`)
 ) ENGINE=MyISAM;
 EOT;
+$extend = <<<EOT
+ALTER TABLE ask_answer DROP tag;
+EOT;
 if (!$action) {
     echo '<meta http-equiv=Content-Type content="text/html;charset=' . TIPASK_CHARSET . '">';
     echo"本程序仅用于升级 Tipask2.0 到 Tipask2.5Beta版,请确认之前已经顺利安装Tipask2.0版本!<br><br><br>";
@@ -41,22 +44,37 @@ if (!$action) {
 } else {
     $db = new db(DB_HOST, DB_USER, DB_PW, DB_NAME, DB_CHARSET, DB_CONNECT);
     runquery($upgrade);
-    $config = "<?php \r\ndefine('DB_HOST',  '" . DB_HOST . "');\r\n";
-    $config .= "define('DB_USER',  '" . DB_USER . "');\r\n";
-    $config .= "define('DB_PW',  '" . DB_PW . "');\r\n";
-    $config .= "define('DB_NAME',  '" . DB_NAME . "');\r\n";
-    $config .= "define('DB_CHARSET', '" . DB_CHARSET . "');\r\n";
-    $config .= "define('DB_TABLEPRE',  '" . DB_TABLEPRE . "');\r\n";
-    $config .= "define('DB_CONNECT', 0);\r\n";
-    $config .= "define('TIPASK_CHARSET', '" . TIPASK_CHARSET . "');\r\n";
-    $config .= "define('TIPASK_VERSION', '2.5Beta');\r\n";
-    $config .= "define('TIPASK_RELEASE', '20140326');\r\n";
-    $fp = fopen(TIPASK_ROOT . '/config.php', 'w');
-    fwrite($fp, $config);
-    fclose($fp);
-    cleardir(TIPASK_ROOT . '/data/cache');
-    cleardir(TIPASK_ROOT . '/data/view');
-    cleardir(TIPASK_ROOT . '/data/tmp');
+    $query = $db->query("SELECT * FROM " . DB_TABLEPRE . "answer WHERE tag<>''");
+    while ($answer = $db->fetch_array($query)) {
+        $question = $db->fetch_first("SELECT * FROM " . DB_TABLEPRE . "question WHERE `id`=" . $answer['qid']);
+        $taglist = tstripslashes(unserialize($answer['tag']));
+        $stime = $answer['time'];
+        foreach ($taglist as $index => $tag) {
+            $stime+=rand(60,7200);
+            $tag = '<p>'.strip_tags($tag).'</p>';
+            if ($index % 2 == 0) {
+                $db->query("INSERT INTO " . DB_TABLEPRE . "answer_append(appendanswerid,answerid,author,authorid,content,time) VALUES (NULL,".$answer['id'].",'".$question['author']."',".$question['authorid'].",'$tag',$stime)");
+            } else {                
+                $db->query("INSERT INTO " . DB_TABLEPRE . "answer_append(appendanswerid,answerid,author,authorid,content,time) VALUES (NULL,".$answer['id'].",'".$answer['author']."',".$answer['authorid'].",'$tag',$stime)");
+            }
+        }
+    }
+//    $config = "<?php \r\ndefine('DB_HOST',  '" . DB_HOST . "');\r\n";
+//    $config .= "define('DB_USER',  '" . DB_USER . "');\r\n";
+//    $config .= "define('DB_PW',  '" . DB_PW . "');\r\n";
+//    $config .= "define('DB_NAME',  '" . DB_NAME . "');\r\n";
+//    $config .= "define('DB_CHARSET', '" . DB_CHARSET . "');\r\n";
+//    $config .= "define('DB_TABLEPRE',  '" . DB_TABLEPRE . "');\r\n";
+//    $config .= "define('DB_CONNECT', 0);\r\n";
+//    $config .= "define('TIPASK_CHARSET', '" . TIPASK_CHARSET . "');\r\n";
+//    $config .= "define('TIPASK_VERSION', '2.5Beta');\r\n";
+//    $config .= "define('TIPASK_RELEASE', '20140326');\r\n";
+//    $fp = fopen(TIPASK_ROOT . '/config.php', 'w');
+//    fwrite($fp, $config);
+//    fclose($fp);
+//    cleardir(TIPASK_ROOT . '/data/cache');
+//    cleardir(TIPASK_ROOT . '/data/view');
+//    cleardir(TIPASK_ROOT . '/data/tmp');
     echo "<font color='red'>升级说明：请登录到tipask后台，重新更改一下用户组权限，还有其他一些新特性!</font><br />";
     echo "升级完成,请删除本升级文件,更新缓存以便完成升级,如果后台登录不进去，请直接删除data/view 目录下的所有.tpl文件，<font color='red'>切记需要保留view目录</font>";
 }
