@@ -30,7 +30,7 @@ class answermodel {
         $bestanswer['format_adopttime'] = tdate($bestanswer['adopttime']);
         $bestanswer['format_time'] = tdate($bestanswer['time']);
         $bestanswer['author_avartar'] = get_avatar_dir($bestanswer['authorid']);
-        $bestanswer['tags'] = tstripslashes(unserialize($bestanswer['tag']));
+        $bestanswer['appends'] = $this->get_appends($bestanswer['id']);
         $bestanswer['userinfo'] = array();
         $author = $this->db->fetch_first("SELECT * FROM " . DB_TABLEPRE . "user WHERE uid='" . $bestanswer['authorid'] . "'");
         if ($author) {
@@ -76,7 +76,7 @@ class answermodel {
             $answer['time'] = tdate($answer['time']);
             $answer['ip'] = formatip($answer['ip']);
             $answer['author_avartar'] = get_avatar_dir($answer['authorid']);
-            $answer['tags'] = tstripslashes(unserialize($answer['tag']));
+            $answer['appends'] = $this->get_appends($answer['id']);
             $answerlist[] = $answer;
             if (1 == $floor) {
                 $floor++;
@@ -126,11 +126,21 @@ class answermodel {
 
     /* 添加追问--追问--回答 */
 
-    function add_tag($aid, $tagstr, $tagliststr) {
-        $taglist = array();
-        $tagliststr && $taglist = tstripslashes(unserialize($tagliststr));
-        $taglist[] = $tagstr;
-        $this->db->query("UPDATE " . DB_TABLEPRE . "answer SET `tag`='" . addslashes(serialize($taglist)) . "' WHERE `id`=$aid");
+    function append($answerid, $author, $authorid, $content) {
+        $this->db->query("INSERT INTO " . DB_TABLEPRE . "answer_append(appendanswerid,answerid,author,authorid,content,time) VALUES (NULL,$answerid,'$author',$authorid,'$content',{$this->base->time})");
+        return $this->db->insert_id();
+    }
+
+    /* 获取追问信息列表 */
+
+    function get_appends($answerid, $start = 0, $limit = 20) {
+        $appendlist = array();
+        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "answer_append WHERE answerid='$answerid' ORDER BY time ASC LIMIT $start,$limit");
+        while ($append = $this->db->fetch_array($query)) {
+            $append['format_time'] = tdate($append['time']);
+            $appendlist[] = $append;
+        }
+        return $appendlist;
     }
 
     /* 修改回答，同时重置回答的状态 */

@@ -56,23 +56,22 @@
             </div>
             <div class="bd">
                 <div class="qa-content">
-                            {$bestanswer['content']}
-                            <div class="appendcontent">
-                                <!--{loop $bestanswer['tags'] $tagindex $tag}-->       
-                                <!--{if ($tagindex%2) == 0}-->
-                                <div class="appendbox">
-                                    <h4 class="appendask">追问:</h4>{$tag}
-                                </div>
-                                <!--{else}-->                        
-                                <div class="appendbox">
-                                    <h4 class="appendanswer">回答:</h4>{$tag}                                    
-                                </div>
-                                <!--{/if}-->
-                                <div class="clr"></div>
-                                <!--{/loop}-->
-                            </div>
-                        </div>
-            </div>
+                {$bestanswer['content']}
+                <div class="appendcontent">
+                    <!--{loop $bestanswer['appends'] $append}-->       
+                    <div class="appendbox">
+                        <!--{if $append['authorid']==$bestanswer['authorid']}-->
+                        <h4 class="appendanswer">回答:<span class="time">{$append['format_time']}</span></h4>
+                        <!--{else}-->
+                        <h4 class="appendask">追问:<span class='time'>{$append['format_time']}</span></h4>
+                        <!--{/if}-->
+                        {$append['content']}                                    
+                    <div class="clr"></div>
+                    </div>
+                    <!--{/loop}-->
+                </div>
+                </div>
+             </div>
             <div class="clr"></div>
             <div class="comment-box mt10">
                 <div class="comments-hd">
@@ -81,7 +80,7 @@
                         <input type="button" class="button_agree" value="{$bestanswer['supports']}" />                                
                     </div>
                 </div>
-                <div class="comments-mod" style="display: none;" id="comment_{$bestanswer['id']}">
+                <div class="comments-mod" style="display: none;margin-left: 40px;" id="comment_{$bestanswer['id']}">
                     <div class="areabox clearfix">
                         <input type="text"  class="comment-input" name="content" />
                         <input type="button" value="评论"  class="normal-button" name="submit" onclick="addcomment({$bestanswer['id']});"/>
@@ -128,19 +127,17 @@
                             </div>
                             <div class="avarta-name"><a target="_blank" title="{$answer['author']}" href="{url user/space/$answer['authorid']}" onmouseover="pop_user_on(this, '{$answer[authorid]}', 'text');"  onmouseout="pop_user_out();">{eval echo cutstr($answer['author'],7,'');}</a></div>                           
                         </div>
-                        <div class="anscontent">
-                            {$answer['content']}
-                            <div class="appendcontent">
-                                <!--{loop $answer['tags'] $tagindex $tag}-->                        
-                                <!--{if ($tagindex%2) == 0}-->
-                                <!--{if $tagindex!=0}-->
+                        <div class="appendcontent">
+                            <!--{loop $answer['appends'] $append}-->       
+                            <div class="appendbox">
+                                <!--{if $append['authorid']==$answer['authorid']}-->
+                                <h4 class="appendanswer">回答:<span class="time">{$append['format_time']}</span></h4>
+                                <!--{else}-->
+                                <h4 class="appendask">追问:<span class='time'>{$append['format_time']}</span></h4>{$tag}
                                 <!--{/if}-->
-                                <span style="color:#5EBB0B;">追问:</span>{$tag}
-                                <!--{else}-->                        
-                                <span style="color:#999999;">回答:</span>{$tag}
-                                <!--{/if}-->
-                                <!--{/loop}-->
-                            </div>
+                                {$append['content']}                                    
+                            <div class="clr"></div>
+                            <!--{/loop}-->
                         </div>
                     </div>
                     <div class="clr"></div>
@@ -180,7 +177,17 @@
             <div class="title">相关已解决</div>
             <ul class="list">
                 <!--{loop $solvelist $solve}-->
-                <li><span class="answer-number">{$solve['answers']}个回答</span><a title="{$solve['title']}" href="{url question/view/$solve['id']}">{$solve['title']}</a></li>
+                <li><span class="answer-number">{$solve['answers']}个回答</span><a title="{$solve['title']}" target="_blank"  href="{url question/view/$solve['id']}">{$solve['title']}</a></li>
+                <!--{/loop}-->
+            </ul>
+        </div>
+        <!--{/if}-->
+        <!--{if $nosolvelist}-->
+        <div class="module mt10">
+            <div class="title">等你来帮忙</div>
+            <ul class="list">
+                <!--{loop $nosolvelist $nosolve}-->
+                <li><span class="answer-number">{$nosolve['answers']}个回答</span><a title="{$nosolve['title']}" target="_blank" href="{url question/view/$nosolve['id']}">{$nosolve['title']}</a></li>
                 <!--{/loop}-->
             </ul>
         </div>
@@ -227,6 +234,20 @@
         <!--{if (isset($adlist['question_view']['right1']) && trim($adlist['question_view']['right1']))}-->
         <div>{$adlist['question_view']['right1']}</div>
       <!--{/if}-->
+      
+       <!--{eval $topiclist=$this->fromcache('topiclist');}-->
+        <!--{if $topiclist}-->
+        <!--{eval $topic = $topiclist[0];}-->
+        <div class="modbox mt10">
+            <div class="title">{eval echo cutstr($topic['title'],14,'');}</div>
+            <div style="margin-left: 10px;"><img width="230" height="170" src="{SITE_URL}{$topic['image']}"/></div>
+            <ul class="list">
+                <!--{loop $topic['questionlist'] $question}-->
+                <li><a title="{$question['title']}" target="_blank" href="{url question/view/$question['qid']}">{eval echo cutstr($question['title'],30,'');}</a></li>
+                <!--{/loop}-->
+            </ul>
+        </div>
+        <!--{/if}-->
     </div>
 </div>
 <div id="catedialog" title="修改分类" style="display: none">

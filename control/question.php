@@ -356,24 +356,6 @@ class questioncontrol extends base {
         include template("editanswer");
     }
 
-    /* 追问模块---追问 */
-
-    function onappendanswer() {
-        $this->load("message");
-        $qid = intval($this->get[2]) ? $this->get[2] : intval($this->post['qid']);
-        $aid = intval($this->get[3]) ? $this->get[3] : intval($this->post['aid']);
-        $type = intval($this->get[4]) ? $this->get[4] : intval($this->post['type']);
-        $question = $_ENV['question']->get($qid);
-        $answer = $_ENV['answer']->get($aid);
-        if (isset($this->post['submit'])) {
-            $_ENV['answer']->add_tag($aid, $this->post['content'], $answer['tag']);
-            $_ENV['message']->add($question['author'], $question['authorid'], $answer['authorid'], '问题追问:' . $question['title'], $question['description'] . '<br /> <a href="' . url('question/view/' . $qid, 1) . '">点击查看问题</a>');
-            $viewurl = urlmap('question/view/' . $qid, 2);
-            isset($type) ? $this->message('继续回答成功!', $viewurl) : $this->message('继续提问成功!', $viewurl);
-        }
-        include template("appendanswer");
-    }
-
     /* 搜索问题 */
 
     function onsearch() {
@@ -401,6 +383,10 @@ class questioncontrol extends base {
         include template('search');
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/360kad
     /* 提问自动搜索已经解决的问题 */
 
     function onajaxsearch() {

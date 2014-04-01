@@ -70,20 +70,18 @@
                         <div class="anscontent">
                             {$answer['content']}
                             <div class="appendcontent">
-                                <!--{loop $answer['tags'] $tagindex $tag}-->       
-                                <!--{if ($tagindex%2) == 0}-->
+                                <!--{loop $answer['appends'] $append}-->       
                                 <div class="appendbox">
-                                    <h4 class="appendask">追问:</h4>{$tag}
-                                </div>
-                                <!--{else}-->                        
-                                <div class="appendbox">
-                                    <h4 class="appendanswer">回答:</h4>{$tag}                                    
-                                </div>
-                                <!--{/if}-->
+                                    <!--{if $append['authorid']==$answer['authorid']}-->
+                                    <h4 class="appendanswer">回答:<span class="time">{$append['format_time']}</span></h4>
+                                    <!--{else}-->
+                                    <h4 class="appendask">追问:<span class='time'>{$append['format_time']}</span></h4>
+                                    <!--{/if}-->
+                                    {$append['content']}                                    
                                 <div class="clr"></div>
+                                </div>
                                 <!--{/loop}-->
                             </div>
-                        </div>
                     </div>
                     <div class="clr"></div>
                     <div class="comment-box mt10">
@@ -92,6 +90,29 @@
                             <!--{if $user['grouptype']==1}-->
                             <span class="admin"><a href="{url question/editanswer/$answer['id']}">编辑内容</a><span class="span-line">|</span><a href="javascript:void(0);" onclick="delete_answer('{$answer['id']}', '{$question['id']}')">删除</a></span>
                             <!--{/if}-->
+                        </div>
+                    </div>
+                                        <div class="clr"></div>
+                    <div class="comment-box mt10">
+                        <div class="comments-hd">
+                            <div class="function" id="{$answer['id']}">
+                                <span class="number"><a onclick="show_comment('{$answer['id']}');" href="javascript:void(0)">评论({$answer['comments']})</a></span>
+                                <input type="button" class="button_agree" value="{$answer['supports']}" />                                
+                            </div>
+                            <span class="time">回答于 {$answer['time']}</span>
+                            <!--{if $user['grouptype']==1}-->
+                            <span class="admin"><a href="javascript:void(0);" onclick="adoptanswer({$answer['id']});">采纳为最佳答案</a><span class="span-line">|</span><a href="{url question/editanswer/$answer['id']}">编辑内容</a><span class="span-line">|</span><a href="javascript:void(0);" onclick="delete_answer('{$answer['id']}', '{$question['id']}')">删除</a></span>
+                            <!--{/if}-->
+                        </div>
+
+                        <div class="comments-mod" style="display: none;margin-left: 70px;" id="comment_{$answer['id']}">
+                            <div class="areabox clearfix">
+                                <input type="text"  class="comment-input" name="content" />
+                                <input type="button" value="评论"  class="normal-button" name="submit" onclick="addcomment({$answer['id']});"/>
+                            </div>
+                            <ul class="comments-list">
+                                <li class="loading"><img src='{SITE_URL}css/default/loading.gif' align='absmiddle' />&nbsp;加载中...</li>
+                            </ul>
                         </div>
                     </div>
                 </li>
@@ -105,7 +126,17 @@
             <div class="title">相关已解决</div>
             <ul class="list">
                 <!--{loop $solvelist $solve}-->
-                <li><span class="answer-number">{$solve['answers']}个回答</span><a title="{$solve['title']}" href="{url question/view/$solve['id']}">{$solve['title']}</a></li>
+                <li><span class="answer-number">{$solve['answers']}个回答</span><a title="{$solve['title']}" target="_blank"  href="{url question/view/$solve['id']}">{$solve['title']}</a></li>
+                <!--{/loop}-->
+            </ul>
+        </div>
+        <!--{/if}-->
+        <!--{if $nosolvelist}-->
+        <div class="module mt10">
+            <div class="title">等你来帮忙</div>
+            <ul class="list">
+                <!--{loop $nosolvelist $nosolve}-->
+                <li><span class="answer-number">{$nosolve['answers']}个回答</span><a title="{$nosolve['title']}" target="_blank" href="{url question/view/$nosolve['id']}">{$nosolve['title']}</a></li>
                 <!--{/loop}-->
             </ul>
         </div>
@@ -150,6 +181,38 @@
         <!--{if (isset($adlist['question_view']['right1']) && trim($adlist['question_view']['right1']))}-->
         <div>{$adlist['question_view']['right1']}</div>
         <!--{/if}-->
+        
+                <!--{eval $topiclist=$this->fromcache('topiclist');}-->
+        <!--{if $topiclist}-->
+        <!--{eval $topic = $topiclist[0];}-->
+        <div class="modbox mt10">
+            <div class="title">{eval echo cutstr($topic['title'],14,'');}</div>
+            <div style="margin-left: 10px;"><img width="230" height="170" src="{SITE_URL}{$topic['image']}"/></div>
+            <ul class="list">
+                <!--{loop $topic['questionlist'] $question}-->
+                <li><a title="{$question['title']}" target="_blank" href="{url question/view/$question['qid']}">{eval echo cutstr($question['title'],30,'');}</a></li>
+                <!--{/loop}-->
+            </ul>
+        </div>
+        <!--{/if}-->
+             <!-- 关注问题排行榜 -->
+            <div class="modbox mt10">
+                <div class="title">一周热点问题</div>
+                <ul class="right-list">
+                    <!--{eval $attentionlist=$this->fromcache('attentionlist');}-->
+                    <!--{loop $attentionlist $index $question}-->
+                    <!--{eval $index++;}-->
+                    <li>
+                        <!--{if $index<4}-->
+                        <em class="n1">{$index}</em>
+                        <!--{else}-->
+                        <em class="n2">{$index}</em>
+                        <!--{/if}-->
+                        <a  title="{$question['title']}" target="_blank" href="{url question/view/$question['id']}">{eval echo cutstr($question['title'],40,'');}</a>
+                    </li>
+                    <!--{/loop}-->
+                </ul>
+            </div>
     </div>
 </div>
 <div id="catedialog" title="修改分类" style="display: none">

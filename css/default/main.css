@@ -495,7 +495,7 @@ th{font-style: normal;font-weight: 400;}
 .comments-hd .admin{margin-left:20px; color:#999;}
 .comments-hd .admin a{color:#999;margin-left:5px;}
 .comments-hd .admin a:hover{color:#333;}
-.comments-mod{margin-left: 70px;padding:10px;margin-bottom: 20px; border:1px solid #E4E4E4; background: #FCFCFC; zoom:1;width:598px;}
+.comments-mod{padding:10px;margin-bottom: 20px; border:1px solid #E4E4E4; background: #FCFCFC; zoom:1;width:598px;}
 .comments-mod .areabox{ padding:0 0 10px; height:30px;}
 .comments-mod .normal-button{float:right;margin-top: -2px;}
 .comments-list{ overflow:hidden; position:relative; zoom:1;}
