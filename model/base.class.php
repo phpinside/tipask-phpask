@@ -23,14 +23,14 @@ class base {
         $this->ip = getip();
         $this->get = & $get;
         $this->post = & $post;
-
         $this->init_db();
         $this->init_cache();
-
-        $this->init_crontab();
+        //$this->init_crontab();
         $this->init_user();
         $this->checkcode();
         $this->banned();
+        
+        
     }
 
     function init_db() {

@@ -104,7 +104,7 @@ class questioncontrol extends base {
 
     function onview() {
         $this->setting['stopcopy_on'] && $_ENV['question']->stopcopy(); //是否开启了防采集功能
-        $qid = $this->get[2]; //接收qid参数
+        $qid = intval($this->get[2]); //接收qid参数
         $_ENV['question']->add_views($qid); //更新问题浏览次数
         $question = $_ENV['question']->get($qid);
         empty($question) && $this->message('问题已经被删除！');
@@ -383,10 +383,6 @@ class questioncontrol extends base {
         include template('search');
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/360kad
     /* 提问自动搜索已经解决的问题 */
 
     function onajaxsearch() {

@@ -59,7 +59,7 @@ class tipask {
         $controlfile = TIPASK_ROOT . '/control/' . $this->get[0] . '.php';
         $isadmin = ('admin' == substr($this->get[0], 0, 5));
         $isadmin && $controlfile = TIPASK_ROOT . '/control/admin/' . substr($this->get[0], 6) . '.php';
-        if (false === @include($controlfile)) {
+        if (false === include($controlfile)) {
             $this->notfound('control file "' . $controlfile . '" not found!');
         }
     }
