@@ -127,6 +127,8 @@
                             </div>
                             <div class="avarta-name"><a target="_blank" title="{$answer['author']}" href="{url user/space/$answer['authorid']}" onmouseover="pop_user_on(this, '{$answer[authorid]}', 'text');"  onmouseout="pop_user_out();">{eval echo cutstr($answer['author'],7,'');}</a></div>                           
                         </div>
+                      <div class="anscontent">
+                            {$answer['content']}  
                         <div class="appendcontent">
                             <!--{loop $answer['appends'] $append}-->       
                             <div class="appendbox">
@@ -137,9 +139,10 @@
                                 <!--{/if}-->
                                 {$append['content']}                                    
                             <div class="clr"></div>
-                            <!--{/loop}-->
-                        </div>
+                            </div>
+                            <!--{/loop}-->                        
                     </div>
+                   </div>
                     <div class="clr"></div>
                     <div class="comment-box mt10">
                         <div class="comments-hd">
@@ -152,7 +155,6 @@
                             <span class="admin"><a href="{url question/editanswer/$answer['id']}">编辑内容</a><span class="span-line">|</span><a href="javascript:void(0);" onclick="delete_answer('{$answer['id']}', '{$question['id']}')">删除</a></span>
                             <!--{/if}-->
                         </div>
-
                         <div class="comments-mod" style="display: none;" id="comment_{$answer['id']}">
                             <div class="areabox clearfix">
                                 <input type="text"  class="comment-input" name="content" />
@@ -178,16 +180,6 @@
             <ul class="list">
                 <!--{loop $solvelist $solve}-->
                 <li><span class="answer-number">{$solve['answers']}个回答</span><a title="{$solve['title']}" target="_blank"  href="{url question/view/$solve['id']}">{$solve['title']}</a></li>
-                <!--{/loop}-->
-            </ul>
-        </div>
-        <!--{/if}-->
-        <!--{if $nosolvelist}-->
-        <div class="module mt10">
-            <div class="title">等你来帮忙</div>
-            <ul class="list">
-                <!--{loop $nosolvelist $nosolve}-->
-                <li><span class="answer-number">{$nosolve['answers']}个回答</span><a title="{$nosolve['title']}" target="_blank" href="{url question/view/$nosolve['id']}">{$nosolve['title']}</a></li>
                 <!--{/loop}-->
             </ul>
         </div>
@@ -234,20 +226,6 @@
         <!--{if (isset($adlist['question_view']['right1']) && trim($adlist['question_view']['right1']))}-->
         <div>{$adlist['question_view']['right1']}</div>
       <!--{/if}-->
-      
-       <!--{eval $topiclist=$this->fromcache('topiclist');}-->
-        <!--{if $topiclist}-->
-        <!--{eval $topic = $topiclist[0];}-->
-        <div class="modbox mt10">
-            <div class="title">{eval echo cutstr($topic['title'],14,'');}</div>
-            <div style="margin-left: 10px;"><img width="230" height="170" src="{SITE_URL}{$topic['image']}"/></div>
-            <ul class="list">
-                <!--{loop $topic['questionlist'] $question}-->
-                <li><a title="{$question['title']}" target="_blank" href="{url question/view/$question['qid']}">{eval echo cutstr($question['title'],30,'');}</a></li>
-                <!--{/loop}-->
-            </ul>
-        </div>
-        <!--{/if}-->
     </div>
 </div>
 <div id="catedialog" title="修改分类" style="display: none">

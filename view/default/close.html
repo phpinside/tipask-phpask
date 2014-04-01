@@ -117,18 +117,7 @@
             </ul>
         </div>
         <!--{/if}-->
-        <!--{if $nosolvelist}-->
-        <div class="module mt10">
-            <div class="title">等你来帮忙</div>
-            <ul class="list">
-                <!--{loop $nosolvelist $nosolve}-->
-                <li><span class="answer-number">{$nosolve['answers']}个回答</span><a title="{$nosolve['title']}" target="_blank" href="{url question/view/$nosolve['id']}">{$nosolve['title']}</a></li>
-                <!--{/loop}-->
-            </ul>
-        </div>
-        <!--{/if}-->
     </div>
-
     <div class="aside-right">
         <!--{if 1==$user['grouptype'] && $user['uid']}-->
         <div class="modbox mb10">
@@ -167,38 +156,6 @@
         <!--{if (isset($adlist['question_view']['right1']) && trim($adlist['question_view']['right1']))}-->
         <div>{$adlist['question_view']['right1']}</div>
         <!--{/if}-->
-        
-                <!--{eval $topiclist=$this->fromcache('topiclist');}-->
-        <!--{if $topiclist}-->
-        <!--{eval $topic = $topiclist[0];}-->
-        <div class="modbox mt10">
-            <div class="title">{eval echo cutstr($topic['title'],14,'');}</div>
-            <div style="margin-left: 10px;"><img width="230" height="170" src="{SITE_URL}{$topic['image']}"/></div>
-            <ul class="list">
-                <!--{loop $topic['questionlist'] $question}-->
-                <li><a title="{$question['title']}" target="_blank" href="{url question/view/$question['qid']}">{eval echo cutstr($question['title'],30,'');}</a></li>
-                <!--{/loop}-->
-            </ul>
-        </div>
-        <!--{/if}-->
-             <!-- 关注问题排行榜 -->
-            <div class="modbox mt10">
-                <div class="title">一周热点问题</div>
-                <ul class="right-list">
-                    <!--{eval $attentionlist=$this->fromcache('attentionlist');}-->
-                    <!--{loop $attentionlist $index $question}-->
-                    <!--{eval $index++;}-->
-                    <li>
-                        <!--{if $index<4}-->
-                        <em class="n1">{$index}</em>
-                        <!--{else}-->
-                        <em class="n2">{$index}</em>
-                        <!--{/if}-->
-                        <a  title="{$question['title']}" target="_blank" href="{url question/view/$question['id']}">{eval echo cutstr($question['title'],40,'');}</a>
-                    </li>
-                    <!--{/loop}-->
-                </ul>
-            </div>
     </div>
 </div>
 <div id="catedialog" title="修改分类" style="display: none">
