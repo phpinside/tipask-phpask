@@ -403,7 +403,7 @@ INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`
 
 DROP TABLE IF EXISTS ask_ad;
 CREATE TABLE ask_ad (
-  `html` tinytext,
+  `html` text,
   `page` varchar(50) NOT NULL DEFAULT '',
   `position` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`page`,`position`)
