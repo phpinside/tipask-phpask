@@ -73,7 +73,8 @@ class questioncontrol extends base {
                 $this->load("message");
                 $this->load("user");
                 $touser = $_ENV['user']->get_by_uid($askfromuid);
-                $_ENV['message']->add($this->user['username'], $this->user['uid'], $touser['uid'], '问题求助:' . $title, $description . '<br /> <a href="' . SITE_URL . $this->setting['seo_prefix'] . $viewurl . $this->setting['seo_suffix'] . '">点击查看问题</a>');
+                $username = addslashes($this->user['username']);
+                $_ENV['message']->add($username, $this->user['uid'], $touser['uid'], '问题求助:' . $title, $description . '<br /> <a href="' . SITE_URL . $this->setting['seo_prefix'] . $viewurl . $this->setting['seo_suffix'] . '">点击查看问题</a>');
                 sendmail($touser, '问题求助:' . $title, $description . '<br /> <a href="' . SITE_URL . $this->setting['seo_prefix'] . $viewurl . $this->setting['seo_suffix'] . '">点击查看问题</a>');
             }
             //如果ucenter开启，则postfeed
