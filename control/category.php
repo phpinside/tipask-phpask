@@ -14,7 +14,7 @@ class categorycontrol extends base {
     //cid，status,第几页？
     function onview() {
         $this->load("expert");
-        $cid = $this->get[2];
+        $cid = intval($this->get[2]);
         $status = isset($this->get[3]) ? $this->get[3] : 'all';
         @$page = max(1, intval($this->get[4]));
         $pagesize = $this->setting['list_default'];
