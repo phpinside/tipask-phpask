@@ -23,7 +23,7 @@
             <div class="category-nav">
                 <!--{eval $categorylist=$this->fromcache('categorylist');}-->
                 <!--{loop $categorylist  $category1}-->
-                <div class="categorybox curr_menu">
+                <div {if !$category1['sublist']}class="categorybox"{else}class="categorybox curr_menu"{/if}>
                     <div class="cate-item">
                         <h3><a target="_blank" title="{$category1['name']}" href="{url category/view/$category1['id']}">{$category1['name']}</a></h3>
                         <p>

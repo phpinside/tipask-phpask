@@ -165,7 +165,7 @@ em {font-style: normal;color:#E63A00;}
 /*分类导航*/
 .modbox{ border:1px solid #D5D5D5;}
 .modbox .title,.my-answerbox .title{padding:0 0 0 10px; height:33px; font:16px/33px "Microsoft YaHei";}
-.categorybox{background: url("arrow_right.png") no-repeat scroll 174px 20px transparent;zoom:1;}
+.category-nav .curr_menu{background: url("arrow_right.png") no-repeat scroll 174px 20px transparent;zoom:1;}
 .categorybox a{color:#333333;}
 .categorybox .cate-item{padding:10px 0 10px 10px; border-top:1px solid #D5D5D5;}
 .categorybox .first{ border-top:0 none;}
