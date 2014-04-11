@@ -173,7 +173,7 @@ function pop_user_out() {
     }
     popusertimer = setTimeout(function() {
         $("#usercard").hide();
-    }, 600);
+    }, 300);
 }
 
 /*用户登陆*/
