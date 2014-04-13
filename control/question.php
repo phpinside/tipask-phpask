@@ -165,7 +165,7 @@ class questioncontrol extends base {
             $seo_description = str_replace("{wtbt}", $question['title'], $seo_description);
             $seo_description = str_replace("{wtzt}", $typedescarray[$question['status']], $seo_description);
             $seo_description = str_replace("{flmc}", $curnavname, $seo_description);
-            $seo_description = str_replace("{wtms}", $question['description'], $seo_description);
+            $seo_description = str_replace("{wtms}", strip_tags($question['description']), $seo_description);
             $seo_description = str_replace("{zjda}", strip_tags($bestanswer['content']), $seo_description);
         }
         if ($this->setting['seo_question_keywords']) {
@@ -174,7 +174,7 @@ class questioncontrol extends base {
             $seo_keywords = str_replace("{wtzt}", $typedescarray[$question['status']], $seo_keywords);
             $seo_keywords = str_replace("{flmc}", $curnavname, $seo_keywords);
             $seo_keywords = str_replace("{wtbq}", implode(",", $taglist), $seo_keywords);
-            $seo_description = str_replace("{description}", $question['description'], $seo_keywords);
+            $seo_keywords = str_replace("{description}", strip_tags($question['description']), $seo_keywords);
             $seo_keywords = str_replace("{zjda}", strip_tags($bestanswer['content']), $seo_keywords);
         }
         include template($dirction);
