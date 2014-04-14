@@ -125,7 +125,7 @@
                 <ul class="list">	    		
                     <li>
                         <span class="answer-number">{$question['answers']}回答</span>
-                        <a target="_blank" href="{url question/view/$question['id']}" title="{$question['title']}">{eval echo cutstr($question['title'],80);}</a>
+                        <a target="_blank" href="{url question/view/$question['id']}" title="{$question['title']}">{eval echo cutstr($question['title'],50);}</a>
                         <a target="_blank" class="type" href="{url category/view/$question['cid']}" title="{$question['category_name']}">[{eval echo cutstr($question['category_name'],10,'');}]</a>
                     </li>
                 </ul>
@@ -149,7 +149,7 @@
                             <img src="{SITE_URL}css/default/gold.gif" />{$question['price']}
                             <!--{/if}-->
                         </span>
-                        <a target="_blank" href="{url question/view/$question['id']}" title="{$question['title']}">{eval echo cutstr($question['title'],80);}</a>
+                        <a target="_blank" href="{url question/view/$question['id']}" title="{$question['title']}">{eval echo cutstr($question['title'],50);}</a>
                         <a target="_blank" class="type" href="{url category/view/$question['cid']}" title="{$question['category_name']}">[{eval echo cutstr($question['category_name'],10,'');}]</a>
                     </li>
                 </ul>
@@ -165,7 +165,7 @@
                 <ul class="list">	    		
                     <li>
                         <span class="answer-number">{$question['answers']}回答</span>
-                        <a target="_blank" href="{url question/view/$question['id']}" title="{$question['title']}">{eval echo cutstr($question['title'],80);}</a>
+                        <a target="_blank" href="{url question/view/$question['id']}" title="{$question['title']}">{eval echo cutstr($question['title'],50);}</a>
                         <a target="_blank" class="type" href="{url category/view/$question['cid']}" title="{$question['category_name']}">[{eval echo cutstr($question['category_name'],10,'');}]</a>
                     </li>
                 </ul>
