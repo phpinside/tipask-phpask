@@ -155,7 +155,7 @@
                             <span class="admin"><a href="{url question/editanswer/$answer['id']}">编辑内容</a><span class="span-line">|</span><a href="javascript:void(0);" onclick="delete_answer('{$answer['id']}', '{$question['id']}')">删除</a></span>
                             <!--{/if}-->
                         </div>
-                        <div class="comments-mod" style="display: none;" id="comment_{$answer['id']}">
+                        <div class="comments-mod" style="display: none;margin-left:70px;" id="comment_{$answer['id']}">
                             <div class="areabox clearfix">
                                 <input type="text"  class="comment-input" name="content" />
                                 <input type="button" value="评论"  class="normal-button" name="submit" onclick="addcomment({$answer['id']});"/>

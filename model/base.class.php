@@ -29,8 +29,6 @@ class base {
         $this->init_user();
         $this->checkcode();
         $this->banned();
-        
-        
     }
 
     function init_db() {
@@ -101,7 +99,7 @@ class base {
                 break;
             case 'topiclist':
                 $this->load('topic');
-                $cachedata = $_ENV['topic']->get_list(1,0,3,4);
+                $cachedata = $_ENV['topic']->get_list(1, 0, 3, 4);
                 break;
             case 'expertlist':
                 $this->load('expert');
@@ -120,10 +118,14 @@ class base {
                 $cachedata = $_ENV['ad']->get_list();
                 break;
             case 'articlelist':
-                $this->load("cms");
-                $cachedata = $_ENV['cms']->get_list();
+                if (isset($this->base->setting['cms_open']) && $this->base->setting['cms_open'] == 1) {
+                    $this->load("cms");
+                    $cachedata = $_ENV['cms']->get_list();
+                } else {
+                    $cachedata = array();
+                }
+
                 break;
-            
         }
         $this->cache->write($cachename, $cachedata);
         return $cachedata;
@@ -150,7 +152,7 @@ class base {
         @$sid = tcookie('sid');
         @$auth = tcookie('auth');
         $user = array();
-        @list($uid, $password) = empty($auth) ? array(0, 0) : taddslashes(explode("\t", authcode($auth,'DECODE')), 1);
+        @list($uid, $password) = empty($auth) ? array(0, 0) : taddslashes(explode("\t", authcode($auth, 'DECODE')), 1);
         if (!$sid) {
             $sid = substr(md5(time() . $this->ip . random(6)), 16, 16);
             tcookie('sid', $sid, 31536000);
