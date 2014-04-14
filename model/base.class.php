@@ -119,6 +119,11 @@ class base {
                 $this->load("ad");
                 $cachedata = $_ENV['ad']->get_list();
                 break;
+            case 'articlelist':
+                $this->load("cms");
+                $cachedata = $_ENV['cms']->get_list();
+                break;
+            
         }
         $this->cache->write($cachename, $cachedata);
         return $cachedata;

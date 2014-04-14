@@ -107,9 +107,9 @@ class questioncontrol extends base {
         $this->setting['stopcopy_on'] && $_ENV['question']->stopcopy(); //是否开启了防采集功能
         $qid = intval($this->get[2]); //接收qid参数
         $_ENV['question']->add_views($qid); //更新问题浏览次数
-        $question = $_ENV['question']->get($qid);
+        $question = taddslashes($_ENV['question']->get($qid), 1); 
         empty($question) && $this->message('问题已经被删除！');
-        (0 == $question['status']) && $this->message('问题正在审核中，请耐心等待！');
+        (0 == $question['status']) && $this->message('问题正在审核中,请耐心等待！');
         /* 问题过期处理 */
         if ($question['endtime'] < $this->time && ($question['status'] == 1 || $question['status'] == 4)) {
             $question['status'] = 9;

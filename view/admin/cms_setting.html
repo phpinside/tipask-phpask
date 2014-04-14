@@ -1,0 +1,91 @@
+<!--{template header,admin}-->
+<div style="width:100%; height:15px;color:#000;margin:0px 0px 10px;">
+    <div style="float:left;"><a href="index.php?admin_main/stat{$setting['seo_suffix']}" target="main"><b>控制面板首页</b></a>&nbsp;&raquo;&nbsp;CMS系统整合</div>
+</div>
+<!--{if isset($message)}-->
+<!--{eval $type=isset($type)?$type:'correctmsg'; }-->
+<table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+    <tr>
+        <td class="{$type}">{$message}</td>
+    </tr>
+</table>
+<!--{/if}-->
+<table width="100%" cellspacing="1" cellpadding="4" align="center" class="tableborder">
+    <tbody><tr class="header"><td>设置说明</td></tr>
+        <tr class="altbg1"><td>UCenter整合开启前，务必关闭通行证整合。</td></tr>
+    </tbody></table>
+<br />
+<form action="index.php?admin_cms/setting{$setting['seo_suffix']}" method="post">
+    <a name="基本设置"></a>
+    <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+        <tr class="header">
+            <td colspan="2">数据库配置</td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>CMS系统整合:</b><br><span class="smalltxt">关闭后设置还会保留。</span></td>
+            <td class="altbg2">
+                <input class="radio"  type="radio"  {if 1==$setting['cms_open'] }checked{/if}  value="1" name="cms_open" ><label for="yes">开启</label>&nbsp;&nbsp;
+                <input class="radio"  type="radio"  {if 0==$setting['cms_open'] }checked{/if} value="0" name="cms_open" ><label for="no">关闭</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>CMS系统数据库地址和端口:</b><br><span class="smalltxt">例如127.0.0.1:3306</span></td>
+            <td class="altbg2"><input type="text" value="{$setting['cms_db_server']}" name="cms_db_server" style="width:332px;" /></td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>CMS系统数据库名:</b><br><span class="smalltxt">填写CMS系统的数据库名。</span></td>
+            <td class="altbg2"><input type="text" value="{$setting['cms_db_name']}" name="cms_db_name" style="width:332px;"></td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>CMS系统数据库用户名:</b><br><span class="smalltxt">填写CMS系统的数据库用户名。</span></td>
+            <td class="altbg2"><input type="text" value="{$setting['cms_db_user']}" name="cms_db_user" style="width:332px;"></td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>CMS系统数据库密码:</b><br><span class="smalltxt">填写CMS系统的数据库密码</span></td>
+            <td class="altbg2"><input type="password" value="{$setting['cms_db_password']}" name="cms_db_password" style="width:332px;"></td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>文章分类表名:</b><br><span class="smalltxt">填写CMS系统的文章分类表全名例如:ask_category</span></td>
+            <td class="altbg2"><input type="text" value="{$setting['cms_db_category_tbname']}" name="cms_db_category_tbname" style="width:332px;"></td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>文章分类名称字段:</b><br><span class="smalltxt">填写CMS系统的文章分类名称字段例如：category_name</span></td>
+            <td class="altbg2"><input type="text" value="{$setting['cms_db_category_field']}" name="cms_db_category_field" style="width:332px;"></td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>文章分类标示主键:</b><br><span class="smalltxt">填写CMS系统的文章分类标示主键例如:categoryid</span></td>
+            <td class="altbg2"><input type="text" value="{$setting['cms_db_category_primary']}" name="cms_db_category_primary" style="width:332px;"></td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>文章表名:</b><br><span class="smalltxt">填写CMS系统的文章表名称例如:ask_article</span></td>
+            <td class="altbg2"><input type="text" value="{$setting['cms_db_article_tbname']}" name="cms_db_article_tbname" style="width:332px;"></td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>文章标题字段:</b><br><span class="smalltxt">填写CMS系统的文章表中文章标题字段例如:title</span></td>
+            <td class="altbg2"><input type="text" value="{$setting['cms_db_article_field']}" name="cms_db_article_field" style="width:332px;"></td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>文章标示主键:</b><br><span class="smalltxt">填写CMS系统的文章表中文章标示主键例如:articleid</span></td>
+            <td class="altbg2"><input type="text" value="{$setting['cms_db_article_primary']}" name="cms_db_article_primary" style="width:332px;"></td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>文章表排序条件:</b><br><span class="smalltxt">填写CMS系统的文章表中的排序条件，例如按照文章创建时间从大到小: createtime DESC</span></td>
+            <td class="altbg2"><input type="text" value="{$setting['cms_db_article_sort']}" name="cms_db_article_sort" style="width:332px;"></td>
+        </tr>
+        <tr>
+            <td class="altbg1" width="45%"><b>文章链接地址:</b><br><span class="smalltxt">填写文章查看地址，将文章的主键ID替换为{articleid},例如：<br />将http://blog.tipask.com/archives/44 改为 http://blog.tipask.com/archives/{{articleid}}</span></td>
+            <td class="altbg2"><input type="text" value="{$setting['cms_article_url']}" name="cms_article_url" style="width:332px;"></td>
+        </tr>
+    </table>
+    <br />
+    <center><input type="submit" class="button" name="submit" value="提 交"></center><br>
+
+    <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+        <tr class="header">
+            <td colspan="2">分类映射设置</td>
+        </tr>
+    </table>
+    <br>
+</form>
+<br>
+<!--{template footer,admin}-->

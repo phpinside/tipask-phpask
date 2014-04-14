@@ -226,6 +226,25 @@
         <!--{if (isset($adlist['question_view']['right1']) && trim($adlist['question_view']['right1']))}-->
         <div>{$adlist['question_view']['right1']}</div>
       <!--{/if}-->
+        <!--{eval $articlelist=$this->fromcache('articlelist');}-->
+        <!--{if $articlelist}-->
+        <div class="modbox mb10">
+            <div class="title">推荐文章</div>
+            <ul class="right-list">
+                <!--{loop $articlelist $index $article}-->
+                <!--{eval $index++;}-->
+                <li>
+                    <!--{if $index<4}-->
+                    <em class="n1">{$index}</em>
+                    <!--{else}-->
+                    <em class="n2">{$index}</em>
+                    <!--{/if}-->
+                    <a  title="{$article['title']}" target="_blank" href="{$article['href']}">{eval echo cutstr($article['title'],40,'');}</a>
+                </li>
+                <!--{/loop}-->
+            </ul>
+        </div>
+        <!--{/if}-->
     </div>
 </div>
 <div id="catedialog" title="修改分类" style="display: none">

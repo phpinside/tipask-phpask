@@ -225,6 +225,8 @@ class admin_settingcontrol extends base {
         }
         include template('setting_ucenter', 'admin');
     }
+      
+    
 
     /* SEO设置 */
 
