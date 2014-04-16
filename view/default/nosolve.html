@@ -146,6 +146,7 @@
                         <div class="comments-mod" style="display: none;margin-left:70px;" id="comment_{$answer['id']}">
                             <div class="areabox clearfix">
                                 <input type="text"  class="comment-input" name="content" />
+                                <input type='hidden' value='0' name='replyauthor' />
                                 <input type="button" value="评论"  class="normal-button" name="submit" onclick="addcomment({$answer['id']});"/>
                             </div>
                             <ul class="comments-list">
@@ -510,9 +511,10 @@
                         //添加评论
                         function addcomment(answerid) {
                         var content = $("#comment_" + answerid + " input[name='content']").val();
-                                if (g_uid == 0){
-                        login();
-                                return false;
+                        var replyauthor = $("#comment_" + answerid + " input[name='replyauthor']").val();
+                        if (g_uid == 0){
+                            login();
+                            return false;
                         }
                         if (bytes($.trim(content)) < 5){
                         alert("评论内容不能少于5字");
@@ -521,7 +523,7 @@
                         $.ajax({
                         type: "POST",
                                 url: "{url answer/addcomment}",
-                                data: "content=" + content + "&answerid=" + answerid,
+                                data: "content=" + content + "&answerid=" + answerid+"&replyauthor="+replyauthor,
                                 success: function(status) {
                                 if (status == '1') {
                                 $("#comment_" + answerid + " input[name='content']").val("");
@@ -556,6 +558,13 @@
                                 $("#comment_" + answerid + " .comments-list").html(comments);
                                 }
                         });
+                        }
+                        
+                        function replycomment(commentauthorid,answerid){
+                            var comment_author = $("#comment_author_"+commentauthorid).attr("title");
+                            $("#comment_"+answerid+" .comment-input").focus();
+                            $("#comment_"+answerid+" .comment-input").val("回复 "+comment_author+" :");
+                            $("#comment_" + answerid + " input[name='replyauthor']").val(commentauthorid);
                         }
                         //检举
                         function inform(name, type) {
