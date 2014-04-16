@@ -600,10 +600,10 @@ th{font-style: normal;font-weight: 400;}
 .status-data .recharge {float: right;margin-top: 4px;color:#F78229;}
 
 .status-data .item {border-right: 1px solid #E9E9E9;float: left;overflow: hidden;padding: 0 6px;width: 68px;}
-.status-data .rate {padding: 5px 0 5px 50px;width: 250px;}
+.status-data .rate {padding: 5px 0 5px 50px;width: 145px;}
 .status-data p{text-align: center;}
 .status-data .item em {color: #F78229;display: block;font-family: tahoma;font-size: 19px;}
-.status-data .item span, .status-data .item a {color: #676767;}
+.status-data .item span{color: #676767;}
 .status-data .last {border-right: 0 none;}
 .expert-single-input{margin-top: 15px;}
 .expert-single-input p {float: left;font-family: 'Microsoft YaHei',Arail;font-size: 14px;margin: 4px 0;width: 100%;}

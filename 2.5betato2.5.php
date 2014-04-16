@@ -51,6 +51,7 @@ CREATE TABLE ask_user_attention (
 
 
 ALTER TABLE `ask_user` ADD `followers` INT( 10 ) NOT NULL DEFAULT '0' AFTER `supports` ;
+ALTER TABLE `ask_user` ADD `attentions` INT( 10 ) NOT NULL DEFAULT '0' AFTER `followers`;
 EOT;
 $extend = <<<EOT
 ALTER TABLE ask_answer DROP tag;

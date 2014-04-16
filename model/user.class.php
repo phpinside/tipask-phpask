@@ -406,9 +406,48 @@ class usermodel {
         return array($this->db->result_first("SELECT COUNT(DISTINCT `ip`) FROM " . DB_TABLEPRE . "session WHERE time>$end"));
     }
 
+    /* 关注者列表 */
+
+    function get_follower($uid, $start = 0, $limit = 20) {
+        $followerlist = array();
+        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "user_attention WHERE uid=$uid ORDER BY time DESC LIMIT $start,$limit");
+        while ($follower = $this->db->fetch_array($query)) {
+            $follower['avatar'] = get_avatar_dir($follower['followerid']);
+            $followerlist[] = $follower;
+        }
+        return $followerlist;
+    }
+
+    /* 已关注列表 */
+
+    function get_attention($followerid, $start = 0, $limit = 20) {
+        $attentionlist = array();
+        $query = $this->db->query("SELECT u.uid,u.username FROM " . DB_TABLEPRE . "user_attention AS ua," . DB_TABLEPRE . "user AS u WHERE ua.uid=u.uid AND ua.followerid=$followerid ORDER BY ua.time DESC LIMIT $start,$limit");
+        while ($attention = $this->db->fetch_array($query)) {
+            $attention['avatar'] = get_avatar_dir($attention['uid']);
+            $attentionlist[] = $attention;
+        }
+        return $attentionlist;
+    }
+
+    /* 已关注列表 */
+
+    function get_attention_question($followerid, $start = 0, $limit = 20) {
+        $questionlist = array();
+        $query = $this->db->query("SELECT *  FROM " . DB_TABLEPRE . "question AS q," . DB_TABLEPRE . "question_attention as qa WHERE q.id=qa.qid AND qa.followerid=$followerid ORDER BY qa.time DESC LIMIT $start,$limit");
+        while ($question = $this->db->fetch_array($query)) {
+            $questionlist[] = $question;
+        }
+        return $questionlist;
+    }
+
+    function rownum_attention_question($followerid) {
+        return $this->db->result_first("SELECT count(*)  FROM " . DB_TABLEPRE . "question AS q," . DB_TABLEPRE . "question_attention as qa WHERE q.id=qa.qid AND qa.followerid=$followerid");
+    }
+
     /* 是否关注问题 */
 
-    function is_followed($uid,$followerid) {
+    function is_followed($uid, $followerid) {
         return $this->db->result_first("SELECT COUNT(*) FROM " . DB_TABLEPRE . "user_attention WHERE uid=$uid AND followerid=$followerid");
     }
 
@@ -422,6 +461,7 @@ class usermodel {
             $this->db->query("UPDATE " . DB_TABLEPRE . "question SET attentions=attentions+1 WHERE `id`=$sourceid");
         } else if ($type == 'user') {
             $this->db->query("UPDATE " . DB_TABLEPRE . "user SET followers=followers+1 WHERE `uid`=$sourceid");
+            $this->db->query("UPDATE " . DB_TABLEPRE . "user SET attentions=attentions+1 WHERE `uid`=$followerid");
         }
     }
 
@@ -435,6 +475,7 @@ class usermodel {
             $this->db->query("UPDATE " . DB_TABLEPRE . "question SET attentions=attentions-1 WHERE `id`=$sourceid");
         } else if ($type == 'user') {
             $this->db->query("UPDATE " . DB_TABLEPRE . "user SET followers=followers-1 WHERE `uid`=$sourceid");
+            $this->db->query("UPDATE " . DB_TABLEPRE . "user SET attentions=attentions-1 WHERE `uid`=$followerid");
         }
     }
 

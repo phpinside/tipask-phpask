@@ -287,9 +287,38 @@ class usercontrol extends base {
         include template('space_answer');
     }
 
+    function onfollower() {
+        $navtitle = '关注者';
+        $page = max(1, intval($this->get[2]));
+        $pagesize = $this->setting['list_default'];
+        $startindex = ($page - 1) * $pagesize;
+        $followerlist = $_ENV['user']->get_follower($this->user['uid'], $startindex, $pagesize);
+        $rownum = $this->db->fetch_total('user_attention', " followerid=" . $this->user['uid']);
+        $departstr = page($rownum, $pagesize, $page, "user/follower");
+        include template("myfollower");
+    }
+
     function onattention() {
-        $navtitle = '我的关注';
-        include template("myattention");
+        $navtitle = '已关注';
+        $attentiontype = ($this->get[2] == 'question') ? 'question' : '';
+        if ($attentiontype) {
+            $page = max(1, intval($this->get[3]));
+            $pagesize = 1;
+            $startindex = ($page - 1) * $pagesize;
+            $questionlist = $_ENV['user']->get_attention_question($this->user['uid'],$startindex,$pagesize);
+            $rownum = $_ENV['user']->rownum_attention_question($this->user['uid']);
+            $departstr = page($rownum, $pagesize, $page, "user/attention/$attentiontype");
+            include template("myattention_question");
+        } else {
+            $page = max(1, intval($this->get[2]));
+            $pagesize = 1;
+            $startindex = ($page - 1) * $pagesize;
+            $attentionlist = $_ENV['user']->get_attention($this->user['uid'], $startindex, $pagesize);
+            $rownum = $this->db->fetch_total('user_attention', " uid=" . $this->user['uid']);
+            $departstr = page($rownum, $pagesize, $page, "user/attention");
+                    include template("myattention");
+
+        }
     }
 
     function onscore() {
@@ -512,7 +541,7 @@ class usercontrol extends base {
         $uid = intval($this->get[2]);
         if ($uid) {
             $userinfo = $_ENV['user']->get_by_uid($uid);
-            $is_followed = $_ENV['user']->is_followed($userinfo['uid'],$this->user['uid']);
+            $is_followed = $_ENV['user']->is_followed($userinfo['uid'], $this->user['uid']);
             $userinfo_group = $this->usergroup[$userinfo['groupid']];
             include template("usercard");
         }
@@ -525,15 +554,15 @@ class usercontrol extends base {
 
     //关注用户
     function onattentto() {
-       $uid = intval($this->post['uid']);
+        $uid = intval($this->post['uid']);
         if (!$uid) {
             exit('error');
         }
-        $is_followed = $_ENV['user']->is_followed($uid,$this->user['uid']);
+        $is_followed = $_ENV['user']->is_followed($uid, $this->user['uid']);
         if ($is_followed) {
-            $_ENV['user']->unfollow($uid, $this->user['uid'],'user');
+            $_ENV['user']->unfollow($uid, $this->user['uid'], 'user');
         } else {
-            $_ENV['user']->follow($uid, $this->user['uid'], $this->user['username'],'user');
+            $_ENV['user']->follow($uid, $this->user['uid'], $this->user['username'], 'user');
         }
         exit('ok');
     }
