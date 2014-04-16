@@ -13,6 +13,7 @@ class questioncontrol extends base {
         $this->load("answer");
         $this->load("expert");
         $this->load("tag");
+        $this->load("user");
         $this->load("userlog");
     }
 
@@ -107,7 +108,7 @@ class questioncontrol extends base {
         $this->setting['stopcopy_on'] && $_ENV['question']->stopcopy(); //是否开启了防采集功能
         $qid = intval($this->get[2]); //接收qid参数
         $_ENV['question']->add_views($qid); //更新问题浏览次数
-        $question = taddslashes($_ENV['question']->get($qid), 1); 
+        $question = taddslashes($_ENV['question']->get($qid), 1);
         empty($question) && $this->message('问题已经被删除！');
         (0 == $question['status']) && $this->message('问题正在审核中,请耐心等待！');
         /* 问题过期处理 */
@@ -148,6 +149,8 @@ class questioncontrol extends base {
         $categoryjs = $_ENV['category']->get_js();
         $taglist = $_ENV['tag']->get_by_qid($qid);
         $expertlist = $_ENV['expert']->get_by_cid($question['cid']);
+        $is_followed = $_ENV['question']->is_followed($qid, $this->user['uid']);
+        $followerlist = $_ENV['question']->get_follower($qid);
         /* SEO */
         $curnavname = $navlist[count($navlist) - 1]['name'];
         if (!$bestanswer) {
@@ -496,6 +499,37 @@ class questioncontrol extends base {
         $viewurl = urlmap('question/view/' . $qid, 2);
         $_ENV['answer']->change_to_verify($aid);
         $this->message("回答审核完成!", $viewurl);
+    }
+
+    //问题关注
+    function onattentto() {
+        $qid = intval($this->post['qid']);
+        if (!$qid) {
+            exit('error');
+        }
+        $is_followed = $_ENV['question']->is_followed($qid, $this->user['uid']);
+        if ($is_followed) {
+            $_ENV['user']->unfollow($qid, $this->user['uid']);
+        } else {
+            $_ENV['user']->follow($qid, $this->user['uid'], $this->user['username']);
+        }
+        exit('ok');
+    }
+
+    function onfollow() {
+        $qid = intval($this->get[2]);
+        $question = taddslashes($_ENV['question']->get($qid), 1);
+        if (!$question) {
+            $this->message("问题不存在!");
+            exit;
+        }
+        $page = max(1, intval($this->get[3]));
+        $pagesize = $this->setting['list_default'];
+        $startindex = ($page - 1) * $pagesize;
+        $followerlist = $_ENV['question']->get_follower($qid, $startindex, $pagesize);
+        $rownum = $this->db->fetch_total('question_attention', " qid=$qid ");
+        $departstr = page($rownum, $pagesize, $page, "question/follow/$qid");
+        include template("question_follower");
     }
 
 }

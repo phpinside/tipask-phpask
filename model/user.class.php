@@ -131,7 +131,7 @@ class usermodel {
         $this->db->query("UPDATE " . DB_TABLEPRE . "user SET `lastlogin`={$this->base->time}  WHERE `uid`=$uid"); //更新最后登录时间
         $this->db->query("REPLACE INTO " . DB_TABLEPRE . "session (sid,uid,islogin,ip,`time`) VALUES ('$sid',$uid,$islogin,'{$this->base->ip}',{$this->base->time})");
         $password = $this->base->user['password'];
-        $auth = authcode("$uid\t$password",'ENCODE');
+        $auth = authcode("$uid\t$password", 'ENCODE');
         if ($cookietime)
             tcookie('auth', $auth, $cookietime);
         else
@@ -287,7 +287,7 @@ class usermodel {
         foreach ($member as $key => $val) {
             $userstr .= "&$key=$val";
         }
-        $userdb = authcode($userstr,'ENCODE', $this->base->setting['passport_key']);
+        $userdb = authcode($userstr, 'ENCODE', $this->base->setting['passport_key']);
         $verify = md5($action . $userdb . $forward . $this->base->setting['passport_key']);
         $location = $this->base->setting['passport_client'] . '?action=' . $action . '&userdb=' . urlencode($userdb) . '&forward=' . urlencode($forward) . '&verify=' . $verify;
         header('location:' . $location);
@@ -389,7 +389,7 @@ class usermodel {
         return $this->db->fetch_first("SELECT * FROM " . DB_TABLEPRE . "login_auth WHERE type='$type' AND uid=$uid");
     }
 
-    function remove_login_auth($uid, $type='qq') {
+    function remove_login_auth($uid, $type = 'qq') {
         $this->db->query("DELETE FROM " . DB_TABLEPRE . "login_auth WHERE type='$type' AND uid=$uid");
     }
 
@@ -404,6 +404,38 @@ class usermodel {
     function rownum_onlineuser() {
         $end = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60;
         return array($this->db->result_first("SELECT COUNT(DISTINCT `ip`) FROM " . DB_TABLEPRE . "session WHERE time>$end"));
+    }
+
+    /* 是否关注问题 */
+
+    function is_followed($uid,$followerid) {
+        return $this->db->result_first("SELECT COUNT(*) FROM " . DB_TABLEPRE . "user_attention WHERE uid=$uid AND followerid=$followerid");
+    }
+
+    /* 关注 */
+
+    function follow($sourceid, $followerid, $follower, $type = 'question') {
+        $sourcefield = 'qid';
+        ($type != 'question') && $sourcefield = 'uid';
+        $this->db->query("INSERT INTO " . DB_TABLEPRE . $type . "_attention($sourcefield,followerid,follower,time) VALUES ($sourceid,$followerid,'$follower',{$this->base->time})");
+        if ($type == 'question') {
+            $this->db->query("UPDATE " . DB_TABLEPRE . "question SET attentions=attentions+1 WHERE `id`=$sourceid");
+        } else if ($type == 'user') {
+            $this->db->query("UPDATE " . DB_TABLEPRE . "user SET followers=followers+1 WHERE `uid`=$sourceid");
+        }
+    }
+
+    /* 取消关注 */
+
+    function unfollow($sourceid, $followerid, $type = 'question') {
+        $sourcefield = 'qid';
+        ($type != 'question') && $sourcefield = 'uid';
+        $this->db->query("DELETE FROM " . DB_TABLEPRE . $type . "_attention WHERE $sourcefield=$sourceid AND followerid=$followerid");
+        if ($type == 'question') {
+            $this->db->query("UPDATE " . DB_TABLEPRE . "question SET attentions=attentions-1 WHERE `id`=$sourceid");
+        } else if ($type == 'user') {
+            $this->db->query("UPDATE " . DB_TABLEPRE . "user SET followers=followers-1 WHERE `uid`=$sourceid");
+        }
     }
 
 }

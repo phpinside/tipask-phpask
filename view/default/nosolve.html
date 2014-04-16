@@ -14,10 +14,13 @@
             <div class="title pd40">
                 <span class="ico ico-nosolve"></span>
                 <h1>{$question['title']} </h1>
-                <!--<div class="same-q-mod">
-                                    <input type="button" class="button_attention" value="关注" />
-                                </div>-->
-
+                <div class="same-q-mod">
+                    <!--{if $is_followed}-->
+                     <input type="button" class="button_followed" id="attenttoquestion" value="取消关注" onclick="attentto_question({$question['id']})"/>
+                    <!--{else}-->
+                    <input type="button" class="button_attention" id="attenttoquestion" value="关注" onclick="attentto_question({$question['id']})"/>
+                    <!--{/if}-->
+                </div>
             </div>
             <div class="tags">
                 <!--{loop $taglist $tag}-->
@@ -179,6 +182,16 @@
         <!--{/if}-->
     </div>
     <div class="aside-right">
+        <div class="question_followbox">
+            <div class="overview">
+                <a href="{url question/follow/$question['id']}"><strong>{$question['attentions']}</strong></a>人关注该问题
+            </div>
+        <div class="follower_list">
+            <!--{loop $followerlist $follower}-->
+            <a href="{url user/space/$follower['followerid']}" target="_blank"><img  src="{$follower['avatar']}" onmouseover="pop_user_on(this, '{$follower[followerid]}', 'image_follow');"  onmouseout="pop_user_out();"/></a>
+            <!--{/loop}-->
+        </div>
+        </div>
         <!--{if 1==$user['grouptype'] && $user['uid']}-->
         <div class="modbox mb10">
             <div class="userinfo-box">

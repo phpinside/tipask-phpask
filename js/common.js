@@ -41,9 +41,9 @@ $(document).ready(function() {
         $("#category3").show();
     });
     $("#changecategory").click(function() {
-        if(!$(this).hasClass("btn-disabled-1"))
-        $("#catedialog").dialog("open");
-        
+        if (!$(this).hasClass("btn-disabled-1"))
+            $("#catedialog").dialog("open");
+
     });
 
     //usercard关闭
@@ -130,7 +130,7 @@ function check_code() {
         type: "GET",
         async: false,
         cache: false,
-        url: g_site_url + "index.php" + query + "user/ajaxcode/"+code,
+        url: g_site_url + "index.php" + query + "user/ajaxcode/" + code,
         success: function(flag) {
             if (1 == flag) {
                 $('#codetip').html("&nbsp;");
@@ -153,6 +153,8 @@ function pop_user_on(popobj, uid, type) {
             myalign = "left-21 bottom-10";
         } else if (type == 'image_active') {
             myalign = "left-40 bottom-43";
+        } else if (type == 'image_follow') {
+            myalign = "left-10 bottom-20";
         }
         if (popusertimer) {
             clearTimeout(popusertimer);
@@ -179,13 +181,13 @@ function pop_user_out() {
 /*用户登陆*/
 function login() {
     $("#poplogin").remove();
-    $("body").append('<div id="poplogin" title="欢迎登陆'+g_site_name+'"></div>');
+    $("body").append('<div id="poplogin" title="欢迎登陆' + g_site_name + '"></div>');
     $("#poplogin").load(g_site_url + "index.php?user/ajaxpoplogin");
     $("#poplogin").dialog({
         width: 520,
         modal: true,
         resizable: false,
-        position:{my:"bottom-60"}
+        position: {my: "bottom-60"}
     });
 }
 
@@ -194,6 +196,44 @@ function delete_answer(aid, qid) {
     if (confirm('确定删除问题？该操作不可返回！') === true) {
         document.location.href = g_site_url + '' + query + 'question/deleteanswer/' + aid + '/' + qid + g_suffix;
     }
+}
+/*关注问题*/
+function attentto_question(qid) {
+    if (g_uid == 0) {
+        login();
+    }
+    $.post(g_site_url + "index.php?question/attentto", {qid: qid}, function(msg) {
+        if (msg == 'ok') {
+            if ($("#attenttoquestion").hasClass("button_attention")) {
+                $("#attenttoquestion").removeClass("button_attention");
+                $("#attenttoquestion").addClass("button_followed");
+                $("#attenttoquestion").val("取消关注");
+            } else {
+                $("#attenttoquestion").removeClass("button_followed");
+                $("#attenttoquestion").addClass("button_attention");
+                $("#attenttoquestion").val("关注");
+            }
+        }
+    });
+}
+/*关注用户*/
+function attentto_user(uid) {
+    if (g_uid == 0) {
+        login();
+    }
+    $.post(g_site_url + "index.php?user/attentto", {uid: uid}, function(msg) {
+        if (msg == 'ok') {
+            if ($("#attenttouser").hasClass("button_attention")) {
+                $("#attenttouser").removeClass("button_attention");
+                $("#attenttouser").addClass("button_followed");
+                $("#attenttouser").val("取消关注");
+            } else {
+                $("#attenttouser").removeClass("button_followed");
+                $("#attenttouser").addClass("button_attention");
+                $("#attenttouser").val("关注");
+            }
+        }
+    });
 }
 
 function checkall(checkname) {

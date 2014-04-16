@@ -100,7 +100,7 @@ class usercontrol extends base {
                 $this->message('用户名或密码错误！', 'user/login');
             }
         } else {
-            $forward = (isset($_SERVER['HTTP_REFERER']) && false!==strpos($group['regulars'],'question/answer'))  ? $_SERVER['HTTP_REFERER'] : SITE_URL;
+            $forward = (isset($_SERVER['HTTP_REFERER']) && false !== strpos($group['regulars'], 'question/answer')) ? $_SERVER['HTTP_REFERER'] : SITE_URL;
             include template('login');
         }
     }
@@ -190,7 +190,7 @@ class usercontrol extends base {
             $this->checkcode(); //检查验证码
             $touser = $_ENV['user']->get_by_name_email($name, $email);
             if ($touser) {
-                $authstr = authcode($touser['username'],"ENCODE");
+                $authstr = authcode($touser['username'], "ENCODE");
                 $_ENV['user']->update_authstr($touser['uid'], $authstr);
                 $getpassurl = SITE_URL . '?user/resetpass/' . urlencode($authstr);
                 $subject = "找回您在" . $this->setting['site_name'] . "的密码";
@@ -211,7 +211,7 @@ class usercontrol extends base {
         if (empty($authstr))
             $this->message("非法提交，缺少参数!", 'BACK');
         $authstr = urldecode($authstr);
-        $username = authcode($authstr,'DECODE');
+        $username = authcode($authstr, 'DECODE');
         $theuser = $_ENV['user']->get_by_username($username);
         if (!$theuser || ($authstr != $theuser['authstr']))
             $this->message("本网址已过期，请重新使用找回密码的功能!", 'BACK');
@@ -512,6 +512,7 @@ class usercontrol extends base {
         $uid = intval($this->get[2]);
         if ($uid) {
             $userinfo = $_ENV['user']->get_by_uid($uid);
+            $is_followed = $_ENV['user']->is_followed($userinfo['uid'],$this->user['uid']);
             $userinfo_group = $this->usergroup[$userinfo['groupid']];
             include template("usercard");
         }
@@ -520,6 +521,21 @@ class usercontrol extends base {
     //积分充值
     function onrecharge() {
         include template("recharge");
+    }
+
+    //关注用户
+    function onattentto() {
+       $uid = intval($this->post['uid']);
+        if (!$uid) {
+            exit('error');
+        }
+        $is_followed = $_ENV['user']->is_followed($uid,$this->user['uid']);
+        if ($is_followed) {
+            $_ENV['user']->unfollow($uid, $this->user['uid'],'user');
+        } else {
+            $_ENV['user']->follow($uid, $this->user['uid'], $this->user['username'],'user');
+        }
+        exit('ok');
     }
 
 }

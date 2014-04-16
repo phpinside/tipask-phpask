@@ -16,13 +16,19 @@
                 <!--{/loop}-->
             </p>
             <!--{/if}-->
-            <p class="stats">{$userinfo['answers']}回答<span class="tx_line">|</span>{$userinfo['supports']}赞同<span class="tx_line">|</span>{$userinfo['credit2']}财富</p>
+            <p class="stats">{$userinfo['answers']}回答<span class="tx_line">|</span>{$userinfo['supports']}赞同<span class="tx_line">|</span>{$userinfo['credit2']}财富<span class="tx_line">|</span>{$userinfo['followers']}关注</p>
         </div>
     </div>
     <div class="usercard_c2 clearfix">
         <div class="usercard_c2_l">
             <span class="gb_foed gb_fo1">
-                <!--<span><input type="button" class="button_attention" value="关注" /></span>-->
+                <!--{if $user['uid']!=$userinfo['uid']}-->
+                <!--{if $is_followed}-->
+                <span><input type="button" class="button_followed" value="取消关注" id="attenttouser" onclick="attentto_user({$userinfo['uid']})"/></span>
+                <!--{else}-->
+                <span><input type="button" class="button_attention" value="关注" id="attenttouser" onclick="attentto_user({$userinfo['uid']})"/></span>
+                <!--{/if}-->
+                <!--{/if}-->
                 <span><input type="button" class="button_attention" value="提问"  onclick="javascript:document.location = '{url question/add/$userinfo['uid']}'"/></span>
                 <span><input type="button" class="button_attention" value="私信"  onclick="javascript:document.location = '{url message/send/$userinfo['uid']}'"/></span>
             </span>

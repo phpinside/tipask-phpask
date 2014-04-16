@@ -10,7 +10,7 @@
                     <a class="name" title="{$gift['title']}"  href="javascript:void(0);" onclick="show_desc('{$gift[title]}',{$gift['id']});">{$gift['title']}</a>
                     <span>(售价：{$gift['credit']}财富）</span>
                     <div style="display:none" id="{$gift['id']}_desc">{$gift['description']}</div>
-                    <span><input type="button" class="button_4_red" value="立即兑换" onclick="exchange({$gift['id']},{$gift['credit']});"/></span>
+                    <span><input type="button" class="button_4" value="立即兑换" onclick="exchange({$gift['id']},{$gift['credit']});"/></span>
                 </li>                
                 <!--{/loop}-->
             </ul>
