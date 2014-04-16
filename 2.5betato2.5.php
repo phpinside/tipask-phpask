@@ -30,6 +30,27 @@ CREATE TABLE ask_answer_append (
     KEY authorid (authorid),
     KEY `time` (`time`)
 ) ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS ask_question_attention;
+CREATE TABLE ask_question_attention (
+  `qid` int(10) NOT NULL,
+  `followerid` int(10) NOT NULL,
+  `follower` char(18) NOT NULL,
+  `time` int(10) NOT NULL,
+  PRIMARY KEY (`qid`,`followerid`)
+) ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS ask_user_attention;
+CREATE TABLE ask_user_attention (
+  `uid` int(10) NOT NULL,
+  `followerid` int(10) NOT NULL,
+  `follower` char(18) NOT NULL,
+  `time` int(10) NOT NULL,
+  PRIMARY KEY (`uid`,`followerid`)
+) ENGINE=MyISAM;
+
+
+
 EOT;
 $extend = <<<EOT
 ALTER TABLE ask_answer DROP tag;
