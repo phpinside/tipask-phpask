@@ -512,6 +512,12 @@ class questioncontrol extends base {
             $_ENV['user']->unfollow($qid, $this->user['uid']);
         } else {
             $_ENV['user']->follow($qid, $this->user['uid'], $this->user['username']);
+            $question = taddslashes($_ENV['question']->get($qid), 1);
+            $msgfrom = $this->setting['site_name'] . '管理员';
+            $username = addslashes($this->user['username']);
+            $this->load("message");
+            $viewurl = url('question/view/' . $qid, 1);
+            $_ENV['message']->add($msgfrom, 0, $question['authorid'], $username . "刚刚关注了您的问题", '<a target="_blank" href="' . url('user/space/' . $this->user['uid'], 1) . '">' . $username . '</a> 刚刚关注了您的问题'.$question['title'].'"<br /> <a href="' . $viewurl . '">点击查看</a>');
         }
         exit('ok');
     }
