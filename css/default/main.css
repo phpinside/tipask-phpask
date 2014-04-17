@@ -1,6 +1,6 @@
 /* CSS Document */
 body,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,th,td,p,blockquote,pre,form,fieldset,legend,input,button,textarea,hr{margin:0;padding:0;}
-body {font:12px/1.5 Arial; color:#333;_height:100%; background-attachment:fixed;}
+body {font:12px/1.5 'Helvetica Neue',Helvetica,Arial,Sans-serif; color:#333;_height:100%; background-attachment:fixed;}
 select,input,button {vertical-align:middle;font-size:100%;}
 .clearfix:after {clear: both;content: ".";display: block;height: 0;visibility: hidden;}
 .clearfix {*zoom:1}
@@ -386,7 +386,7 @@ th{font-style: normal;font-weight: 400;}
 .q-tabmod li p{ line-height:20px;}
 .q-tabmod li .type{ margin:0 0 0 5px; color:#999;}
 .q-tabmod .related{ padding:2px 0 0; height:22px; line-height:22px;}
-.q-tabmod .pv,.q-tabmod .answer-number{ float:right; color:#666;}
+.q-tabmod .pv,.q-tabmod .answer-number{ float:right; color:#999;}
 .q-tabmod .answer-number{ padding:0 0 0 12px;}
 .q-tabmod .time{ padding:0 0 0 12px; color:#9c9c9c;}
 
@@ -634,7 +634,7 @@ th{font-style: normal;font-weight: 400;}
 .my-answerbox .answer-number span{padding:0 5px 0 5px;}
 .my-answerbox .ico{ float:left; position:relative; margin:-5px 0 0; padding:0 0 3px 4px; height:13px; font-size:10px; line-height:13px; color:#fff; -webkit-text-size-adjust:none;background-position:-193px -204px;}
 .my-answerbox .ico em{ padding:0 4px 0 0; display:inline-block; background-position:100% -204px; color:#fff;}
-.my-answerbox .q-tabmod .related{ padding:10px 0 0 0;}
+.my-answerbox .q-tabmod .related{ padding:6px 0 0 0;}
 .my-answerbox .q-tabmod .msgcontent{float: left;width: 600px;word-wrap:break-word;word-break:normal;}
 .msgcontent img{max-width: 500px;}
 .my-answerbox .q-tabmod .avatar{float: left; padding:10px 0px 10px 10px;}
@@ -642,6 +642,17 @@ th{font-style: normal;font-weight: 400;}
 .my-answerbox .manage-box{margin-left: 58px;padding: 10px;}
 .my-answerbox .manage-box2{padding: 10px;}
 .my-answerbox .pages{ padding:10px 0 ;}
+
+/*动态*/
+.msgcontent .source{color:#999999;line-height: 25px;}
+.msgcontent .source a{color:#999999;}
+.msgcontent .source a:hover{color:#134BA0;}
+.msgcontent .source .time{color: #999999;display: inline-block;float: right;font-size: 12px;margin-left: 2px;}
+.msgcontent .title{font-size: 14px;font-weight: normal;padding: 0;height: 26px;line-height: 26px;}
+.msgcontent .dot{color: #BBBBBB;display: inline-block;font-family: Arial;padding: 0 3px;}
+
+.msgcontent .quote{background: none repeat scroll 0 0 #F5F5F5;border:1px solid #EEE;border-width:1px 0 0 1px;padding:10px 5px 5px 10px;min-height:52px;margin-top: 10px;}
+.msgcontent .quote .avatar{padding: 0;}
 
 /*我的等级*/
 .table_list {margin-bottom: 20px;}
