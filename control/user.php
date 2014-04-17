@@ -303,21 +303,20 @@ class usercontrol extends base {
         $attentiontype = ($this->get[2] == 'question') ? 'question' : '';
         if ($attentiontype) {
             $page = max(1, intval($this->get[3]));
-            $pagesize = 1;
+            $pagesize = $this->setting['list_default'];
             $startindex = ($page - 1) * $pagesize;
-            $questionlist = $_ENV['user']->get_attention_question($this->user['uid'],$startindex,$pagesize);
+            $questionlist = $_ENV['user']->get_attention_question($this->user['uid'], $startindex, $pagesize);
             $rownum = $_ENV['user']->rownum_attention_question($this->user['uid']);
             $departstr = page($rownum, $pagesize, $page, "user/attention/$attentiontype");
             include template("myattention_question");
         } else {
             $page = max(1, intval($this->get[2]));
-            $pagesize = 1;
+            $pagesize = $this->setting['list_default'];
             $startindex = ($page - 1) * $pagesize;
             $attentionlist = $_ENV['user']->get_attention($this->user['uid'], $startindex, $pagesize);
             $rownum = $this->db->fetch_total('user_attention', " uid=" . $this->user['uid']);
             $departstr = page($rownum, $pagesize, $page, "user/attention");
-                    include template("myattention");
-
+            include template("myattention");
         }
     }
 
@@ -563,6 +562,10 @@ class usercontrol extends base {
             $_ENV['user']->unfollow($uid, $this->user['uid'], 'user');
         } else {
             $_ENV['user']->follow($uid, $this->user['uid'], $this->user['username'], 'user');
+            $msgfrom = $this->setting['site_name'] . '管理员';
+            $username = addslashes($this->user['username']);
+            $this->load("message");
+            $_ENV['message']->add($msgfrom,0,$uid,$username."刚刚关注了您", '<a target="_blank" href="'.url('user/space/' . $this->user['uid'], 1).'">'.$username.'</a> 刚刚关注了您!<br /> <a href="' .url('user/follower', 1) . '">点击查看</a>');
         }
         exit('ok');
     }

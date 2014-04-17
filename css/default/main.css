@@ -758,7 +758,7 @@ input:hover{border-color:#3EA201;}
 .usercard_c1 .tit{margin-bottom:5px;line-height:18px}
 .usercard_c1 .info{color:#666;line-height:18px;height:20px;overflow:hidden;margin-bottom:8px;word-wrap:break-word;word-break:normal;}
 .usercard_c1 .stats{color:#999}
-.usercard_c1 .stats .tx_line{color:#F0F0F0;margin:0 10px}
+.usercard_c1 .stats .tx_line{color:#F0F0F0;margin:0 6px}
 .usercard_c2{background:#f0f0f0;padding:5px 14px 6px 10px;}
 .usercard_c2_l{float:left}
 .usercard_c2_r{float:right}

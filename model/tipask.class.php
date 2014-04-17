@@ -2,6 +2,10 @@
 
 !defined('IN_TIPASK') && exit('Access Denied');
 define('MAGIC_QUOTES_GPC', get_magic_quotes_gpc());
+define("DOING_SOURCE_QUESTION", 1);
+define("DOING_ADD_QUESTION", 1);
+define("DOING_ADD_ANSWER", 1);
+
 require TIPASK_ROOT . '/lib/db.class.php';
 require TIPASK_ROOT . '/lib/global.func.php';
 require TIPASK_ROOT . '/lib/cache.class.php';
