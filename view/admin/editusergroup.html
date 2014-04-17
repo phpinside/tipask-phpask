@@ -55,6 +55,9 @@
                     <input name="regular_code[]" value="question/view"  {if false!==strpos($group['regulars'],'question/view')}checked{/if}  class="checkbox" type="checkbox">浏览问题
                 </div>
                 <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="question/follow"  {if false!==strpos($group['regulars'],'question/follow')}checked{/if}  class="checkbox" type="checkbox">查看问题关注者
+                </div>
+                <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="topic/default"  {if false!==strpos($group['regulars'],'topic/default')}checked{/if}  class="checkbox" type="checkbox">知识专题
                 </div>
                 <div style="width: 200px; float: left;">
@@ -122,6 +125,12 @@
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="note/addcomment"  {if false!==strpos($group['regulars'],'note/addcomment')}checked{/if}  class="checkbox" type="checkbox" />公告评论
                 </div>
+                <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="question/attentto"  {if false!==strpos($group['regulars'],'question/attentto')}checked{/if}  class="checkbox" type="checkbox" />关注问题
+                </div>
+                <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="user/attentto"  {if false!==strpos($group['regulars'],'user/attentto')}checked{/if}  class="checkbox" type="checkbox" />关注用户
+                </div>
                 <!--{/if}-->
             </td>
         </tr>
@@ -146,6 +155,9 @@
                 </div>
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="user/answer"  {if false!==strpos($group['regulars'],'user/answer')}checked{/if}  class="checkbox" type="checkbox">我的回答
+                </div>
+                <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="user/follower,user/attention"  {if false!==strpos($group['regulars'],'user/follower,user/attention')}checked{/if}  class="checkbox" type="checkbox">我的关注
                 </div>
                 <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="favorite/default,favorite/delete,question/addfavorite"  {if false!==strpos($group['regulars'],'favorite/default,favorite/delete,question/addfavorite')}checked{/if}  class="checkbox" type="checkbox">我的收藏

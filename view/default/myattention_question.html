@@ -16,7 +16,7 @@
                 <div class="cls-qa-table">
                     <table>
                         <tbody>
-                            <tr><th class="s0">标题</th><th class="s1">回答/浏览</th><th class="s2">时间</th></tr>
+                            <tr><th class="s0">标题</th><th class="s2">关注时间</th></tr>
                             <!--{loop $questionlist $question}-->
                             <tr>
                                 <td class="title">
@@ -29,8 +29,7 @@
                                             <a title="{$question['category_name']}" href="{url category/view/$question['cid']}" class="type" target="_blank">[{$question['category_name']}]</a>                                        </div>
                                     </div>
                                 </td>
-                                <td>{$question['answers']}/{$question['views']}</td>
-                                <td>{$question['format_time']}</td>
+                                <td>{$question['attention_time']}</td>
                             </tr>                   
                             <!--{/loop}-->
                         </tbody>

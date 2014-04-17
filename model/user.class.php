@@ -434,8 +434,10 @@ class usermodel {
 
     function get_attention_question($followerid, $start = 0, $limit = 20) {
         $questionlist = array();
-        $query = $this->db->query("SELECT *  FROM " . DB_TABLEPRE . "question AS q," . DB_TABLEPRE . "question_attention as qa WHERE q.id=qa.qid AND qa.followerid=$followerid ORDER BY qa.time DESC LIMIT $start,$limit");
+        $query = $this->db->query("SELECT q.cid,q.title,q.id,qa.time  FROM " . DB_TABLEPRE . "question AS q," . DB_TABLEPRE . "question_attention as qa WHERE q.id=qa.qid AND qa.followerid=$followerid ORDER BY qa.time DESC LIMIT $start,$limit");
         while ($question = $this->db->fetch_array($query)) {
+            $question['attention_time'] = tdate($question['time']);
+            $question['category_name'] = $this->base->category[$question['cid']]['name'];
             $questionlist[] = $question;
         }
         return $questionlist;
