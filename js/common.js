@@ -60,7 +60,7 @@ $(document).ready(function() {
             $("#usercard").hide();
         }, 300);
     });
-
+    load_message();
 });
 function bytes(str) {
     var len = 0;
@@ -189,6 +189,24 @@ function login() {
         resizable: false,
         position: {my: "bottom-60"}
     });
+}
+
+function load_message() {
+    if(g_uid==0){
+        return false;
+    }
+    $.post(g_site_url+"index.php?user/ajaxloadmessage",function(msg){
+        if(msg.msg_personal!=0){
+            $("#mymessage_personal").html(msg.msg_personal);
+            $("#mymessage_personal").show();
+            $("#mymessage .ismore a").removeClass("msg-null");
+        }
+        if(msg.msg_system!=0){
+            $("#mymessage_system").html(msg.msg_system);
+            $("#mymessage_system").show();
+            $("#mymessage .ismore a").removeClass("msg-null");
+        }
+    },"json");
 }
 
 /*删除回答*/

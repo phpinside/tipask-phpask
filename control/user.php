@@ -243,6 +243,18 @@ class usercontrol extends base {
         include template('myask');
     }
 
+    function onrecommend() {
+        $navtitle = '为我推荐的问题';
+        $status = intval($this->get[2]);
+        @$page = max(1, intval($this->get[3]));
+        $pagesize = $this->setting['list_default'];
+        $startindex = ($page - 1) * $pagesize; //每页面显示$pagesize条
+        $questionlist = $_ENV['question']->list_by_uid($this->user['uid'], $status, $startindex, $pagesize);
+        $questiontotal = intval($this->db->fetch_total('question', 'authorid=' . $this->user['uid'] . $_ENV['question']->statustable[$status]));
+        $departstr = page($questiontotal, $pagesize, $page, "user/ask/$status"); //得到分页字符串
+        include template('myrecommend');
+    }
+
     function onspace_ask() {
         $navtitle = 'TA的提问';
         $uid = intval($this->get[2]);
@@ -546,6 +558,18 @@ class usercontrol extends base {
         }
     }
 
+    function onajaxloadmessage() {
+        $uid = $this->user['uid'];
+        if ($uid==0) {
+            return;
+        }
+        $message = array();
+        $message['msg_system'] = $this->db->fetch_total('message', " new=1 AND touid=$uid AND fromuid<>$uid AND fromuid=0 AND status<>2");
+        $message['msg_personal'] = $this->db->fetch_total('message', " new=1 AND touid=$uid AND fromuid<>$uid AND fromuid<>0 AND status<>2");
+        echo tjson_encode($message);
+        exit;
+    }
+
     //积分充值
     function onrecharge() {
         include template("recharge");
@@ -565,7 +589,7 @@ class usercontrol extends base {
             $msgfrom = $this->setting['site_name'] . '管理员';
             $username = addslashes($this->user['username']);
             $this->load("message");
-            $_ENV['message']->add($msgfrom,0,$uid,$username."刚刚关注了您", '<a target="_blank" href="'.url('user/space/' . $this->user['uid'], 1).'">'.$username.'</a> 刚刚关注了您!<br /> <a href="' .url('user/follower', 1) . '">点击查看</a>');
+            $_ENV['message']->add($msgfrom, 0, $uid, $username . "刚刚关注了您", '<a target="_blank" href="' . url('user/space/' . $this->user['uid'], 1) . '">' . $username . '</a> 刚刚关注了您!<br /> <a href="' . url('user/follower', 1) . '">点击查看</a>');
         }
         exit('ok');
     }

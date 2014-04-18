@@ -53,13 +53,14 @@
                             <li id="mymessage" class="tuser_menu">
                                 <!-- 如果没有短消息的话 msg-ico 后面有个 msg-null -->   
                                 <!--{if ($user['msg_system']+$user['msg_personal'])>0}-->
-                                <span class="ismore"><a target="_self" href="{url message/personal}" class="msg-ico">收件箱</a><i class="ar-ico"></i></span>
+                                <span class="ismore" id="mymessage_status"><a target="_self" href="{url message/personal}" class="msg-ico"></a><i class="ar-ico"></i></span>
                                 <!--{else}-->
-                                <span class="ismore"><a target="_self" href="{url message/personal}" class="msg-ico msg-null">收件箱</a><i class="ar-ico"></i></span>
+                                <span class="ismore" id="mymessage_status"><a target="_self" href="{url message/personal}" class="msg-ico msg-null"></a><i class="ar-ico"></i></span>
                                 <!--{/if}-->
                                 <div class="tuser-more-list tuser_msg">
-                                    <a onclick="msgClear();" target="_blank" href="{url message/personal}">私人消息<!--{if $user['msg_personal']>0}--><span class="msg-num">{$user['msg_personal']}</span><!--{/if}--></a>
-                                    <a onclick="msgClear();" target="_blank" href="{url message/system}">系统消息<!--{if $user['msg_system']>0}--><span class="msg-num">{$user['msg_system']}</span><!--{/if}--></a>
+                                    <a onclick="msgClear();" target="_blank" href="{url message/personal}">私人消息<span class="msg-num"  id="mymessage_personal"></span></a>
+                                    <a onclick="msgClear();" target="_blank" href="{url message/system}">系统消息<span class="msg-num"  id="mymessage_system"></span></a>
+                                    <a target="_blank" href="{url user/recommend}">为我推荐<span class="msg-num"  id="mymessage_recommend"></span></a>
                                 </div>
                             </li>
                             <li class="tuser_menu">

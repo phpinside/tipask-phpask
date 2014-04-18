@@ -165,9 +165,6 @@ class base {
         if (!$user) {
             $user['uid'] = 0;
             $user['groupid'] = 6;
-        } else {
-            $user['msg_system'] = $this->db->fetch_total('message', " new=1 AND touid=$uid AND fromuid<>$uid AND fromuid=0 AND status<>2");
-            $user['msg_personal'] = $this->db->fetch_total('message', " new=1 AND touid=$uid AND fromuid<>$uid AND fromuid<>0 AND status<>2");
         }
         $_ENV['user']->refresh_session_time($sid, $user['uid']);
         $user['sid'] = $sid;

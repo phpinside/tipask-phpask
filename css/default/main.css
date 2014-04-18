@@ -85,7 +85,7 @@ em {font-style: normal;color:#E63A00;}
 .msg-ico {float:left; width:15px; height:12px; margin-top:8px; background-position:0 -2px; overflow:hidden; font:0/0 arial}
 .msg-null {background-position:-20px -2px}
 .tuser_logout {border-top:1px dotted #ccc}
-.msg-num {right:2px; z-index:3; height:12px; line-height:18px; padding:0 5px; background:#f60; font-family:verdana; font-size:10px;color:#fff; font-weight:bold;}
+.msg-num {right:2px; height:16px; line-height:16px; padding:2px 5px; background:#f60; font-family:verdana; font-size:10px;color:#fff; font-weight:bold;display: none;}
 .top-close {position:absolute;right:3px; top:3px; width:19px; height:18px; background-position:-41px 0; cursor:pointer;}
 
 .tuser-nav .tuser_menu,.tuser-login .tuser_menu {padding:0; position:relative; z-index:9; line-height:26px;}

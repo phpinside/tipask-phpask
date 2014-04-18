@@ -52,6 +52,13 @@ CREATE TABLE ask_user_attention (
 
 ALTER TABLE `ask_user` ADD `followers` INT( 10 ) NOT NULL DEFAULT '0' AFTER `supports` ;
 ALTER TABLE `ask_user` ADD `attentions` INT( 10 ) NOT NULL DEFAULT '0' AFTER `followers`;
+
+DROP TABLE IF EXISTS ask_user_readlog;
+CREATE TABLE ask_user_readlog (
+  `uid` int(10) NOT NULL,
+  `qid` int(10) NOT NULL,
+  PRIMARY KEY (`uid`,`qid`)
+) ENGINE=MyISAM;
 EOT;
 $extend = <<<EOT
 ALTER TABLE ask_answer DROP tag;
