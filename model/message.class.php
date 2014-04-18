@@ -129,7 +129,6 @@ class messagemodel {
         }
         $cids = implode(",", $user_categorys);
         $sql = "SELECT id FROM " . DB_TABLEPRE . "question WHERE cid IN ($cids) AND id NOT IN (SELECT qid FROM " . DB_TABLEPRE . "user_readlog WHERE uid=$uid)";
-        echo $sql;
         $query = $this->db->query($sql);
         $questionlist = array();
         while ($question = $this->db->fetch_array($query)) {

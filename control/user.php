@@ -245,7 +245,6 @@ class usercontrol extends base {
 
     function onrecommend() {
         $this->load('message');
-
         $navtitle = '为我推荐的问题';
         @$page = max(1, intval($this->get[2]));
         $pagesize = $this->setting['list_default'];
