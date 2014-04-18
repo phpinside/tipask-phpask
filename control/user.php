@@ -260,7 +260,7 @@ class usercontrol extends base {
     function onspace_ask() {
         $navtitle = 'TA的提问';
         $uid = intval($this->get[2]);
-        $member = $_ENV['user']->get_by_uid($uid);
+        $member = $_ENV['user']->get_by_uid($uid,0);
         $status = $this->get[3] ? $this->get[3] : 1;
         //升级进度
         $membergroup = $this->usergroup[$member['groupid']];
@@ -289,7 +289,7 @@ class usercontrol extends base {
         $navtitle = 'TA的回答';
         $uid = intval($this->get[2]);
         $status = $this->get[3] ? $this->get[3] : 'all';
-        $member = $_ENV['user']->get_by_uid($uid);
+        $member = $_ENV['user']->get_by_uid($uid,0);
         //升级进度
         $membergroup = $this->usergroup[$member['groupid']];
         @$page = max(1, intval($this->get[4]));
@@ -441,7 +441,7 @@ class usercontrol extends base {
     function onspace() {
         $navtitle = "个人空间";
         $userid = intval($this->get[2]);
-        $member = $_ENV['user']->get_by_uid($userid);
+        $member = $_ENV['user']->get_by_uid($userid,2);
         if ($member) {
             $membergroup = $this->usergroup[$member['groupid']];
             $adoptpercent = $_ENV['user']->adoptpercent($member);
@@ -553,7 +553,7 @@ class usercontrol extends base {
     function onajaxuserinfo() {
         $uid = intval($this->get[2]);
         if ($uid) {
-            $userinfo = $_ENV['user']->get_by_uid($uid);
+            $userinfo = $_ENV['user']->get_by_uid($uid,$this->user['sid'],1);
             $is_followed = $_ENV['user']->is_followed($userinfo['uid'], $this->user['uid']);
             $userinfo_group = $this->usergroup[$userinfo['groupid']];
             include template("usercard");

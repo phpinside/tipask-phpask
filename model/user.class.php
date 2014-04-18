@@ -15,10 +15,11 @@ class usermodel {
     function get_by_uid($uid, $loginstatus = 1) {
         $user = $this->db->fetch_first("SELECT * FROM " . DB_TABLEPRE . "user WHERE uid='$uid'");
         $user['avatar'] = get_avatar_dir($uid);
+        $user['register_time'] = tdate($user['regtime']);
         $user['lastlogin'] = tdate($user['lastlogin']);
         $user['grouptitle'] = $this->base->usergroup[$user['groupid']]['grouptitle'];
         $user['category'] = $this->get_category($user['uid']);
-        $loginstatus && $user['islogin'] = $this->is_login($uid);
+        ($loginstatus == 1) && $user['islogin'] = $this->is_login($uid);
         return $user;
     }
 
@@ -256,12 +257,15 @@ class usermodel {
     function is_login($uid = 0) {
         (!$uid) && $uid = $this->base->user['uid'];
         $onlinetime = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60;
-        ;
         $islogin = $this->db->result_first("SELECT islogin FROM " . DB_TABLEPRE . "session WHERE uid=$uid AND time>$onlinetime");
         if ($islogin && $uid > 0) {
             return $islogin;
         }
         return false;
+    }
+
+    function get_refresh_time($uid) {
+        return $this->db->result_first("SELECT time FROM " . DB_TABLEPRE . "session WHERE sid='￥ ORDER BY time DESC");
     }
 
     /* 客服端通行证 */
