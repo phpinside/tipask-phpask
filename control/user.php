@@ -244,14 +244,17 @@ class usercontrol extends base {
     }
 
     function onrecommend() {
+        $this->load('message');
+
         $navtitle = '为我推荐的问题';
-        $status = intval($this->get[2]);
-        @$page = max(1, intval($this->get[3]));
+        @$page = max(1, intval($this->get[2]));
         $pagesize = $this->setting['list_default'];
-        $startindex = ($page - 1) * $pagesize; //每页面显示$pagesize条
-        $questionlist = $_ENV['question']->list_by_uid($this->user['uid'], $status, $startindex, $pagesize);
-        $questiontotal = intval($this->db->fetch_total('question', 'authorid=' . $this->user['uid'] . $_ENV['question']->statustable[$status]));
-        $departstr = page($questiontotal, $pagesize, $page, "user/ask/$status"); //得到分页字符串
+        $startindex = ($page - 1) * $pagesize;
+        $user_categorys = array_per_fields($this->user['category'], 'cid');
+        $_ENV['message']->read_user_recommend($this->user['uid'], $user_categorys);
+        $questionlist = $_ENV['message']->list_user_recommend($this->user['uid'], $user_categorys, $startindex, $pagesize);
+        $questiontotal = $_ENV['message']->rownum_user_recommend($this->user['uid'], $user_categorys);
+        $departstr = page($questiontotal, $pagesize, $page, "user/recommend");
         include template('myrecommend');
     }
 
@@ -560,12 +563,15 @@ class usercontrol extends base {
 
     function onajaxloadmessage() {
         $uid = $this->user['uid'];
-        if ($uid==0) {
+        if ($uid == 0) {
             return;
         }
+        $user_categorys = array_per_fields($this->user['category'], 'cid');
         $message = array();
+        $this->load('message');
         $message['msg_system'] = $this->db->fetch_total('message', " new=1 AND touid=$uid AND fromuid<>$uid AND fromuid=0 AND status<>2");
         $message['msg_personal'] = $this->db->fetch_total('message', " new=1 AND touid=$uid AND fromuid<>$uid AND fromuid<>0 AND status<>2");
+        $message['message_recommand'] = $_ENV['message']->rownum_user_recommend($uid, $user_categorys, 'notread');
         echo tjson_encode($message);
         exit;
     }

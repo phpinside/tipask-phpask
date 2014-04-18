@@ -7,8 +7,9 @@
             <div class="bd">
                 <div class="cls-qa-table">
                     <table>
-                        <tbody>
+                        <tbody>                            
                             <tr><th class="s0">标题</th><th class="s1">回答/浏览</th><th class="s2">时间</th></tr>
+                            <!--{if $questionlist}-->
                             <!--{loop $questionlist $question}-->
                             <tr>
                                 <td class="title">
@@ -25,6 +26,9 @@
                                 <td>{$question['format_time']}</td>
                             </tr>                   
                             <!--{/loop}-->
+                            <!--{else}-->
+                            <tr><td colspan="3"><p>亲，快设置下擅长领域吧，设置后可根据您的兴趣爱好为您推荐合适的问题!<br /><a href="{url user/mycategory}">点击设置擅长领域</a> </p></td></tr>
+                            <!--{/if}-->
                         </tbody>
                     </table>
                 </div>

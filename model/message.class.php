@@ -123,6 +123,54 @@ class messagemodel {
         $this->db->query("UPDATE " . DB_TABLEPRE . "message SET status=$status WHERE id=$id");
     }
 
+    function read_user_recommend($uid, $user_categorys) {
+        if (!$user_categorys) {
+            return 0;
+        }
+        $cids = implode(",", $user_categorys);
+        $sql = "SELECT id FROM " . DB_TABLEPRE . "question WHERE cid IN ($cids) AND id NOT IN (SELECT qid FROM " . DB_TABLEPRE . "user_readlog WHERE uid=$uid)";
+        echo $sql;
+        $query = $this->db->query($sql);
+        $questionlist = array();
+        while ($question = $this->db->fetch_array($query)) {
+            $questionlist[] = $question;
+        }
+        if ($questionlist) {
+            $insertsql = "INSERT INTO " . DB_TABLEPRE . "user_readlog(qid,uid) VALUES ";
+            foreach ($questionlist as $question) {
+                $insertsql.= "(" . $question['id'] . ",$uid),";
+            }            
+            $this->db->query(substr($insertsql, 0, -1));
+        }
+    }
+
+    function rownum_user_recommend($uid, $user_categorys, $type = 'all') {
+        if (!$user_categorys) {
+            return 0;
+        }
+        $timestart = $this->base->time - 30 * 24 * 3600;
+        $cids = implode(",", $user_categorys);
+        $sql = "SELECT COUNT(*) FROM " . DB_TABLEPRE . "question WHERE cid IN ($cids)  ";
+        ($type == 'notread') && $sql.="  AND id NOT IN (SELECT qid FROM " . DB_TABLEPRE . "user_readlog WHERE uid=$uid)";
+        return $this->db->result_first($sql);
+    }
+
+    function list_user_recommend($uid, $user_categorys, $start = 0, $limit = 20) {
+        $questionlist = array();
+        if (!$user_categorys) {
+            return $questionlist;
+        }
+        $cids = implode(",", $user_categorys);
+
+        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "question WHERE cid IN ($cids) ORDER BY time DESC LIMIT $start,$limit");
+        while ($question = $this->db->fetch_array($query)) {
+            $question['format_time'] = tdate($question['time']);
+            $question['category_name'] = $this->base->category[$question['cid']]['name'];
+            $questionlist[] = $question;
+        }
+        return $questionlist;
+    }
+
 }
 
 ?>

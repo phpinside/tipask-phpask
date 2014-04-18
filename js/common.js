@@ -206,6 +206,11 @@ function load_message() {
             $("#mymessage_system").show();
             $("#mymessage .ismore a").removeClass("msg-null");
         }
+        if(msg.message_recommand!=0){
+            $("#mymessage_recommend").html(msg.message_recommand);
+            $("#mymessage_recommend").show();
+            $("#mymessage .ismore a").removeClass("msg-null");
+        }
     },"json");
 }
 

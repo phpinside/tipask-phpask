@@ -1062,7 +1062,13 @@ function getfirstimg(&$string) {
         return "";
     }
 }
-
+function array_per_fields($array, $field) {
+    $values = array();
+    foreach ($array as $val) {
+        $values[] = $val[$field];
+    }
+    return $values;
+}
 function highlight($content, $words, $highlightcolor = 'red') {
     $wordlist = explode(" ", $words);
     foreach ($wordlist as $hightlightword) {
