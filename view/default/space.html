@@ -40,7 +40,7 @@
                         <!--{/if}-->
                         <p><label>介绍：</label><i><span>{if $member['signature']}{$member['signature']}{else}暂无介绍{/if}</span></i></p>
                         <p><label>注册日期：</label><i>{$member['register_time']}</i></p>
-                        <p><label>上次登录：</label><i>{$member['lastlogin']}</i></p>
+                        <p><label>最近更新：</label><i>{$member['refresh_time']}</i></p>
                     </div>
                     <div class="ask-box clearfix">
                         <form name="askform" action="{url question/add/$member['uid']}" method="POST">

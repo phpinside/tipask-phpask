@@ -553,7 +553,7 @@ class usercontrol extends base {
     function onajaxuserinfo() {
         $uid = intval($this->get[2]);
         if ($uid) {
-            $userinfo = $_ENV['user']->get_by_uid($uid,$this->user['sid'],1);
+            $userinfo = $_ENV['user']->get_by_uid($uid,1);
             $is_followed = $_ENV['user']->is_followed($userinfo['uid'], $this->user['uid']);
             $userinfo_group = $this->usergroup[$userinfo['groupid']];
             include template("usercard");

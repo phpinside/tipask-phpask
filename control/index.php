@@ -16,13 +16,6 @@ class indexcontrol extends base {
         $this->setting['seo_index_keywords'] && $seo_keywords = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_index_keywords']);
         include template('index');
     }
-    
-    function ontest(){
-        $touser = array();
-        $touser['username'] = 'songdf';
-        $touser['email'] = 'sdf_sky@qq.com';
-        sendmail($touser, "ceshineiru", "hello world!");
-    }
 
     function onhelp() {
         $this->load('usergroup');
@@ -41,8 +34,17 @@ class indexcontrol extends base {
         ($width > 300) && exit('1');
         exit('-1');
     }
-    
-    
+
+    function ononline() {
+        $this->load('user');
+        @$page = max(1, intval($this->get[2]));
+        $pagesize = 50;
+        $startindex = ($page - 1) * $pagesize;
+        $onlinelist = $_ENV['user']->list_online_user();
+        $onlinetotal = $_ENV['user']->rownum_onlineuser($startindex,$pagesizea);
+        $departstr = page($onlinetotal, $pagesize, $page, "index/online");
+        include template("online");
+    }
 
 }
 

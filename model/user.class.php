@@ -20,6 +20,7 @@ class usermodel {
         $user['grouptitle'] = $this->base->usergroup[$user['groupid']]['grouptitle'];
         $user['category'] = $this->get_category($user['uid']);
         ($loginstatus == 1) && $user['islogin'] = $this->is_login($uid);
+        ($loginstatus == 2) && $user['refresh_time'] = tdate($this->get_refresh_time($uid));
         return $user;
     }
 
@@ -232,13 +233,11 @@ class usermodel {
     }
 
     function logout() {
-        $sid = $this->base->user['sid'];
+
         tcookie('sid', '', 0);
         tcookie('auth', '', 0);
         tcookie('loginuser', '', 0);
-        if ($sid) {
-            $this->db->query('DELETE FROM ' . DB_TABLEPRE . 'session WHERE sid=\'' . $sid . '\'');
-        }
+        $this->db->query("DELETE FROM " . DB_TABLEPRE . "session WHERE uid=" . $this->base->user['uid']);
     }
 
     function save_code($code) {
@@ -265,7 +264,7 @@ class usermodel {
     }
 
     function get_refresh_time($uid) {
-        return $this->db->result_first("SELECT time FROM " . DB_TABLEPRE . "session WHERE sid='￥ ORDER BY time DESC");
+        return $this->db->result_first("SELECT time FROM " . DB_TABLEPRE . "session WHERE uid=$uid ORDER BY time DESC");
     }
 
     /* 客服端通行证 */
@@ -407,7 +406,18 @@ class usermodel {
 
     function rownum_onlineuser() {
         $end = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60;
-        return array($this->db->result_first("SELECT COUNT(DISTINCT `ip`) FROM " . DB_TABLEPRE . "session WHERE time>$end"));
+        return $this->db->result_first("SELECT COUNT(DISTINCT COALESCE(ip,'unkown')) FROM " . DB_TABLEPRE . "session WHERE time>$end");
+    }
+
+    function list_online_user($start = 0, $limit = 50) {
+        $onlinelist = array();
+        $end = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60;  
+        $query = $this->db->query("SELECT DISTINCT s.ip ,s.uid,u.username,s.time FROM " . DB_TABLEPRE . "session AS s LEFT  JOIN " . DB_TABLEPRE . "user AS u ON u.uid=s.uid WHERE s.time>$end ORDER BY s.time DESC LIMIT $start,$limit");
+        while ($online = $this->db->fetch_array($query)) {
+            $online['online_time'] = tdate($online['time']);
+            $onlinelist[] = $online;
+        }
+        return $onlinelist;
     }
 
     /* 关注者列表 */

@@ -3,7 +3,7 @@
 <!--{eval $statistics=$this->fromcache('statistics');}-->
 <!--{eval $onlineusernum=$this->fromcache('onlineusernum');}-->
 <div class="nav-line">
-    <div class="icon_count"/></div><span>已解决问题：{$statistics['solves']}</span><span>待解决问题：{$statistics['nosolves']}</span><span>当前在线：{$onlineusernum[0]}人</span>
+    <div class="icon_count"/></div><span>已解决问题：{$statistics['solves']}</span><span>待解决问题：{$statistics['nosolves']}</span><span>当前在线：{if $this->user['grouptype']==1}<a href="{url index/online}">{$onlineusernum}</a>{else}{$onlineusernum}{/if}人</span>
 <div id="scoll-note">
     <ul>
         <!--{eval $notelist=$this->fromcache('notelist');}-->
