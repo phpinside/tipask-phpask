@@ -148,18 +148,17 @@ function generate_key() {
  * @return string
  */
 function getip() {
-    if (getenv('HTTP_CLIENT_IP') && strcasecmp(getenv('HTTP_CLIENT_IP'), 'unknown')) {
-        $ip = getenv('HTTP_CLIENT_IP');
-    } else if (getenv('HTTP_X_FORWARDED_FOR') && strcasecmp(getenv('HTTP_X_FORWARDED_FOR'), 'unknown')) {
-        $ip = getenv('HTTP_X_FORWARDED_FOR');
-    } else if (getenv('REMOTE_ADDR') && strcasecmp(getenv('REMOTE_ADDR'), 'unknown')) {
-        $ip = getenv('REMOTE_ADDR');
-    } else if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], 'unknown')) {
-        $ip = $_SERVER['REMOTE_ADDR'];
+    $ip = $_SERVER['REMOTE_ADDR'];
+    if (isset($_SERVER['HTTP_CLIENT_IP']) && preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR']) AND preg_match_all('#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s', $_SERVER['HTTP_X_FORWARDED_FOR'], $matches)) {
+        foreach ($matches[0] AS $xip) {
+            if (!preg_match('#^(10|172\.16|192\.168)\.#', $xip)) {
+                $ip = $xip;
+                break;
+            }
+        }
     }
-    preg_match("/[\d\.]{7,15}/", $ip, $temp);
-    $ip = $temp[0] ? $temp[0] : 'unknown';
-    unset($temp);
     return $ip;
 }
 
@@ -365,7 +364,8 @@ function makecode($code, $width = 80, $height = 28, $quality = 3) {
     imagedestroy($im);
 }
 
-/*通用php加解密函数*/
+/* 通用php加解密函数 */
+
 function authcode($string, $operation = 'DECODE', $key = '', $expiry = 0) {
     global $setting;
     $ckey_length = 4;
@@ -1062,6 +1062,7 @@ function getfirstimg(&$string) {
         return "";
     }
 }
+
 function array_per_fields($array, $field) {
     $values = array();
     foreach ($array as $val) {
@@ -1069,6 +1070,7 @@ function array_per_fields($array, $field) {
     }
     return $values;
 }
+
 function highlight($content, $words, $highlightcolor = 'red') {
     $wordlist = explode(" ", $words);
     foreach ($wordlist as $hightlightword) {

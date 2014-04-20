@@ -36,12 +36,13 @@ class indexcontrol extends base {
     }
 
     function ononline() {
+        $navtitle= "当前在线";
         $this->load('user');
         @$page = max(1, intval($this->get[2]));
-        $pagesize = 50;
+        $pagesize = 30;
         $startindex = ($page - 1) * $pagesize;
-        $onlinelist = $_ENV['user']->list_online_user();
-        $onlinetotal = $_ENV['user']->rownum_onlineuser($startindex,$pagesizea);
+        $onlinelist = $_ENV['user']->list_online_user($startindex,$pagesize);
+        $onlinetotal = $_ENV['user']->rownum_onlineuser();
         $departstr = page($onlinetotal, $pagesize, $page, "index/online");
         include template("online");
     }

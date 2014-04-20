@@ -13,7 +13,7 @@
                             <tr><th class="s1">ip</th><th class="s2">用户名</th><th class="s2">时间</th></tr>
                             <!--{loop $onlinelist $online}-->
                             <tr>
-                                <td>{$online['ip']}</td>
+                                <td>{if $online['ip']}{$online['ip']}{else}未知{/if}</td>
                                 <td>{if $online['username']}<a href="{url user/space/$online['uid']}" target="_blank">{$online['username']}</a>{else}游客{/if}</td>
                                 <td>{$online['online_time']}</td>
                             </tr>

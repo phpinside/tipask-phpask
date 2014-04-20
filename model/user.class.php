@@ -406,13 +406,15 @@ class usermodel {
 
     function rownum_onlineuser() {
         $end = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60;
-        return $this->db->result_first("SELECT COUNT(DISTINCT COALESCE(ip,'unkown')) FROM " . DB_TABLEPRE . "session WHERE time>$end");
+        $query = $this->db->query("SELECT *  FROM " . DB_TABLEPRE . "session WHERE time>$end GROUP BY ip");
+        $ret =  $this->db->num_rows($query);
+        return $ret;
     }
 
     function list_online_user($start = 0, $limit = 50) {
         $onlinelist = array();
         $end = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60;  
-        $query = $this->db->query("SELECT DISTINCT s.ip ,s.uid,u.username,s.time FROM " . DB_TABLEPRE . "session AS s LEFT  JOIN " . DB_TABLEPRE . "user AS u ON u.uid=s.uid WHERE s.time>$end ORDER BY s.time DESC LIMIT $start,$limit");
+        $query = $this->db->query("SELECT s.ip,s.uid,u.username,s.time FROM " . DB_TABLEPRE . "session AS s LEFT  JOIN " . DB_TABLEPRE . "user AS u ON u.uid=s.uid WHERE s.time>$end GROUP BY s.ip ORDER BY s.time DESC LIMIT $start,$limit");
         while ($online = $this->db->fetch_array($query)) {
             $online['online_time'] = tdate($online['time']);
             $onlinelist[] = $online;

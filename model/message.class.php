@@ -138,7 +138,7 @@ class messagemodel {
             $insertsql = "INSERT INTO " . DB_TABLEPRE . "user_readlog(qid,uid) VALUES ";
             foreach ($questionlist as $question) {
                 $insertsql.= "(" . $question['id'] . ",$uid),";
-            }            
+            }
             $this->db->query(substr($insertsql, 0, -1));
         }
     }
@@ -149,7 +149,7 @@ class messagemodel {
         }
         $timestart = $this->base->time - 30 * 24 * 3600;
         $cids = implode(",", $user_categorys);
-        $sql = "SELECT COUNT(*) FROM " . DB_TABLEPRE . "question WHERE cid IN ($cids)  ";
+        $sql = "SELECT COUNT(*) FROM " . DB_TABLEPRE . "question WHERE cid IN ($cids) AND authorid<>$uid";
         ($type == 'notread') && $sql.="  AND id NOT IN (SELECT qid FROM " . DB_TABLEPRE . "user_readlog WHERE uid=$uid)";
         return $this->db->result_first($sql);
     }
@@ -161,7 +161,7 @@ class messagemodel {
         }
         $cids = implode(",", $user_categorys);
 
-        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "question WHERE cid IN ($cids) ORDER BY time DESC LIMIT $start,$limit");
+        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "question WHERE cid IN ($cids) AND authorid<>$uid ORDER BY time DESC LIMIT $start,$limit");
         while ($question = $this->db->fetch_array($query)) {
             $question['format_time'] = tdate($question['time']);
             $question['category_name'] = $this->base->category[$question['cid']]['name'];
