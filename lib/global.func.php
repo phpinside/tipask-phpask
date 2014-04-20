@@ -78,7 +78,7 @@ function random($length = 6, $type = 0) {
     return $hash;
 }
 
-function cutstr($string, $length, $dot = ' ...') {
+function cutstr($string, $length, $dot = '...') {
     if (strlen($string) <= $length) {
         return $string;
     }

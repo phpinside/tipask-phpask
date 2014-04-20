@@ -15,6 +15,7 @@ class questioncontrol extends base {
         $this->load("tag");
         $this->load("user");
         $this->load("userlog");
+        $this->load("doing");
     }
 
     /* 提交问题 */
@@ -84,6 +85,7 @@ class questioncontrol extends base {
                 $_ENV['ucenter']->ask_feed($qid, $title, $description);
             }
             $_ENV['userlog']->add('ask');
+            $_ENV['doing']->add($this->user['uid'], $this->user['username'], 1, $qid, $description);
             if (0 == $status) {
                 $this->message('问题发布成功！为了确保问答的质量，我们会对您的提问内容进行审核。请耐心等待......', 'BACK');
             } else {
@@ -233,6 +235,7 @@ class questioncontrol extends base {
         }
         $viewurl = urlmap('question/view/' . $qid, 2);
         $_ENV['userlog']->add('answer');
+        $_ENV['doing']->add($this->user['uid'], $this->user['username'],2, $qid,$content);
         if (0 == $status) {
             $this->message('提交回答成功！为了确保问答的质量，我们会对您的回答内容进行审核。请耐心等待......', 'BACK');
         } else {
@@ -517,7 +520,8 @@ class questioncontrol extends base {
             $username = addslashes($this->user['username']);
             $this->load("message");
             $viewurl = url('question/view/' . $qid, 1);
-            $_ENV['message']->add($msgfrom, 0, $question['authorid'], $username . "刚刚关注了您的问题", '<a target="_blank" href="' . url('user/space/' . $this->user['uid'], 1) . '">' . $username . '</a> 刚刚关注了您的问题'.$question['title'].'"<br /> <a href="' . $viewurl . '">点击查看</a>');
+            $_ENV['message']->add($msgfrom, 0, $question['authorid'], $username . "刚刚关注了您的问题", '<a target="_blank" href="' . url('user/space/' . $this->user['uid'], 1) . '">' . $username . '</a> 刚刚关注了您的问题' . $question['title'] . '"<br /> <a href="' . $viewurl . '">点击查看</a>');
+            $_ENV['doing']->add($this->user['uid'], $this->user['username'], 4, $qid);
         }
         exit('ok');
     }

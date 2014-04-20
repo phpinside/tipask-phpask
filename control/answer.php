@@ -10,6 +10,7 @@ class answercontrol extends base {
         $this->load('answer_comment');
         $this->load('question');
         $this->load('message');
+        $this->load('doing');
     }
 
     /* 追问模块---追问 */
@@ -29,9 +30,11 @@ class answercontrol extends base {
             $_ENV['answer']->append($answer['id'], $this->user['username'], $this->user['uid'], $this->post['content']);
             if ($answer['authorid'] == $this->user['uid']) {//继续回答
                 $_ENV['message']->add($this->user['username'], $this->user['uid'], $question['authorid'], $this->user['username'] . '继续回答了您的问题:' . $question['title'], $this->post['content'] . '<br /> <a href="' . url('question/view/' . $qid, 1) . '">点击查看</a>');
+                $_ENV['doing']->add($this->user['uid'], $this->user['username'], 7, $qid, $this->post['content']);
                 $this->message('继续回答成功!', $viewurl);
             } else {//继续追问
                 $_ENV['message']->add($this->user['username'], $this->user['uid'], $answer['authorid'], $this->user['username'] . '对您的回答进行了追问', $this->post['content'] . '<br /> <a href="' . url('question/view/' . $qid, 1) . '">点击查看问题</a>');
+                $_ENV['doing']->add($this->user['uid'], $this->user['username'], 6, $qid, $this->post['content'],$answer['id'],$answer['authorid'],$answer['content']);
                 $this->message('继续提问成功!', $viewurl);
             }
         }
@@ -65,12 +68,13 @@ class answercontrol extends base {
             $replyauthorid = intval($this->post['replyauthor']);
             $answer = $_ENV['answer']->get($answerid);
             $_ENV['answer_comment']->add($answerid, $content, $this->user['uid'], $this->user['username']);
-            if ($answer['authorid'] != $this->user['uid']){
+            if ($answer['authorid'] != $this->user['uid']) {
                 $_ENV['message']->add($this->user['username'], $this->user['uid'], $answer['authorid'], '您的回答有了新评论', '您对于问题 "' . $answer['title'] . '" 的回答 "' . $answer['content'] . '" 有了新评论 "' . $content . '"<br /> <a href="' . url('question/view/' . $answer['qid'], 1) . '">点击查看</a>');
             }
-            if ($replyauthorid && $this->user['uid']!=$replyauthorid) {
-                $_ENV['message']->add($this->user['username'], $this->user['uid'],$replyauthorid, '您的评论有了新回复', '您对于问题 "' . $answer['title'] . '" 的评论有了新回复"' . $content . '"<br /> <a href="' . url('question/view/' . $answer['qid'], 1) . '">点击查看</a>');
+            if ($replyauthorid && $this->user['uid'] != $replyauthorid) {
+                $_ENV['message']->add($this->user['username'], $this->user['uid'], $replyauthorid, '您的评论有了新回复', '您对于问题 "' . $answer['title'] . '" 的评论有了新回复"' . $content . '"<br /> <a href="' . url('question/view/' . $answer['qid'], 1) . '">点击查看</a>');
             }
+            $_ENV['doing']->add($this->user['uid'], $this->user['username'], 3, $answer['qid'], $content, $answer['id'], $answer['authorid'], $answer['content']);
             exit('1');
         }
     }
@@ -87,6 +91,9 @@ class answercontrol extends base {
     function onajaxgetsupport() {
         $answerid = intval($this->get[2]);
         $answer = $_ENV['answer']->get($answerid);
+        if ($this->user['uid']) {
+            $_ENV['doing']->add($this->user['uid'], $this->user['username'], 5, $answer['qid'], '', $answer['id'],$answer['authorid'], $answer['content']);
+        }
         exit($answer['supports']);
     }
 

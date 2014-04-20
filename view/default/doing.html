@@ -5,97 +5,48 @@
             <div class="title">最新动态</div>
             <div id="qa-tabcard" style="width:690px;">
                 <ul>
+                    <!--{if $type=='all'}-->
                     <li class="on">全站动态</li>
-                    <li><a href="{url question/search/$word/2}">关注的动态</a></li>
-                    <li><a href="{url question/search/$word/2}">我的动态</a></li>
+                    <li><a href="{url doing/default/atentto}">关注的动态</a></li>
+                    <li><a href="{url doing/default/my}">我的动态</a></li>
+                    <!--{elseif $type=='atentto'}-->
+                    <li><a href="{url doing/default/all}">全站动态</a></li>
+                    <li class="on">关注的动态</li>
+                    <li><a href="{url doing/default/my}">我的动态</a></li>
+                    <!--{elseif $type=='my'}-->
+                    <li><a href="{url doing/default/all}">全站动态</a></li>
+                    <li><a href="{url doing/default/atentto}">关注的动态</a></li>
+                    <li class='on'>我的动态</li>
+                    <!--{/if}-->
                 </ul>
             </div>
             <ul class="q-tabmod mt10">
-
-                <li id="msg6181">
+                <!--{loop $doinglist $doing}-->
+                <li>
                     <div class="avatar">
-                        <a class="pic" target="_blank" title="supermustang" href="http://localhost/tipask-phpask/u-36.html"><img src="http://localhost/tipask-phpask/css/default/avatar.gif" alt="自由的风"></a>
+                        <a class="pic" target="_blank" title="{$doing['author']}" href="{url user/space/$doing['authorid']}"><img src="{$doing['avatar']}" alt="{$doing['author']}" onmouseover="pop_user_on(this, '{$doing[authorid]}', 'img');"  onmouseout="pop_user_out();" /></a>
                     </div>
                     <div class="msgcontent">
                         <div class="source">
-                            <a title="陈皓宇" class="zg-link" target="_blank" href="http://www.zhihu.com/people/chen-hao-yu" data-tip="p$t$chen-hao-yu">陈皓宇</a> 回答了该问题<span data-timestamp="1397705924000" class="time">8 小时前</span>
+                            <a title="陈皓宇"  target="_blank" href="{url user/space/$doing['authorid']}">{$doing['author']}</a> {$doing['actiondesc']}<span class="time">{$doing['doing_time']}</span>
                         </div>
-                        <div class="title"><a href="#">在爱情面前你能卑微到什么程度?</a></div>
-                        <div class="detail"><p>难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么</p></div>
+                        <div class="title"><a href="{url question/view/$doing['questionid']}" target="_blank">{$doing['title']}?</a></div>
+                        <div class="detail"><p>{eval echo cutstr($doing['content'],500)}</p></div>
                         <div class="related">
-                            <div class="pv">2 人关注 <span class="dot">•</span> 1 个回答 <span class="dot">•</span> 20 次浏览 <span class="dot">•</span>发表于 2 分钟前 </div>
+                            <div class="pv">{$doing['attentions']} 人关注 <span class="dot">•</span> {$doing['answers']} 个回答 <span class="dot">•</span> {$doing['views']} 次浏览 <span class="dot">•</span>发表于 {$doing['question_time']} </div>
                         </div>
-                    </div>
-                    <div class="clr"></div>
-                </li>
-                <li id="msg6181">
-                    <div class="avatar">
-                        <a class="pic" target="_blank" title="supermustang" href="http://localhost/tipask-phpask/u-36.html"><img src="http://localhost/tipask-phpask/css/default/avatar.gif" alt="自由的风"></a>
-                    </div>
-                    <div class="msgcontent">
-                        <div class="source">
-                            <a title="陈皓宇" class="zg-link" target="_blank" href="http://www.zhihu.com/people/chen-hao-yu" data-tip="p$t$chen-hao-yu">陈皓宇</a> 回答了该问题<span data-timestamp="1397705924000" class="time">8 小时前</span>
-                        </div>
-                        <div class="title"><a href="#">在爱情面前你能卑微到什么程度?</a></div>
-                        <div class="detail"><p>难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么</p></div>
-                        <div class="related">
-                            <div class="pv">2 人关注 <span class="dot">•</span> 1 个回答 <span class="dot">•</span> 20 次浏览 <span class="dot">•</span> 发表于 2 分钟前</div>
-                        </div>
-                    </div>
-                    <div class="clr"></div>
-                </li>
-                <li id="msg6181">
-                    <div class="avatar">
-                        <a class="pic" target="_blank" title="supermustang" href="http://localhost/tipask-phpask/u-36.html"><img src="http://localhost/tipask-phpask/css/default/avatar.gif" alt="自由的风"></a>
-                    </div>
-                    <div class="msgcontent">
-                        <div class="source">
-                            <a title="陈皓宇" class="zg-link" target="_blank" href="http://www.zhihu.com/people/chen-hao-yu" data-tip="p$t$chen-hao-yu">陈皓宇</a> 关注该问题<span class="time">8 小时前</span>
-                        </div>
-                        <div class="title"><a href="#">如何在中国的足球圈内求职谋生？</a></div>
-                        <div class="related">
-                            <div class="pv">2 人关注 <span class="dot">•</span> 1 个回答 <span class="dot">•</span> 20 次浏览 <span class="dot">•</span> 发表于 2 分钟前</div>
-                        </div>
-                    </div>
-                    <div class="clr"></div>
-                </li>
-                <li id="msg6181">
-                    <div class="avatar">
-                        <a class="pic" target="_blank" title="supermustang" href="http://localhost/tipask-phpask/u-36.html"><img src="http://localhost/tipask-phpask/css/default/avatar.gif" alt="自由的风"></a>
-                    </div>
-                    <div class="msgcontent">
-                        <div class="source">
-                            <a title="陈皓宇" class="zg-link" target="_blank" href="http://www.zhihu.com/people/chen-hao-yu" data-tip="p$t$chen-hao-yu">陈皓宇</a> 赞同该回答<span data-timestamp="1397705924000" class="time">8 小时前</span>
-                        </div>
-                        <div class="title"><a href="#">在爱情面前你能卑微到什么程度?</a></div>
-                        <div class="detail"><p>难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么 <a href="#">查看全部</a></p></div>
-                        <div class="related">
-                            <div class="pv">2 人关注 <span class="dot">•</span> 1 个回答 <span class="dot">•</span> 20 次浏览 <span class="dot">•</span> 发表于 2 分钟前</div>
-                        </div>
-                    </div>
-                    <div class="clr"></div>
-                </li>
-                <li id="msg6181">
-                    <div class="avatar">
-                        <a class="pic" target="_blank" title="supermustang" href="http://localhost/tipask-phpask/u-36.html"><img src="http://localhost/tipask-phpask/css/default/avatar.gif" alt="自由的风"></a>
-                    </div>
-                    <div class="msgcontent">
-                        <div class="source">
-                            <a title="陈皓宇" class="zg-link" target="_blank" href="http://www.zhihu.com/people/chen-hao-yu" data-tip="p$t$chen-hao-yu">陈皓宇</a> 赞同该回答<span data-timestamp="1397705924000" class="time">8 小时前</span>
-                        </div>
-                        <div class="title"><a href="#">在爱情面前你能卑微到什么程度?</a></div>
-                        <div class="related">
-                            <div class="pv">2 人关注 <span class="dot">•</span> 1 个回答 <span class="dot">•</span> 20 次浏览 <span class="dot">•</span> 发表于 2 分钟前</div>
-                        </div>
+                        <!--{if $doing['referid']}-->
                         <div class="quote">
                             <div class="avatar">
-                                <a href="http://localhost/tipask-phpask/u-36.html" title="supermustang" target="_blank" class="pic"><img alt="自由的风" src="http://localhost/tipask-phpask/css/default/avatar.gif"></a>
+                                <a href="{url user/space/$doing['refer_authorid']}"  target="_blank" class="pic"><img alt="自由的风" src="{$doing['refer_avatar']}" onmouseover="pop_user_on(this, '{$doing['refer_authorid']}', 'img');"  onmouseout="pop_user_out();" /></a>
                             </div>
-                            <div class="detail"><p>难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么难道我说的还不够清楚么</p></div>
+                            <div class="detail"><p>{eval echo cutstr($doing['refer_content'],200)}</p></div>
                         </div>
+                        <!--{/if}-->
                     </div>
                     <div class="clr"></div>
                 </li>
+                <!--{/loop}-->
             </ul>
         </div>	
         <div class="pages">{$departstr}</div>	
@@ -103,13 +54,22 @@
 
     <div class="aside-right">
         <div class="modbox mt10">
-            <div class="title">专家最新解答</div>
-            <ul class="list">
-                <!--{loop $questionlist $question}-->
-                <li><a title="{$question['title']}" target="_blank" href="{url question/view/$question['qid']}">{eval echo cutstr($question['title'],30,'');}</a></li>
+            <div class="title">一周热点问题</div>
+            <ul class="right-list">
+                <!--{eval $attentionlist=$this->fromcache('attentionlist');}-->
+                <!--{loop $attentionlist $index $question}-->
+                <!--{eval $index++;}-->
+                <li>
+                    <!--{if $index<4}-->
+                    <em class="n1">{$index}</em>
+                    <!--{else}-->
+                    <em class="n2">{$index}</em>
+                    <!--{/if}-->
+                    <a  title="{$question['title']}" target="_blank" href="{url question/view/$question['id']}">{eval echo cutstr($question['title'],40,'');}</a>
+                </li>
                 <!--{/loop}-->
             </ul>
-        </div>	
+        </div>
     </div>
 </div>
 <!--{template footer}-->

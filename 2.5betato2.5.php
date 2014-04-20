@@ -60,6 +60,25 @@ CREATE TABLE ask_user_readlog (
   PRIMARY KEY (`uid`,`qid`)
 ) ENGINE=MyISAM;
 EOT;
+
+DROP TABLE IF EXISTS ask_doing;
+CREATE TABLE ask_doing (
+  `doingid` bigint(20) NOT NULL AUTO_INCREMENT,
+  `authorid` int(10) NOT NULL,
+  `author` varchar(20) NOT NULL,
+  `action` tinyint(1) NOT NULL,
+  `questionid` int(10) NOT NULL,
+  `content` text,
+  `referid` int(10) NOT NULL DEFAULT '0',
+  `refer_authorid` int(10) NOT NULL DEFAULT '0',
+  `refer_content` tinytext,
+  `createtime` int(10) NOT NULL,
+  PRIMARY KEY (`doingid`),
+  KEY `authorid` (`authorid`,`author`),
+  KEY `sourceid` (`questionid`),
+  KEY `createtime` (`createtime`),
+  KEY `referid` (`referid`)
+) ENGINE=MyISAM;
 $extend = <<<EOT
 ALTER TABLE ask_answer DROP tag;
 EOT;
