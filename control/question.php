@@ -110,7 +110,7 @@ class questioncontrol extends base {
         $this->setting['stopcopy_on'] && $_ENV['question']->stopcopy(); //是否开启了防采集功能
         $qid = intval($this->get[2]); //接收qid参数
         $_ENV['question']->add_views($qid); //更新问题浏览次数
-        $question = taddslashes($_ENV['question']->get($qid), 1);
+        $question = $_ENV['question']->get($qid);
         empty($question) && $this->message('问题已经被删除！');
         (0 == $question['status']) && $this->message('问题正在审核中,请耐心等待！');
         /* 问题过期处理 */
@@ -235,7 +235,7 @@ class questioncontrol extends base {
         }
         $viewurl = urlmap('question/view/' . $qid, 2);
         $_ENV['userlog']->add('answer');
-        $_ENV['doing']->add($this->user['uid'], $this->user['username'],2, $qid,$content);
+        $_ENV['doing']->add($this->user['uid'], $this->user['username'], 2, $qid, $content);
         if (0 == $status) {
             $this->message('提交回答成功！为了确保问答的质量，我们会对您的回答内容进行审核。请耐心等待......', 'BACK');
         } else {
@@ -255,10 +255,10 @@ class questioncontrol extends base {
         if ($ret) {
             $this->load("answer_comment");
             $_ENV['answer_comment']->add($aid, $comment, $question['authorid'], $question['author']);
-            //把问题的悬赏送给被采纳为答案的回答者,同时发消息通知回答者
             $this->credit($answer['authorid'], $this->setting['credit1_adopt'], intval($question['price'] + $this->setting['credit2_adopt']), 0, 'adopt');
             $this->send($answer['authorid'], $question['id'], 1);
             $viewurl = urlmap('question/view/' . $qid, 2);
+            $_ENV['doing']->add($question['authorid'],$question['author'],8, $qid,$comment,$answer['id'],$answer['authorid'],$answer['content']);
         }
 
         $this->message('采纳答案成功！', $viewurl);
@@ -274,7 +274,6 @@ class questioncontrol extends base {
     }
 
     /* 补充提问细节 */
-
     function onsupply() {
         $qid = $this->get[2] ? $this->get[2] : $this->post['qid'];
         $question = $_ENV['question']->get($qid);

@@ -13,7 +13,8 @@ class doingmodel {
         '4' => '关注了该问题',
         '5' => '赞同了该回答',
         '6' => '对该回答进行了追问',
-        '7' => '继续回答了该问题'
+        '7' => '继续回答了该问题',
+        '8'=>'采纳了回答'
     );
 
     function doingmodel(&$base) {
@@ -29,7 +30,7 @@ class doingmodel {
 
     function list_by_type($searchtype = 'all', $start = 0, $limit = 20) {
         $doinglist = array();
-        $sql = "SELECT q.title,q.attentions,q.answers,q.views,q.time,d.* FROM " . DB_TABLEPRE . "doing AS d," . DB_TABLEPRE . "question AS q WHERE q.id=d.questionid";
+        $sql = "SELECT q.title,q.attentions,q.answers,q.views,q.time,q.hidden,d.* FROM " . DB_TABLEPRE . "doing AS d," . DB_TABLEPRE . "question AS q WHERE q.id=d.questionid";
         ($searchtype == 'my') && $sql .= " AND d.authorid=" . $this->base->user['uid'];
         ($searchtype == 'atentto') && $sql .=" AND q.id IN (SELECT qid FROM " . DB_TABLEPRE . "question_attention WHERE followerid=" . $this->base->user['uid'] . ")";
         $sql .=" ORDER BY d.createtime DESC LIMIT $start,$limit";
