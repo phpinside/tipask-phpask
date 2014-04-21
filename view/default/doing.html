@@ -20,11 +20,11 @@
                     <li><a href="{url doing/default/my}">我的动态</a></li>
                     <!--{/if}-->
                     <!--{elseif $type=='atentto'}-->
-                    <li><a href="{url doing/default/all}">全站动态</a></li>
+                    <li><a href="{url doing/default}">全站动态</a></li>
                     <li class="on">关注的动态</li>
                     <li><a href="{url doing/default/my}">我的动态</a></li>
                     <!--{elseif $type=='my'}-->
-                    <li><a href="{url doing/default/all}">全站动态</a></li>
+                    <li><a href="{url doing/default}">全站动态</a></li>
                     <li><a href="{url doing/default/atentto}">关注的动态</a></li>
                     <li class='on'>我的动态</li>
                     <!--{/if}-->
@@ -63,6 +63,31 @@
     </div>
 
     <div class="aside-right">
+        <div class="modbox mt10">
+            <div class="title">热门用户</div>
+            <ul class="left-expert-list">
+                <!--{eval $activeuserlist=$this->fromcache('activeuser');}-->
+                <!--{loop $activeuserlist $index $activeuser}-->
+                <!--{eval $index++;}-->
+                <li>
+                    <div class="pic"><a title="{$activeuser['username']}" target="_blank" href="{url user/space/$activeuser['uid']}"><img width="50" height="50" alt="{$activeuser['username']}" src="{$activeuser['avatar']}"  onmouseover="pop_user_on(this, '{$activeuser[uid]}', '');"  onmouseout="pop_user_out();"/></a></div>
+                    <h3><a title="{$activeuser['username']}" target="_blank" href="{url user/space/$activeuser['uid']}" onmouseover="pop_user_on(this, '{$activeuser[uid]}', 'text');"  onmouseout="pop_user_out();">{$activeuser['username']}</a></h3>
+                    <span>{$activeuser['answers']}回答</span>
+                    <span>{$activeuser['supports']}赞同</span>
+                    <p><a href="{url question/add/$activeuser['uid']}" class="invite">向TA求助</a></p>
+                </li>
+                <!--{/loop}-->
+            </ul>
+        </div>
+        <div class="modbox mt10">
+            <h3 class="title">热门标签</h3>
+            <div class="hot-tags">
+                <!--{eval $taglist=$this->fromcache('hosttaglist');}-->
+                <!--{loop $taglist $tag}-->
+                <a target="_blank" title="$tag['name']" href="{url question/search/tag:$tag['name']}">{$tag['name']}</a>
+                <!--{/loop}-->
+            </div>
+        </div>
         <div class="modbox mt10">
             <div class="title">一周热点问题</div>
             <ul class="right-list">

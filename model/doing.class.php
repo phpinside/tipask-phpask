@@ -31,7 +31,7 @@ class doingmodel {
         $doinglist = array();
         $sql = "SELECT q.title,q.attentions,q.answers,q.views,q.time,d.* FROM " . DB_TABLEPRE . "doing AS d," . DB_TABLEPRE . "question AS q WHERE q.id=d.questionid";
         ($searchtype == 'my') && $sql .= " AND d.authorid=" . $this->base->user['uid'];
-        ($searchtype == 'attentto') && $sql .=" AND q.id IN (SELECT qid FROM " . DB_TABLEPRE . "question_attention WHERE followerid=" . $this->base->user['uid'] . ")";
+        ($searchtype == 'atentto') && $sql .=" AND q.id IN (SELECT qid FROM " . DB_TABLEPRE . "question_attention WHERE followerid=" . $this->base->user['uid'] . ")";
         $sql .=" ORDER BY d.createtime DESC LIMIT $start,$limit";
         $query = $this->db->query($sql);
         while ($doing = $this->db->fetch_array($query)) {

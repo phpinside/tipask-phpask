@@ -322,8 +322,8 @@ th{font-style: normal;font-weight: 400;}
 .last {padding-bottom:12px;}
 .right-list li{ position:relative; padding:0 0 0 26px; height:28px; line-height:28px; overflow:hidden;}
 .right-list em{ position:absolute; top:6px; left:0; display:block; width:16px; height:16px; font-size:10px; line-height:16px; text-align:center;-webkit-text-size-adjust:none;}
-.right-list .n1,.left-expert-list .n1{ background:#FF9900; color:#fff;}
-.right-list .n2,.left-expert-list .n2{ background:#e5e5e5; color:#666;}
+.right-list .n1{ background:#FF9900; color:#fff;}
+.right-list .n2{ background:#e5e5e5; color:#666;}
 .right-list .credit{float: right;color:#FF8100;margin-right: 5px;}
 
 /*问题关注*/

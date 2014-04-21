@@ -16,7 +16,7 @@ class doingcontrol extends base {
             $type = $recivetype;
         }
         $page = max(1, intval($this->get[3]));
-        $pagesize = 3;
+        $pagesize = $this->setting['list_default'];
         $startindex = ($page - 1) * $pagesize;
         $doinglist = $_ENV['doing']->list_by_type($type,$startindex,$pagesize);
         $rownum = $_ENV['doing']->rownum_by_type($type);
