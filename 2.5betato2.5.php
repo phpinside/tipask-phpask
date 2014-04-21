@@ -59,8 +59,7 @@ CREATE TABLE ask_user_readlog (
   `qid` int(10) NOT NULL,
   PRIMARY KEY (`uid`,`qid`)
 ) ENGINE=MyISAM;
-EOT;
-
+        
 DROP TABLE IF EXISTS ask_doing;
 CREATE TABLE ask_doing (
   `doingid` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -78,7 +77,9 @@ CREATE TABLE ask_doing (
   KEY `sourceid` (`questionid`),
   KEY `createtime` (`createtime`),
   KEY `referid` (`referid`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM;        
+EOT;
+
 $extend = <<<EOT
 ALTER TABLE ask_answer DROP tag;
 EOT;

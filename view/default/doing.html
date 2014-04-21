@@ -2,13 +2,23 @@
 <div class="wrapper clearfix">
     <div class="content-left">
         <div class="my-answerbox mt10">
-            <div class="title">最新动态</div>
+            <div class="title">
+                <!--{if $type=='all'}-->
+                全站最新动态
+                <!--{elseif $type=='atentto'}-->
+                我关注的动态
+                <!--{elseif $type=='my'}-->
+                我的动态
+                <!--{/if}-->
+            </div>
             <div id="qa-tabcard" style="width:690px;">
                 <ul>
                     <!--{if $type=='all'}-->
                     <li class="on">全站动态</li>
+                    <!--{if $this->user['uid']}-->
                     <li><a href="{url doing/default/atentto}">关注的动态</a></li>
                     <li><a href="{url doing/default/my}">我的动态</a></li>
+                    <!--{/if}-->
                     <!--{elseif $type=='atentto'}-->
                     <li><a href="{url doing/default/all}">全站动态</a></li>
                     <li class="on">关注的动态</li>

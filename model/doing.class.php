@@ -30,8 +30,8 @@ class doingmodel {
     function list_by_type($searchtype = 'all', $start = 0, $limit = 20) {
         $doinglist = array();
         $sql = "SELECT q.title,q.attentions,q.answers,q.views,q.time,d.* FROM " . DB_TABLEPRE . "doing AS d," . DB_TABLEPRE . "question AS q WHERE q.id=d.questionid";
-        ($type == 'my') && $sql .= " AND d.authorid=" . $this->base->user['uid'];
-        ($type == 'attentto') && $sql .=" AND q.id IN (SELECT qid FROM " . DB_TABLEPRE . "question_attention WHERE followerid=" . $this->base->user['uid'] . ")";
+        ($searchtype == 'my') && $sql .= " AND d.authorid=" . $this->base->user['uid'];
+        ($searchtype == 'attentto') && $sql .=" AND q.id IN (SELECT qid FROM " . DB_TABLEPRE . "question_attention WHERE followerid=" . $this->base->user['uid'] . ")";
         $sql .=" ORDER BY d.createtime DESC LIMIT $start,$limit";
         $query = $this->db->query($sql);
         while ($doing = $this->db->fetch_array($query)) {
@@ -49,8 +49,8 @@ class doingmodel {
 
     function rownum_by_type($searchtype = 'all') {
         $sql = "SELECT count(d.questionid) FROM " . DB_TABLEPRE . "doing AS d," . DB_TABLEPRE . "question AS q WHERE q.id=d.questionid";
-        ($type == 'my') && $sql .= " AND d.authorid=" . $this->base->user['uid'];
-        ($type == 'atentto') && $sql .=" AND q.id IN (SELECT qid FROM " . DB_TABLEPRE . "question_attention WHERE followerid=" . $this->base->user['uid'] . ")";        
+        ($searchtype == 'my') && $sql .= " AND d.authorid=" . $this->base->user['uid'];
+        ($searchtype == 'atentto') && $sql .=" AND q.id IN (SELECT qid FROM " . DB_TABLEPRE . "question_attention WHERE followerid=" . $this->base->user['uid'] . ")";        
         return $this->db->result_first($sql);
     }
 

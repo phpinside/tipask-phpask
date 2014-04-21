@@ -15,7 +15,6 @@ class doingcontrol extends base {
         if($recivetype){
             $type = $recivetype;
         }
-        echo $type;
         $page = max(1, intval($this->get[3]));
         $pagesize = 3;
         $startindex = ($page - 1) * $pagesize;

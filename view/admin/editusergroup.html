@@ -101,6 +101,9 @@
                     <input name="regular_code[]" value="question/answer"  {if false!==strpos($group['regulars'],'question/answer')}checked{/if}  class="checkbox" type="checkbox">回答问题
                 </div>
                 <div style="width: 200px; float: left;">
+                    <input name="regular_code[]" value="doing/default"  {if false!==strpos($group['regulars'],'doing/default')}checked{/if}  class="checkbox" type="checkbox">动态
+                </div>
+                <div style="width: 200px; float: left;">
                     <input name="regular_code[]" value="user/space_ask,user/space_answer,user/space"  {if false!==strpos($group['regulars'],'user/space_ask,user/space_answer,user/space')}checked{/if}  class="checkbox" type="checkbox">用户空间
                 </div>
                 <!--{if 3!=$group['grouptype']}-->
