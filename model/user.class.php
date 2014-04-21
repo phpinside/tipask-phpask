@@ -413,7 +413,7 @@ class usermodel {
 
     function list_online_user($start = 0, $limit = 50) {
         $onlinelist = array();
-        $end = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60;  
+        $end = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60; 
         $query = $this->db->query("SELECT s.ip,s.uid,u.username,s.time FROM " . DB_TABLEPRE . "session AS s LEFT  JOIN " . DB_TABLEPRE . "user AS u ON u.uid=s.uid WHERE s.time>$end GROUP BY s.ip ORDER BY s.time DESC LIMIT $start,$limit");
         while ($online = $this->db->fetch_array($query)) {
             $online['online_time'] = tdate($online['time']);
