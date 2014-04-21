@@ -52,6 +52,9 @@
                     <!--{/loop}-->
                 </ul>
             </div>
+            <!--{if $question['authorid']!=$user['uid']}-->
+            <div class="score_tip">回答该问题即可获得 <b>{$setting['credit1_answer']}</b> 经验值{if $setting['credit2_answer']}，<b>{$setting['credit2_answer']}</b> 财富值{/if}，问题被采纳即可获得 <b>{$setting['credit1_answer']}</b> 经验值{if $setting['credit2_answer'] || $question['price']}，<b>{eval echo ($setting['credit2_answer']+$question['price'])}</b> 财富值{/if}！</div>
+            <!--{/if}-->
             <!--{if 0!=$question['authorid'] && ($question['authorid']==$user['uid'])}-->
             <div class="managebox mt10">
                 <h3>处理问题：</h3>
