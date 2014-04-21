@@ -34,7 +34,7 @@ class answercontrol extends base {
                 $this->message('继续回答成功!', $viewurl);
             } else {//继续追问
                 $_ENV['message']->add($this->user['username'], $this->user['uid'], $answer['authorid'], $this->user['username'] . '对您的回答进行了追问', $this->post['content'] . '<br /> <a href="' . url('question/view/' . $qid, 1) . '">点击查看问题</a>');
-                $_ENV['doing']->add($this->user['uid'], $this->user['username'], 6, $qid, $this->post['content'],$answer['id'],$answer['authorid'],$answer['content']);
+                $_ENV['doing']->add($this->user['uid'], $this->user['username'], 6, $qid, $this->post['content'], $answer['id'], $answer['authorid'], $answer['content']);
                 $this->message('继续提问成功!', $viewurl);
             }
         }
@@ -91,9 +91,6 @@ class answercontrol extends base {
     function onajaxgetsupport() {
         $answerid = intval($this->get[2]);
         $answer = $_ENV['answer']->get($answerid);
-        if ($this->user['uid']) {
-            $_ENV['doing']->add($this->user['uid'], $this->user['username'], 5, $answer['qid'], '', $answer['id'],$answer['authorid'], $answer['content']);
-        }
         exit($answer['supports']);
     }
 
@@ -109,6 +106,9 @@ class answercontrol extends base {
         $answer = $_ENV['answer']->get($answerid);
         $_ENV['answer']->add_support($this->user['sid'], $answerid, $answer['authorid']);
         $answer = $_ENV['answer']->get($answerid);
+        if ($this->user['uid']) {
+            $_ENV['doing']->add($this->user['uid'], $this->user['username'], 5, $answer['qid'], '', $answer['id'], $answer['authorid'], $answer['content']);
+        }
         exit($answer['supports']);
     }
 
