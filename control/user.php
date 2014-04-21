@@ -260,7 +260,7 @@ class usercontrol extends base {
     function onspace_ask() {
         $navtitle = 'TA的提问';
         $uid = intval($this->get[2]);
-        $member = $_ENV['user']->get_by_uid($uid,0);
+        $member = $_ENV['user']->get_by_uid($uid, 0);
         $status = $this->get[3] ? $this->get[3] : 1;
         //升级进度
         $membergroup = $this->usergroup[$member['groupid']];
@@ -289,7 +289,7 @@ class usercontrol extends base {
         $navtitle = 'TA的回答';
         $uid = intval($this->get[2]);
         $status = $this->get[3] ? $this->get[3] : 'all';
-        $member = $_ENV['user']->get_by_uid($uid,0);
+        $member = $_ENV['user']->get_by_uid($uid, 0);
         //升级进度
         $membergroup = $this->usergroup[$member['groupid']];
         @$page = max(1, intval($this->get[4]));
@@ -441,11 +441,17 @@ class usercontrol extends base {
     function onspace() {
         $navtitle = "个人空间";
         $userid = intval($this->get[2]);
-        $member = $_ENV['user']->get_by_uid($userid,2);
+        $member = $_ENV['user']->get_by_uid($userid, 2);
         if ($member) {
+            $this->load('doing');
             $membergroup = $this->usergroup[$member['groupid']];
             $adoptpercent = $_ENV['user']->adoptpercent($member);
-            $answerlist = $_ENV['answer']->list_by_uid($member['uid'], 'all', 0, 6);
+            $page = max(1, intval($this->get[3]));
+            $pagesize = 8;
+            $startindex = ($page - 1) * $pagesize;
+            $doinglist = $_ENV['doing']->list_by_type("my", $userid, $startindex, $pagesize);
+            $rownum = $_ENV['doing']->rownum_by_type("my",$userid);
+            $departstr = page($rownum, $pagesize, $page, "user/space/$userid");
             $navtitle = $member['username'] . $navtitle;
             include template('space');
         } else {
@@ -553,7 +559,7 @@ class usercontrol extends base {
     function onajaxuserinfo() {
         $uid = intval($this->get[2]);
         if ($uid) {
-            $userinfo = $_ENV['user']->get_by_uid($uid,1);
+            $userinfo = $_ENV['user']->get_by_uid($uid, 1);
             $is_followed = $_ENV['user']->is_followed($userinfo['uid'], $this->user['uid']);
             $userinfo_group = $this->usergroup[$userinfo['groupid']];
             include template("usercard");

@@ -15,20 +15,18 @@
             <div id="qa-tabcard" style="width:690px;">
                 <ul>
                     <!--{if $type=='atentto'}-->
-                    <!--{if $this->user['uid']}-->
                     <li class="on">关注的动态</li>
                     <li><a href="{url doing/default/my}">我的动态</a></li>
                     <li><a href="{url doing/default/all}">全站动态</a></li>
-                    <!--{else}-->
-                    <li class="on">全站动态</li>
-                    <!--{/if}-->
                     <!--{elseif $type=='my'}-->
                     <li><a href="{url doing/default}">关注的动态</a></li>
                     <li class="on">我的动态</li>
                     <li><a href="{url doing/default/all}">全站动态</a></li>
                     <!--{elseif $type=='all'}-->
+                    <!--{if $this->user['uid']}-->
                     <li><a href="{url doing/default}">关注的动态</a></li>
                     <li><a href="{url doing/default/my}">我的动态</a></li>
+                    <!--{/if}-->
                     <li class='on'>全站动态</li>
                     <!--{/if}-->
                 </ul>
@@ -44,12 +42,8 @@
                         <!--{/if}-->
                     </div>
                     <div class="msgcontent">
-                        <div class="source">
-                            <!--{if $doing['hidden'] && in_array($doing['action'],array(1,8))}-->
-                            匿名
-                            <!--{else}-->
+                        <div class="source"> 
                             <a title="{$doing['author']}"  target="_blank" href="{url user/space/$doing['authorid']}">{$doing['author']}</a> 
-                            <!--{/if}-->                            
                             {$doing['actiondesc']}<span class="time">{$doing['doing_time']}</span>
                         </div>
                         <div class="title"><a href="{url question/view/$doing['questionid']}" target="_blank">{$doing['title']}?</a></div>

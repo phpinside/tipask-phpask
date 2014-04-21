@@ -28,11 +28,11 @@ class doingmodel {
         $this->db->query("INSERT INTO " . DB_TABLEPRE . "doing(doingid,authorid,author,action,questionid,content,referid,refer_authorid,refer_content,createtime) VALUES (NULL,$authorid,'$author',$action,$qid,'$content',$referid,$refer_authorid,'$refer_content',{$this->base->time})");
     }
 
-    function list_by_type($searchtype = 'all', $start = 0, $limit = 20) {
+    function list_by_type($searchtype = 'all',$uid=0, $start = 0, $limit = 20) {
         $doinglist = array();
         $sql = "SELECT q.title,q.attentions,q.answers,q.views,q.time,q.hidden,d.* FROM " . DB_TABLEPRE . "doing AS d," . DB_TABLEPRE . "question AS q WHERE q.id=d.questionid";
-        ($searchtype == 'my') && $sql .= " AND d.authorid=" . $this->base->user['uid'];
-        ($searchtype == 'atentto') && $sql .=" AND q.id IN (SELECT qid FROM " . DB_TABLEPRE . "question_attention WHERE followerid=" . $this->base->user['uid'] . ")";
+        ($searchtype == 'my') && $sql .= " AND d.authorid=$uid";
+        ($searchtype == 'atentto') && $sql .=" AND q.id IN (SELECT qid FROM " . DB_TABLEPRE . "question_attention WHERE followerid=$uid)";
         $sql .=" ORDER BY d.createtime DESC LIMIT $start,$limit";
         $query = $this->db->query($sql);
         while ($doing = $this->db->fetch_array($query)) {
@@ -48,10 +48,10 @@ class doingmodel {
         return $doinglist;
     }
 
-    function rownum_by_type($searchtype = 'all') {
+    function rownum_by_type($searchtype = 'all',$uid=0) {
         $sql = "SELECT count(d.questionid) FROM " . DB_TABLEPRE . "doing AS d," . DB_TABLEPRE . "question AS q WHERE q.id=d.questionid";
-        ($searchtype == 'my') && $sql .= " AND d.authorid=" . $this->base->user['uid'];
-        ($searchtype == 'atentto') && $sql .=" AND q.id IN (SELECT qid FROM " . DB_TABLEPRE . "question_attention WHERE followerid=" . $this->base->user['uid'] . ")";        
+        ($searchtype == 'my') && $sql .= " AND d.authorid=$uid";
+        ($searchtype == 'atentto') && $sql .=" AND q.id IN (SELECT qid FROM " . DB_TABLEPRE . "question_attention WHERE followerid=$uid)";        
         return $this->db->result_first($sql);
     }
 
