@@ -157,6 +157,7 @@ class questionmodel {
     function remove($qids) {
         $this->db->query("DELETE FROM `" . DB_TABLEPRE . "question` WHERE `id` IN ($qids)");
         $this->db->query("DELETE FROM `" . DB_TABLEPRE . "question_tag` WHERE `qid` IN ($qids)");
+        $this->db->query("DELETE FROM `" . DB_TABLEPRE . "doing` WHERE `questionid` IN ($qids)");
         $this->remove_supply_by_qid($qids);
         $this->db->query("DELETE FROM `" . DB_TABLEPRE . "answer_comment ` WHERE `aid` IN (SELECT id FROM " . DB_TABLEPRE . "answer WHERE `qid` IN($qids))");
         $this->db->query("DELETE FROM `" . DB_TABLEPRE . "answer_support ` WHERE `aid` IN (SELECT id FROM " . DB_TABLEPRE . "answer WHERE `qid` IN($qids))");
