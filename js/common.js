@@ -147,27 +147,25 @@ function check_code() {
 }
 //usercard弹出层
 function pop_user_on(popobj, uid, type) {
-    $("#usercard").load(g_site_url + "index.php" + query + "user/ajaxuserinfo/" + uid, {}, function() {
-        var myalign = "left-27 bottom-30";
-        if (type == 'text') {
-            myalign = "left-21 bottom-10";
-        } else if (type == 'image_active') {
-            myalign = "left-40 bottom-43";
-        } else if (type == 'image_follow') {
-            myalign = "left-10 bottom-20";
-        }
-        if (popusertimer) {
-            clearTimeout(popusertimer);
-        }
-        popusertimer = setTimeout(function() {
-            $("#usercard").show();
-            $("#usercard").position({
-                my: myalign,
-                of: popobj
-            });
-        }, 300);
-
-    });
+    var myalign = "left-27 bottom-30";
+    if (type == 'text') {
+        myalign = "left-21 bottom-10";
+    } else if (type == 'image_active') {
+        myalign = "left-40 bottom-43";
+    } else if (type == 'image_follow') {
+        myalign = "left-10 bottom-20";
+    }
+    if (popusertimer) {
+        clearTimeout(popusertimer);
+    }
+    popusertimer = setTimeout(function() {
+        $("#usercard").show();
+        $("#usercard").position({
+            my: myalign,
+            of: popobj
+        });
+    }, 300);
+    $("#usercard").load(g_site_url + "index.php" + query + "user/ajaxuserinfo/" + uid);
 }
 function pop_user_out() {
     if (popusertimer) {
@@ -192,26 +190,26 @@ function login() {
 }
 
 function load_message() {
-    if(g_uid==0){
+    if (g_uid == 0) {
         return false;
     }
-    $.post(g_site_url+"index.php?user/ajaxloadmessage",function(msg){
-        if(msg.msg_personal!=0){
+    $.post(g_site_url + "index.php?user/ajaxloadmessage", function(msg) {
+        if (msg.msg_personal != 0) {
             $("#mymessage_personal").html(msg.msg_personal);
             $("#mymessage_personal").show();
             $("#mymessage .ismore a").removeClass("msg-null");
         }
-        if(msg.msg_system!=0){
+        if (msg.msg_system != 0) {
             $("#mymessage_system").html(msg.msg_system);
             $("#mymessage_system").show();
             $("#mymessage .ismore a").removeClass("msg-null");
         }
-        if(msg.message_recommand!=0){
+        if (msg.message_recommand != 0) {
             $("#mymessage_recommend").html(msg.message_recommand);
             $("#mymessage_recommend").show();
             $("#mymessage .ismore a").removeClass("msg-null");
         }
-    },"json");
+    }, "json");
 }
 
 /*删除回答*/

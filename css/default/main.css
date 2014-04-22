@@ -761,6 +761,7 @@ input:hover{border-color:#3EA201;}
 .icon_0{background: url("girl.gif") no-repeat scroll 0 50% rgba(0, 0, 0, 0);vertical-align:top;margin-left: 2px;display:inline-block;height: 15px; width: 8px;}
 .icon_expert{background: url("expert.gif") no-repeat scroll 0 50% rgba(0, 0, 0, 0);vertical-align:top;margin-left: 2px;display:inline-block;height: 15px; width: 15px;}
 .usercard{position:absolute;z-index:1003;width:340px;display: none;}
+.usercard .loading{margin: 0;text-align: center;height:50px;line-height: 50px;}
 .usercard_in{border:1px solid #CFCFCF;background:#fff;position:relative;box-shadow:0 0 2px 2px rgba(0,0,0,0.1)}
 .usercard_c1{padding:11px 10px 10px 14px;}
 .usercard_c1_l{float:left;width:90px;_width:87px;padding-top:3px;}

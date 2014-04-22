@@ -28,9 +28,9 @@
                 <!--{else}-->
                 <span><input type="button" class="button_attention" value="关注" id="attenttouser" onclick="attentto_user({$userinfo['uid']})"/></span>
                 <!--{/if}-->
-                <!--{/if}-->
                 <span><input type="button" class="button_attention" value="提问"  onclick="javascript:document.location = '{url question/add/$userinfo['uid']}'"/></span>
                 <span><input type="button" class="button_attention" value="私信"  onclick="javascript:document.location = '{url message/send/$userinfo['uid']}'"/></span>
+                <!--{/if}-->
             </span>
         </div>
     </div>
