@@ -50,6 +50,9 @@ class admin_settingcontrol extends base {
                 $message = '问题过期时间至少为3天！';
             }
         }
+        $this->setting['question_share'] = tstripslashes($this->post['question_share']);
+        $this->setting['site_statcode'] = tstripslashes($this->post['site_statcode']);
+
         include template('setting_base', 'admin');
     }
 
@@ -225,8 +228,6 @@ class admin_settingcontrol extends base {
         }
         include template('setting_ucenter', 'admin');
     }
-      
-    
 
     /* SEO设置 */
 
@@ -390,7 +391,7 @@ class admin_settingcontrol extends base {
             $config = "<?php \r\ndefine('WB_AKEY',  '" . $this->setting['sinalogin_appid'] . "');\r\n";
             $config .= "define('WB_SKEY',  '" . $this->setting['sinalogin_key'] . "');\r\n";
             $config .= "define('WB_CALLBACK_URL',  '" . SITE_URL . 'plugin/sinalogin/callback.php' . "');\r\n";
-            writetofile(TIPASK_ROOT . '/plugin/sinalogin/config.php',$config);
+            writetofile(TIPASK_ROOT . '/plugin/sinalogin/config.php', $config);
             $message = 'sina互联参数保存成功！';
         }
         include template("setting_sinalogin", "admin");
@@ -417,7 +418,7 @@ class admin_settingcontrol extends base {
         }
         include template("setting_ebank", "admin");
     }
-    
+
 }
 
 ?>
