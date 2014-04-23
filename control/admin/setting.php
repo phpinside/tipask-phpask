@@ -50,9 +50,6 @@ class admin_settingcontrol extends base {
                 $message = '问题过期时间至少为3天！';
             }
         }
-        $this->setting['question_share'] = tstripslashes($this->post['question_share']);
-        $this->setting['site_statcode'] = tstripslashes($this->post['site_statcode']);
-
         include template('setting_base', 'admin');
     }
 

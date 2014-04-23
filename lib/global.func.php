@@ -42,7 +42,6 @@ function url($var, $url = '') {
 
 /* url转换器，1为请求转换，就是把类似q-替换为question/view
   2为反向转换，就是把类似/question/view/替换为q-
- * q-1
  */
 
 function urlmap($var, $direction = 1) {
