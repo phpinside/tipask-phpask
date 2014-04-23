@@ -29,7 +29,7 @@ class admin_navcontrol extends base {
                 include template('addnav', 'admin');
                 exit;
             }
-            $_ENV['nav']->add($name, $url, $title, $target, $navtype);
+            $_ENV['nav']->add($name, $url, $title, $target,1,$navtype);
             $this->cache->remove('nav');
             $this->ondefault('导航添加成功！');
         } else {
