@@ -42,19 +42,25 @@ function url($var, $url = '') {
 
 /* url转换器，1为请求转换，就是把类似q-替换为question/view
   2为反向转换，就是把类似/question/view/替换为q-
+ * q-1
  */
 
 function urlmap($var, $direction = 1) {
-    $replaces = array(
-        'q-' => 'question/view/',
+    $url_routes = array(
+        'questions/' => 'question/view/',
         'c-' => 'category/view/',
         'l-' => 'category/list/',
         'r-' => 'category/recommend/',
         'u-' => 'user/space/',
         'us-' => 'user/scorelist/',
     );
-    (2 == $direction) && $replaces = array_flip($replaces);
-    return str_replace(array_keys($replaces), array_values($replaces), $var);
+    (2 == $direction) && $url_routes = array_flip($url_routes);
+    foreach ($url_routes as $mapkey => $route) {
+        if (false !== strpos($var, $mapkey)) {
+            return str_replace($mapkey, $route, $var);
+        }
+    }
+    return $var;
 }
 
 /**
