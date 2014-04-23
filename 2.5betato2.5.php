@@ -78,8 +78,6 @@ CREATE TABLE ask_doing (
   KEY `createtime` (`createtime`),
   KEY `referid` (`referid`)
 ) ENGINE=MyISAM;
-
-ALTER TABLE ask_nav ADD homepage TINYINT(1) NOT NULL DEFAULT '0' AFTER `type`;        
 EOT;
 
 $extend = <<<EOT

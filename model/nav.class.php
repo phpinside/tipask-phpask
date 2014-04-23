@@ -30,8 +30,8 @@ class navmodel {
         return $this->db->insert_id();
     }
 
-    function update($name, $url, $title = '', $target = 0, $id) {
-        $this->db->query('UPDATE  `' . DB_TABLEPRE . "nav`  set `name`='$name',`url`='$url',`title`='$title',`target`='$target' where id=$id ");
+    function update($name, $url, $title = '', $target = 0,$type=2, $id) {
+        $this->db->query('UPDATE  `' . DB_TABLEPRE . "nav`  set `name`='$name',`url`='$url',`title`='$title',`target`='$target',`type`=$type where id=$id ");
     }
 
     function remove_by_id($ids) {
@@ -61,16 +61,6 @@ class navmodel {
         }
         return $navlist;
     }
-
-    function get_home_page() {
-        $navlist = $this->base->fromcache('headernavlist');
-        foreach ($navlist as $nav) {
-            if ($nav['url'] != 'index/default' && !stristr($nav, "http://") && $nav['homepage'] && $nav['available']) {
-                return $nav['url'];
-            }
-        }
-    }
-
 }
 
 ?>
