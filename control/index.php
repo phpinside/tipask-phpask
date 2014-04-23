@@ -6,10 +6,13 @@ class indexcontrol extends base {
 
     function indexcontrol(& $get, & $post) {
         $this->base($get, $post);
+        $this->load('nav');
     }
 
     function ondefault() {
         $linklist = $this->cache->load('link', 'id', 'displayorder');
+        $navlist = $_ENV['nav']->get_format_url();
+        print_r($navlist);
         /* SEO */
         $this->setting['seo_index_title'] && $seo_title = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_index_title']);
         $this->setting['seo_index_description'] && $seo_description = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_index_description']);

@@ -11,7 +11,6 @@ class base {
     var $user = array();
     var $setting = array();
     var $category = array();
-    var $nav = array();
     var $usergroup = array();
     var $get = array();
     var $post = array();
@@ -25,7 +24,6 @@ class base {
         $this->post = & $post;
         $this->init_db();
         $this->init_cache();
-        //$this->init_crontab();
         $this->init_user();
         $this->checkcode();
         $this->banned();
@@ -44,17 +42,25 @@ class base {
         $category = $this->category = $this->cache->load('category', 'id', 'displayorder');
         $badword = $this->cache->load('badword', 'find');
         $this->usergroup = $this->cache->load('usergroup', 'groupid');
-        $this->nav = $this->cache->load('nav', 'id', 'displayorder');
     }
 
     /* 从缓存中读取数据，如果失败，则自动去读取数据然后写入缓存 */
 
     function fromcache($cachename, $cachetime = 3) {
         $cachetime = ($this->setting['index_life'] == 0) ? 1 : $this->setting['index_life'] * 60;
-        $cachedata = $this->cache->read($cachename, $cachetime);
+        if ($cachetime == 'static') {
+            $cachedata = $this->cache->read($cachename, 0);
+        } else {
+            $cachedata = $this->cache->read($cachename, $cachetime);
+        }
+
         if ($cachedata)
             return $cachedata;
         switch ($cachename) {
+            case 'headernavlist':
+                $this->load('nav');
+                $cachedata = $_ENV['nav']->get_format_url();
+                break;
             case 'nosolvelist': //待解决问题，网友正在问
                 $this->load('question');
                 $cachedata = $_ENV['question']->list_by_cfield_cvalue_status('', 0, 1, 0, $this->setting['list_indexnosolve']);
@@ -119,7 +125,7 @@ class base {
                 break;
             case 'activeuser':
                 $this->load('user');
-                $cachedata = $_ENV['user']->get_active_list(0,6);
+                $cachedata = $_ENV['user']->get_active_list(0, 6);
                 break;
             case 'articlelist':
                 if (isset($this->base->setting['cms_open']) && $this->base->setting['cms_open'] == 1) {

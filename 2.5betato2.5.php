@@ -77,7 +77,9 @@ CREATE TABLE ask_doing (
   KEY `sourceid` (`questionid`),
   KEY `createtime` (`createtime`),
   KEY `referid` (`referid`)
-) ENGINE=MyISAM;        
+) ENGINE=MyISAM;
+
+ALTER TABLE ask_nav ADD index TINYINT(1) NOT NULL DEFAULT '0' AFTER `type`;        
 EOT;
 
 $extend = <<<EOT
