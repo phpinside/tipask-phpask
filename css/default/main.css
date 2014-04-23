@@ -474,7 +474,7 @@ th{font-style: normal;font-weight: 400;}
 .mod-best-a .hd .pubtime {float: right;}
 .pubtime, .ui-report {color: #666666;}
 .mod-best-a .bd {padding: 10px 0;}
-.qa-content {font-size: 14px;line-height: 24px;margin-bottom: 10px;}
+.qa-content {font-size: 14px;line-height: 24px;margin-bottom: 10px;word-break: break-all;}
 .mod-best-a .user-vcard {border-top: 1px solid #F4F4F4;padding-top: 15px;}
 .user-vcard .info {margin-right: 20px;width: 54px;}
 .user-vcard .info, .user-vcard .text {float: left;}

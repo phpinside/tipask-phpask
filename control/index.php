@@ -6,19 +6,23 @@ class indexcontrol extends base {
 
     function indexcontrol(& $get, & $post) {
         $this->base($get, $post);
-        $this->load('nav');
     }
 
     function ondefault() {
         $linklist = $this->cache->load('link', 'id', 'displayorder');
-        $navlist = $_ENV['nav']->get_format_url();
-        print_r($navlist);
+        $navlist = $this->fromcache('headernavlist');
+        foreach($navlist as $nav){
+            if($nav['url']!='index/default' && !stristr($nav, "http://") && $nav['homepage'] && $nav['available']){
+                header("Location:".$nav['format_url']);
+            }
+        }
         /* SEO */
         $this->setting['seo_index_title'] && $seo_title = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_index_title']);
         $this->setting['seo_index_description'] && $seo_description = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_index_description']);
         $this->setting['seo_index_keywords'] && $seo_keywords = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_index_keywords']);
         include template('index');
     }
+   
 
     function onhelp() {
         $this->load('usergroup');
@@ -39,12 +43,12 @@ class indexcontrol extends base {
     }
 
     function ononline() {
-        $navtitle= "当前在线";
+        $navtitle = "当前在线";
         $this->load('user');
         @$page = max(1, intval($this->get[2]));
         $pagesize = 30;
         $startindex = ($page - 1) * $pagesize;
-        $onlinelist = $_ENV['user']->list_online_user($startindex,$pagesize);
+        $onlinelist = $_ENV['user']->list_online_user($startindex, $pagesize);
         $onlinetotal = $_ENV['user']->rownum_onlineuser();
         $departstr = page($onlinetotal, $pagesize, $page, "index/online");
         include template("online");

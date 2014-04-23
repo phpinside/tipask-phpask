@@ -48,10 +48,27 @@ class navmodel {
 
     function get_format_url() {
         $navlist = $this->get_list();
-        foreach($navlist as &$nav){
-            $nav['format_url'] = url($nav['url'],1);
+        foreach ($navlist as &$nav) {
+            if (!stristr($nav['url'], "http://")) {
+                if ($nav['url'] == 'index/default') {
+                    $nav['format_url'] = SITE_URL;
+                } else {
+                    $nav['format_url'] = url($nav['url'], 1);
+                }
+            } else {
+                $nav['format_url'] = $nav['url'];
+            }
         }
         return $navlist;
+    }
+
+    function get_home_page() {
+        $navlist = $this->base->fromcache('headernavlist');
+        foreach ($navlist as $nav) {
+            if ($nav['url'] != 'index/default' && !stristr($nav, "http://") && $nav['homepage'] && $nav['available']) {
+                return $nav['url'];
+            }
+        }
     }
 
 }
