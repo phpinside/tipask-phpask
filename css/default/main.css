@@ -376,7 +376,7 @@ th{font-style: normal;font-weight: 400;}
 /*问答分类页*/
 .classifymod .title{background: url(category_title.png) no-repeat scroll 0 8px rgba(0, 0, 0, 0);padding: 0 0 0 20px;font-size: 14px;font-weight: bold;margin-left: 30px;}
 .classifymod-list{ padding:0px 0 15px 10px;margin-left: 25px;}
-.classifymod-list li{ float:left; width:150px; height:30px; font-size:14px; line-height:30px;}
+.classifymod-list li{ float:left; width:150px; height:30px; font-size:14px; line-height:30px;font-family: "microsoft yahei";}
 .classifymod-list li em{ color:#999;}
 .q-tabmod{ padding:5px 10px;}
 .q-tabmod li{ padding:12px 0 5px;}
