@@ -12,6 +12,10 @@ class ebankcontrol extends base {
     /* 支付宝回调 */
 
     function onaliapyback() {
+        if (!$this->setting['recharge_open']) {
+            $this->message("财富充值服务已关闭，如有问题，请联系管理员!", "STOP");
+        }
+        exit;
         if ($_GET['trade_status'] == 'TRADE_SUCCESS') {
             $credit2 = $_GET['total_fee'] * $this->setting['recharge_rate'];
             $this->credit($this->user['uid'], 0, $credit2, 0, "支付宝充值");

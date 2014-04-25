@@ -450,7 +450,7 @@ class usercontrol extends base {
             $pagesize = 8;
             $startindex = ($page - 1) * $pagesize;
             $doinglist = $_ENV['doing']->list_by_type("my", $userid, $startindex, $pagesize);
-            $rownum = $_ENV['doing']->rownum_by_type("my",$userid);
+            $rownum = $_ENV['doing']->rownum_by_type("my", $userid);
             $departstr = page($rownum, $pagesize, $page, "user/space/$userid");
             $navtitle = $member['username'] . $navtitle;
             include template('space');
@@ -583,6 +583,8 @@ class usercontrol extends base {
 
     //积分充值
     function onrecharge() {
+        header("Location:" . SITE_URL);
+        exit;
         include template("recharge");
     }
 
