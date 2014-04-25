@@ -284,7 +284,7 @@ em {font-style: normal;color:#E63A00;}
 
 /*问题分类*/
 .mod-answer-list {background: url("ctab.png") repeat-x scroll 0 0 transparent;border: 1px solid #E0E0E0;}
-.mod-answer-list .hd .tab-card {height: 35px;margin-left: 25px;overflow: hidden;}
+.mod-answer-list .hd .tab-card {height: 35px;margin-left: 25px;overflow: hidden;margin-left: 35px;}
 .mod-answer-list .hd li {background: url("ctab_li.png") no-repeat scroll 0 center transparent;float: left;font-size: 14px;height: 35px;line-height: 35px;margin-left: -2px;padding: 0 15px;}
 .mod-answer-list .hd li.on {background: none repeat scroll 0 0 #FFFFFF;border-color: #E0E0E0;border-image: none;border-style: solid;border-width: 0 1px;font-weight: 700;margin-left: 2px;position: relative;}
 .mod-answer-list .bd {padding: 0 23px;}
@@ -374,9 +374,9 @@ th{font-style: normal;font-weight: 400;}
 
 
 /*问答分类页*/
-.classifymod .title{ background-position: -214px -646px;}
-.classifymod-list{ padding:0px 0 15px 10px;}
-.classifymod-list li{ float:left; width:176px; height:30px; font-size:14px; line-height:30px;}
+.classifymod .title{background: url(category_title.png) no-repeat scroll 0 8px rgba(0, 0, 0, 0);padding: 0 0 0 20px;font-size: 14px;font-weight: bold;margin-left: 30px;}
+.classifymod-list{ padding:0px 0 15px 10px;margin-left: 25px;}
+.classifymod-list li{ float:left; width:150px; height:30px; font-size:14px; line-height:30px;}
 .classifymod-list li em{ color:#999;}
 .q-tabmod{ padding:5px 10px;}
 .q-tabmod li{ padding:12px 0 5px;}
