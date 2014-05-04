@@ -46,7 +46,7 @@ function url($var, $url = '') {
 
 function urlmap($var, $direction = 1) {
     $url_routes = array(
-        'questions/' => 'question/view/',
+        'q-' => 'question/view/',
         'c-' => 'category/view/',
         'l-' => 'category/list/',
         'r-' => 'category/recommend/',
