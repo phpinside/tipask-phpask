@@ -256,7 +256,7 @@ class questioncontrol extends base {
             $this->credit($answer['authorid'], $this->setting['credit1_adopt'], intval($question['price'] + $this->setting['credit2_adopt']), 0, 'adopt');
             $this->send($answer['authorid'], $question['id'], 1);
             $viewurl = urlmap('question/view/' . $qid, 2);
-            $_ENV['doing']->add($question['authorid'],$question['author'],8, $qid,$comment,$answer['id'],$answer['authorid'],$answer['content']);
+            $_ENV['doing']->add($question['authorid'], $question['author'], 8, $qid, $comment, $answer['id'], $answer['authorid'], $answer['content']);
         }
 
         $this->message('采纳答案成功！', $viewurl);
@@ -272,11 +272,17 @@ class questioncontrol extends base {
     }
 
     /* 补充提问细节 */
+
     function onsupply() {
         $qid = $this->get[2] ? $this->get[2] : $this->post['qid'];
         $question = $_ENV['question']->get($qid);
-        if (!$question)
+        if (!$question) {
             $this->message("问题不存在或已被删除!", "STOP");
+        }
+        if ($question['authorid'] != $this->user['uid'] || $this->user['uid']==0) {
+            $this->message("非法操作!", "STOP");
+            exit;
+        }
         $navlist = $_ENV['category']->get_navigation($question['cid'], true);
         if (isset($this->post['submit'])) {
             $content = $this->post['content'];

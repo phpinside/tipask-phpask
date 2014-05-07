@@ -1,24 +1,23 @@
 <?php
-
 !defined('IN_TIPASK') && exit('Access Denied');
-
+require_once TIPASK_ROOT.'/data/cms.config.inc';
 class cmsmodel {
-
     var $dbcms;
     var $db;
     var $base;
 
     function cmsmodel(&$base) {
         $this->base = $base;
-        $this->db = new db($this->base->setting['cms_db_server'], $this->base->setting['cms_db_user'], $this->base->setting['cms_db_password'], $this->base->setting['cms_db_name'], DB_CHARSET, DB_CONNECT);
+        $this->db = $base->db;
+        $this->dbcms = new db(CMS_DB_SERVER,CMS_DB_USER,CMS_DB_PASSWORD,CMS_DB_NAME, DB_CHARSET, DB_CONNECT);
     }
-
+    
     function get_list() {
         $articlelist = array();
-        $query = $this->db->query("SELECT * FROM " . $this->base->setting['cms_db_article_tbname'] . " WHERE 1=1 " . tstripslashes($this->base->setting['cms_db_article_sort']));
-        while ($article = $this->db->fetch_array($query)) {
-            $article['title'] = $article[$this->base->setting['cms_db_article_field']];
-            $article['href'] = str_replace("{articleid}", $article[$this->base->setting['cms_db_article_primary']], $this->base->setting['cms_article_url']);
+        $query = $this->dbcms->query("SELECT * FROM " .CMS_DB_ARTICLE_TBNAME . " WHERE 1=1 " .CMS_DB_ARTICLE_SORT);
+        while ($article = $this->dbcms->fetch_array($query)) {
+            $article['title'] = $article[CMS_DB_ARTICLE_FIELD];
+            $article['href'] = str_replace("[articleid]", $article[CMS_DB_ARTICLE_PRIMARY],CMS_ARTICLE_URL);
             $articlelist[] = $article;
         }
         return $articlelist;

@@ -128,7 +128,7 @@ class base {
                 $cachedata = $_ENV['user']->get_active_list(0, 6);
                 break;
             case 'articlelist':
-                if (isset($this->base->setting['cms_open']) && $this->base->setting['cms_open'] == 1) {
+                if (isset($this->setting['cms_open']) && $this->setting['cms_open'] == 1) {
                     $this->load("cms");
                     $cachedata = $_ENV['cms']->get_list();
                 } else {

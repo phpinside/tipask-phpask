@@ -12,7 +12,7 @@
 <!--{/if}-->
 <table width="100%" cellspacing="1" cellpadding="4" align="center" class="tableborder">
     <tbody><tr class="header"><td>设置说明</td></tr>
-        <tr class="altbg1"><td>UCenter整合开启前，务必关闭通行证整合。</td></tr>
+        <tr class="altbg1"><td>CMS系统整合主要是从数据库层面进行内容整合，在问答页面展示文章内容。<br />cms系统配置完成后生成的配置文件放在在tipask/data/cms.config.ini中，也可以自行修改配置</td></tr>
     </tbody></table>
 <br />
 <form action="index.php?admin_cms/setting{$setting['seo_suffix']}" method="post">
@@ -29,52 +29,25 @@
             </td>
         </tr>
         <tr>
-            <td class="altbg1" width="45%"><b>CMS系统数据库地址和端口:</b><br><span class="smalltxt">例如127.0.0.1:3306</span></td>
-            <td class="altbg2"><input type="text" value="{$setting['cms_db_server']}" name="cms_db_server" style="width:332px;" /></td>
+            <td class="altbg1" width="45%"><b>CMS系统数据库配置:</b><br><span class="smalltxt">请根据实际配置来填写数据库配置信息，建议使用只读访问用户.</span></td>
+            <td class="altbg2">
+                <textarea name="cms_db_config" style="width:650px;height:80px;">
+define("CMS_DB_SERVER","127.0.0.1:3306");//数据库地址端口
+define("CMS_DB_NAME","wordpress");//数据库名
+define("CMS_DB_USER","root");//数据库管理用户名
+define("CMS_DB_PASSWORD","");//数据库管理用户密码</textarea>
+            </td>
         </tr>
         <tr>
-            <td class="altbg1" width="45%"><b>CMS系统数据库名:</b><br><span class="smalltxt">填写CMS系统的数据库名。</span></td>
-            <td class="altbg2"><input type="text" value="{$setting['cms_db_name']}" name="cms_db_name" style="width:332px;"></td>
-        </tr>
-        <tr>
-            <td class="altbg1" width="45%"><b>CMS系统数据库用户名:</b><br><span class="smalltxt">填写CMS系统的数据库用户名。</span></td>
-            <td class="altbg2"><input type="text" value="{$setting['cms_db_user']}" name="cms_db_user" style="width:332px;"></td>
-        </tr>
-        <tr>
-            <td class="altbg1" width="45%"><b>CMS系统数据库密码:</b><br><span class="smalltxt">填写CMS系统的数据库密码</span></td>
-            <td class="altbg2"><input type="password" value="{$setting['cms_db_password']}" name="cms_db_password" style="width:332px;"></td>
-        </tr>
-        <tr>
-            <td class="altbg1" width="45%"><b>文章分类表名:</b><br><span class="smalltxt">填写CMS系统的文章分类表全名例如:ask_category</span></td>
-            <td class="altbg2"><input type="text" value="{$setting['cms_db_category_tbname']}" name="cms_db_category_tbname" style="width:332px;"></td>
-        </tr>
-        <tr>
-            <td class="altbg1" width="45%"><b>文章分类名称字段:</b><br><span class="smalltxt">填写CMS系统的文章分类名称字段例如：category_name</span></td>
-            <td class="altbg2"><input type="text" value="{$setting['cms_db_category_field']}" name="cms_db_category_field" style="width:332px;"></td>
-        </tr>
-        <tr>
-            <td class="altbg1" width="45%"><b>文章分类标示主键:</b><br><span class="smalltxt">填写CMS系统的文章分类标示主键例如:categoryid</span></td>
-            <td class="altbg2"><input type="text" value="{$setting['cms_db_category_primary']}" name="cms_db_category_primary" style="width:332px;"></td>
-        </tr>
-        <tr>
-            <td class="altbg1" width="45%"><b>文章表名:</b><br><span class="smalltxt">填写CMS系统的文章表名称例如:ask_article</span></td>
-            <td class="altbg2"><input type="text" value="{$setting['cms_db_article_tbname']}" name="cms_db_article_tbname" style="width:332px;"></td>
-        </tr>
-        <tr>
-            <td class="altbg1" width="45%"><b>文章标题字段:</b><br><span class="smalltxt">填写CMS系统的文章表中文章标题字段例如:title</span></td>
-            <td class="altbg2"><input type="text" value="{$setting['cms_db_article_field']}" name="cms_db_article_field" style="width:332px;"></td>
-        </tr>
-        <tr>
-            <td class="altbg1" width="45%"><b>文章标示主键:</b><br><span class="smalltxt">填写CMS系统的文章表中文章标示主键例如:articleid</span></td>
-            <td class="altbg2"><input type="text" value="{$setting['cms_db_article_primary']}" name="cms_db_article_primary" style="width:332px;"></td>
-        </tr>
-        <tr>
-            <td class="altbg1" width="45%"><b>文章表排序条件:</b><br><span class="smalltxt">填写CMS系统的文章表中的排序条件，例如按照文章创建时间从大到小: createtime DESC</span></td>
-            <td class="altbg2"><input type="text" value="{$setting['cms_db_article_sort']}" name="cms_db_article_sort" style="width:332px;"></td>
-        </tr>
-        <tr>
-            <td class="altbg1" width="45%"><b>文章链接地址:</b><br><span class="smalltxt">填写文章查看地址，将文章的主键ID替换为{articleid},例如：<br />将http://blog.tipask.com/archives/44 改为 http://blog.tipask.com/archives/{{articleid}}</span></td>
-            <td class="altbg2"><input type="text" value="{$setting['cms_article_url']}" name="cms_article_url" style="width:332px;"></td>
+            <td class="altbg1" width="45%"><b>cms系统文章表配置</b><br><span class="smalltxt">cms系统文章表相关字段配置</span></td>
+            <td class="altbg2">
+                <textarea name="cms_db_article" style="width:650px;height:100px;">
+define("CMS_DB_ARTICLE_TBNAME","wp_posts");//文章表名
+define("CMS_DB_ARTICLE_FIELD","post_title");//文章标题
+define("CMS_DB_ARTICLE_PRIMARY","ID");//文章的主键ID
+define("CMS_DB_ARTICLE_SORT"," and post_type='post' and post_status='publish' ORDER BY post_modified DESC LIMIT 0,10 ");//文章排序过滤条件
+define("CMS_ARTICLE_URL","http://blog.tipask.com/archives/[articleid]");//文章查看地址[articleid]会动态替换为真实文章主键ID</textarea>                
+            </td>
         </tr>
     </table>
     <br />
@@ -83,6 +56,9 @@
     <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
         <tr class="header">
             <td colspan="2">分类映射设置</td>
+        </tr>
+        <tr>
+            <td class="altbg2" colspan="2">设置分类映射后，问题页面推荐文章可根据文章分类进行动态筛选，免费本暂不支持该功能!</td>
         </tr>
     </table>
     <br>
