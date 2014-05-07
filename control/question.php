@@ -391,7 +391,7 @@ class questioncontrol extends base {
         $corrected_words = $_ENV['question']->get_corrected_word($word);
         $departstr = page($rownum, $pagesize, $page, "question/search/$word/$status");
         include template('search');
-    }
+    }   
 
     /* 提问自动搜索已经解决的问题 */
 

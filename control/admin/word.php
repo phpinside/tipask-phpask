@@ -5,15 +5,19 @@
 class admin_wordcontrol extends base {
 
     function admin_wordcontrol(& $get, & $post) {
-        $this->base($get,$post);
+        $this->base($get, $post);
         $this->load("badword");
     }
 
-    function ondefault($message='') {
+    function ondefault($message = '') {
         $this->cache->remove('word');
-        if (empty($message))
-            unset($message);
-        $wordlist = $_ENV['badword']->get_list();
+
+        @$page = max(1, intval($this->get[2]));
+        $pagesize = $this->setting['list_default'];
+        $startindex = ($page - 1) * $pagesize;
+        $wordlist = $_ENV['badword']->get_list($startindex, $pagesize);
+        $rownum = $this->db->fetch_total("badword"," 1=1");
+        $departstr = page($rownum, $pagesize, $page, "admin_word/default");
         include template('wordlist', 'admin');
     }
 
