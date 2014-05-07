@@ -16,27 +16,27 @@ define('PMSENDREGDAYS', -4);
 define('CHATPMTHREADLIMIT_ERROR', -5);
 define('CHATPMMEMBERLIMIT_ERROR', -7);
 
-class pmcontrol extends base {
+class uc_pmcontrol extends uc_base {
 
 	function __construct() {
-		$this->pmcontrol();
+		$this->uc_pmcontrol();
 	}
 
-	function pmcontrol() {
+	function uc_pmcontrol() {
 		parent::__construct();
-		$this->load('user');
-		$this->load('pm');
+		$this->load('uc_user');
+		$this->load('uc_pm');
 	}
 
 	function oncheck_newpm() {
 		$this->init_input();
 		$uid = intval($this->input('uid'));
 		$more = intval($this->input('more'));
-		if(!$_ENV['pm']->isnewpm($uid) && !$more) {
+		if(!$_ENV['uc_pm']->isnewpm($uid) && !$more) {
 			return 0;
 		}
-		$newprvpm = $_ENV['pm']->getpmnum($uid, 1, 1);
-		$newchatpm = $_ENV['pm']->getpmnum($uid, 2, 1);
+		$newprvpm = $_ENV['uc_pm']->getpmnum($uid, 1, 1);
+		$newchatpm = $_ENV['uc_pm']->getpmnum($uid, 2, 1);
 		$newpm = $newprvpm + $newchatpm;
 		if($more == 0) {
 			return $newpm;
@@ -46,7 +46,7 @@ class pmcontrol extends base {
 			if($more == 2) {
 				return array('newpm' => $newpm, 'newprivatepm' => $newprvpm, 'newchatpm' => $newchatpm);
 			} else {
-				$lastpm = $_ENV['pm']->lastpm($uid);
+				$lastpm = $_ENV['uc_pm']->lastpm($uid);
 				require_once UC_ROOT.'lib/uccode.class.php';
 				$this->uccode = new uccode();
 				$lastpm['lastsummary'] = $this->uccode->complie($lastpm['lastsummary']);
@@ -73,7 +73,7 @@ class pmcontrol extends base {
 			return 0;
 		}
 
-		$user = $_ENV['user']->get_user_by_uid($fromuid);
+		$user = $_ENV['uc_user']->get_user_by_uid($fromuid);
 		$user = daddslashes($user, 1);
 		if(!$user) {
 			return 0;
@@ -83,8 +83,8 @@ class pmcontrol extends base {
 
 		if($replypmid) {
 			$isusername = 0;
-			$plid = $_ENV['pm']->getplidbypmid($replypmid);
-			$msgto = $_ENV['pm']->getuidbyplid($plid);
+			$plid = $_ENV['uc_pm']->getplidbypmid($replypmid);
+			$msgto = $_ENV['uc_pm']->getuidbyplid($plid);
 			unset($msgto[$this->user['uid']]);
 		} else {
 			if(!empty($msgto)) {
@@ -93,7 +93,7 @@ class pmcontrol extends base {
 		}
 
 		if($isusername) {
-			$msgto = $_ENV['user']->name2id($msgto);
+			$msgto = $_ENV['uc_user']->name2id($msgto);
 		}
 		$countmsgto = count($msgto);
 
@@ -108,26 +108,26 @@ class pmcontrol extends base {
 			}
 		}
 		if($this->settings['pmfloodctrl']) {
-			if(!$_ENV['pm']->ispminterval($this->user['uid'], $this->settings['pmfloodctrl'])) {
+			if(!$_ENV['uc_pm']->ispminterval($this->user['uid'], $this->settings['pmfloodctrl'])) {
 				return PMFLOODCTRL_ERROR;
 			}
 		}
 		if($this->settings['privatepmthreadlimit']) {
-			if(!$_ENV['pm']->isprivatepmthreadlimit($this->user['uid'], $this->settings['privatepmthreadlimit'])) {
+			if(!$_ENV['uc_pm']->isprivatepmthreadlimit($this->user['uid'], $this->settings['privatepmthreadlimit'])) {
 				return PRIVATEPMTHREADLIMIT_ERROR;
 			}
 		}
 		if($this->settings['chatpmthreadlimit']) {
-			if(!$_ENV['pm']->ischatpmthreadlimit($this->user['uid'], $this->settings['chatpmthreadlimit'])) {
+			if(!$_ENV['uc_pm']->ischatpmthreadlimit($this->user['uid'], $this->settings['chatpmthreadlimit'])) {
 				return CHATPMTHREADLIMIT_ERROR;
 			}
 		}
 
 		$lastpmid = 0;
 		if($replypmid) {
-			$lastpmid = $_ENV['pm']->replypm($plid, $this->user['uid'], $this->user['username'], $message);
+			$lastpmid = $_ENV['uc_pm']->replypm($plid, $this->user['uid'], $this->user['username'], $message);
 		} else {
-			$lastpmid = $_ENV['pm']->sendpm($this->user['uid'], $this->user['username'], $msgto, $subject, $message, $type);
+			$lastpmid = $_ENV['uc_pm']->sendpm($this->user['uid'], $this->user['username'], $msgto, $subject, $message, $type);
 		}
 		return $lastpmid;
 	}
@@ -142,12 +142,12 @@ class pmcontrol extends base {
 		if(is_array($pmids)) {
 			$this->apps = $this->cache('apps');
 			if($this->apps[$this->app['appid']]['type'] == 'UCHOME') {
-				$id = $_ENV['pm']->deletepmbyplids($this->user['uid'], $this->input('pmids'));
+				$id = $_ENV['uc_pm']->deletepmbyplids($this->user['uid'], $this->input('pmids'));
 			} else {
-				$id = $_ENV['pm']->deletepmbypmids($this->user['uid'], $this->input('pmids'));
+				$id = $_ENV['uc_pm']->deletepmbypmids($this->user['uid'], $this->input('pmids'));
 			}
 		} else {
-			$id = $_ENV['pm']->deletepmbypmid($this->user['uid'], $this->input('pmids'));
+			$id = $_ENV['uc_pm']->deletepmbypmid($this->user['uid'], $this->input('pmids'));
 		}
 		return $id;
 	}
@@ -158,29 +158,29 @@ class pmcontrol extends base {
 		$plids = $this->input('plids');
 		$type = intval($this->input('type'));
 		if($type == 1) {
-			return $_ENV['pm']->deletepmbyplids($this->user['uid'], $plids);
+			return $_ENV['uc_pm']->deletepmbyplids($this->user['uid'], $plids);
 		} else {
-			return $_ENV['pm']->quitchatpm($this->user['uid'], $plids);
+			return $_ENV['uc_pm']->quitchatpm($this->user['uid'], $plids);
 		}
 	}
 
 	function ondeleteuser() {
 		$this->init_input();
 		$this->user['uid'] = intval($this->input('uid'));
-		$id = $_ENV['pm']->deletepmbyplids($this->user['uid'], $this->input('touids'), 1);
+		$id = $_ENV['uc_pm']->deletepmbyplids($this->user['uid'], $this->input('touids'), 1);
 		return $id;
 	}
 
 	function onreadstatus() {
 		$this->init_input();
 		$this->user['uid'] = intval($this->input('uid'));
-		$_ENV['pm']->setpmstatus($this->user['uid'], $this->input('uids'), $this->input('plids'), $this->input('status'));
+		$_ENV['uc_pm']->setpmstatus($this->user['uid'], $this->input('uids'), $this->input('plids'), $this->input('status'));
 	}
 
 	function onignore() {
 		$this->init_input();
 		$this->user['uid'] = intval($this->input('uid'));
-		return $_ENV['pm']->set_ignore($this->user['uid']);
+		return $_ENV['uc_pm']->set_ignore($this->user['uid']);
 	}
 
 	function onls() {
@@ -209,15 +209,15 @@ class pmcontrol extends base {
 		} else {
 			return array();
 		}
-		$pmnum = $_ENV['pm']->getpmnum($this->user['uid'], $type, $new);
+		$pmnum = $_ENV['uc_pm']->getpmnum($this->user['uid'], $type, $new);
 		$start = $this->page_get_start($page, $pagesize, $pmnum);
 
  		if($pagesize > 0) {
-	 		$pms = $_ENV['pm']->getpmlist($this->user['uid'], $filter, $start, $pagesize);
+	 		$pms = $_ENV['uc_pm']->getpmlist($this->user['uid'], $filter, $start, $pagesize);
 	 		if(is_array($pms) && !empty($pms)) {
 				foreach($pms as $key => $pm) {
 					if($msglen) {
-						$pms[$key]['lastsummary'] = $_ENV['pm']->removecode($pms[$key]['lastsummary'], $msglen);
+						$pms[$key]['lastsummary'] = $_ENV['uc_pm']->removecode($pms[$key]['lastsummary'], $msglen);
 					} else {
 						unset($pms[$key]['lastsummary']);
 					}
@@ -256,12 +256,12 @@ class pmcontrol extends base {
 		$endtime = $this->time;
 
 		if(!$isplid) {
-			$plid = $_ENV['pm']->getplidbytouid($this->user['uid'], $touid);
+			$plid = $_ENV['uc_pm']->getplidbytouid($this->user['uid'], $touid);
 		} else {
 			$plid = $touid;
 		}
 		if($page) {
-			$pmnum = $_ENV['pm']->getpmnumbyplid($this->user['uid'], $plid);
+			$pmnum = $_ENV['uc_pm']->getpmnumbyplid($this->user['uid'], $plid);
 			$start = $this->page_get_start($page, $pagesize, $pmnum);
 			$ppp = $pagesize;
 		} else {
@@ -271,9 +271,9 @@ class pmcontrol extends base {
 		}
 
 		if($pmid) {
-			$pms = $_ENV['pm']->getpmbypmid($this->user['uid'], $pmid);
+			$pms = $_ENV['uc_pm']->getpmbypmid($this->user['uid'], $pmid);
 		} else {
-			$pms = $_ENV['pm']->getpmbyplid($this->user['uid'], $plid, $starttime, $endtime, $start, $ppp, $type);
+			$pms = $_ENV['uc_pm']->getpmbyplid($this->user['uid'], $plid, $starttime, $endtime, $start, $ppp, $type);
 		}
 
  	 	require_once UC_ROOT.'lib/uccode.class.php';
@@ -292,11 +292,11 @@ class pmcontrol extends base {
 		$touid = $this->input('touid');
 		$isplid = $this->input('isplid');
 		if(!$isplid) {
-			$plid = $_ENV['pm']->getplidbytouid($this->user['uid'], $touid);
+			$plid = $_ENV['uc_pm']->getplidbytouid($this->user['uid'], $touid);
 		} else {
 			$plid = $touid;
 		}
-		$pmnum = $_ENV['pm']->getpmnumbyplid($this->user['uid'], $plid);
+		$pmnum = $_ENV['uc_pm']->getpmnumbyplid($this->user['uid'], $plid);
 		return $pmnum;
 	}
 
@@ -306,7 +306,7 @@ class pmcontrol extends base {
 		$type = $this->input('type');
 		$pmid = $this->input('pmid');
 		$type = 0;
-		$pms = $_ENV['pm']->getpmbypmid($this->user['uid'], $pmid);
+		$pms = $_ENV['uc_pm']->getpmbypmid($this->user['uid'], $pmid);
 
  	 	require_once UC_ROOT.'lib/uccode.class.php';
 		$this->uccode = new uccode();
@@ -323,7 +323,7 @@ class pmcontrol extends base {
 		$this->init_input();
 		$this->user['uid'] = intval($this->input('uid'));
 		$plid = intval($this->input('plid'));
-		return $_ENV['pm']->chatpmmemberlist($this->user['uid'], $plid);
+		return $_ENV['uc_pm']->chatpmmemberlist($this->user['uid'], $plid);
 	}
 
 	function onkickchatpm() {
@@ -331,7 +331,7 @@ class pmcontrol extends base {
 		$this->user['uid'] = intval($this->input('uid'));
 		$plid = intval($this->input('plid'));
 		$touid = intval($this->input('touid'));
-		return $_ENV['pm']->kickchatpm($plid, $this->user['uid'], $touid);
+		return $_ENV['uc_pm']->kickchatpm($plid, $this->user['uid'], $touid);
 	}
 
 	function onappendchatpm() {
@@ -339,34 +339,34 @@ class pmcontrol extends base {
 		$this->user['uid'] = intval($this->input('uid'));
 		$plid = intval($this->input('plid'));
 		$touid = intval($this->input('touid'));
-		return $_ENV['pm']->appendchatpm($plid, $this->user['uid'], $touid);
+		return $_ENV['uc_pm']->appendchatpm($plid, $this->user['uid'], $touid);
 	}
 
   	function onblackls_get() {
   		$this->init_input();
  		$this->user['uid'] = intval($this->input('uid'));
- 		return $_ENV['pm']->get_blackls($this->user['uid']);
+ 		return $_ENV['uc_pm']->get_blackls($this->user['uid']);
  	}
 
  	function onblackls_set() {
  		$this->init_input();
  		$this->user['uid'] = intval($this->input('uid'));
  		$blackls = $this->input('blackls');
- 		return $_ENV['pm']->set_blackls($this->user['uid'], $blackls);
+ 		return $_ENV['uc_pm']->set_blackls($this->user['uid'], $blackls);
  	}
 
 	function onblackls_add() {
 		$this->init_input();
  		$this->user['uid'] = intval($this->input('uid'));
  		$username = $this->input('username');
- 		return $_ENV['pm']->update_blackls($this->user['uid'], $username, 1);
+ 		return $_ENV['uc_pm']->update_blackls($this->user['uid'], $username, 1);
  	}
 
  	function onblackls_delete($arr) {
 		$this->init_input();
  		$this->user['uid'] = intval($this->input('uid'));
  		$username = $this->input('username');
- 		return $_ENV['pm']->update_blackls($this->user['uid'], $username, 2);
+ 		return $_ENV['uc_pm']->update_blackls($this->user['uid'], $username, 2);
  	}
 }
 

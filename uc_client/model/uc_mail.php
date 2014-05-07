@@ -11,17 +11,17 @@
 
 define('UC_MAIL_REPEAT', 5);
 
-class mailmodel {
+class uc_mailmodel {
 
 	var $db;
 	var $base;
 	var $apps;
 
 	function __construct(&$base) {
-		$this->mailmodel($base);
+		$this->uc_mailmodel($base);
 	}
 
-	function mailmodel(&$base) {
+	function uc_mailmodel(&$base) {
 		$this->base = $base;
 		$this->db = $base->db;
 		$this->apps = &$this->base->cache['apps'];

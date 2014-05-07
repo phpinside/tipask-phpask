@@ -15,7 +15,7 @@ define('UC_NOTE_GC', 10000);
 
 define('API_RETURN_FAILED', '-1');
 
-class notemodel {
+class uc_notemodel {
 
 	var $db;
 	var $base;
@@ -24,10 +24,10 @@ class notemodel {
 	var $notetype = 'HTTP';
 
 	function __construct(&$base) {
-		$this->notemodel($base);
+		$this->uc_notemodel($base);
 	}
 
-	function notemodel(&$base) {
+	function uc_notemodel(&$base) {
 		$this->base = $base;
 		$this->db = $base->db;
 		$this->apps = $this->base->cache('apps');

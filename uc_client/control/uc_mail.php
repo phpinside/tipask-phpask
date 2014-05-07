@@ -9,19 +9,19 @@
 
 !defined('IN_UC') && exit('Access Denied');
 
-class mailcontrol extends base {
+class uc_mailcontrol extends uc_base {
 
 	function __construct() {
-		$this->mailcontrol();
+		$this->uc_mailcontrol();
 	}
 
-	function mailcontrol() {
+	function uc_mailcontrol() {
 		parent::__construct();
 		$this->init_input();
 	}
 
 	function onadd() {
-		$this->load('mail');
+		$this->load('uc_mail');
 		$mail = array();
 		$mail['appid']		= UC_APPID;
 		$mail['uids']		= explode(',', $this->input('uids'));
@@ -33,7 +33,7 @@ class mailcontrol extends base {
 		$mail['level']		= abs(intval($this->input('level')));
 		$mail['frommail']	= $this->input('frommail');
 		$mail['dateline']	= $this->time;
-		return $_ENV['mail']->add($mail);
+		return $_ENV['uc_mail']->add($mail);
 	}
 
 }

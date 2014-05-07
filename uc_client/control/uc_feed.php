@@ -9,25 +9,25 @@
 
 !defined('IN_UC') && exit('Access Denied');
 
-class feedcontrol extends base {
+class uc_feedcontrol extends uc_base {
 
 	function __construct() {
-		$this->feedcontrol();
+		$this->uc_feedcontrol();
 	}
 
-	function feedcontrol() {
+	function uc_feedcontrol() {
 		parent::__construct();
 		$this->init_input();
 	}
 
 	function onadd() {
-		$this->load('misc');
+		$this->load('uc_misc');
 		$appid = intval($this->input('appid'));
 		$icon = $this->input('icon');
 		$uid = intval($this->input('uid'));
 		$username = $this->input('username');
-		$body_data = $_ENV['misc']->array2string($this->input('body_data'));
-		$title_data = $_ENV['misc']->array2string($this->input('title_data'));
+		$body_data = $_ENV['uc_misc']->array2string($this->input('body_data'));
+		$title_data = $_ENV['uc_misc']->array2string($this->input('title_data'));
 
 		$title_template = $this->_parsetemplate($this->input('title_template'));
 		$body_template = $this->_parsetemplate($this->input('body_template'));
@@ -61,15 +61,15 @@ class feedcontrol extends base {
 	}
 
 	function onget() {
-		$this->load('misc');
+		$this->load('uc_misc');
 		$limit = intval($this->input('limit'));
 		$delete = $this->input('delete');
 		$feedlist = $this->db->fetch_all("SELECT * FROM ".UC_DBTABLEPRE."feeds ORDER BY feedid DESC LIMIT $limit");
 		if($feedlist) {
 			$maxfeedid = $feedlist[0]['feedid'];
 			foreach($feedlist as $key => $feed) {
-				$feed['body_data'] = $_ENV['misc']->string2array($feed['body_data']);
-				$feed['title_data'] = $_ENV['misc']->string2array($feed['title_data']);
+				$feed['body_data'] = $_ENV['uc_misc']->string2array($feed['body_data']);
+				$feed['title_data'] = $_ENV['uc_misc']->string2array($feed['title_data']);
 				$feedlist[$key] = $feed;
 			}
 		}

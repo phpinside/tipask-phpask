@@ -22,7 +22,7 @@
         <!--{loop $taglist $tag}-->
         <tr align="center" class="smalltxt">
             <td class="altbg2">&nbsp;<input class="checkbox" type="checkbox" value="{$tag['name']}" name="delete[]"></td>
-            <td  class="altbg2"><a href="{url question/search/$tag['name']}" target="_blank">{$tag['name']}</a></td>
+            <td  class="altbg2"><a href="{url question/search/tag:$tag['name']}" target="_blank">{$tag['name']}</a></td>
             <td  class="altbg2">{$tag['questions']}</td>
             <td></td>
         </tr>

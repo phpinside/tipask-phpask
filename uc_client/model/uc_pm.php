@@ -19,15 +19,15 @@ define('PMCHATTYPE_ERROR', -13);
 define('PMUIDTYPE_ERROR', -14);
 define('PMDATA_ERROR', -15);
 
-class pmmodel {
+class uc_pmmodel {
 
 	var $db;
 	var $base;
 	function __construct(&$base) {
-		$this->pmmodel($base);
+		$this->uc_pmmodel($base);
 	}
 
-	function pmmodel(&$base) {
+	function uc_pmmodel(&$base) {
 		$this->base = $base;
 		$this->db = $base->db;
 	}
@@ -759,7 +759,7 @@ class pmmodel {
 
 		if($filter == 'newpm') {
 			$addsql = 'm.isnew=1 AND ';
-		/*ÐÔÄÜÓÐÓ°Ïì
+		/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½
 		} elseif($filter == 'privatepm') {
 			$addsql = 't.pmtype=1 AND ';
 		} elseif($filter == 'chatpm') {

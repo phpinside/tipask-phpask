@@ -12,16 +12,16 @@
 define('UC_ARRAY_SEP_1', 'UC_ARRAY_SEP_1');
 define('UC_ARRAY_SEP_2', 'UC_ARRAY_SEP_2');
 
-class miscmodel {
+class uc_miscmodel {
 
 	var $db;
 	var $base;
 
 	function __construct(&$base) {
-		$this->miscmodel($base);
+		$this->uc_miscmodel($base);
 	}
 
-	function miscmodel(&$base) {
+	function uc_miscmodel(&$base) {
 		$this->base = $base;
 		$this->db = $base->db;
 	}

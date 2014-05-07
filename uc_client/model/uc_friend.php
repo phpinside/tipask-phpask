@@ -9,16 +9,16 @@
 
 !defined('IN_UC') && exit('Access Denied');
 
-class friendmodel {
+class uc_friendmodel {
 
 	var $db;
 	var $base;
 
 	function __construct(&$base) {
-		$this->friendmodel($base);
+		$this->uc_friendmodel($base);
 	}
 
-	function friendmodel(&$base) {
+	function uc_friendmodel(&$base) {
 		$this->base = $base;
 		$this->db = $base->db;
 	}

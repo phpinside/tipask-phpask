@@ -9,16 +9,16 @@
 
 !defined('IN_UC') && exit('Access Denied');
 
-class tagmodel {
+class uc_tagmodel {
 
 	var $db;
 	var $base;
 
 	function __construct(&$base) {
-		$this->tagmodel($base);
+		$this->uc_tagmodel($base);
 	}
 
-	function tagmodel(&$base) {
+	function uc_tagmodel(&$base) {
 		$this->base = $base;
 		$this->db = $base->db;
 	}

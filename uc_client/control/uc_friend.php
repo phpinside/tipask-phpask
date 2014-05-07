@@ -9,22 +9,22 @@
 
 !defined('IN_UC') && exit('Access Denied');
 
-class friendcontrol extends base {
+class uc_friendcontrol extends uc_base {
 
 	function __construct() {
-		$this->friendcontrol();
+		$this->uc_friendcontrol();
 	}
 
-	function friendcontrol() {
+	function uc_friendcontrol() {
 		parent::__construct();
 		$this->init_input();
-		$this->load('friend');
+		$this->load('uc_friend');
 	}
 
 	function ondelete() {
 		$uid = intval($this->input('uid'));
 		$friendids = $this->input('friendids');
-		$id = $_ENV['friend']->delete($uid, $friendids);
+		$id = $_ENV['uc_friend']->delete($uid, $friendids);
 		return $id;
 	}
 
@@ -32,14 +32,14 @@ class friendcontrol extends base {
 		$uid = intval($this->input('uid'));
 		$friendid = $this->input('friendid');
 		$comment = $this->input('comment');
-		$id = $_ENV['friend']->add($uid, $friendid, $comment);
+		$id = $_ENV['uc_friend']->add($uid, $friendid, $comment);
 		return $id;
 	}
 
 	function ontotalnum() {
 		$uid = intval($this->input('uid'));
 		$direction = intval($this->input('direction'));
-		$totalnum = $_ENV['friend']->get_totalnum_by_uid($uid, $direction);
+		$totalnum = $_ENV['uc_friend']->get_totalnum_by_uid($uid, $direction);
 		return $totalnum;
 	}
 
@@ -50,8 +50,8 @@ class friendcontrol extends base {
 		$totalnum = intval($this->input('totalnum'));
 		$direction = intval($this->input('direction'));
 		$pagesize = $pagesize ? $pagesize : UC_PPP;
-		$totalnum = $totalnum ? $totalnum : $_ENV['friend']->get_totalnum_by_uid($uid);
-		$data = $_ENV['friend']->get_list($uid, $page, $pagesize, $totalnum, $direction);
+		$totalnum = $totalnum ? $totalnum : $_ENV['uc_friend']->get_totalnum_by_uid($uid);
+		$data = $_ENV['uc_friend']->get_list($uid, $page, $pagesize, $totalnum, $direction);
 		return $data;
 	}
 }

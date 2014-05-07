@@ -9,19 +9,19 @@
 
 !defined('IN_UC') && exit('Access Denied');
 
-class cachecontrol extends base {
+class uc_cachecontrol extends uc_base {
 
 	function __construct() {
-		$this->cachecontrol();
+		$this->uc_cachecontrol();
 	}
 
-	function cachecontrol() {
+	function uc_cachecontrol() {
 		parent::__construct();
 	}
 
 	function onupdate($arr) {
-		$this->load("cache");
-		$_ENV['cache']->updatedata();
+		$this->load("uc_cache");
+		$_ENV['uc_cache']->updatedata();
 	}
 
 }

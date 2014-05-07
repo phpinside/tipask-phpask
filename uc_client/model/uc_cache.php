@@ -17,17 +17,17 @@ if(!function_exists('file_put_contents')) {
 	}
 }
 
-class cachemodel {
+class uc_cachemodel {
 
 	var $db;
 	var $base;
 	var $map;
 
 	function __construct(&$base) {
-		$this->cachemodel($base);
+		$this->uc_cachemodel($base);
 	}
 
-	function cachemodel(&$base) {
+	function uc_cachemodel(&$base) {
 		$this->base = $base;
 		$this->db = $base->db;
 		$this->map = array(

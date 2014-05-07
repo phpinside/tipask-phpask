@@ -21,7 +21,7 @@ if(!function_exists('getgpc')) {
 	}
 }
 
-class base {
+class uc_base {
 
 	var $time;
 	var $onlineip;
@@ -33,10 +33,10 @@ class base {
 	var $user = array();
 	var $input = array();
 	function __construct() {
-		$this->base();
+		$this->uc_base();
 	}
 
-	function base() {
+	function uc_base() {
 		$this->init_var();
 		$this->init_db();
 		$this->init_cache();

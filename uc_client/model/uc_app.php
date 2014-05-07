@@ -9,16 +9,16 @@
 
 !defined('IN_UC') && exit('Access Denied');
 
-class appmodel {
+class uc_appmodel {
 
 	var $db;
 	var $base;
 
 	function __construct(&$base) {
-		$this->appmodel($base);
+		$this->uc_appmodel($base);
 	}
 
-	function appmodel(&$base) {
+	function uc_appmodel(&$base) {
 		$this->base = $base;
 		$this->db = $base->db;
 	}

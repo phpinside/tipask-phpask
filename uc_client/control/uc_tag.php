@@ -9,17 +9,17 @@
 
 !defined('IN_UC') && exit('Access Denied');
 
-class tagcontrol extends base {
+class uc_tagcontrol extends uc_base {
 
 	function __construct() {
-		$this->tagcontrol();
+		$this->uc_tagcontrol();
 	}
 
-	function tagcontrol() {
+	function uc_tagcontrol() {
 		parent::__construct();
 		$this->init_input();
-		$this->load('tag');
-		$this->load('misc');
+		$this->load('uc_tag');
+		$this->load('uc_misc');
 	}
 
 	function ongettag() {
@@ -37,7 +37,7 @@ class tagcontrol extends base {
 			}
 		}
 
-		$data = $_ENV['tag']->get_tag_by_name($tagname);
+		$data = $_ENV['uc_tag']->get_tag_by_name($tagname);
 		if($data) {
 			$apparraynew = array();
 			foreach($data as $tagdata) {
@@ -46,12 +46,12 @@ class tagcontrol extends base {
 				$type = $tmp[0];
 				array_shift($tmp);
 				foreach($tmp as $tmp1) {
-					$tmp1 != '' && $r[] = $_ENV['misc']->string2array($tmp1);
+					$tmp1 != '' && $r[] = $_ENV['uc_misc']->string2array($tmp1);
 				}
 				if(in_array($tagdata['appid'], $apparray)) {
 					if($tagdata['expiration'] > 0 && $this->time - $tagdata['expiration'] > 3600) {
 						$appadd[] = $tagdata['appid'];
-						$_ENV['tag']->formatcache($tagdata['appid'], $tagname);
+						$_ENV['uc_tag']->formatcache($tagdata['appid'], $tagname);
 					} else {
 						$apparraynew[] = $tagdata['appid'];
 					}
@@ -70,12 +70,12 @@ class tagcontrol extends base {
 			$apparray = array_diff($apparray, $apparraynew);
 		} else {
 			foreach($apparray as $appid) {
-				$_ENV['tag']->formatcache($appid, $tagname);
+				$_ENV['uc_tag']->formatcache($appid, $tagname);
 			}
 		}
 		if($apparray) {
-			$this->load('note');
-			$_ENV['note']->add('gettag', "id=$tagname", '', $appadd, -1);
+			$this->load('uc_note');
+			$_ENV['uc_note']->add('gettag', "id=$tagname", '', $appadd, -1);
 		}
 		return $return;
 	}

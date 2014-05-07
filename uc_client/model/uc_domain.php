@@ -9,16 +9,16 @@
 
 !defined('IN_UC') && exit('Access Denied');
 
-class domainmodel {
+class uc_domainmodel {
 
 	var $db;
 	var $base;
 
 	function __construct(&$base) {
-		$this->domainmodel($base);
+		$this->uc_domainmodel($base);
 	}
 
-	function domainmodel(&$base) {
+	function uc_domainmodel(&$base) {
 		$this->base = $base;
 		$this->db = $base->db;
 	}

@@ -9,20 +9,20 @@
 
 !defined('IN_UC') && exit('Access Denied');
 
-class appcontrol extends base {
+class uc_appcontrol extends uc_base {
 
 	function __construct() {
-		$this->appcontrol();
+		$this->uc_appcontrol();
 	}
 
-	function appcontrol() {
+	function uc_appcontrol() {
 		parent::__construct();
-		$this->load('app');
+		$this->load('uc_app');
 	}
 
 	function onls() {
 		$this->init_input();
-		$applist = $_ENV['app']->get_apps('appid, type, name, url, tagtemplates, viewprourl, synlogin');
+		$applist = $_ENV['uc_app']->get_apps('appid, type, name, url, tagtemplates, viewprourl, synlogin');
 		$applist2 = array();
 		foreach($applist as $key => $app) {
 			$app['tagtemplates'] = $this->unserialize($app['tagtemplates']);

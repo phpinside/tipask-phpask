@@ -16,25 +16,25 @@ define('UC_USER_EMAIL_FORMAT_ILLEGAL', -4);
 define('UC_USER_EMAIL_ACCESS_ILLEGAL', -5);
 define('UC_USER_EMAIL_EXISTS', -6);
 
-class usercontrol extends base {
+class uc_usercontrol extends uc_base {
 
 
 	function __construct() {
-		$this->usercontrol();
+		$this->uc_usercontrol();
 	}
 
-	function usercontrol() {
+	function uc_usercontrol() {
 		parent::__construct();
-		$this->load('user');
+		$this->load('uc_user');
 		$this->app = $this->cache['apps'][UC_APPID];
 	}
 
-	// -1 Î´¿ªÆô
+	// -1 Î´ï¿½ï¿½ï¿½ï¿½
 	function onsynlogin() {
 		$this->init_input();
 		$uid = $this->input('uid');
 		if($this->app['synlogin']) {
-			if($this->user = $_ENV['user']->get_user_by_uid($uid)) {
+			if($this->user = $_ENV['uc_user']->get_user_by_uid($uid)) {
 				$synstr = '';
 				foreach($this->cache['apps'] as $appid => $app) {
 					if($app['synlogin'] && $app['appid'] != $this->app['appid']) {
@@ -76,7 +76,7 @@ class usercontrol extends base {
 		if(($status = $this->_check_email($email)) < 0) {
 			return $status;
 		}
-		$uid = $_ENV['user']->add_user($username, $password, $email, 0, $questionid, $answer, $regip);
+		$uid = $_ENV['uc_user']->add_user($username, $password, $email, 0, $questionid, $answer, $regip);
 		return $uid;
 	}
 
@@ -93,12 +93,12 @@ class usercontrol extends base {
 		if(!$ignoreoldpw && $email && ($status = $this->_check_email($email, $username)) < 0) {
 			return $status;
 		}
-		$status = $_ENV['user']->edit_user($username, $oldpw, $newpw, $email, $ignoreoldpw, $questionid, $answer);
+		$status = $_ENV['uc_user']->edit_user($username, $oldpw, $newpw, $email, $ignoreoldpw, $questionid, $answer);
 
 		if($newpw && $status > 0) {
-			$this->load('note');
-			$_ENV['note']->add('updatepw', 'username='.urlencode($username).'&password=');
-			$_ENV['note']->send();
+			$this->load('uc_note');
+			$_ENV['uc_note']->add('updatepw', 'username='.urlencode($username).'&password=');
+			$_ENV['uc_note']->send();
 		}
 		return $status;
 	}
@@ -112,11 +112,11 @@ class usercontrol extends base {
 		$questionid = $this->input('questionid');
 		$answer = $this->input('answer');
 		if($isuid == 1) {
-			$user = $_ENV['user']->get_user_by_uid($username);
+			$user = $_ENV['uc_user']->get_user_by_uid($username);
 		} elseif($isuid == 2) {
-			$user = $_ENV['user']->get_user_by_email($username);
+			$user = $_ENV['uc_user']->get_user_by_email($username);
 		} else {
-			$user = $_ENV['user']->get_user_by_username($username);
+			$user = $_ENV['uc_user']->get_user_by_username($username);
 		}
 
 		$passwordmd5 = preg_match('/^\w{32}$/', $password) ? $password : md5($password);
@@ -124,12 +124,12 @@ class usercontrol extends base {
 			$status = -1;
 		} elseif($user['password'] != md5($passwordmd5.$user['salt'])) {
 			$status = -2;
-		} elseif($checkques && $user['secques'] != '' && $user['secques'] != $_ENV['user']->quescrypt($questionid, $answer)) {
+		} elseif($checkques && $user['secques'] != '' && $user['secques'] != $_ENV['uc_user']->quescrypt($questionid, $answer)) {
 			$status = -3;
 		} else {
 			$status = $user['uid'];
 		}
-		$merge = $status != -1 && !$isuid && $_ENV['user']->check_mergeuser($username) ? 1 : 0;
+		$merge = $status != -1 && !$isuid && $_ENV['uc_user']->check_mergeuser($username) ? 1 : 0;
 		return array($status, $user['username'], $password, $user['email'], $merge);
 	}
 
@@ -153,9 +153,9 @@ class usercontrol extends base {
 		$this->init_input();
 		$username = $this->input('username');
 		if(!$this->input('isuid')) {
-			$status = $_ENV['user']->get_user_by_username($username);
+			$status = $_ENV['uc_user']->get_user_by_username($username);
 		} else {
-			$status = $_ENV['user']->get_user_by_uid($username);
+			$status = $_ENV['uc_user']->get_user_by_uid($username);
 		}
 		if($status) {
 			return array($status['uid'],$status['username'],$status['email']);
@@ -173,7 +173,7 @@ class usercontrol extends base {
 	function ondelete() {
 		$this->init_input();
 		$uid = $this->input('uid');
-		return $_ENV['user']->delete_user($uid);
+		return $_ENV['uc_user']->delete_user($uid);
 	}
 
 	function onaddprotected() {
@@ -183,7 +183,7 @@ class usercontrol extends base {
 		$appid = $this->app['appid'];
 		$usernames = (array)$username;
 		foreach($usernames as $username) {
-			$user = $_ENV['user']->get_user_by_username($username);
+			$user = $_ENV['uc_user']->get_user_by_username($username);
 			$uid = $user['uid'];
 			$this->db->query("REPLACE INTO ".UC_DBTABLEPRE."protectedmembers SET uid='$uid', username='$username', appid='$appid', dateline='{$this->time}', admin='$admin'", 'SILENT');
 		}
@@ -211,7 +211,7 @@ class usercontrol extends base {
 		if(($status = $this->_check_username($newusername)) < 0) {
 			return $status;
 		}
-		$uid = $_ENV['user']->add_user($newusername, $password, $email, $uid);
+		$uid = $_ENV['uc_user']->add_user($newusername, $password, $email, $uid);
 		$this->db->query("DELETE FROM ".UC_DBTABLEPRE."mergemembers WHERE appid='".$this->app['appid']."' AND username='$oldusername'");
 		return $uid;
 	}
@@ -225,11 +225,11 @@ class usercontrol extends base {
 
 	function _check_username($username) {
 		$username = addslashes(trim(stripslashes($username)));
-		if(!$_ENV['user']->check_username($username)) {
+		if(!$_ENV['uc_user']->check_username($username)) {
 			return UC_USER_CHECK_USERNAME_FAILED;
-		} elseif(!$_ENV['user']->check_usernamecensor($username)) {
+		} elseif(!$_ENV['uc_user']->check_usernamecensor($username)) {
 			return UC_USER_USERNAME_BADWORD;
-		} elseif($_ENV['user']->check_usernameexists($username)) {
+		} elseif($_ENV['uc_user']->check_usernameexists($username)) {
 			return UC_USER_USERNAME_EXISTS;
 		}
 		return 1;
@@ -239,11 +239,11 @@ class usercontrol extends base {
 		if(empty($this->settings)) {
 			$this->settings = $this->cache('settings');
 		}
-		if(!$_ENV['user']->check_emailformat($email)) {
+		if(!$_ENV['uc_user']->check_emailformat($email)) {
 			return UC_USER_EMAIL_FORMAT_ILLEGAL;
-		} elseif(!$_ENV['user']->check_emailaccess($email)) {
+		} elseif(!$_ENV['uc_user']->check_emailaccess($email)) {
 			return UC_USER_EMAIL_ACCESS_ILLEGAL;
-		} elseif(!$this->settings['doublee'] && $_ENV['user']->check_emailexists($email, $username)) {
+		} elseif(!$this->settings['doublee'] && $_ENV['uc_user']->check_emailexists($email, $username)) {
 			return UC_USER_EMAIL_EXISTS;
 		} else {
 			return 1;
