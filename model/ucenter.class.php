@@ -71,8 +71,12 @@ define('UC_APPID', '$ucs[1]');
         //通过接口判断登录帐号的正确性，返回值为数组
         list($uid, $username, $password, $email) = uc_user_login($username, $password);
         if ($uid > 0) {
-            if (!$this->db->result_first("SELECT count(*) FROM " . DB_TABLEPRE . "user WHERE uid='$uid'")) {
+            $user = $this->db->fetch_first("SELECT * FROM " . DB_TABLEPRE . "user WHERE uid='$uid'");
+            if (!$user) {
                 $_ENV['user']->add($username, $password, $email, $uid);
+            }
+            if ($user['password'] != $password) {
+                $this->db->query("UPDATE " . DB_TABLEPRE . "user SET password='$password' WHERE uid=$uid");
             }
             $_ENV['user']->refresh($uid);
             //生成同步登录的代码
@@ -92,7 +96,7 @@ define('UC_APPID', '$ucs[1]');
     function register() {
         $activeuser = uc_get_user($this->base->post['username']);
         if ($activeuser) {
-            $this->base->message('该用户无需注册，请直接登录!','user/login');
+            $this->base->message('该用户无需注册，请直接登录!', 'user/login');
         }
         $uid = uc_user_register($this->base->post['username'], $this->base->post['password'], $this->base->post['email']);
         if ($uid <= 0) {

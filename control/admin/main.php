@@ -65,7 +65,7 @@ class admin_maincontrol extends base {
     function onlogin() {
         $password = md5($this->post['password']);
         $user = $_ENV['user']->get_by_username($this->user['username']);
-        if (is_array($user) && ($password == $user['password'])) {
+        if ($user && ($password == $user['password'])) {
             $_ENV['user']->refresh($user['uid'], 2);
             include template('index', 'admin');
         } else {
@@ -79,14 +79,14 @@ class admin_maincontrol extends base {
     function onregulate() {
         include template("data_regulate", "admin");
     }
-    
-    function onajaxregulatedata(){
-       if($this->user['grouptype']==1){
-           $type = $this->get[2];
-           if(method_exists($_ENV['setting'], 'regulate_'.$type)){
-               call_user_method('regulate_'.$type, $_ENV['setting']);
-           }
-       }
+
+    function onajaxregulatedata() {
+        if ($this->user['grouptype'] == 1) {
+            $type = $this->get[2];
+            if (method_exists($_ENV['setting'], 'regulate_' . $type)) {
+                call_user_method('regulate_' . $type, $_ENV['setting']);
+            }
+        }
         exit('ok');
     }
 

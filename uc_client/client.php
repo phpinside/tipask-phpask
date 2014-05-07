@@ -10,7 +10,7 @@
 if (!defined('UC_API')) {
     exit('Access denied');
 }
-error_reporting(0);
+error_reporting(E_ALL);
 define('IN_UC', TRUE);
 define('UC_CLIENT_VERSION', '1.6.0');
 define('UC_CLIENT_RELEASE', '20110501');
@@ -247,12 +247,12 @@ function uc_fopen($url, $limit = 0, $post = '', $cookie = '', $bysocket = FALSE,
 }
 
 function uc_app_ls() {
-    $return = call_user_func(UC_API_FUNC, 'app', 'ls', array());
+    $return = call_user_func(UC_API_FUNC, 'uc_app', 'ls', array());
     return UC_CONNECT == 'mysql' ? $return : uc_unserialize($return);
 }
 
 function uc_feed_add($icon, $uid, $username, $title_template = '', $title_data = '', $body_template = '', $body_data = '', $body_general = '', $target_ids = '', $images = array()) {
-    return call_user_func(UC_API_FUNC, 'feed', 'add', array('icon' => $icon,
+    return call_user_func(UC_API_FUNC, 'uc_feed', 'add', array('icon' => $icon,
         'appid' => UC_APPID,
         'uid' => $uid,
         'username' => $username,
@@ -275,7 +275,7 @@ function uc_feed_add($icon, $uid, $username, $title_template = '', $title_data =
 }
 
 function uc_feed_get($limit = 100, $delete = TRUE) {
-    $return = call_user_func(UC_API_FUNC, 'feed', 'get', array('limit' => $limit, 'delete' => $delete));
+    $return = call_user_func(UC_API_FUNC, 'uc_feed', 'get', array('limit' => $limit, 'delete' => $delete));
     return UC_CONNECT == 'mysql' ? $return : uc_unserialize($return);
 }
 
