@@ -17,7 +17,7 @@ class ucentermodel {
 
     /* 连接ucenter服务器，生成ucconfig文件 */
 
-    function connect($url, $password, $ip='') {
+    function connect($url, $password, $ip = '') {
         $ucapi = preg_replace("/\/$/", '', trim($url));
         $ucip = trim($ip);
         if (!$ucip) {
@@ -67,7 +67,7 @@ define('UC_APPID', '$ucs[1]');
 
     /* 同步uc注册 */
 
-    function login($username,$password) {
+    function login($username, $password) {
         //通过接口判断登录帐号的正确性，返回值为数组
         list($uid, $username, $password, $email) = uc_user_login($username, $password);
         if ($uid > 0) {
@@ -92,7 +92,7 @@ define('UC_APPID', '$ucs[1]');
     function register() {
         $activeuser = uc_get_user($this->base->post['username']);
         if ($activeuser) {
-            $this->base->message('该用户无需注册，请直接登录！<br><a href="index.php?user/login">继续</a>');
+            $this->base->message('该用户无需注册，请直接登录!','user/login');
         }
         $uid = uc_user_register($this->base->post['username'], $this->base->post['password'], $this->base->post['email']);
         if ($uid <= 0) {
@@ -112,12 +112,7 @@ define('UC_APPID', '$ucs[1]');
                 $this->base->message('未定义');
             }
         } else {
-
-            if (isset($this->base->post['access_token'])) {
-                $uid = $_ENV['user']->add($this->base->post['username'], $this->base->post['password'], $this->base->post['email'], $uid, $this->base->post['access_token']);
-            } else {
-                $_ENV['user']->add($this->base->post['username'], $this->base->post['password'], $this->base->post['email'],$uid);
-            }
+            $_ENV['user']->add($this->base->post['username'], $this->base->post['password'], $this->base->post['email'], $uid);
             $_ENV['user']->refresh($uid);
             $ucsynlogin = uc_user_synlogin($uid);
             $this->base->message('注册成功' . $ucsynlogin . '<br><a href="' . $_SERVER['PHP_SELF'] . '">继续</a>');
@@ -188,9 +183,9 @@ define('UC_APPID', '$ucs[1]');
     function set_avatar($uid) {
         return uc_avatar($uid);
     }
-    
-    function uppass($username,$oldpw,$newpw,$email){
-        uc_user_edit($username,$oldpw,$newpw,$email);
+
+    function uppass($username, $oldpw, $newpw, $email) {
+        uc_user_edit($username, $oldpw, $newpw, $email);
     }
 
 }
