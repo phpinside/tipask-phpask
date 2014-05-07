@@ -30,10 +30,8 @@ class questioncontrol extends base {
             $cid3 = $this->post['cid3'];
             $cid = $this->post['cid'];
             $hidanswer = intval($this->post['hidanswer']) ? 1 : 0;
-            $price = intval($this->post['givescore']);
+            $price = abs($this->post['givescore']);
             $askfromuid = $this->post['askfromuid'];
-            //检查魅力值
-            //if($this->user['credit3']<$this->user)
             $this->setting['code_ask'] && $this->checkcode(); //检查验证码
             $offerscore = $price;
             ($hidanswer) && $offerscore+=10;
@@ -314,7 +312,7 @@ class questioncontrol extends base {
 
     function onaddscore() {
         $qid = intval($this->post['qid']);
-        $score = intval($this->post['score']);
+        $score = abs($this->post['score']);
         if ($this->user['credit2'] < $score) {
             $this->message("财富值不足!", 'BACK');
         }
