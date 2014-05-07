@@ -150,7 +150,7 @@ class messagemodel {
         $timestart = $this->base->time - 30 * 24 * 3600;
         $cids = implode(",", $user_categorys);
         $sql = "SELECT COUNT(*) FROM " . DB_TABLEPRE . "question WHERE cid IN ($cids) AND authorid<>$uid";
-        ($type == 'notread') && $sql.="  AND id NOT IN (SELECT qid FROM " . DB_TABLEPRE . "user_readlog WHERE uid=$uid)";
+        ($type == 'notread') && $sql.="  AND id NOT IN (SELECT qid FROM " . DB_TABLEPRE . "user_readlog WHERE uid=$uid) AND time>$timestart";
         return $this->db->result_first($sql);
     }
 
