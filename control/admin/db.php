@@ -1,4 +1,4 @@
-<?
+<?php
 
 !defined('IN_TIPASK') && exit('Access Denied');
 

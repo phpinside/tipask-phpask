@@ -1,7 +1,5 @@
 <!--{template header,admin}-->
-<script type="text/javascript">
-        g_site_url='{SITE_URL}';
-</script>
+
 <div style="width:100%; height:15px;color:#000;margin:0px 0px 10px;">
   <div style="float:left;"><a href="index.php?admin_main/stat{$setting['seo_suffix']}" target="main"><b>控制面板首页</b></a>&nbsp;&raquo;&nbsp;数据库备份</div>
 </div>
@@ -79,9 +77,9 @@
 		<td class="altbg2">{$value['filepath']}</td>
 		<td class="altbg2">{$value['filesize']}</td>
 		<td class="altbg2">{$value['filectime']}</td>
-		<td class="altbg2"><a href="#" onclick="cofirmimport('{$value['filename']}')" >导入文件</a></td>
-		<td class="altbg2"><a href="#" onclick="download('{$value['filename']}')">下载文件</a></td>
-		<td class="altbg2"><a href="#" onclick="removefile('{$value['filename']}')">删除文件</a></td>
+		<td class="altbg2"><a href="javascript:void(0)" onclick="cofirmimport('{$value['filename']}')" >导入文件</a></td>
+		<td class="altbg2"><a href="javascript:void(0)" onclick="downloadfile('{$value['filename']}')">下载文件</a></td>
+		<td class="altbg2"><a href="javascript:void(0)" onclick="removefile('{$value['filename']}')">删除文件</a></td>
 	</tr>
 	<!--{/loop}-->
 </table>
@@ -92,18 +90,18 @@ function cofirmimport(filename){
 	if(confirm('导入该sql文件会覆盖原来的数据!是否导入？')==false){
 		return false;
 	}else{
-		window.location='index.php?admin_db/import/'+filename.replace(/\./g,'*');
+		window.location='{SITE_URL}index.php?admin_db/import/'+filename.replace(/\./g,'*');
 	}
 }
 function removefile(filename){
 	if(confirm('删除数据库备份文件不可恢复!是否删除？')==false){
 		return false;
 	}else{
-		window.location='index.php?admin_db/remove/'+filename.replace(/\./g,'*');
+		window.location='{SITE_URL}index.php?admin_db/remove/'+filename.replace(/\./g,'*');
 	}
 }
-function download(filename){
-	window.location='index.php?admin_db/downloadfile/'+filename.replace(/\./g,'*');
+function downloadfile(filename){
+	window.location='{SITE_URL}index.php?admin_db/downloadfile/'+filename.replace(/\./g,'*');
 }
 function selectAll(tipid,chkid,childname){
 	var chk=$("#"+chkid);
