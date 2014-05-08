@@ -84,7 +84,7 @@
         </div>
     </div>
 </div>
-<div id="gift_desc" title="礼品详情" style="display: none"></div>
+<div id="gift_desc" title="礼品详情" style="display: none;"></div>
 <div id="exchangeform" title="兑换礼品" style="display: none">
     <form name="loginform"  action="{url gift/add}" method="post">
         <input type="hidden" name="gid"  id="gid" value="" />
@@ -191,9 +191,9 @@
             $("#gift_desc").html($("#" + gid + "_desc").html());
             $("#gift_desc").dialog({
     autoOpen: false,
-            width: 500,
-            modal: false,
-            resizable: false
+            width: 600,
+            modal: true,
+            resizable: true
     });
             $("#gift_desc").dialog("open");
     }
