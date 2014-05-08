@@ -26,11 +26,11 @@
         </td>
         <td width="30%" class="altbg2">礼品名称:<input type="text" name="giftname"></td>
         <td rowspan="2" class="altbg2"><input class="btn" type="submit" value="提 交"></td>
+        </tr>
         <tr>
             <td class="altbg2">兑换用户：<input class="txt" name="username"></td>
             <td class="altbg2">兑换时间:<input class="txt" id="timestart" name="srchregdatestart">到&nbsp;<input class="txt" id="timeend" name="srchregdateend"></td>
         </tr>
-   </tr>
 	</tbody>
 </table>
 </form>
@@ -38,18 +38,18 @@
 <form name="userForm" action="index.php?admin_gift/remove{$setting['seo_suffix']}" method="post">
  <table width="100%" border="0" cellpadding="4" cellspacing="1" class="tableborder">
 	<tr class="header">
-		<td width="10%"><input class="checkbox" value="chkall" id="chkall" onclick="checkall('gid[]')" type="checkbox" name="chkall"><label for="chkall">全选</label></td>
+		<td width="5%"><input class="checkbox" value="chkall" id="chkall" onclick="checkall('id[]')" type="checkbox" name="chkall"><label for="chkall">全选</label></td>
 		<td  width="10%">礼品名称</td>
-		<td  width="10%">用户名</td>
-		<td  width="10%">真名</td>
-		<td  width="10%">地址</td>
+		<td  width="5%">用户名</td>
+		<td  width="5%">真实姓名</td>
+		<td  width="15%">地址</td>
 		<td  width="5%">邮编</td>
 		<td  width="5%">电话</td>
 		<td  width="5%">QQ</td>
 		<td  width="10%">Email</td>
-		<td  width="10%">备注</td>
+		<td  width="15%">备注</td>
 		<td  width="10%">兑换时间</td>
-		<td  width="5%">状态</td>
+		<td  width="10%">状态</td>
 	</tr>
 	
 	<!--{loop $loglist $log}-->
