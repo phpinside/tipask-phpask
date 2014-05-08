@@ -6,7 +6,7 @@
             <ul class="gift-list clearfix">
                 <!--{loop $giftlist $gift}-->
                 <li>
-                    <img width="138" height="138" src="{SITE_URL}{$gift['image']}" alt="{$gift['title']}" />
+                    <img width="138" height="138" src="{SITE_URL}{$gift['image']}" alt="{$gift['title']}" onclick="show_desc('{$gift[title]}', {$gift['id']});"/>
                     <a class="name" title="{$gift['title']}"  href="javascript:void(0);" onclick="show_desc('{$gift[title]}', {$gift['id']});">{$gift['title']}</a>
                     <span>(售价：{$gift['credit']}财富）</span>
                     <div style="display:none" id="{$gift['id']}_desc">{$gift['description']}</div>
@@ -79,23 +79,7 @@
                 <p>进行了编辑，将使更多人因此受益。1</p>
                 <p>进行了编辑，将使更多人因此受益。2</p>
                 <p>进行了编辑，将使更多人因此受益。3</p>
-                <p>进行了编辑，将使更多人因此受益。4</p>
-                <p>进行了编辑，将使更多人因此受益。5</p>
-                <p>进行了编辑，将使更多人因此受益。6</p>
-                <p>进行了编辑，将使更多人因此受益。7</p>
-                <p>进行了编辑，将使更多人因此受益。8</p>
-                <p>进行了编辑，将使更多人因此受益。9</p>
-                <p>进行了编辑，将使更多人因此受益。10</p>
-                <p>进行了编辑，将使更多人因此受益。11</p>
-                <p>进行了编辑，将使更多人因此受益。12</p>
-                <p>胡淼刚刚兑换了礼品"excel导入插件"13</p>
-                <p>进行了编辑，将使更多人因此受益。14</p>
-                <p>进行了编辑，将使更多人因此受益。15</p>
-                <p>进行了编辑，将使更多人因此受益。16</p>
-                <p>进行了编辑，将使更多人因此受益。17</p>
-                <p>进行了编辑，将使更多人因此受益。18</p>
-                <p>进行了编辑，将使更多人因此受益。19</p>
-                <p>进行了编辑，将使更多人因此受益。20</p>
+
             </div>
         </div>
     </div>

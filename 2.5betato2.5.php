@@ -50,9 +50,9 @@ CREATE TABLE ask_user_attention (
 ) ENGINE=MyISAM;
 
 
-ALTER TABLE `ask_user` ADD `followers` INT( 10 ) NOT NULL DEFAULT '0' AFTER `supports` ;
-ALTER TABLE `ask_user` ADD `attentions` INT( 10 ) NOT NULL DEFAULT '0' AFTER `followers`;
-
+ALTER TABLE ask_user ADD `followers` INT( 10 ) NOT NULL DEFAULT '0' AFTER `supports` ;
+ALTER TABLE ask_user ADD `attentions` INT( 10 ) NOT NULL DEFAULT '0' AFTER `followers`;
+ALTER TABLE ask_gift CHANGE `description` `description` TEXT NOT NULL;
 DROP TABLE IF EXISTS ask_user_readlog;
 CREATE TABLE ask_user_readlog (
   `uid` int(10) NOT NULL,
