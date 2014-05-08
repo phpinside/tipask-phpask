@@ -54,6 +54,24 @@
             <div class="title">礼品公告</div>
             <div class="rcontent clearfix">{$setting['gift_note']}</div>
         </div>
+        <div class="modbox mt10">
+            <h3 class="title">财富榜</h3>
+            <ul class="right-list" id="alltop">
+                <!--{eval $weekuserlist=$this->fromcache('alluserlist');}-->
+                <!--{loop $weekuserlist $index $alluser}-->
+                <!--{eval $index++;}-->
+                <li>
+                    <!--{if $index<4}-->
+                    <em class="n1">{$index}</em>
+                    <!--{else}-->
+                    <em class="n2">{$index}</em>
+                    <!--{/if}-->
+                    <a href="{url user/space/$alluser['uid']}" target="_blank" onmouseover="pop_user_on(this, '{$alluser[uid]}', 'text');"  onmouseout="pop_user_out();">{$alluser['username']}</a>
+                    <span class="credit">{$alluser['credit2']}</span>
+                </li>
+                <!--{/loop}-->
+            </ul>
+        </div>
         <div class="modbox mt15">
             <div class="title">兑换动态</div>
             <div id="exchange_detail" class="exchange">
@@ -79,24 +97,6 @@
                 <p>进行了编辑，将使更多人因此受益。19</p>
                 <p>进行了编辑，将使更多人因此受益。20</p>
             </div>
-        </div>
-        <div class="modbox mt10">
-            <h3 class="title">财富榜</h3>
-            <ul class="right-list" id="alltop">
-                <!--{eval $weekuserlist=$this->fromcache('alluserlist');}-->
-                <!--{loop $weekuserlist $index $alluser}-->
-                <!--{eval $index++;}-->
-                <li>
-                    <!--{if $index<4}-->
-                    <em class="n1">{$index}</em>
-                    <!--{else}-->
-                    <em class="n2">{$index}</em>
-                    <!--{/if}-->
-                    <a href="{url user/space/$alluser['uid']}" target="_blank" onmouseover="pop_user_on(this, '{$alluser[uid]}', 'text');"  onmouseout="pop_user_out();">{$alluser['username']}</a>
-                    <span class="credit">{$alluser['credit2']}</span>
-                </li>
-                <!--{/loop}-->
-            </ul>
         </div>
     </div>
 </div>
