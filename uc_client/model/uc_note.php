@@ -113,7 +113,7 @@ class uc_notemodel {
 		if($noteid) {
 			$note = $this->_get_note_by_id($noteid);
 		}
-		$this->base->load('misc');
+		$this->base->load('uc_misc');
 		$apifilename = isset($app['apifilename']) && $app['apifilename'] ? $app['apifilename'] : 'uc.php';
 		if($app['extra']['apppath'] && @include $app['extra']['apppath'].'./api/'.$apifilename) {
 			$uc_note = new uc_note();
@@ -130,7 +130,7 @@ class uc_notemodel {
 		} else {
 			$url = $this->get_url_code($note['operation'], $note['getdata'], $appid);
 			$note['postdata'] = str_replace(array("\n", "\r"), '', $note['postdata']);
-			$response = trim($_ENV['misc']->dfopen2($url, 0, $note['postdata'], '', 1, $app['ip'], UC_NOTE_TIMEOUT, TRUE));
+			$response = trim($_ENV['uc_misc']->dfopen2($url, 0, $note['postdata'], '', 1, $app['ip'], UC_NOTE_TIMEOUT, TRUE));
 		}
 
 		$returnsucceed = $response != '' && ($response == 1 || is_array(xml_unserialize($response)));

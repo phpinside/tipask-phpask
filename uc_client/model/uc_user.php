@@ -185,8 +185,8 @@ class uc_usermodel {
 			$this->db->query("DELETE FROM ".UC_DBTABLEPRE."members WHERE uid IN($uids)");
 			$this->db->query("DELETE FROM ".UC_DBTABLEPRE."memberfields WHERE uid IN($uids)");
 			uc_user_deleteavatar($uidsarr);
-			$this->base->load('note');
-			$_ENV['note']->add('deleteuser', "ids=$uids");
+			$this->base->load('uc_note');
+			$_ENV['uc_note']->add('deleteuser', "ids=$uids");
 			return $this->db->affected_rows();
 		} else {
 			return 0;

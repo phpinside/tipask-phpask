@@ -192,8 +192,8 @@ class uc_base {
 
 	function init_note() {
 		if($this->note_exists()) {
-			$this->load('note');
-			$_ENV['note']->send();
+			$this->load('uc_note');
+			$_ENV['uc_note']->send();
 		}
 	}
 

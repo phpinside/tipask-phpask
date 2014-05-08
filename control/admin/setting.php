@@ -206,22 +206,15 @@ class admin_settingcontrol extends base {
 
     function onucenter() {
         if (isset($this->post['submit'])) {
-            foreach ($this->post as $key => $value) {
-                if ('ucenter' == substr($key, 0, 7)) {
-                    $this->setting[$key] = $value;
-                }
-            }
-            $this->setting['ucenter_ask'] = intval(isset($this->post['ucenter_ask']));
-            $this->setting['ucenter_answer'] = intval(isset($this->post['ucenter_answer']));
-            $this->setting['ucenter_adopt'] = intval(isset($this->post['ucenter_adopt']));
+            $this->setting['ucenter_open'] = intval(isset($this->post['ucenter_open']));
             $_ENV['setting']->update($this->setting);
-            //连接ucenter服务端，生成uc配置文件
-            $message = 'UCenter设置保持完毕！';
-            if ($this->setting['ucenter_open']) {
-                $this->load('ucenter');
-                $success = $_ENV['ucenter']->connect($this->setting['ucenter_url'], $this->setting['ucenter_password'], $this->setting['ucenter_ip']);
-                $success && $message = 'UCenter服务器连接成功，设置保持完毕！';
+            if ($this->post['ucenter_config']){
+                $ucconfig = "<?php\n";
+                $ucconfig.=tstripslashes($this->post['ucenter_config']);
+                writetofile(TIPASK_ROOT . '/data/ucconfig.inc.php',$ucconfig);
             }
+            //连接ucenter服务端，生成uc配置文件
+            $message = 'UCenter设置完成！';
         }
         include template('setting_ucenter', 'admin');
     }

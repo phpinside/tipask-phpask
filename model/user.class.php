@@ -165,7 +165,7 @@ class usermodel {
     function add($username, $password, $email = '', $uid = 0) {
         $password = md5($password);
         if ($uid) {
-            $this->db->query("REPLACE INTO  " . DB_TABLEPRE . "user (uid,username,password,email,regip,`lastlogin`) VALUES ('$uid','$username','$password','$email','" . getip() . "',{$this->base->time})");
+            $this->db->query("REPLACE INTO  " . DB_TABLEPRE . "user (uid,username,password,email,regip,regtime,`lastlogin`) VALUES ('$uid','$username','$password','$email','" . getip() . "',{$this->base->time},{$this->base->time})");
         } else {
             $this->db->query("INSERT INTO " . DB_TABLEPRE . "user(username,password,email,regip,regtime,`lastlogin`) values ('$username','$password','$email','" . getip() . "',{$this->base->time},{$this->base->time})");
             $uid = $this->db->insert_id();

@@ -12,7 +12,7 @@
 <!--{/if}-->
 <table width="100%" cellspacing="1" cellpadding="4" align="center" class="tableborder">
 	<tbody><tr class="header"><td>设置说明</td></tr>
-	<tr class="altbg1"><td>UCenter整合开启前，务必关闭通行证整合。</td></tr>
+            <tr class="altbg1"><td>UCenter整合开启前，务必关闭通行证整合。<br />配置步骤如下：<br />1、ucenter服务端添加tipask问答应用<br />2、添加完成之后将生成的应用配置贴到下方即可<br />3、ucenter服务端检测tipask问答连接状态，通信成功即表示整合完成</td></tr>
 </tbody></table>
 <br />
 <form action="index.php?admin_setting/ucenter{$setting['seo_suffix']}" method="post">
@@ -29,23 +29,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="altbg1" width="45%"><b>UCenter的URL:</b><br><span class="smalltxt">填写UCenter服务端的地址。</span></td>
-			<td class="altbg2"><input type="text" value="{$setting['ucenter_url']}" name="ucenter_url" style="width:332px;"></td>
-		</tr>
-		<tr>
-			<td class="altbg1" width="45%"><b>UCenter的IP:</b><br><span class="smalltxt">一般不用填写，通信失败后可尝试填写</span></td>
-			<td class="altbg2"><input type="text" value="{$setting['ucenter_ip']}" name="ucenter_ip" style="width:332px;"></td>
-		</tr>
-		<tr>
-			<td class="altbg1" width="45%"><b>UCenter的密码:</b><br><span class="smalltxt">UCenter的管理密码。</span></td>
-			<td class="altbg2"><input type="password" value="{$setting['ucenter_password']}" name="ucenter_password" style="width:332px;"></td>
-		</tr>
-		<tr>
-			<td class="altbg1" width="45%"><b>需要加入的事件:</b><br><span class="smalltxt">选择需要加入到事件的操作。</span></td>
-			<td class="altbg2">
-						<input name="ucenter_ask" value="1" {if 1==$setting['ucenter_ask'] }checked{/if}  type="checkbox">提问&nbsp;&nbsp;
-						<input name="ucenter_answer" value="1" {if 1==$setting['ucenter_answer'] }checked{/if}  type="checkbox">回答
-			</td>
+			<td class="altbg1" width="45%"><b>应用配置信息</b><br><span class="smalltxt">ucener中的应用配置信息,保存之后配置会写入到tipask/data/ucconfig.inc.php中，也可自行修改</span></td>
+			<td class="altbg2"><textarea name="ucenter_config" style="width:650px;height:200px;"></textarea></td>
 		</tr>
 	</table>
 	<br>

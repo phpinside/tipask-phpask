@@ -15,59 +15,15 @@ class ucentermodel {
         require_once TIPASK_ROOT . '/uc_client/client.php';
     }
 
-    /* 连接ucenter服务器，生成ucconfig文件 */
-
-    function connect($url, $password, $ip = '') {
-        $ucapi = preg_replace("/\/$/", '', trim($url));
-        $ucip = trim($ip);
-        if (!$ucip) {
-            $temp = @parse_url($ucapi);
-            $ucip = gethostbyname($temp['host']);
-            if (ip2long($ucip) == -1 || ip2long($ucip) === FALSE) {
-                $ucip = '';
-            }
-        }
-        $ucinfo = uc_fopen2($ucapi . '/index.php?m=app&a=ucinfo&a=ucinfo', 500, '', '', 1, $ucip);
-        list($status, $ucversion, $ucrelease, $uccharset, $ucdbcharset, $apptypes) = explode('|', $ucinfo);
-
-        if ($status != 'UC_STATUS_OK') {
-            exit('连接失败,请检查URL和密码是否正确！');
-        }
-
-        $postdata = "m=app&a=add&ucfounder=&ucfounderpw=" . urlencode($password) . "&apptype=" . urlencode('OTHER') . "&appname=" . urlencode($this->base->setting['site_name']) . "&appurl=" . urlencode(SITE_URL) . "&appip=&appcharset=" . TIPASK_CHARSET . '&appdbcharset=' . DB_CHARSET;
-        $s = uc_fopen2($ucapi . '/index.php', 500, $postdata, '', 1, $ucip);
-        if (empty($s)) {
-            exit('不能连接到UCenter服务端!');
-        } elseif ($s == '-1') {
-            exit('UCenter密码错误!');
-        } else {
-            $ucs = explode('|', $s);
-            if (empty($ucs[0]) || empty($ucs[1])) {
-                exit('网络连接超时，不能返回数据，请稍后重试！');
-            }
-        }
-        $ucdata = "<?php
-define('UC_OPEN','1');
-define('UC_CONNECT', 'uc_api_post');
-define('UC_DBHOST', '$ucs[2]');
-define('UC_DBUSER', '$ucs[4]');
-define('UC_DBPW', '$ucs[5]');
-define('UC_DBNAME', '$ucs[3]');
-define('UC_DBCHARSET', '$ucs[6]');
-define('UC_DBTABLEPRE', '$ucs[7]');
-define('UC_KEY', '$ucs[0]');
-define('UC_API', '$ucapi');
-define('UC_CHARSET', '$ucs[8]');
-define('UC_IP', '$ucip');
-define('UC_APPID', '$ucs[1]');
-?>";
-        $bytes = writetofile(TIPASK_ROOT . '/data/ucconfig.inc.php', $ucdata);
-        return (0 != $bytes);
-    }
-
     /* 同步uc注册 */
 
     function login($username, $password) {
+        $tuser = $_ENV['user']->get_by_username($username);
+        $ucenter_user = uc_get_user($username);
+        if (!$ucenter_user && ($tuser['username']==$username && $password==$tuser['password'])){
+            $uid = uc_user_register($tuser['username'], $this->base->post['password'], $tuser['email']);
+            $this->db->query("UPDATE " . DB_TABLEPRE . "user SET uid=$uid WHERE uid=".$tuser['uid']);
+        }
         //通过接口判断登录帐号的正确性，返回值为数组
         list($uid, $username, $password, $email) = uc_user_login($username, $password);
         if ($uid > 0) {
@@ -81,13 +37,13 @@ define('UC_APPID', '$ucs[1]');
             $_ENV['user']->refresh($uid);
             //生成同步登录的代码
             $ucsynlogin = uc_user_synlogin($uid);
-            $this->base->message('登录成功' . $ucsynlogin . '<br><a href="' . $_SERVER['PHP_SELF'] . '">继续</a>');
+            $this->base->message('登录成功!' . $ucsynlogin . '<br><a href="' . $_SERVER['PHP_SELF'] . '">继续</a>');
         } elseif ($uid == -1) {
-            $this->base->message('用户不存在,或者被删除');
+            $this->base->message('用户不存在,或者被删除!');
         } elseif ($uid == -2) {
-            $this->base->message('密码错误');
+            $this->base->message('密码错误!');
         } else {
-            $this->base->message('未定义');
+            $this->base->message('未定义!');
         }
     }
 
