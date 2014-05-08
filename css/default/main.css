@@ -326,6 +326,8 @@ th{font-style: normal;font-weight: 400;}
 .right-list .n2{ background:#e5e5e5; color:#666;}
 .right-list .credit{float: right;color:#FF8100;margin-right: 5px;}
 
+
+
 /*问题关注*/
 .question_followbox{color:#999999;}
 .question_followbox .overview{margin: 0 0 10px;}
@@ -570,6 +572,8 @@ th{font-style: normal;font-weight: 400;}
 .credit_note{margin-left: 15px;}
 .credit_note p{height:25px;}
 
+.exchange{padding:4px 10px 5px;}
+.exchange p{color: #333333;margin: 8px 10px 0;padding-bottom: 6px;}
 
 /*用户空间*/
 .usermenu{padding:15px 5px 5px; border:1px solid #F2E4A4; background:#FFFEF1;}

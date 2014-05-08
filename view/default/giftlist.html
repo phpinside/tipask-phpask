@@ -54,9 +54,32 @@
             <div class="title">礼品公告</div>
             <div class="rcontent clearfix">{$setting['gift_note']}</div>
         </div>
-        <!--        <div class="modbox mt15">
-                    <div class="title">兑换动态</div>
-                </div>-->
+        <div class="modbox mt15">
+            <div class="title">兑换动态</div>
+            <div id="exchange_detail" class="exchange">
+                <p><a href="#">胡淼</a>刚刚兑换了礼品"excel导入插件"0</p>
+                <p>进行了编辑，将使更多人因此受益。1</p>
+                <p>进行了编辑，将使更多人因此受益。2</p>
+                <p>进行了编辑，将使更多人因此受益。3</p>
+                <p>进行了编辑，将使更多人因此受益。4</p>
+                <p>进行了编辑，将使更多人因此受益。5</p>
+                <p>进行了编辑，将使更多人因此受益。6</p>
+                <p>进行了编辑，将使更多人因此受益。7</p>
+                <p>进行了编辑，将使更多人因此受益。8</p>
+                <p>进行了编辑，将使更多人因此受益。9</p>
+                <p>进行了编辑，将使更多人因此受益。10</p>
+                <p>进行了编辑，将使更多人因此受益。11</p>
+                <p>进行了编辑，将使更多人因此受益。12</p>
+                <p>胡淼刚刚兑换了礼品"excel导入插件"13</p>
+                <p>进行了编辑，将使更多人因此受益。14</p>
+                <p>进行了编辑，将使更多人因此受益。15</p>
+                <p>进行了编辑，将使更多人因此受益。16</p>
+                <p>进行了编辑，将使更多人因此受益。17</p>
+                <p>进行了编辑，将使更多人因此受益。18</p>
+                <p>进行了编辑，将使更多人因此受益。19</p>
+                <p>进行了编辑，将使更多人因此受益。20</p>
+            </div>
+        </div>
         <div class="modbox mt10">
             <h3 class="title">财富榜</h3>
             <ul class="right-list" id="alltop">
@@ -127,17 +150,69 @@
     <div class="clr mt15"></div>
 </div>
 <script type="text/javascript">
-            function show_desc(title, gid) {
-            $("#gift_desc").attr("title", title + "详情");
-                    $("#gift_desc").html($("#" + gid + "_desc").html());
-                    $("#gift_desc").dialog({
-            autoOpen: false,
-                    width: 500,
-                    modal: false,
-                    resizable: false
-            });
-                    $("#gift_desc").dialog("open");
+    $(document).ready(function(){
+        	if($("#exchange_detail").height()>250){
+		$("#exchange_detail").height(250);
+		$("#exchange_detail").css("overflow","hidden");
+		var scroll=new s('exchange_detail',2000,30);
+		scroll.bind();
+		scroll.start();
+	}
+    });
+            function s(zxdt, delay, speed){
+                    this.rotator = $("#" + zxdt);
+                    this.delay = delay || 1000;
+                    this.speed = speed || 20;
+                    this.tid = this.tid2 = this.firstp = null;
+                    this.pause = false;
+                    this.num = 0;
+                    this.p_length = $("#exchange_detail p").length;
+                    }
+    s.prototype = {
+    bind:function(){
+    var o = this;
+            this.rotator.hover(function(){o.end(); }, function(){o.start(); });
+    },
+            start:function(){
+            this.pause = false;
+                    if ($("#exchange_detail p").length == this.p_length){
+            this.firstp = $("#exchange_detail p:first-child");
+                    this.rotator.append(this.firstp.clone());
             }
+            var o = this;
+                    this.tid = setInterval(function(){o.rotation(); }, this.speed);
+            },
+            end:function(){
+                    this.pause = true;
+                    clearInterval(this.tid);
+                    clearTimeout(this.tid2);
+            },
+            rotation:function(){
+                    if (this.pause)return;
+                    var o = this;
+                    var firstp = $("#exchange_detail p:first-child");
+                    this.num++;
+                    this.rotator[0].scrollTop = this.num;
+                    if (this.num == this.firstp[0].scrollHeight + 8){
+                        clearInterval(this.tid);
+                        this.firstp.remove();
+                        this.num = 0;
+                        this.rotator[0].scrollTop = 0;
+                        this.tid2 = setTimeout(function m(){o.start(); }, this.delay);
+                    }
+            }
+    }
+    function show_desc(title, gid) {
+    $("#gift_desc").attr("title", title + "详情");
+            $("#gift_desc").html($("#" + gid + "_desc").html());
+            $("#gift_desc").dialog({
+    autoOpen: false,
+            width: 500,
+            modal: false,
+            resizable: false
+    });
+            $("#gift_desc").dialog("open");
+    }
     function exchange(id, credit) {
     var uid = "{$user['uid']}";
             var usercredit = "{$user['credit2']}";
