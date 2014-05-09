@@ -107,8 +107,10 @@ class questionmodel {
         $author && ($condition .= " AND `author`='$author'");
         $datestart && ($condition .= " AND `time`>= " . strtotime($datestart));
         $dateend && ($condition .=" AND `time`<= " . strtotime($dateend));
-        $cid && ($condition .= " AND `cid`= $cid ");
-        isset($this->statustable[$status]) && $condition.=$this->statustable[$status];
+        if($cid){
+            $category = $this->base->category[$cid];
+            $sql .= " AND `cid".$category['grade']."`= $cid ";            
+        }        isset($this->statustable[$status]) && $condition.=$this->statustable[$status];
         return $this->db->fetch_total('question', $condition);
     }
 
@@ -120,7 +122,10 @@ class questionmodel {
         $author && ($sql .= " AND `author`='$author'");
         $datestart && ($sql .= " AND `time` >= " . strtotime($datestart));
         $dateend && ($sql .=" AND `time` <= " . strtotime($dateend));
-        $cid && ($sql .= " AND `cid`= $cid ");
+        if($cid){
+            $category = $this->base->category[$cid];
+            $sql .= " AND `cid".$category['grade']."`= $cid ";            
+        }
         isset($this->statustable[$status]) && $sql.=$this->statustable[$status];
         $sql.=" ORDER BY `time` DESC LIMIT $start,$limit";
         $questionlist = array();
