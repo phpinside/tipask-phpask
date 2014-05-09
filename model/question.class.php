@@ -107,10 +107,11 @@ class questionmodel {
         $author && ($condition .= " AND `author`='$author'");
         $datestart && ($condition .= " AND `time`>= " . strtotime($datestart));
         $dateend && ($condition .=" AND `time`<= " . strtotime($dateend));
-        if($cid){
+        if ($cid) {
             $category = $this->base->category[$cid];
-            $condition .= " AND `cid".$category['grade']."`= $cid ";            
-        }        isset($this->statustable[$status]) && $condition.=$this->statustable[$status];
+            $condition .= " AND `cid" . $category['grade'] . "`= $cid ";
+        }
+        isset($this->statustable[$status]) && $condition.=$this->statustable[$status];
         return $this->db->fetch_total('question', $condition);
     }
 
@@ -122,9 +123,9 @@ class questionmodel {
         $author && ($sql .= " AND `author`='$author'");
         $datestart && ($sql .= " AND `time` >= " . strtotime($datestart));
         $dateend && ($sql .=" AND `time` <= " . strtotime($dateend));
-        if($cid){
+        if ($cid) {
             $category = $this->base->category[$cid];
-            $sql .= " AND `cid".$category['grade']."`= $cid ";            
+            $sql .= " AND `cid" . $category['grade'] . "`= $cid ";
         }
         isset($this->statustable[$status]) && $sql.=$this->statustable[$status];
         $sql.=" ORDER BY `time` DESC LIMIT $start,$limit";
@@ -378,16 +379,19 @@ class questionmodel {
     }
 
     /* 是否关注问题 */
+
     function is_followed($qid, $uid) {
         return $this->db->result_first("SELECT COUNT(*) FROM " . DB_TABLEPRE . "question_attention WHERE qid=$qid AND followerid=$uid");
     }
 
-    /*获取问题管理者列表信息*/
+    /* 获取问题管理者列表信息 */
+
     function get_follower($qid, $start = 0, $limit = 16) {
         $followerlist = array();
         $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "question_attention WHERE qid=$qid ORDER BY `time` DESC LIMIT $start,$limit");
         while ($follower = $this->db->fetch_array($query)) {
-            $follower['avatar'] = get_avatar_dir($follower['followerid']);            ;
+            $follower['avatar'] = get_avatar_dir($follower['followerid']);
+            ;
             $followerlist[] = $follower;
         }
         return $followerlist;
