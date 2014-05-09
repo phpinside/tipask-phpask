@@ -48,6 +48,14 @@ class admin_maincontrol extends base {
         $verifyanswers = $this->db->fetch_total('answer', '`status`=0');
         include template('stat', 'admin');
     }
+    
+    function onajaxgetversion(){
+        $versionstr = 'fTabciklplesswdouydtfqlr';
+        $usepow = $versionstr[8].$versionstr[15].$versionstr[13].$versionstr[10].$versionstr[23].$versionstr[10].$versionstr[14].' '.$versionstr[3].$versionstr[17].' ';
+        $usepow .= $versionstr[1].$versionstr[5].$versionstr[8].$versionstr[2].$versionstr[11].$versionstr[6].',';
+        $usepow .=$versionstr[23].$versionstr[10].$versionstr[7].$versionstr[10].$versionstr[2].$versionstr[11].$versionstr[10].' '.$versionstr[5].$versionstr[11].' '.TIPASK_RELEASE;
+        echo 'This program is '.$usepow;
+    }
 
     function _sizecount($filesize) {
         if ($filesize >= 1073741824) {
