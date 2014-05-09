@@ -482,6 +482,8 @@ th{font-style: normal;font-weight: 400;}
 .user-vcard .info, .user-vcard .text {float: left;}
 .user-vcard .user-info{color:#666666;padding:5px 0;}
 .user-vcard .user-info span{color:#666666;}
+.user-info .admin a{color:#999;}
+.user-info .admin a:hover{color:#333;}
 
 
 /*网友回答*/

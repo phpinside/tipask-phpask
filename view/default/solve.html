@@ -58,7 +58,7 @@
                 <h2>满意回答</h2>
                 <p class="pubtime">
                     <a class="js-report ui-report" href="javascript:;" style="visibility: hidden;">检举</a>
-                    <span class="line ui-line" style="visibility: hidden;">|</span>{$bestanswer['format_time']}
+                    <span class="line ui-line" style="visibility: hidden;">|</span>{$bestanswer['format_adopttime']}
                 </p>
             </div>
             <div class="bd">
@@ -109,6 +109,12 @@
                             <span>{$bestanswer['author_groupname']}</span>
                             <span class="span-line">|</span>
                             <span>采纳率{$bestanswer['adoption_rate']}%</span>
+                            <span class="span-line">|</span>
+                            <span>回答于 {$bestanswer['format_time']}</span>
+                            <!--{if $user['grouptype']==1}-->
+                             <span class="span-line">|</span>
+                             <span class="admin"><a href="{url question/editanswer/$bestanswer['id']}">编辑内容</a>
+                            <!--{/if}-->
                         </div>
                     </div>
                 </div>
