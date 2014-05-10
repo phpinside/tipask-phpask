@@ -32,6 +32,28 @@
                 </ul>
             </div>
             <ul class="q-tabmod mt10">
+                <!--{if $recommandusers && $page==1}-->
+                <li><p class='suggest-header'>您可能感兴趣的人</p></li>
+                <!--{loop $recommandusers $recommanduser}-->
+                <li class="suggest-item">
+                    <div class="suggest-item-inner">
+                        <span class="zg-right"><input type="button" onclick="attentto_user($recommanduser['uid'])" id="attenttouser_{$recommanduser['uid']}" value="关注" class="button_attention"></span>
+                        <a class="image-link" href="{url user/space/$recommanduser['uid']}" target="_blank"><img alt="{$recommanduser['username']}" src="{$recommanduser['avatar']}" /></a>
+                        <div class="item-main">
+                            <a class="item-link" href="{url user/space/$recommanduser['uid']}">{$recommanduser['username']}</a>
+                            <p class="item-info-minor">
+                                <!--{if $recommanduser['category']}-->擅长: 
+                                <!--{loop $recommanduser['category'] $category}-->
+                                <i class="expert-field"><a target="_blank" href="{url category/view/$category['cid']}">{$category['categoryname']}</a></i>
+                                <!--{/loop}-->
+                                <!--{/if}-->
+                            </p>
+                            <p class="item-info-major">{$recommanduser['followers']}关注 , {$recommanduser['answers']}回答</p>
+                        </div>
+                    </div>
+                </li>
+                <!--{/loop}-->
+                <!--{/if}-->
                 <!--{loop $doinglist $doing}-->
                 <li>
                     <div class="avatar">
@@ -63,6 +85,9 @@
                     <div class="clr"></div>
                 </li>
                 <!--{/loop}-->
+                <!--{if !$doinglist && $type=='my'}-->
+                <li><p>帮助他人，快乐自己！拿出你的热心，帮忙大家解决问题吧。 <a href='{url category/view/all/1}'>这些问题需要您的帮助</a></p></li>
+                <!--{/if}-->
             </ul>
         </div>	
         <div class="pages">{$departstr}</div>	

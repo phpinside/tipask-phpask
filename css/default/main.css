@@ -391,6 +391,15 @@ th{font-style: normal;font-weight: 400;}
 .q-tabmod .pv,.q-tabmod .answer-number{ float:right; color:#999;}
 .q-tabmod .answer-number{ padding:0 0 0 12px;}
 .q-tabmod .time{ padding:0 0 0 12px; color:#9c9c9c;}
+.suggest-header{font-size: 14px;font-family: "microsoft yahei";}
+.suggest-item-inner {padding: 12px 15px;}
+.suggest-item-inner .image-link { float: left;margin: 2px 0 0;}
+.suggest-item-inner .image-link img{border-radius: 3px;height: 52px;width: 52px;}
+.suggest-item-inner .item-main {overflow: hidden;padding: 0 0 0 15px;}
+.suggest-item-inner .item-link {font-size: 14px;font-weight: 700;}
+.item-info-major {color: #666666;}
+.item-info-minor {color: #999999;}
+.q-tabmod .zg-right{float: right;}
 
 /* 问答的列表页需要改版 */
 .q-tabmod2 li{ padding:12px 0 5px;}

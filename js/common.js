@@ -244,14 +244,14 @@ function attentto_user(uid) {
     }
     $.post(g_site_url + "index.php?user/attentto", {uid: uid}, function(msg) {
         if (msg == 'ok') {
-            if ($("#attenttouser").hasClass("button_attention")) {
-                $("#attenttouser").removeClass("button_attention");
-                $("#attenttouser").addClass("button_followed");
-                $("#attenttouser").val("取消关注");
+            if ($("#attenttouser_"+uid).hasClass("button_attention")) {
+                $("#attenttouser_"+uid).removeClass("button_attention");
+                $("#attenttouser_"+uid).addClass("button_followed");
+                $("#attenttouser_"+uid).val("取消关注");
             } else {
-                $("#attenttouser").removeClass("button_followed");
-                $("#attenttouser").addClass("button_attention");
-                $("#attenttouser").val("关注");
+                $("#attenttouser_"+uid).removeClass("button_followed");
+                $("#attenttouser_"+uid).addClass("button_attention");
+                $("#attenttouser_"+uid).val("关注");
             }
         }
     });
