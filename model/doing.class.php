@@ -63,11 +63,11 @@ class doingmodel {
         $userlist = array();
         $usercount = $this->db->fetch_total("user", " 1=1");
         if ($usercount > 100) {
-            $usercount = 100;
+            $usercount = 101;
         }
-        $start = rand(0, $usercount);
+        $start = rand(0, $usercount-1);
         $loginuid = $this->base->user['uid'];
-        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "user  WHERE uid<>$loginuid AND uid NOT IN (SELECT followerid FROM ".DB_TABLEPRE."user_attention WHERE followerid<>$loginuid)  ORDER BY followers DESC,answers DESC,regtime DESC LIMIT $start,$limit ");
+        $query = $this->db->query("SELECT * FROM " . DB_TABLEPRE . "user  WHERE uid<>$loginuid AND uid NOT IN (SELECT uid FROM ".DB_TABLEPRE."user_attention WHERE followerid=$loginuid)  ORDER BY followers DESC,answers DESC,regtime DESC LIMIT $start,$limit ");
         while ($user = $this->db->fetch_array($query)) {
             $user['avatar'] = get_avatar_dir($user['uid']);
             $user['category'] = $_ENV['user']->get_category($user['uid']);
