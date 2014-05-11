@@ -1,10 +1,15 @@
 <!--{template header}-->
+<!--{eval $adlist = $this->fromcache("adlist");}-->
 <div class="nav-line">
     <a class="first" href="{SITE_URL}">{$setting['site_name']}</a>
     &gt; <span>公告列表</span>
 </div>
 <div class="wrapper clearfix">
     <div class="content-left">
+        <!--广告位1-->
+        <!--{if (isset($adlist['common']['left1']) && trim($adlist['common']['left1']))}-->
+        <div>{$adlist['common']['left1']}</div>
+        <!--{/if}-->
         <div id="mod-answer-list" class="mod-answer-list">
             <div class="bd">
                 <div class="cls-qa-table">
@@ -50,7 +55,11 @@
                 </li>
                 <!--{/loop}-->
             </ul>
-        </div>	
+        </div>
+        <!--广告位2-->
+        <!--{if (isset($adlist['common']['right1']) && trim($adlist['common']['right1']))}-->
+        <div style="margin-top:5px;">{$adlist['common']['right1']}</div>
+        <!--{/if}-->
     </div>
 </div>
 <!--{template footer}-->

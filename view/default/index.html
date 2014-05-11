@@ -155,7 +155,10 @@
                 </ul>
                 <!--{/loop}-->
             </div>			
-
+            <!--广告位3-->
+            <!--{if (isset($adlist['index']['middle3']) && trim($adlist['index']['middle3']))}-->
+            <div class="question-mod mt10">{$adlist['index']['middle3']}</div>
+            <!--{/if}-->
             <!-- 最新已解决-->
             <div class="question-mod mt10">
                 <h3 class="title">最新已解决</h3>
@@ -171,10 +174,6 @@
                 </ul>
                 <!--{/loop}-->
             </div>
-            <!--广告位3-->
-            <!--{if (isset($adlist['index']['middle3']) && trim($adlist['index']['middle3']))}-->
-            <div class="question-mod mt10">{$adlist['index']['middle3']}</div>
-            <!--{/if}-->
         </div>
         <div class="side">
             <!--{if $user['uid']}-->

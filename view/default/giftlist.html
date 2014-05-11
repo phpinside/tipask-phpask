@@ -45,7 +45,7 @@
                     <a target="_blank" href="{url user/default}" class="pic"><img width="50" height="50" src="{$user['avatar']}"></a>
                     <h3><a target="_blank" href="{url user/default}">{$user['username']}</a></h3>
                     <p>当前财富值:<img src="http://localhost/tipask-phpask/css/default/gold.gif"><font color="#FF6600">{$user['credit2']}</font></p>
-                    <p><a href="{url index/help}#如何获得积分">如何获得财富?</a></p>
+                    <p><a href="{url index/help}#如何获得积分" target="_blank">如何获得财富?</a></p>
                 </div>
             </div>
         </div>
@@ -75,11 +75,11 @@
         <div class="modbox mt15">
             <div class="title">兑换动态</div>
             <div id="exchange_detail" class="exchange">
-                <p><a href="#">胡淼</a>刚刚兑换了礼品"excel导入插件"0</p>
-                <p>进行了编辑，将使更多人因此受益。1</p>
-                <p>进行了编辑，将使更多人因此受益。2</p>
-                <p>进行了编辑，将使更多人因此受益。3</p>
-
+                <!--{if $loglist}-->
+                <!--{loop $loglist $giftlog}-->
+                <p><a href="{url user/space/$giftlog['uid']}" target="_blank">{$giftlog['username']}</a> 刚刚兑换了礼品"{$giftlog['giftname']}"</p>
+                <!--{/loop}-->
+                <!--{/if}-->
             </div>
         </div>
     </div>
@@ -205,12 +205,15 @@
             return false;
     }
     if (credit > usercredit){
-    alert("抱歉!您的财富值不够!");
+            alert("抱歉!您的财富值不够!");
             return false;
+    }
+    if(!confirm("确定兑换该礼品？完成兑换后会消耗您"+credit+"财富值!")){
+        return false;
     }
     $("#gid").val(id);
             $("#exchangeform").dialog({
-    autoOpen: false,
+            autoOpen: false,
             width: 560,
             modal: false,
             resizable: false

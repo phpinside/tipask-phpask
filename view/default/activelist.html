@@ -1,7 +1,12 @@
 <!--{template header}-->
+<!--{eval $adlist = $this->fromcache("adlist");}-->
 <div class="nav-line"><a class="first" href="{SITE_URL}">{$setting['site_name']}</a> &gt; <span>活跃用户</span></div>
 <div class="wrapper clearfix">
     <div class="content-left">
+        <!--广告位1-->
+        <!--{if (isset($adlist['common']['left1']) && trim($adlist['common']['left1']))}-->
+        <div>{$adlist['common']['left1']}</div>
+        <!--{/if}-->
         <div class="modbox">
             <ul class="active-list clearfix">
                 <!--{loop $userlist $activeuser}-->
@@ -29,6 +34,10 @@
                 <!--{/loop}-->
             </ul>
         </div>
+        <!--广告位2-->
+        <!--{if (isset($adlist['common']['right1']) && trim($adlist['common']['right1']))}-->
+        <div style="margin-top:5px;">{$adlist['common']['right1']}</div>
+        <!--{/if}-->
         <div class="modbox mt10">
             <div class="title">一周热点问题</div>
             <ul class="right-list">

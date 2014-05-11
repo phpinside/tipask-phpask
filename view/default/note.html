@@ -1,4 +1,5 @@
 <!--{template header}-->
+<!--{eval $adlist = $this->fromcache("adlist");}-->
 <script type="text/javascript" src="{SITE_URL}js/editor/ueditor.config.js"></script> 
 <script type="text/javascript" src="{SITE_URL}js/editor/ueditor.all.js"></script> 
 <div class="nav-line">
@@ -37,6 +38,10 @@
                 </div>
             </form>
         </div>
+        <!--广告位1-->
+        <!--{if (isset($adlist['common']['left1']) && trim($adlist['common']['left1']))}-->
+        <div style="margin-top:5px;">{$adlist['common']['left1']}</div>
+        <!--{/if}-->
         <!--{if $commentlist}-->
         <div  class="net-answer mt10">
             <div class="title">全部评论</div>
@@ -79,7 +84,11 @@
                 <li><a target="_blank" title="{$note['title']}" {if $note['url']}href="{$note['url']}"{else}href="{url note/view/$note['id']}"{/if}>{eval echo cutstr({$note['title']},28);}</a></li>
                 <!--{/loop}-->
             </ul>
-        </div>	
+        </div>
+        <!--广告位2-->
+        <!--{if (isset($adlist['common']['right1']) && trim($adlist['common']['right1']))}-->
+        <div style="margin-top:5px;">{$adlist['common']['right1']}</div>
+        <!--{/if}-->
     </div>
 </div>
 <link rel="stylesheet" href="{SITE_URL}js/lightbox/lightbox.css"/>

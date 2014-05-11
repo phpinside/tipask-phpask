@@ -18,6 +18,7 @@ class giftcontrol extends base {
         $giftlist = $_ENV['gift']->get_list($startindex,$pagesize);
         $giftnum=$this->db->fetch_total('gift');
         $departstr=page($giftnum, $pagesize, $page,"gift/default");
+        $loglist = $_ENV['gift']->getloglist(0, 30);
         include template('giftlist');
     }
     

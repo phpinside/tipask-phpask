@@ -37,7 +37,7 @@
             <td class="altbg2"><img src="{SITE_URL}{$gift['image']}" width="80" height="80"/></td>
             <td class="altbg2"><strong>{$gift['title']}</strong></td>
             <td class="altbg2">{$gift['credit']}</td>
-            <td class="altbg2">{$gift['description']}</td>
+            <td class="altbg2">{eval echo cutstr(strip_tags($gift['description']),40,'')}</td>
             <td class="altbg2">{$gift['time']}</td>
             <td class="altbg2">{if !$gift['available']}<font color="Red">是</font>{else}否{/if}</td>
             <td class="altbg2"><a href="index.php?admin_gift/edit/$gift['id']{$setting['seo_suffix']}">编辑</a></td>
