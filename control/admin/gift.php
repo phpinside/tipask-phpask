@@ -37,7 +37,7 @@ class admin_giftcontrol extends base {
                 $this->ondefault('图片格式不支持，目前仅支持jpg、gif、png格式！');
                 exit;
             }
-            $filepath = '/data/attach/giftimg/gfit' . random(6, 0) . '.' . $type;
+            $filepath = '/data/attach/giftimg/gift' . random(6, 0) . '.' . $type;
             forcemkdir(TIPASK_ROOT . '/data/attach/giftimg');
             if (move_uploaded_file($_FILES['imgurl']['tmp_name'], TIPASK_ROOT . $filepath)) {
                 $_ENV['gift']->add($title, $desrc, $filepath, $credit);
@@ -73,7 +73,7 @@ class admin_giftcontrol extends base {
             }
 
 
-            $filepath = '/data/attach/gfit' . random(6, 0) . '.' . $type;
+            $filepath = '/data/attach/giftimg/gift' . random(6, 0) . '.' . $type;
             forcemkdir(TIPASK_ROOT . '/data/attach/giftimg');
             if (!empty($_FILES['imgurl']['tmp_name']) && (!move_uploaded_file($_FILES['imgurl']['tmp_name'], TIPASK_ROOT . $filepath))) {
                 $message = '服务器忙，请稍后再试！';
