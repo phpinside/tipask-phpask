@@ -69,7 +69,11 @@
                     </div>
                     <div class="msgcontent">
                         <div class="source"> 
+                            <!--{if $doing['hidden'] && in_array($doing['action'],array(1,8))}-->
+                            匿名
+                            <!--{else}-->
                             <a title="{$doing['author']}"  target="_blank" href="{url user/space/$doing['authorid']}">{$doing['author']}</a> 
+                            <!--{/if}-->
                             {$doing['actiondesc']}<span class="time">{$doing['doing_time']}</span>
                         </div>
                         <div class="title"><a href="{url question/view/$doing['questionid']}" target="_blank">{$doing['title']}?</a></div>
