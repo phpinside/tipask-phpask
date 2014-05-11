@@ -34,7 +34,6 @@ CREATE TABLE ask_answer (
   `comments` int(10) NOT NULL,
   `status` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `ip` varchar(20) DEFAULT NULL,
-  `tag` text NOT NULL COMMENT '追问',
   `supports` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `qid` (`qid`),
@@ -215,11 +214,6 @@ INSERT INTO ask_setting VALUES ('passport_credit1', '0');
 INSERT INTO ask_setting VALUES ('passport_credit2', '0');
 INSERT INTO ask_setting VALUES ('overdue_days', '60');
 INSERT INTO ask_setting VALUES ('ucenter_open', '0');
-INSERT INTO ask_setting VALUES ('ucenter_url', '');
-INSERT INTO ask_setting VALUES ('ucenter_ip', '');
-INSERT INTO ask_setting VALUES ('ucenter_password', '');
-INSERT INTO ask_setting VALUES ('ucenter_ask', '1');
-INSERT INTO ask_setting VALUES ('ucenter_answer', '1');
 INSERT INTO ask_setting VALUES ('seo_on', '0');
 INSERT INTO ask_setting VALUES ('seo_title', '');
 INSERT INTO ask_setting VALUES ('seo_keywords', '');
@@ -239,7 +233,7 @@ INSERT INTO ask_setting VALUES ('stopcopy_stopagent', '');
 INSERT INTO ask_setting VALUES ('stopcopy_maxnum', '60');
 INSERT INTO ask_setting VALUES ('editor_wordcount', 'false');
 INSERT INTO ask_setting VALUES ('editor_elementpath', 'false');
-INSERT INTO ask_setting VALUES ('editor_toolbars', 'bold,forecolor,insertimage,autotypeset,attachment,link,unlink,insertvideo,map,insertcode,fullscreen');
+INSERT INTO ask_setting VALUES ('editor_toolbars', 'bold,forecolor,insertimage,autotypeset,attachment,link,unlink,insertvideo,map,fullscreen');
 INSERT INTO ask_setting VALUES ('gift_range', 'a:3:{i:0;s:2:"50";i:50;s:3:"100";i:100;s:3:"300";}');
 INSERT INTO ask_setting VALUES ('usernamepre', 'tipask_');
 INSERT INTO ask_setting VALUES ('usercount', '0');
@@ -270,12 +264,15 @@ CREATE TABLE ask_user (
   `phone` varchar(30) DEFAULT NULL,
   `qq` varchar(15) DEFAULT NULL,
   `msn` varchar(40) DEFAULT NULL,
+  `authstr` varchar(25) null,
   `signature` mediumtext,
   `introduction` varchar(200) DEFAULT NULL,
   `questions` int(10) unsigned NOT NULL DEFAULT '0',
   `answers` int(10) unsigned NOT NULL DEFAULT '0',
   `adopts` int(10) unsigned NOT NULL DEFAULT '0',
-  `supports` int(10) NOT NULL DEFAULT '0' COMMENT '赞同',
+  `supports` int(10) NOT NULL DEFAULT '0',
+  `followers` INT( 10 ) NOT NULL DEFAULT '0',
+  `attentions` INT( 10 ) NOT NULL DEFAULT '0',
   `isnotify` tinyint(1) unsigned NOT NULL DEFAULT '7',
   `elect` int(10) NOT NULL DEFAULT '0',
   `expert` tinyint(2) NOT NULL DEFAULT '0',
@@ -284,12 +281,27 @@ CREATE TABLE ask_user (
   KEY email (email)
 ) ENGINE=MyISAM;
 
-
 DROP TABLE IF EXISTS ask_user_category;
 CREATE TABLE ask_user_category (
   `uid` int(10) NOT NULL,
   `cid` int(4) NOT NULL,
   PRIMARY KEY (`uid`,`cid`)
+) ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS ask_user_readlog;
+CREATE TABLE ask_user_readlog (
+  `uid` int(10) NOT NULL,
+  `qid` int(10) NOT NULL,
+  PRIMARY KEY (`uid`,`qid`)
+) ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS ask_user_attention;
+CREATE TABLE ask_user_attention (
+  `uid` int(10) NOT NULL,
+  `followerid` int(10) NOT NULL,
+  `follower` char(18) NOT NULL,
+  `time` int(10) NOT NULL,
+  PRIMARY KEY (`uid`,`followerid`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS ask_login_auth;
@@ -394,11 +406,13 @@ CREATE TABLE ask_nav (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '问答首页', '问答首页', 'index/default', 0, 1, 1, 1);
-INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '问题库', '分类大全', 'category/view/all', 0, 1, 1, 2);
-INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '问答专家', '问答专家', 'expert/default', 0, 1, 1, 3);
-INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '知识专题', '知识专题', 'topic/default', 0, 1, 1, 4);
-INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '活跃用户', '活跃用户', 'user/activelist', 0, 1, 1, 5);
-INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '财富商城', '财富商城', 'gift/default', 0, 1, 1,6);
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '问答动态', '问答动态', 'doing/default', 0, 1, 1, 2);
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '问题库', '分类大全', 'category/view/all', 0, 1, 1, 3);
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '问答专家', '问答专家', 'expert/default', 0, 1, 1, 4);
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '知识专题', '知识专题', 'topic/default', 0, 1, 1, 5);
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '活跃用户', '活跃用户', 'user/activelist', 0, 1, 1, 6);
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '财富商城', '财富商城', 'gift/default', 0, 1, 1,7);
+INSERT INTO ask_nav (`id`, `name`, `title`, `url`, `target`, `available`, `type`, `displayorder`) VALUES(NULL, '站内公告', '站内公告', 'note/list', 0, 1, 1,7);
 
 
 DROP TABLE IF EXISTS ask_ad;
@@ -464,7 +478,7 @@ DROP TABLE IF EXISTS ask_gift;
 CREATE TABLE ask_gift (
   `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(80) NOT NULL,
-  `description` varchar(250) NOT NULL,
+  `description` text NOT NULL,
   `image` varchar(250) NOT NULL,
   `credit` int(10) NOT NULL DEFAULT '0',
   `time` int(11) NOT NULL,
@@ -534,6 +548,20 @@ CREATE TABLE ask_answer_support (
   PRIMARY KEY (`sid`,`aid`)
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS ask_answer_append;
+CREATE TABLE ask_answer_append (
+    appendanswerid int(10) NOT NULL AUTO_INCREMENT,
+    answerid int(10) NOT NULL,
+    author varchar(20) NOT NULL,
+    authorid int(10) NOT NULL,
+    content text NOT NULL,
+    `time` int(10) NOT NULL,
+    PRIMARY KEY (appendanswerid),
+    KEY answerid (answerid),
+    KEY authorid (authorid),
+    KEY `time` (`time`)
+) ENGINE=MyISAM;
+
 DROP TABLE IF EXISTS ask_expert;
 CREATE TABLE ask_expert (
   `uid` int(10) NOT NULL,
@@ -564,8 +592,6 @@ CREATE TABLE IF NOT EXISTS ask_recommend(
   PRIMARY KEY (`qid`)
 )ENGINE=MyISAM;
 
-
-
 DROP TABLE IF EXISTS ask_topic;
 CREATE TABLE ask_topic (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -583,7 +609,24 @@ CREATE TABLE ask_tid_qid (
   PRIMARY KEY (`tid`,`qid`)
 )ENGINE=MyISAM;
 
-
+DROP TABLE IF EXISTS ask_doing;
+CREATE TABLE ask_doing (
+  `doingid` bigint(20) NOT NULL AUTO_INCREMENT,
+  `authorid` int(10) NOT NULL,
+  `author` varchar(20) NOT NULL,
+  `action` tinyint(1) NOT NULL,
+  `questionid` int(10) NOT NULL,
+  `content` text,
+  `referid` int(10) NOT NULL DEFAULT '0',
+  `refer_authorid` int(10) NOT NULL DEFAULT '0',
+  `refer_content` tinytext,
+  `createtime` int(10) NOT NULL,
+  PRIMARY KEY (`doingid`),
+  KEY `authorid` (`authorid`,`author`),
+  KEY `sourceid` (`questionid`),
+  KEY `createtime` (`createtime`),
+  KEY `referid` (`referid`)
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS ask_question_tag;
 CREATE TABLE ask_question_tag (
@@ -605,6 +648,15 @@ CREATE TABLE ask_question_supply (
   KEY `time` (`time`),
   KEY `qid` (`qid`)
 )ENGINE=MyISAM;
+
+DROP TABLE IF EXISTS ask_question_attention;
+CREATE TABLE ask_question_attention (
+  `qid` int(10) NOT NULL,
+  `followerid` int(10) NOT NULL,
+  `follower` char(18) NOT NULL,
+  `time` int(10) NOT NULL,
+  PRIMARY KEY (`qid`,`followerid`)
+) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS ask_crontab;
 CREATE TABLE ask_crontab(

@@ -11,8 +11,8 @@ if(!defined('IN_TIPASK')) {
 	exit('Access Denied');
 }
 
-define('TIPASK_VERSION', '2.5Beta');
-define('TIPASK_RELEASE', '20140326');
+define('TIPASK_VERSION', '2.5');
+define('TIPASK_RELEASE', '20140511');
 define('INSTALL_LANG', 'SC_UTF8');
 define('TIPASK_ROOT', dirname(__FILE__).'/../');
 define('CONFIG', TIPASK_ROOT.'./config.php');
