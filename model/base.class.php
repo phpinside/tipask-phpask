@@ -179,6 +179,7 @@ class base {
         $_ENV['user']->refresh_session_time($sid, $user['uid']);
         $user['sid'] = $sid;
         $user['ip'] = $this->ip;
+        $user['username'] = taddslashes($user['username']);
         $user['uid'] && $user['loginuser'] = $user['username'];
         $user['uid'] && $user['avatar'] = get_avatar_dir($user['uid']);
         $this->user = array_merge($user, $this->usergroup[$user['groupid']]);

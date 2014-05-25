@@ -130,7 +130,7 @@
                             <input type="button" class="button_7" value="采纳为满意回答" onclick="adoptanswer({$answer['id']});" />
                             <input type="button" class="button_4" value="继续追问" onclick="javascript:document.location = '{url answer/append/$question['id']/$answer['id']}'" />
                             <!--{elseif $user['uid']==$answer['authorid']}-->
-                            <input type="button" class="button_4" value="修改答案"  onclick="javascript:document.location = '{url question/editanswer/$answer['id']/0}'" />
+                            <input type="button" class="button_4" value="修改答案"  onclick="javascript:document.location = '{url question/editanswer/$answer['id']}'" />
                             <input type="button"  value="继续回答" name="submit"  onclick="javascript:document.location = '{url answer/append/$question['id']/$answer['id']}'" class="button_4"/>
                             <!--{/if}-->
                         </div>
