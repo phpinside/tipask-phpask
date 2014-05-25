@@ -118,8 +118,8 @@ class admin_usercontrol extends base {
             $phone = $this->post['phone'];
             $qq = $this->post['qq'];
             $msn = $this->post['msn'];
-            $introduction = htmlentities($this->post['introduction']);
-            $signature = htmlentities($this->post['signature']);
+            $introduction = htmlspecialchars($this->post['introduction']);
+            $signature = htmlspecialchars($this->post['signature']);
             //表单检查
             $user = $_ENV['user']->get_by_uid($uid);
             if ($username && '' == $username) {

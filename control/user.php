@@ -405,8 +405,8 @@ class usercontrol extends base {
             $messagenotify = isset($this->post['messagenotify']) ? 1 : 0;
             $mailnotify = isset($this->post['mailnotify']) ? 2 : 0;
             $isnotify = $messagenotify + $mailnotify;
-            $introduction = htmlentities($this->post['introduction']);
-            $signature = htmlentities($this->post['signature']);
+            $introduction = htmlspecialchars($this->post['introduction'],TIPASK_CHARSET);
+            $signature = htmlspecialchars($this->post['signature']);
             if (($this->post['email'] != $this->user['email']) && (!preg_match("/^[a-z'0-9]+([._-][a-z'0-9]+)*@([a-z0-9]+([._-][a-z0-9]+))+$/", $this->post['email']) || $this->db->fetch_total('user', " email='" . $this->post['email'] . "' "))) {
                 $this->message("邮件格式不正确或已被占用!", 'user/profile');
             }

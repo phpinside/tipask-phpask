@@ -63,7 +63,7 @@ class answercontrol extends base {
 
     function onaddcomment() {
         if (isset($this->post['content'])) {
-            $content = htmlentities($this->post['content']);
+            $content = htmlspecialchars($this->post['content']);
             $answerid = intval($this->post['answerid']);
             $replyauthorid = intval($this->post['replyauthor']);
             $answer = $_ENV['answer']->get($answerid);

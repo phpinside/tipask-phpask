@@ -45,7 +45,7 @@ class tagmodel {
         $this->db->query("DELETE FROM " . DB_TABLEPRE . "question_tag WHERE qid=$qid");
         $insertsql = "INSERT INTO " . DB_TABLEPRE . "question_tag(`qid`,`name`,`time`) VALUES ";
         foreach ($namelist as $name) {
-            $insertsql .= "($qid,'".  htmlentities($name)."',{$this->base->time}),";
+            $insertsql .= "($qid,'".  htmlspecialchars($name)."',{$this->base->time}),";
         }
         $this->db->query(substr($insertsql, 0, -1));
     }
