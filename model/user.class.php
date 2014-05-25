@@ -209,8 +209,8 @@ class usermodel {
 
     /* 后台更新用户信息 */
 
-    function update_user($uid, $username, $passwd, $email, $groupid, $credits, $credit1, $credit2, $gender, $bday, $phone, $qq, $msn, $signature) {
-        $this->db->query("UPDATE " . DB_TABLEPRE . "user SET `username`='$username',`password`='$passwd',`email`='$email',`groupid`='$groupid',`credits`=$credits,`credit1`=$credit1,`credit2`=$credit2,`gender`='$gender',`bday`='$bday',`phone`='$phone',`qq`='$qq',`msn`='$msn',`signature`='$signature'  WHERE `uid`=$uid");
+    function update_user($uid, $username, $passwd, $email, $groupid, $credits, $credit1, $credit2, $gender, $bday, $phone, $qq, $msn,$introduction,$signature) {
+        $this->db->query("UPDATE " . DB_TABLEPRE . "user SET `username`='$username',`password`='$passwd',`email`='$email',`groupid`='$groupid',`credits`=$credits,`credit1`=$credit1,`credit2`=$credit2,`gender`='$gender',`bday`='$bday',`phone`='$phone',`qq`='$qq',`msn`='$msn',introduction='$introduction',`signature`='$signature'  WHERE `uid`=$uid");
     }
 
     /* 更新authstr */

@@ -118,7 +118,8 @@ class admin_usercontrol extends base {
             $phone = $this->post['phone'];
             $qq = $this->post['qq'];
             $msn = $this->post['msn'];
-            $signature = $this->post['signature'];
+            $introduction = htmlentities($this->post['introduction']);
+            $signature = htmlentities($this->post['signature']);
             //表单检查
             $user = $_ENV['user']->get_by_uid($uid);
             if ($username && '' == $username) {
@@ -133,7 +134,7 @@ class admin_usercontrol extends base {
                 $message = '该邮箱已有人使用，请修改!';
             } else {
                 $password = ($password == '') ? $user['password'] : md5($password);
-                $_ENV['user']->update_user($uid, $username, $password, $email, $groupid, $credits, $credit1, $credit2, $gender, $bday, $phone, $qq, $msn, $signature);
+                $_ENV['user']->update_user($uid, $username, $password, $email, $groupid, $credits, $credit1, $credit2, $gender, $bday, $phone, $qq, $msn,$introduction,$signature);
                 $message = '用户资料编辑成功!';
                 unset($type);
             }
