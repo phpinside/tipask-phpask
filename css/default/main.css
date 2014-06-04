@@ -157,10 +157,9 @@ em {font-style: normal;color:#E63A00;}
 .main-nav .total {background-position: 100% -160px;color: #FFFFFF;float: right;padding-right: 18px;}
 /*页面导航*/
 .nav-line{ margin:0 auto; width:980px; height:32px; line-height:32px;font-family:simsun;}
-.nav-line span{font-family:arial;margin-right: 15px;}
-.nav-line a.first,.nav-line span.first{ margin-left:0;}
-.icon_count{background: url("count.png") no-repeat scroll 0 50% transparent;float: left;width:16px;height:32px;margin-right:2px;}
-.nav-line span{ color:#666;}
+.count_info{height:29px;width: 670px;float: left;}
+.count_info span{font-family:arial;margin-right: 15px;color:#666;height: 29px}
+.count_info .icon_count{background: url("count.png") no-repeat scroll 0 50% transparent;float: left;width:16px;height:32px;margin-right:2px;}
 
 /*分类导航*/
 .modbox{ border:1px solid #D5D5D5;}
@@ -231,7 +230,6 @@ em {font-style: normal;color:#E63A00;}
 .ask-input .blue-btn-w90{ margin:0 0 0 10px; border:0 none; cursor:pointer;}
 
 /*公告*/
-
 #scoll-note{height: 29px;overflow: hidden;float: right;text-align: right;}
 #scoll-note a{color:#444;}
 #scoll-note span{margin-left: 10px;color:#999999;}
@@ -481,7 +479,7 @@ th{font-style: normal;font-weight: 400;}
 .mod-best-a .hd {height: 45px;position: relative;}
 .mod-best-a .hd h2 {float: left; margin-left: 65px;font:16px/24px "Microsoft YaHei";}
 .mod-best-a .hd .ico {display: inline-block;height: 70px;left: 0;position: absolute;top: -26px;width: 60px;}
-.ico-satisfy {background: url("best_answer.jpg") no-repeat scroll 50% 0 rgba(0, 0, 0, 0);}
+.ico-satisfy{background: url("best_answer.jpg") no-repeat scroll 0 0 #FFFFFF;}
 .mod-best-a .hd .pubtime {float: right;}
 .pubtime, .ui-report {color: #666666;}
 .mod-best-a .bd {padding: 10px 0;}

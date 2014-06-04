@@ -3,7 +3,9 @@
 <!--{eval $statistics=$this->fromcache('statistics');}-->
 <!--{eval $onlineusernum=$this->fromcache('onlineusernum');}-->
 <div class="nav-line">
-    <div class="icon_count"/></div><span>已解决问题：{$statistics['solves']}</span><span>待解决问题：{$statistics['nosolves']}</span><span>当前在线：{if $this->user['grouptype']==1}<a href="{url index/online}">{$onlineusernum}</a>{else}{$onlineusernum}{/if}人</span>
+    <div class="count_info">
+        <span class="icon_count"/></span><span>已解决问题：{$statistics['solves']}</span><span>待解决问题：{$statistics['nosolves']}</span><span>当前在线：{if $this->user['grouptype']==1}<a href="{url index/online}">{$onlineusernum}</a>{else}{$onlineusernum}{/if}人</span>
+    </div>
 <div id="scoll-note">
     <ul>
         <!--{eval $notelist=$this->fromcache('notelist');}-->
@@ -88,7 +90,7 @@
             <div class="focusbox mt10">
                 <div class="slidermod" >
                     <div class="slider-box clearfix">
-                        
+
                         <!--{loop $topiclist $index $topic}-->
                         <div class="topic" id="{$topic['id']}" <!--{if $index!=0}-->style="display:none"<!--{/if}-->>
                              <img width="228" height="170" src="{SITE_URL}{$topic['image']}"/>

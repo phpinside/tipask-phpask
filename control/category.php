@@ -25,7 +25,7 @@ class categorycontrol extends base {
             $cfield = 'cid' . $category['grade'];
         } else {
             $category = $this->category;
-            $navtitle = '';
+            $navtitle = '全部分类';
             $cfield = '';
             $category['pid'] = 0;
         }
