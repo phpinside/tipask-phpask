@@ -39,16 +39,16 @@
 				<tr>
 					<td class="altbg1" width="45%"><b>用户组:</b><br><span class="smalltxt">用户所在用户组</span></td>
 					<td class="altbg2">
-						<select name="groupid">
+						<select name="groupid" onchange="getcredit1()" id="groupid">
 							<optgroup label="会员用户组">
-							{loop $usergrouplist $group}
+							<!--{loop $usergrouplist $group}-->
 							<option {if $member['groupid'] == $group['groupid']}selected{/if} value="{$group['groupid']}">{$group['grouptitle']}</option>
-							{/loop}
+							<!--{/loop}-->
 							</optgroup>
 							<optgroup label="系统用户组">
-							{loop $sysgrouplist $group}
+							<!--{loop $sysgrouplist $group}-->
 							<option {if $member['groupid'] == $group['groupid']}selected{/if} value="{$group['groupid']}">{$group['grouptitle']}</option>
-							{/loop}
+							<!--{/loop}-->
 							</optgroup>
 						</select>
 					</td>
@@ -59,7 +59,7 @@
 				</tr>
 				<tr>
 					<td class="altbg1" width="45%"><b>经验值:</b><br><span class="smalltxt">用户经验值，可以修改</span></td>
-					<td class="altbg2"><input class="text"  name="credit1" value="{$member['credit1']}" /></td>
+					<td class="altbg2"><input class="text"  name="credit1" id="credit1" value="{$member['credit1']}" /></td>
 				</tr>
 				<tr>
 					<td class="altbg1" width="45%"><b>财富值:</b><br><span class="smalltxt">用户经财富值,可以修改</span></td>
@@ -101,4 +101,13 @@
 			<center><input type="submit" class="button" name="submit" value="提 交"></center><br>
 		</form>
 <br />
+<script type="text/javascript">
+    function getcredit1(){
+        var groupid = $("#groupid").val();
+        $.get("{SITE_URL}index.php?admin_user/ajaxgetcredit1/"+groupid,function(credit){         
+         $("#credit1").val(credit);
+        });
+        
+    }
+</script>
 <!--{template footer,admin}-->

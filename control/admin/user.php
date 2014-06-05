@@ -171,6 +171,14 @@ class admin_usercontrol extends base {
             $this->ondefault($msg);
         }
     }
+    
+    function onajaxgetcredit1(){
+        $groupid = intval($this->get[2]);
+        if(isset($this->usergroup[$groupid]) && $this->usergroup[$groupid]['grouptype']==2){
+            exit($this->usergroup[$groupid]['creditslower']);
+        }
+        exit('0');
+    }
 
 }
 
