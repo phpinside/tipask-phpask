@@ -279,7 +279,7 @@ class questioncontrol extends base {
         if (!$question) {
             $this->message("问题不存在或已被删除!", "STOP");
         }
-        if ($question['authorid'] != $this->user['uid'] || $this->user['uid']==0) {
+        if ($question['authorid'] != $this->user['uid'] || $this->user['uid'] == 0) {
             $this->message("非法操作!", "STOP");
             exit;
         }
@@ -372,8 +372,12 @@ class questioncontrol extends base {
         $qstatus = $status = $this->get[3] ? $this->get[3] : 1;
         (1 == $status) && ($qstatus = "1,2,6,9");
         (2 == $status) && ($qstatus = "2,6");
-        $word = urldecode($this->post['word'] ? str_replace("%27", "", $this->post['word']) : $this->get[2]);
-        (!trim($word)) && $this->message("搜索关键词不能为空!", 'BACK');
+        $word = trim($this->post['word']) ? trim($this->post['word']) : urldecode($this->get[2]);
+        $word = str_replace(array("\\","'"," ","/","&"),"", $word);
+        $word = strip_tags($word);
+        $word = htmlspecialchars($word);
+        $word = taddslashes($word, 1);
+        (!$word) && $this->message("搜索关键词不能为空!", 'BACK');
         $navtitle = $word . '-搜索问题';
         @$page = max(1, intval($this->get[4]));
         $pagesize = $this->setting['list_default'];
@@ -391,7 +395,7 @@ class questioncontrol extends base {
         $corrected_words = $_ENV['question']->get_corrected_word($word);
         $departstr = page($rownum, $pagesize, $page, "question/search/$word/$status");
         include template('search');
-    }   
+    }
 
     /* 提问自动搜索已经解决的问题 */
 

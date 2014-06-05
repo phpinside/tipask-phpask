@@ -27,7 +27,7 @@ class tipask {
         require TIPASK_ROOT . '/config.php';
         header('Content-type: text/html; charset=' . TIPASK_CHARSET);
         $querystring = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
-        $pos = strpos($querystring, '.');
+        $pos = strrpos($querystring, '.');
         if ($pos !== false) {
             $querystring = substr($querystring, 0, $pos);
         }
