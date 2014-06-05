@@ -209,7 +209,7 @@ class usermodel {
 
     /* 后台更新用户信息 */
 
-    function update_user($uid, $username, $passwd, $email, $groupid, $credits, $credit1, $credit2, $gender, $bday, $phone, $qq, $msn,$introduction,$signature) {
+    function update_user($uid, $username, $passwd, $email, $groupid, $credits, $credit1, $credit2, $gender, $bday, $phone, $qq, $msn, $introduction, $signature) {
         $this->db->query("UPDATE " . DB_TABLEPRE . "user SET `username`='$username',`password`='$passwd',`email`='$email',`groupid`='$groupid',`credits`=$credits,`credit1`=$credit1,`credit2`=$credit2,`gender`='$gender',`bday`='$bday',`phone`='$phone',`qq`='$qq',`msn`='$msn',introduction='$introduction',`signature`='$signature'  WHERE `uid`=$uid");
     }
 
@@ -233,11 +233,11 @@ class usermodel {
     }
 
     function logout() {
-
         tcookie('sid', '', 0);
         tcookie('auth', '', 0);
         tcookie('loginuser', '', 0);
-        $this->db->query("DELETE FROM " . DB_TABLEPRE . "session WHERE uid=" . $this->base->user['uid']);
+        $lasttime = $this->db->result_first("SELECT MAX(time) FROM ".DB_TABLEPRE."session WHERE uid=" . $this->base->user['uid']);
+        $this->db->query("DELETE FROM " . DB_TABLEPRE . "session WHERE uid=" . $this->base->user['uid']." AND `time`<$lasttime");
     }
 
     function save_code($code) {
@@ -407,13 +407,13 @@ class usermodel {
     function rownum_onlineuser() {
         $end = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60;
         $query = $this->db->query("SELECT *  FROM " . DB_TABLEPRE . "session WHERE time>$end GROUP BY ip");
-        $ret =  $this->db->num_rows($query);
+        $ret = $this->db->num_rows($query);
         return $ret;
     }
 
     function list_online_user($start = 0, $limit = 50) {
         $onlinelist = array();
-        $end = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60; 
+        $end = $this->base->time - intval($this->base->setting['sum_onlineuser_time']) * 60;
         $query = $this->db->query("SELECT s.ip,s.uid,u.username,s.time FROM " . DB_TABLEPRE . "session AS s LEFT  JOIN " . DB_TABLEPRE . "user AS u ON u.uid=s.uid WHERE s.time>$end GROUP BY s.ip ORDER BY s.time DESC LIMIT $start,$limit");
         while ($online = $this->db->fetch_array($query)) {
             $online['online_time'] = tdate($online['time']);
