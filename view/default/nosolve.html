@@ -44,7 +44,9 @@
                 </div>
                 <div class="timeright"><span><a href="{url favorite/add/$question['id']}">收藏</a></span><span class="span-line">|</span>{$question['format_time']}</div>                    
             </div>
-            <div class="description clearfix">{$question['description']}</div> 
+            <div class="clr"></div>
+            <div class="description">{$question['description']}</div> 
+            <div class="clr"></div>
             <div class="mainbox mt10">
                 <ul>
                     <!--{loop $supplylist $supply}-->
@@ -56,6 +58,7 @@
             <div class="score_tip">回答该问题即可获得 <b>{$setting['credit1_answer']}</b> 经验值{if $setting['credit2_answer']} + <b>{$setting['credit2_answer']}</b> 财富值{/if}，问题被采纳即可获得 <b>{$setting['credit1_answer']}</b> 经验值{if $setting['credit2_answer'] || $question['price']} + <b>{eval echo ($setting['credit2_answer']+$question['price'])}</b> 财富值{/if}！</div>
             <!--{/if}-->
             <!--{if 0!=$question['authorid'] && ($question['authorid']==$user['uid'])}-->
+            <div class="clr"></div>
             <div class="managebox mt10">
                 <h3>处理问题：</h3>
                 <p> 如果已获得满意的回答，请及时采纳，感谢回答者。若还没有满意的回答，可以尝试以下操作：</p>
