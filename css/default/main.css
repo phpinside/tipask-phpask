@@ -336,7 +336,7 @@ th{font-style: normal;font-weight: 400;}
 /*专家列表*/
 .left-expert-list li{ height:68px; line-height:20px; overflow:hidden; vertical-align:middle;}
 .left-expert-list h3{ display:inline-block; width:120px; font-size:12px; font-weight:normal; vertical-align:baseline;}
-.left-expert-list span{ float:left; padding:0 15px 0 0px; color:#999; width:50px; overflow:hidden; text-align:left;}
+.left-expert-list span{ float:left; padding:0 15px 0 0px; color:#999; width:55px; overflow:hidden; text-align:left;}
 .left-expert-list p a{ color:#333;}
 .left-expert-list p .invite{ color:#60A506;width: 150px;float: left;}
 .left-expert-list .pic{ float:left; width:50px; margin:5px 10px 0 0;}
