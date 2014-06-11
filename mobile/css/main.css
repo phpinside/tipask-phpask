@@ -1,0 +1,6 @@
+body#main{margin: 0px;padding: 0px;color: #555555;min-width: 320px;font:12px/1.5 Arial;}
+
+a {color: #444;text-decoration: none;}
+a:hover {color: #333;}
+.comment{ border-top: 1px solid rgba(0, 0, 0, 0.05);}
+

@@ -194,7 +194,7 @@ class questionmodel {
         while ($question = $this->db->fetch_array($query)) {
             $question['category_name'] = $this->base->category[$question['cid']]['name'];
             $question['format_time'] = tdate($question['time']);
-
+            $question['avatar'] = get_avatar_dir($question['authorid']);
             $question['url'] = url('question/view/' . $question['id'], $question['url']);
             $questionlist[] = $question;
         }

@@ -1,0 +1,83 @@
+<html><head>
+        <!-- Standard Meta -->
+        <meta charset="utf-8">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+
+        <!-- Site Properities -->
+        <title>Feed Example - Semantic</title>
+        <link href="javascript/semantic/packaged/css/semantic.min.css" type="text/css" rel="stylesheet" />
+        <script src="javascript/jquery-2.1.1.min.js"></script>
+        <script src="javascript/jquery.address.js"></script>
+        <script src="javascript/semantic/packaged/javascript/semantic.min.js"></script>
+        <link href="css/main.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body id="main">
+        <div class="ui fixed  inverted  menu">
+            <a class="icon item" href="home.html">
+                <i class="large Angle Left link icon"></i>
+            </a>
+            <div class="title item" href="ask.html">
+                <div class="ui tiny header">发起问题</div>
+            </div>
+            <div class="right menu">
+                <div class="item">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="请输入关键词">
+                        <i class="search link icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui column grid">
+            <div class="column">
+                <div class="ui fluid form segment">
+                    <div class="field">
+                        <label>请将您的问题告诉我们:</label>
+                        <input type="text" placeholder="这里要描述您的问题" />
+                    </div>
+                    <div class="field">
+                        <label>问题补充</label>
+                        <textarea placeholder="在这里补充问题的详细信息，详细全面的问题往往有助于网友高质量的解答"></textarea>
+                    </div>
+                    <div class="inline field">
+                        <label>问题分类</label>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="category1" value="">
+                            <div class="text">请选择</div>
+                            <i class="dropdown icon"></i>
+                            <div class="menu ui transition hidden">
+                                <div data-value="0" class="item active">请选择</div>
+                                <div data-value="1" class="item">默认分类</div>
+                            </div>
+                        </div>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="category1" value="">
+                            <div class="text">请选择</div>
+                            <i class="dropdown icon"></i>
+                            <div class="menu ui transition hidden">
+                                <div data-value="0" class="item active">请选择</div>
+                                <div data-value="1" class="item">默认分类</div>
+                            </div>
+                        </div>
+                        <div class="ui selection dropdown">
+                            <input type="hidden" name="category1" value="">
+                            <div class="text">请选择</div>
+                            <i class="dropdown icon"></i>
+                            <div class="menu ui transition hidden">
+                                <div data-value="0" class="item active">请选择</div>
+                                <div data-value="1" class="item">默认分类</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="fluid ui teal button">提交问题</a>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.ui.selection.dropdown').dropdown();
+            });
+        </script>
+    </body>
+</html>

@@ -301,8 +301,13 @@ function tstripslashes($string) {
 function template($file, $tpldir = '') {
     global $setting;
     $tpldir = ('' == $tpldir) ? $setting['tpl_dir'] : $tpldir;
-    $tplfile = TIPASK_ROOT . '/view/' . $tpldir . '/' . $file . '.html';
-    $objfile = TIPASK_ROOT . '/data/view/' . $tpldir . '_' . $file . '.tpl.php';
+    if (is_mobile()) {
+        $tplfile = TIPASK_ROOT . '/mobile/view/' . $file . '.html';
+        $objfile = TIPASK_ROOT . '/data/view/mobile_' . $file . '.tpl.php';
+    } else {
+        $tplfile = TIPASK_ROOT . '/view/' . $tpldir . '/' . $file . '.html';
+        $objfile = TIPASK_ROOT . '/data/view/' . $tpldir . '_' . $file . '.tpl.php';
+    }
     if ('default' != $tpldir && !is_file($tplfile)) {
         $tplfile = TIPASK_ROOT . '/view/default/' . $file . '.html';
         $objfile = TIPASK_ROOT . '/data/view/default_' . $file . '.tpl.php';
@@ -1097,6 +1102,19 @@ function get_remote_image($url, $savepath) {
     fwrite($fp2, $img);
     fclose($fp2);
     return $savepath;
+}
+
+function is_mobile() {
+    $is_mobile = false;
+    if (empty($_SERVER['HTTP_USER_AGENT'])) {
+        $is_mobile = false;
+    } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'Silk/') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'Kindle') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mobi') !== false) {
+        $is_mobile = true;
+    } else {
+        $is_mobile = false;
+    }
+
+    return $is_mobile;
 }
 
 ?>

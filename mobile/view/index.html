@@ -1,0 +1,148 @@
+<html>
+    <head>
+        <!--{eval $setting=$this->setting;$user=$this->user;}-->
+
+        <!-- Standard Meta -->
+        <meta charset="utf-8">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+
+        <!--{if isset($seo_description)}-->
+        <meta name="description" content="{eval echo cutstr($seo_description,160,'')}" />
+        <!--{else}-->
+        <meta name="description" content="{$setting['site_name']}" />
+        <!--{/if}-->
+        <meta name="keywords" content="{$seo_keywords}" />
+        <meta name="generator" content="Tipask {TIPASK_VERSION} {TIPASK_RELEASE}" />
+        <meta name="author" content="Tipask Team" />
+        <meta name="copyright" content="2014 tipask.com" />
+        <meta name="robots" content="index, follow">
+        <meta name="googlebot" content="index, follow" />
+        <!-- Site Properities -->
+        <!--{if isset($seo_title)}-->
+        <title>{$seo_title}</title>
+        <!--{else}-->
+        <title><!--{if $navtitle}-->{$navtitle} - <!--{/if}-->{$setting['site_name']}</title>
+        <!--{/if}-->
+        <link href="{SITE_URL}mobile/js/semantic/packaged/css/semantic.min.css" type="text/css" rel="stylesheet" />
+        <script src="{SITE_URL}mobile/js/jquery-2.1.1.min.js"></script>
+        <script src="{SITE_URL}mobile/js/jquery.address.js"></script>
+        <script src="{SITE_URL}mobile/js/semantic/packaged/javascript/semantic.min.js"></script>
+        <link href="{SITE_URL}mobile/css/main.css" type="text/css" rel="stylesheet" />
+    </head>
+    <body id="main">
+        <div class="ui fixed  inverted  menu">
+            <div class="title item">
+                <div class="ui tiny header">{$setting['site_name']}</div>
+            </div>
+            <div class="right menu">
+                <a class="icon item" href="{url question/search}">
+                    <i class="search link icon"></i>
+                </a>
+                <a class="icon item" href="{url question/add}">
+                    <i class="small inverted teal circular question link icon"></i>
+                </a>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <div class="ui teal secondary pointing menu">
+            <a class="active item" href="{SITE_URL}">
+                <i class="home icon"></i> 首页
+            </a>
+            <a class="item" href="attentionmenu.html">
+                <i class="Unhide icon"></i> 发现
+            </a>
+            <a class="item">
+                <i class="mail icon"></i> 消息
+            </a>
+            <a class="item">
+                <i class="user icon"></i> 资料
+            </a>
+        </div>
+        <div class="ui column grid">
+            <div class="column">
+                <h5 class="ui header">大家正在问 </h5>
+                <div class="ui comments">
+                    <!--{loop $questionlist $index $question}-->
+
+
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="{$question['avatar']}">
+                        </a>
+                        <div class="content">
+                            <a class="author" href="http://www.baidu.com">{$question['author']}</a>
+                            <div class="metadata">
+                                <div class="date">{$question['format_time']}</div>
+                            </div>
+                            <div class="text"><a  href="{url question/view/$question['id']}" title="{$question['title']}">{eval echo cutstr($question['title'],80);}</a></div>
+                            <div class="actions">
+                                <i class="Tags icon"></i> ucenter 系统整合
+                            </div>
+                        </div>
+                    </div>
+                    <!--{/loop}-->
+
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="http://help.tipask.com/data/avatar/000/00/00/small_000000026.jpg">
+                        </a>
+                        <div class="content">
+                            <a class="author">嘟嘟</a>
+                            <div class="metadata">
+                                <div class="date">1天前</div>
+                            </div>
+                            <div class="text"><a  href="register.html">爱酷学习网的视频教程在线观看真清晰！观看真清晰?</a></div>
+                            <div class="actions">
+                                <i class="Tags icon"></i> ucenter 系统整合
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="http://help.tipask.com/data/avatar/000/00/00/small_000000026.jpg">
+                        </a>
+                        <div class="content">
+                            <a class="author">嘟嘟</a>
+                            <div class="metadata">
+                                <div class="date">1天前</div>
+                            </div>
+                            <div class="text"><a  href="register.html">爱酷学习网的视频教程在线观看真清晰！观看真清晰?</a></div>
+                            <div class="actions">
+                                <i class="Tags icon"></i> ucenter 系统整合
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <a class="avatar">
+                            <img src="http://help.tipask.com/data/avatar/000/00/00/small_000000026.jpg">
+                        </a>
+                        <div class="content">
+                            <a class="author">嘟嘟</a>
+                            <div class="metadata">
+                                <div class="date">1天前</div>
+                            </div>
+                            <div class="text"><a  href="register.html">爱酷学习网的视频教程在线观看真清晰！观看真清晰?</a></div>
+                            <div class="actions">
+                                <i class="Tags icon"></i> ucenter 系统整合
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui pagination menu">
+            <a class="icon item">
+                <i class="left arrow icon"></i>
+            </a>
+            <a class="item">1</a>
+            <div class="disabled item">...</div>
+            <a class="active item">10</a>
+            <a class="item">11</a>
+            <a class="item">12</a>
+            <a class="icon item"><i class="right arrow icon"></i></a>
+        </div>
+    </body>
+</html>

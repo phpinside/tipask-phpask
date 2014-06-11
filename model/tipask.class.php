@@ -56,7 +56,11 @@ class tipask {
     }
 
     function load_control() {
-        $controlfile = TIPASK_ROOT . '/control/' . $this->get[0] . '.php';
+        if (is_mobile()) {
+            $controlfile = TIPASK_ROOT . '/mobile/control/' . $this->get[0] . '.php';
+        } else {
+            $controlfile = TIPASK_ROOT . '/control/' . $this->get[0] . '.php';
+        }
         $isadmin = ('admin' == substr($this->get[0], 0, 5));
         $isadmin && $controlfile = TIPASK_ROOT . '/control/admin/' . substr($this->get[0], 6) . '.php';
         if (false === include($controlfile)) {
