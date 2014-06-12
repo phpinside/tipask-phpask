@@ -44,6 +44,7 @@ class questionmodel {
         $question = $this->db->fetch_first("SELECT * FROM " . DB_TABLEPRE . "question WHERE id='$id'");
         if ($question) {
             $question['format_time'] = tdate($question['time']);
+            $question['category_name'] = $this->base->category[$question['cid']]['name'];
             $question['ip'] = formatip($question['ip']);
             $question['author_avartar'] = get_avatar_dir($question['authorid']);
         }

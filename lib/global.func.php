@@ -502,7 +502,7 @@ function runlog($file, $message, $halt = 0) {
 
 /* 翻页函数 */
 
-function page($num, $perpage, $curpage, $operation, $ajax = 0) {
+function page($num, $perpage, $curpage, $operation) {
     global $setting;
     $multipage = '';
     $operation = urlmap($operation, 2);
@@ -531,7 +531,16 @@ function page($num, $perpage, $curpage, $operation, $ajax = 0) {
                 $to = $pages;
             }
         }
-        if (!$ajax) {
+        if (is_mobile()) {
+            $multipage = ($curpage - $offset > 1 && $pages > $page ? '<a  class="icon item" href="' . $mpurl . '1' . $setting['seo_suffix'] . '" ><i class="Double angle Left icon"></i></a>' . "\n" : '') .
+                    ($curpage > 1 ? '<a class="icon item" href="' . $mpurl . ($curpage - 1) . $setting['seo_suffix'] . '"  class="n"><i class="left arrow icon"></i></a>' . "\n" : '');
+            for ($i = $from; $i <= $to; $i++) {
+                $multipage .= $i == $curpage ? '<a  class="active item" href="' . $mpurl .$i . $setting['seo_suffix'] . '" >'.$i.'</a>'."\n" :
+                        '<a class="item" href="' . $mpurl . $i . $setting['seo_suffix'] . '">' . $i . '</a>' . "\n";
+            }
+            $multipage .= ( $curpage < $pages ? '<a class="icon item" href="' . $mpurl . ($curpage + 1) . $setting['seo_suffix'] . '"><i class="right arrow icon"></i></a>' . "\n" : '') .
+                    ($to < $pages ? '<a class="icon item" href="' . $mpurl . $pages . $setting['seo_suffix'] . '" ><i class="Double angle Right icon"></i></a>' . "\n" : '');
+        } else {
             $multipage = ($curpage - $offset > 1 && $pages > $page ? '<a  class="n" href="' . $mpurl . '1' . $setting['seo_suffix'] . '" >首页</a>' . "\n" : '') .
                     ($curpage > 1 ? '<a href="' . $mpurl . ($curpage - 1) . $setting['seo_suffix'] . '"  class="n">上一页</a>' . "\n" : '');
             for ($i = $from; $i <= $to; $i++) {
@@ -540,10 +549,6 @@ function page($num, $perpage, $curpage, $operation, $ajax = 0) {
             }
             $multipage .= ( $curpage < $pages ? '<a class="n" href="' . $mpurl . ($curpage + 1) . $setting['seo_suffix'] . '">下一页</a>' . "\n" : '') .
                     ($to < $pages ? '<a class="n" href="' . $mpurl . $pages . $setting['seo_suffix'] . '" >最后一页</a>' . "\n" : '');
-        } else {
-            $multipage = '';
-            if ($curpage < $pages)
-                $multipage = '<a href="' . $mpurl . ($curpage + 1) . $setting['seo_suffix'] . '">查看更多</a>';
         }
     }
     return $multipage;
@@ -1106,6 +1111,7 @@ function get_remote_image($url, $savepath) {
 
 function is_mobile() {
     $is_mobile = false;
+    return true;
     if (empty($_SERVER['HTTP_USER_AGENT'])) {
         $is_mobile = false;
     } elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mobile') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'Android') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'Silk/') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'Kindle') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'BlackBerry') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mini') !== false || strpos($_SERVER['HTTP_USER_AGENT'], 'Opera Mobi') !== false) {

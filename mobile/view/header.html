@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <!--{eval $setting=$this->setting;$user=$this->user;}-->
+        <!-- Standard Meta -->
+        <meta charset="utf-8">
+        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0" name="viewport">
+
+        <!--{if isset($seo_description)}-->
+        <meta name="description" content="{eval echo cutstr($seo_description,160,'')}" />
+        <!--{else}-->
+        <meta name="description" content="{$setting['site_name']}" />
+        <!--{/if}-->
+        <meta name="keywords" content="{$seo_keywords}" />
+        <meta name="generator" content="Tipask {TIPASK_VERSION} {TIPASK_RELEASE}" />
+        <meta name="author" content="Tipask Team" />
+        <meta name="copyright" content="2014 tipask.com" />
+        <meta name="robots" content="index, follow">
+        <meta name="googlebot" content="index, follow" />
+        <!-- Site Properities -->
+        <!--{if isset($seo_title)}-->
+        <title>{$seo_title}</title>
+        <!--{else}-->
+        <title><!--{if $navtitle}-->{$navtitle} - <!--{/if}-->{$setting['site_name']}</title>
+        <!--{/if}-->
+        <link href="{SITE_URL}mobile/js/semantic/packaged/css/semantic.min.css" type="text/css" rel="stylesheet" />
+        <script src="{SITE_URL}mobile/js/jquery-2.1.1.min.js"></script>
+        <script src="{SITE_URL}mobile/js/jquery.address.js"></script>
+        <script src="{SITE_URL}mobile/js/semantic/packaged/javascript/semantic.min.js"></script>
+        <link href="{SITE_URL}mobile/css/main.css" type="text/css" rel="stylesheet" />
+    </head>

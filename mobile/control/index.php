@@ -10,7 +10,15 @@ class indexcontrol extends base {
     }
 
     function ondefault() {
-        $questionlist = $_ENV['question']->list_by_cfield_cvalue_status('', 0, 1, 0, $this->setting['list_indexnosolve']);
+        $questionlist = $_ENV['question']->list_by_cfield_cvalue_status('', 0, 1, 0, $this->setting['list_indexnosolve']);        
+        
+        $navtitle = "问题专家";
+        $page = max(1, intval($this->get[2]));
+        $pagesize = intval($this->setting['list_default']/2);
+        $startindex = ($page - 1) * $pagesize;
+        $questionlist = $_ENV['question']->list_by_cfield_cvalue_status('', 0, 'all', 0,$pagesize);
+        $rownum = $_ENV['question']->rownum_by_cfield_cvalue_status('', 0,'all');
+        $departstr = page($rownum, $pagesize, $page, "index/default");
         include template('index');
     }
 }

@@ -117,20 +117,11 @@ class questioncontrol extends base {
             $_ENV['question']->update_status($qid, 9);
             $this->send($question['authorid'], $question['id'], 2);
         }
-        $asktime = tdate($question['time']);
-        $endtime = timeLength($question['endtime'] - $this->time);
         $solvetime = tdate($question['endtime']);
         $supplylist = $_ENV['question']->get_supply($question['id']);
-        if (isset($this->get[3]) && $this->get[3] == 1) {
-            $ordertype = 2;
-            $ordertitle = '倒序查看回答';
-        } else {
-            $ordertype = 1;
-            $ordertitle = '正序查看回答';
-        }
         //回答分页        
         @$page = max(1, intval($this->get[4]));
-        $pagesize = $this->setting['list_default'];
+        $pagesize = 1;
         $startindex = ($page - 1) * $pagesize;
         $rownum = $this->db->fetch_total("answer", " qid=$qid AND status>0 AND adopttime =0");
         $answerlistarray = $_ENV['answer']->list_by_qid($qid, $this->get[3], $rownum, $startindex, $pagesize);
@@ -138,48 +129,11 @@ class questioncontrol extends base {
         $answerlist = $answerlistarray[0];
         $already = $answerlistarray[1];
         $solvelist = $_ENV['question']->list_by_cfield_cvalue_status('cid', $question['cid'], 2);
-        $nosolvelist = $_ENV['question']->list_by_cfield_cvalue_status('cid', $question['cid'], 1);
-        $navlist = $_ENV['category']->get_navigation($question['cid'], true);
-        $expertlist = $_ENV['expert']->get_by_cid($question['cid']);
         $typearray = array('1' => 'nosolve', '2' => 'solve', '4' => 'nosolve', '6' => 'solve', '9' => 'close');
         $typedescarray = array('1' => '待解决', '2' => '已解决', '4' => '高悬赏', '6' => '已推荐', '9' => '已关闭');
         $navtitle = $question['title'];
         $dirction = $typearray[$question['status']];
         ('solve' == $dirction) && $bestanswer = $_ENV['answer']->get_best($qid);
-        $categoryjs = $_ENV['category']->get_js();
-        $taglist = $_ENV['tag']->get_by_qid($qid);
-        $expertlist = $_ENV['expert']->get_by_cid($question['cid']);
-        $is_followed = $_ENV['question']->is_followed($qid, $this->user['uid']);
-        $followerlist = $_ENV['question']->get_follower($qid);
-        /* SEO */
-        $curnavname = $navlist[count($navlist) - 1]['name'];
-        if (!$bestanswer) {
-            $bestanswer = array();
-            $bestanswer['content'] = '';
-        }
-        if ($this->setting['seo_question_title']) {
-            $seo_title = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_question_title']);
-            $seo_title = str_replace("{wtbt}", $question['title'], $seo_title);
-            $seo_title = str_replace("{wtzt}", $typedescarray[$question['status']], $seo_title);
-            $seo_title = str_replace("{flmc}", $curnavname, $seo_title);
-        }
-        if ($this->setting['seo_question_description']) {
-            $seo_description = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_question_description']);
-            $seo_description = str_replace("{wtbt}", $question['title'], $seo_description);
-            $seo_description = str_replace("{wtzt}", $typedescarray[$question['status']], $seo_description);
-            $seo_description = str_replace("{flmc}", $curnavname, $seo_description);
-            $seo_description = str_replace("{wtms}", strip_tags($question['description']), $seo_description);
-            $seo_description = str_replace("{zjda}", strip_tags($bestanswer['content']), $seo_description);
-        }
-        if ($this->setting['seo_question_keywords']) {
-            $seo_keywords = str_replace("{wzmc}", $this->setting['site_name'], $this->setting['seo_question_keywords']);
-            $seo_keywords = str_replace("{wtbt}", $question['title'], $seo_keywords);
-            $seo_keywords = str_replace("{wtzt}", $typedescarray[$question['status']], $seo_keywords);
-            $seo_keywords = str_replace("{flmc}", $curnavname, $seo_keywords);
-            $seo_keywords = str_replace("{wtbq}", implode(",", $taglist), $seo_keywords);
-            $seo_keywords = str_replace("{description}", strip_tags($question['description']), $seo_keywords);
-            $seo_keywords = str_replace("{zjda}", strip_tags($bestanswer['content']), $seo_keywords);
-        }
         include template("question");
     }
 
@@ -377,7 +331,6 @@ class questioncontrol extends base {
         $word = strip_tags($word);
         $word = htmlspecialchars($word);
         $word = taddslashes($word, 1);
-        (!$word) && $this->message("搜索关键词不能为空!", 'BACK');
         $navtitle = $word . '-搜索问题';
         @$page = max(1, intval($this->get[4]));
         $pagesize = $this->setting['list_default'];
