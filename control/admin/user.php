@@ -182,4 +182,3 @@ class admin_usercontrol extends base {
 
 }
 
-?>

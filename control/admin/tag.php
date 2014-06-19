@@ -31,4 +31,3 @@ class admin_tagcontrol extends base {
 
 }
 
-?>

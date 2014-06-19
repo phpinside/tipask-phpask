@@ -62,4 +62,3 @@ class admin_notecontrol extends base {
 
 }
 
-?>

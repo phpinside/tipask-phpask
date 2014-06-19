@@ -223,4 +223,3 @@ function gbk_to_pinyin($str,$ishead=0,$isclose=1) {
 }
 
 
-?>

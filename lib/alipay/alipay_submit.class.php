@@ -99,4 +99,3 @@ class AlipaySubmit {
 		return $doc;
 	}
 }
-?>

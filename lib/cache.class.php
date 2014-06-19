@@ -36,7 +36,7 @@ class cache {
         $this->getfile($cachename);
         if (!is_array($arraydata))
             return false;
-        $strdata = "<?php\nreturn " . var_export($arraydata, true) . ";\n?>";
+        $strdata = "<?php\nreturn " . var_export($arraydata, true) . ";\n";
         $bytes = writetofile($this->cachefile, $strdata);
         return $bytes;
     }
@@ -68,4 +68,3 @@ class cache {
 
 }
 
-?>

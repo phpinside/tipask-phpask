@@ -71,4 +71,3 @@ class admin_expertcontrol extends base {
 
 }
 
-?>

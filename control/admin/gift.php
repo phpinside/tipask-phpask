@@ -205,4 +205,3 @@ class admin_giftcontrol extends base {
 
 }
 
-?>

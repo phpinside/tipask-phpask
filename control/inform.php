@@ -24,4 +24,3 @@ class informcontrol extends base {
         $this->message('举报成功，健康的网络环境需要大家共同维护，谢谢您的支持 :)','BACK');
     }
 }
-?>

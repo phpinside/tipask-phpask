@@ -37,7 +37,7 @@ function url($var, $url = '') {
     if ($url)
         return SITE_URL . $location; //程序动态获取的，给question的model使用
     else
-        return '<?=SITE_URL?>' . $location; //模板编译时候生成使用
+        return '<?=SITE_URL' . $location; //模板编译时候生成使用
 }
 
 /* url转换器，1为请求转换，就是把类似q-替换为question/view
@@ -493,7 +493,7 @@ function runlog($file, $message, $halt = 0) {
     }
     if ($fp = @fopen($logfile, 'a')) {
         @flock($fp, 2);
-        fwrite($fp, "<?PHP exit;?>\t" . str_replace(array('<?', '?>', "\r", "\n"), '', $log) . "\n");
+        fwrite($fp, "<?PHP exit;\t" . str_replace(array('<?', '', "\r", "\n"), '', $log) . "\n");
         fclose($fp);
     }
     if ($halt)
@@ -1123,4 +1123,3 @@ function is_mobile() {
     return $is_mobile;
 }
 
-?>

@@ -110,4 +110,3 @@ class admin_topiccontrol extends base {
 
 }
 
-?>

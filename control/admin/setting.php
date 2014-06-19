@@ -360,7 +360,7 @@ class admin_settingcontrol extends base {
             $logininc['scope'] = "get_user_info";
             $logininc['errorReport'] = "true";
             $logininc['storageType'] = "file";
-            $loginincstr = "<?php die('forbidden'); ?>\n" . json_encode($logininc);
+            $loginincstr = "<?php die('forbidden'); \n" . json_encode($logininc);
             $loginincstr = str_replace("\\", "", $loginincstr);
             writetofile(TIPASK_ROOT . "/plugin/qqlogin/API/comm/inc.php", $loginincstr);
             $message = 'qq互联参数保存成功！';
@@ -403,7 +403,7 @@ class admin_settingcontrol extends base {
             $aliapy_config['return_url'] = SITE_URL . "index.php?ebank/aliapyback";
             $aliapy_config['notify_url'] = "";
             $_ENV['setting']->update($this->setting);
-            $strdata = "<?php\nreturn " . var_export($aliapy_config, true) . ";\n?>";
+            $strdata = "<?php\nreturn " . var_export($aliapy_config, true) . ";\n";
             writetofile(TIPASK_ROOT . "/data/alipay.config.php", $strdata);
         }
         include template("setting_ebank", "admin");
@@ -411,4 +411,3 @@ class admin_settingcontrol extends base {
 
 }
 
-?>

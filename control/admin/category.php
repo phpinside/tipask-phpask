@@ -115,4 +115,3 @@ class admin_categorycontrol extends base {
 
 }
 
-?>

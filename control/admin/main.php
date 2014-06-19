@@ -105,4 +105,3 @@ class admin_maincontrol extends base {
 
 }
 
-?>

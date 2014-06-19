@@ -85,4 +85,3 @@ class admin_navcontrol extends base {
 
 }
 
-?>

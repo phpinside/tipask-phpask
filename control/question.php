@@ -551,4 +551,3 @@ class questioncontrol extends base {
 
 }
 
-?>

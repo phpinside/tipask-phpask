@@ -71,4 +71,3 @@ class admin_usergroupcontrol extends base {
         $this->ondefault('用户组更新成功！');
     }
 }
-?>

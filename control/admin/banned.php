@@ -28,4 +28,3 @@ class admin_bannedcontrol extends base {
 
 }
 
-?>

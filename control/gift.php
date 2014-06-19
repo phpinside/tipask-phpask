@@ -71,4 +71,3 @@ class giftcontrol extends base {
     }
 
 }
-?>

@@ -49,4 +49,4 @@ class favoritemodel {
 
 }
 
-?>
+

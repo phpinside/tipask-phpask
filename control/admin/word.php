@@ -45,4 +45,3 @@ class admin_wordcontrol extends base {
 
 }
 
-?>

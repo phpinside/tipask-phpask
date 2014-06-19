@@ -32,4 +32,3 @@ class admin_informcontrol extends base {
 
     }
 }
-?>

@@ -21,4 +21,3 @@ class admin_adcontrol extends base {
 
 }
 
-?>

@@ -317,4 +317,3 @@ class admin_dbcontrol extends base {
 
 
 }
-?>

@@ -50,4 +50,3 @@ class indexcontrol extends base {
 
 }
 
-?>

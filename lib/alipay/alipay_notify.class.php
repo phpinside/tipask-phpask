@@ -137,4 +137,4 @@ class AlipayNotify {
 		return $responseTxt;
 	}
 }
-?>
+

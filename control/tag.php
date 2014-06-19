@@ -25,4 +25,3 @@ class tagcontrol extends base {
 
 }
 
-?>

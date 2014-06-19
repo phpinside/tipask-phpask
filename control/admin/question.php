@@ -303,4 +303,3 @@ class admin_questioncontrol extends base {
 
 }
 
-?>

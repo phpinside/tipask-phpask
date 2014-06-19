@@ -76,4 +76,3 @@ class AlipayService {
 		return $html_text;
 	}
 }
-?>

@@ -72,4 +72,3 @@ class admin_linkcontrol extends base {
     }
 
 }
-?>

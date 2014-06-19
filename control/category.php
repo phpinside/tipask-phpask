@@ -83,4 +83,3 @@ class categorycontrol extends base {
 
 }
 
-?>

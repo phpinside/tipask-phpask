@@ -57,4 +57,3 @@ class jscontrol extends base {
 
 }
 
-?>

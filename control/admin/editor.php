@@ -49,4 +49,3 @@ class admin_editorcontrol extends base {
 
 }
 
-?>

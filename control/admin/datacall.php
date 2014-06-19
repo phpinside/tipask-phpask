@@ -106,4 +106,3 @@ class admin_datacallcontrol extends base {
     //此函数不存在，需要在后台用弹出div展示即可
 
 }
-?>

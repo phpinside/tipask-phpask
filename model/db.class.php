@@ -107,7 +107,7 @@ class dbmodel {
 
 
     function write_to_sql(&$sqldump,$dumpfile,$volume) {
-        $sqldump =	"# <?exit();?>\n".
+        $sqldump =	"# exit();\n".
                 "# Tipask Multi-Volume Data Dump Vol.$volume\n".
                 "# Version: Tipask ".TIPASK_VERSION."\n".
                 "# Time: ".date("Y-m-d",$this->base->time)."\n".
@@ -243,4 +243,3 @@ class dbmodel {
 
 
 }
-?>
